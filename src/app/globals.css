@@ -1,26 +1,139 @@
 @import "tailwindcss";
 
 :root {
+  /* Primary - Figma: #3737C1 (Blue-Purple) */
+  --primary: #3737C1;
+  --primary-foreground: #ffffff;
+  
+  /* Secondary - Figma: #00C89C (Teal-Green) */
+  --secondary: #00C89C;
+  --secondary-foreground: #000000;
+  
+  /* Background & Foreground */
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* Muted */
+  --muted: #f3f4f6;
+  --muted-foreground: #6b7280;
+  
+  /* Accent */
+  --accent: #f3f4f6;
+  --accent-foreground: #171717;
+  
+  /* Destructive (Error) */
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  
+  /* Border & Input */
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  
+  /* Ring (focus) */
+  --ring: #3737C1;
+  
+  /* Radius */
+  --radius: 0.5rem;
+  
+  /* Success - using secondary */
+  --success: #00C89C;
+  --warning: #f59e0b;
+  --info: #3737C1;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --radius-sm: calc(var(--radius) - 0.125rem);
+  --radius-md: calc(var(--radius));
+  --radius-lg: calc(var(--radius) + 0.125rem);
+  --radius-xl: calc(var(--radius) + 0.25rem);
+  --font-sans: var(--font-inter);
+  --font-mono: ui-monospace, SFMono-Regular, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  /* Primary - lighter version for dark mode */
+  --primary: #5a56d4;
+  --primary-foreground: #ffffff;
+  /* Secondary - lighter version for dark mode */
+  --secondary: #33d9b5;
+  --secondary-foreground: #000000;
+  --muted: #1f2937;
+  --muted-foreground: #9ca3af;
+  --accent: #1f2937;
+  --accent-foreground: #ededed;
+  --destructive: #7f1d1d;
+  --destructive-foreground: #fef2f2;
+  --border: #374151;
+  --input: #374151;
+  --ring: #5a56d4;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
 }
+
+* {
+  border-color: var(--border);
+}
+
+input,
+button,
+textarea,
+select {
+  font-family: inherit;
+}
+
+/* Fix for DatePicker to take full width of container */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+/* Customizing the popup to match your theme */
+.react-datepicker {
+  @apply !border-input !bg-background !font-sans !rounded-lg !shadow-lg;
+}
+
+.react-datepicker__header {
+  @apply !bg-muted !border-input;
+}
+
+.react-datepicker__day--selected {
+  @apply !bg-primary !text-primary-foreground !rounded-md;
+}
+/* .react-datepicker {
+  @apply border border-border bg-popover text-popover-foreground rounded-md shadow-md font-sans !important;
+}
+.react-datepicker__header {
+  @apply bg-muted border-b border-border rounded-t-md !important;
+}
+.react-datepicker__day--selected {
+  @apply bg-primary text-primary-foreground rounded-md !important;
+}
+.react-datepicker__day:hover {
+  @apply bg-accent text-accent-foreground !important;
+}
+.react-datepicker__current-month, .react-datepicker__day-name {
+  @apply text-foreground !important;
+} */
