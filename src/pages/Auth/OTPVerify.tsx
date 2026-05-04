@@ -5,6 +5,7 @@ import GradientButton from '@/components/ui/GradientButton'
 import { ArrowLeft } from 'lucide-react'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { showToast } from '@/lib/toast'
 
 type OTPVerifyProps = {
   resend?: () => void
@@ -38,6 +39,7 @@ function OTPVerify({
 
     if (otp.length !== 6) {
       setError('Enter valid 6-digit OTP')
+      showToast({ message: 'Please enter a valid 6-digit OTP', type: 'error' })
       return
     }
 
@@ -47,9 +49,14 @@ function OTPVerify({
       // 👉 simulate API verify
       await new Promise(res => setTimeout(res, 1200))
 
+      showToast({ message: 'OTP verified successfully!', type: 'success' })
+      
       // ✅ navigate to PAN page
       router.push('/pan-details')
 
+    } catch (err) {
+      showToast({ message: 'Invalid OTP. Please try again.', type: 'error' })
+      setError('Invalid OTP')
     } finally {
       setLoading(false)
     }

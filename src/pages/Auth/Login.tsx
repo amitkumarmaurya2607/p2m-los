@@ -6,6 +6,7 @@ import React, { ButtonHTMLAttributes, ChangeEvent, useEffect, useState } from 'r
 import OTPVerify from './OTPVerify';
 import TextInput from '@/components/ui/TextInput';
 import { isValidEmail, isValidMobile } from '@/lib/utils';
+import { showToast } from '@/lib/toast';
 
 const Login = () => {
     const [method, setMethod] = useState<'mobile' | 'email'>('mobile');
@@ -26,12 +27,14 @@ const Login = () => {
 
   if (!isValid) {
     setError(method === "mobile" ? "Enter valid mobile number" : "Enter valid email");
+    showToast({ message: method === "mobile" ? "Enter valid mobile number" : "Enter valid email", type: 'error' });
     return;
   }
         setLoading(true)
         setTimeout(() => {
             setLoading(false);
-            setSendOtp(true)
+            setSendOtp(true);
+            showToast({ message: 'OTP sent successfully!', type: 'success' });
         }, 5000);
     }
 
