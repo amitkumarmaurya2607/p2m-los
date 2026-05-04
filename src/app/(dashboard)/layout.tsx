@@ -1,3 +1,7 @@
+import Header from "@/pages/Dashbaord/componants/Header";
+import ProgressBar from "@/pages/Dashbaord/componants/ProgressBar";
+import { StepperAlt } from "@/pages/Dashbaord/componants/Stepper";
+
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -13,17 +17,18 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="min-h-screen bg-background">
-      <nav className="border-b border-border bg-card">
-        <div className="container mx-auto flex items-center gap-6 px-4 py-3">
-          <Link href="/dashboard" className="font-semibold">
-            P2M LOS
-          </Link>
-          <Link href="/dashboard" className="text-sm text-muted-foreground">
-            Dashboard
-          </Link>
+      <Header />
+    
+        <div className="flex">
+          <StepperAlt />
+           <div className=" grow-1 ">
+              <ProgressBar />
+              <div className="flex justify-center px-4 pt-12 pb-6">
+                {children}
+              </div>
+             
+           </div>
         </div>
-      </nav>
-      {children}
     </div>
   );
 }

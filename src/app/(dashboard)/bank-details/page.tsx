@@ -1,10 +1,12 @@
-import LoanApplication from '@/pages/Dashbaord/LoanApplication'
+
+
+import BankDetails from '@/pages/Dashbaord/BankDetails/BankDetails'
 import React from 'react'
 
 function page() {
   return (
    <>
-   <LoanApplication />
+   <BankDetails />
    </>
   )
 }

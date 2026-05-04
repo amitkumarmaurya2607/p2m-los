@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import "./globals.css";
+import ToastProvider from "@/components/ToastProvider/ToastProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans" cz-shortcut-listen="true">
         <ErrorBoundary>
           <Providers>{children}</Providers>
+          <ToastProvider  />
         </ErrorBoundary>
       </body>
     </html>

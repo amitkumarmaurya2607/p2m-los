@@ -5,15 +5,29 @@ import { ArrowRight, Mail, Phone } from 'lucide-react';
 import React, { ButtonHTMLAttributes, ChangeEvent, useEffect, useState } from 'react';
 import OTPVerify from './OTPVerify';
 import TextInput from '@/components/ui/TextInput';
+import { isValidEmail, isValidMobile } from '@/lib/utils';
 
 const Login = () => {
     const [method, setMethod] = useState<'mobile' | 'email'>('mobile');
     const [sendOtp, setSendOtp] = useState(false);
     const [loading, setLoading] = useState(false);
     const [userName,setUserName] = useState<string>("+91");
+    const [error,setError] = useState<string>("")
 
     const submitHandler = (e?: React.FormEvent | null, type?:string) => {
         e?.preventDefault();
+          let isValid = false;
+
+  if (method === "mobile") {
+    isValid = isValidMobile(userName);
+  } else {
+    isValid = isValidEmail(userName);
+  }
+
+  if (!isValid) {
+    setError(method === "mobile" ? "Enter valid mobile number" : "Enter valid email");
+    return;
+  }
         setLoading(true)
         setTimeout(() => {
             setLoading(false);
@@ -56,9 +70,9 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                 className="w-full lg:w-1/2 bg-gray-50 flex items-center justify-center p-6  bg-[url('/images/boginBanner.webp')] lg:bg-none">
                 <div
                     className="
-    w-full max-w-[448px] h-[621.33px]
+    w-full max-w-[448px] 
     flex flex-col items-start gap-2
-    p-[48.6667px] pb-[0.6667px]
+    p-[48.6667px]
     bg-white/80
     border border-[#F1F5F9]
     rounded-[32px]
@@ -68,11 +82,11 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                 >
                     <header className="mb-8 w-f" >
                         <h2 className="text-2xl font-bold text-gray-900">Welcome back</h2>
-                        <p className="text-gray-500 text-sm">Please enter your details to sign in.</p>
+                        <p className="text-gray-500 text-sm mt-3">Please enter your details to sign in.</p>
                     </header>
 
                     {/* Tab Switcher */}
-                    <div className="flex bg-gray-100 p-1 rounded-xl mb-6">
+                    {/* <div className="flex bg-gray-100 p-1 rounded-xl mb-6">
                         <button
                         type='button'
                             onClick={(e) => switchMethod(e,'mobile')}
@@ -87,7 +101,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                         >
                             <Mail className="w-4 h-4" /> Email
                         </button>
-                    </div>
+                    </div> */}
 
                     {/* Input & CTA */}
                     <div className="space-y-4">
@@ -96,10 +110,10 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                             label={method === 'mobile' ? 'Mobile Number' : 'Email Address'}
                             onChange={handleChange}
                             value={userName}
-                        // error={"error"}
+                         error={error}
                         // leftIcon={method === 'mobile' ? <Phone size={18} /> : <Mail size={18} />}
                         />
-                        <GradientButton type="submit" loading={loading}>
+                        <GradientButton type="submit" loading={loading} className='mt-8'>
                           <span className="flex items-center gap-2">
   Get OTP
   <ArrowRight className="w-5 h-5" />
@@ -107,13 +121,13 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                         </GradientButton>
                     </div>
 
-                    {/* Divider */}
-                    <div className="relative my-8">
+            
+                    {/* <div className="relative my-8">
                         <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200"></div></div>
                         <div className="relative flex justify-center text-xs uppercase"><span className="bg-white px-3 text-gray-400 font-medium tracking-widest">OR</span></div>
                     </div>
 
-                    {/* Social Auth */}
+                   
                     <div className="grid grid-cols-2 gap-4">
                         <SocialButton icon="fa-github" label="GitHub" />
                         <SocialButton icon="fa-google" label="Google" />
@@ -121,10 +135,11 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
                     <p className="mt-8 text-center text-sm text-primary">
                         <span className="text-primary font-bold cursor-pointer translate-all hover:underline">  Continue as Guest</span>
-                    </p>
+                    </p> */}
                 </div>
             </form>
                 : <OTPVerify
+                back={()=>{setSendOtp(false)}}
                   resend={()=>submitHandler(null,"resend")}
                   method={method}
                   userName={userName}

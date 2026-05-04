@@ -1,73 +1,116 @@
-
-
+'use client'
 import OTPInput from '@/components/OTPInput/OTPInput'
-import ResendTimer from '@/components/ResendTimer/ResendTimer';
+import ResendTimer from '@/components/ResendTimer/ResendTimer'
 import GradientButton from '@/components/ui/GradientButton'
-import React from 'react'
+import { ArrowLeft } from 'lucide-react'
+import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 type OTPVerifyProps = {
-  resend?: () => void;
-  method?: string;
-  userName:string
-
-};
+  resend?: () => void
+  method?: string
+  userName: string
+  back: () => void
+}
 
 function OTPVerify({
   resend = () => {},
   method,
   userName,
+  back
 }: OTPVerifyProps) {
 
-   const maskedValue =
-  method === "email"
-    ? userName.replace(/(.{2}).+(@.+)/, "$1****$2")
-    : userName.startsWith("+91")
-      ? "+91" + userName.slice(3).replace(/.(?=.{4})/g, "*")
-      : userName.replace(/.(?=.{4})/g, "*");
+  const router = useRouter()
+
+  const [otp, setOtp] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const maskedValue =
+    method === "email"
+      ? userName.replace(/(.{2}).+(@.+)/, "$1****$2")
+      : userName.startsWith("+91")
+        ? "+91" + userName.slice(3).replace(/.(?=.{4})/g, "*")
+        : userName.replace(/.(?=.{4})/g, "*")
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (otp.length !== 6) {
+      setError('Enter valid 6-digit OTP')
+      return
+    }
+
+    try {
+      setLoading(true)
+
+      // 👉 simulate API verify
+      await new Promise(res => setTimeout(res, 1200))
+
+      // ✅ navigate to PAN page
+      router.push('/pan-details')
+
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
-     <form className="w-full lg:w-1/2 bg-gray-50 flex items-center justify-center p-6  bg-[url('/images/boginBanner.webp')] lg:bg-none">
-<div
-  className="
-    w-full max-w-[448px] h-[621.33px]
-    flex flex-col items-start gap-2
-    p-[48.6667px] pb-[0.6667px]
-    bg-white/80
-    border border-[#F1F5F9]
-    rounded-[32px]
-    shadow-[0px_32px_64px_-16px_rgba(0,0,0,0.1)]
-    [&>*]:w-full
-  "
->
-                    <header className="mb-8 w-f" >
-                        <h2 className="text-2xl font-bold text-gray-900">Verify OTP</h2>
-                       <p className="text-gray-500 text-sm">
-  {`We've sent a 6-digit code to your ${
-    method === "email" ? "email" : "mobile number"
-  } (${maskedValue})`}
-</p>
-                    </header>
+    <div className="w-full lg:w-1/2 bg-gray-50 flex items-center justify-center p-6 bg-[url('/images/boginBanner.webp')] lg:bg-none">
+      
+      <div className="w-full max-w-[500px] flex flex-col items-start gap-2 p-[48px] bg-white/80 border border-[#F1F5F9] rounded-[32px] shadow-[0px_32px_64px_-16px_rgba(0,0,0,0.1)] [&>*]:w-full">
 
-              
+        {/* Back */}
+        <button
+          className="flex items-center justify-center w-[40px] h-[40px] bg-[#F1F5F9] rounded-full"
+          onClick={back}
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </button>
 
-                    <div className="space-y-4">
-   <OTPInput length={6} onComplete={(code) => {}}/>
+        {/* Header */}
+        <header className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-900">Verify OTP</h2>
+          <p className="text-gray-500 text-sm mt-3">
+            {`We've sent a 6-digit code to your ${
+              method === "email" ? "email" : "mobile number"
+            } (${maskedValue})`}
+          </p>
+        </header>
 
-                       <GradientButton
-                       className='bg-[linear-gradient(90deg,#3737C1_0%,#3535BC_12.5%,#3434B7_25%,#3232B2_37.5%,#3131AD_50%,#2F2FA8_62.5%,#2E2EA4_75%,#2C2C9F_87.5%,#2B2B9A_100%)] 
-shadow-[0px_12px_24px_-8px_rgba(55,55,193,0.4)] '
-                       >
-                          Verify & Continue
-                        </GradientButton>
+        {/* Form */}
+        <form className="space-y-4" onSubmit={handleSubmit}>
 
-                         <p className="mt-8 text-center text-sm text-gray-500 flex gap-0.5 align-middle">
-                       <span> {`Didn't receive code? `} </span> <ResendTimer  onResend={() => { }} />
-                    </p>
-                    </div>
+          <OTPInput
+            length={6}
+            onComplete={(code) => {
+              setOtp(code)
+              if (error) setError('')
+            }}
+          />
 
-                 
+          {/* Error */}
+          {error && (
+            <p className="text-sm text-red-500 text-center">{error}</p>
+          )}
 
-                </div>
-            </form>
+          <GradientButton
+            type="submit"
+            disabled={loading}
+            className="mt-6"
+          >
+            {loading ? 'Verifying...' : 'Verify & Continue'}
+          </GradientButton>
+
+          {/* Resend */}
+          <p className="mt-6 text-center text-sm text-gray-500 flex justify-center gap-1">
+            <span>Didn't receive code?</span>
+            <ResendTimer onResend={resend} />
+          </p>
+
+        </form>
+      </div>
+    </div>
   )
 }
 
