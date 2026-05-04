@@ -46,12 +46,10 @@ function OTPVerify({
     try {
       setLoading(true)
 
-      // 👉 simulate API verify
       await new Promise(res => setTimeout(res, 1200))
 
       showToast({ message: 'OTP verified successfully!', type: 'success' })
       
-      // ✅ navigate to PAN page
       router.push('/pan-details')
 
     } catch (err) {
@@ -63,29 +61,26 @@ function OTPVerify({
   }
 
   return (
-    <div className="w-full lg:w-1/2 bg-gray-50 flex items-center justify-center p-6 bg-[url('/images/boginBanner.webp')] lg:bg-none">
+    <div className="w-full lg:w-1/2 bg-surface-muted flex items-center justify-center p-6 bg-[url('/images/boginBanner.webp')] lg:bg-none">
       
-      <div className="w-full max-w-[500px] flex flex-col items-start gap-2 p-[48px] bg-white/80 border border-[#F1F5F9] rounded-[32px] shadow-[0px_32px_64px_-16px_rgba(0,0,0,0.1)] [&>*]:w-full">
+      <div className="w-full max-w-[500px] flex flex-col items-start gap-2 p-[48px] bg-card-bg border border-card-border rounded-[32px] shadow-[var(--shadow-md)] [&>*]:w-full">
 
-        {/* Back */}
         <button
-          className="flex items-center justify-center w-[40px] h-[40px] bg-[#F1F5F9] rounded-full"
+          className="flex items-center justify-center w-[40px] h-[40px] bg-muted rounded-full"
           onClick={back}
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
 
-        {/* Header */}
         <header className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Verify OTP</h2>
-          <p className="text-gray-500 text-sm mt-3">
+          <h2 className="text-2xl font-bold text-text-heading">Verify OTP</h2>
+          <p className="text-text-muted text-sm mt-3">
             {`We've sent a 6-digit code to your ${
               method === "email" ? "email" : "mobile number"
             } (${maskedValue})`}
           </p>
         </header>
 
-        {/* Form */}
         <form className="space-y-4" onSubmit={handleSubmit}>
 
           <OTPInput
@@ -96,9 +91,8 @@ function OTPVerify({
             }}
           />
 
-          {/* Error */}
           {error && (
-            <p className="text-sm text-red-500 text-center">{error}</p>
+            <p className="text-sm text-destructive text-center">{error}</p>
           )}
 
           <GradientButton
@@ -109,8 +103,7 @@ function OTPVerify({
             {loading ? 'Verifying...' : 'Verify & Continue'}
           </GradientButton>
 
-          {/* Resend */}
-          <p className="mt-6 text-center text-sm text-gray-500 flex justify-center gap-1">
+          <p className="mt-6 text-center text-sm text-text-muted flex justify-center gap-1">
             <span>Didn't receive code?</span>
             <ResendTimer onResend={resend} />
           </p>

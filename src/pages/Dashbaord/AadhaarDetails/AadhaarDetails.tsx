@@ -120,7 +120,7 @@ function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
           />
 
           {error && (
-            <p className="text-sm text-red-500 text-center">{error}</p>
+            <p className="text-sm text-destructive text-center">{error}</p>
           )}
 
           <GradientButton
@@ -132,7 +132,7 @@ function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
           </GradientButton>
 
           {/* Resend */}
-           <p className="mt-6 text-center text-sm text-gray-500 flex justify-center gap-1">
+           <p className="mt-6 text-center text-sm text-text-muted flex justify-center gap-1">
             <span>Didn't receive code?</span>
             <ResendTimer onResend={resend} />
           </p>

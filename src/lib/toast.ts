@@ -23,40 +23,40 @@ const typeStyles: Record<ToastType, { icon?: string; style?: React.CSSProperties
   success: {
     icon: '✅',
     style: {
-      border: '1px solid #16a34a',
-      background: '#f0fdf4',
-      color: '#166534',
+      border: '1px solid var(--success)',
+      background: 'var(--surface-muted)',
+      color: 'var(--success)',
     },
   },
   error: {
     icon: '❌',
     style: {
-      border: '1px solid #dc2626',
-      background: '#fef2f2',
-      color: '#991b1b',
+      border: '1px solid var(--destructive)',
+      background: 'var(--surface-muted)',
+      color: 'var(--destructive)',
     },
   },
   warning: {
     icon: '⚠️',
     style: {
-      border: '1px solid #ca8a04',
-      background: '#fefce8',
-      color: '#854d0e',
+      border: '1px solid var(--warning)',
+      background: 'var(--surface-muted)',
+      color: 'var(--warning)',
     },
   },
   info: {
     icon: 'ℹ️',
     style: {
-      border: '1px solid #2563eb',
-      background: '#eff6ff',
-      color: '#1e40af',
+      border: '1px solid var(--info)',
+      background: 'var(--surface-muted)',
+      color: 'var(--info)',
     },
   },
   loading: {
     style: {
-      border: '1px solid #6b7280',
-      background: '#f9fafb',
-      color: '#374151',
+      border: '1px solid var(--muted-foreground)',
+      background: 'var(--surface-muted)',
+      color: 'var(--foreground)',
     },
   },
   custom: {},

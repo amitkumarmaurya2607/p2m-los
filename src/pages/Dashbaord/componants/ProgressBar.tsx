@@ -6,10 +6,10 @@ type ProgressBarProps = {
 
 const ProgressBar: React.FC<ProgressBarProps> = ({ value = 40 }) => {
   return (
-    <div className="w-full h-[6px] bg-slate-200 overflow-hidden">
+    <div className="w-full h-[6px] bg-stepper-pending overflow-hidden">
       <div
         className="h-full transition-all duration-300 
-        bg-gradient-to-r from-teal-400 via-blue-500 to-indigo-500"
+        bg-gradient-to-r from-secondary via-primary to-primary-light"
         style={{ width: `${value}%` }}
       />
     </div>

@@ -4,7 +4,7 @@ import React from "react";
 type StepCardProps = {
   title?: string;
   subtitle?: string;
-  icon?: React.ReactNode; // 👈 new
+  icon?: React.ReactNode;
   children?: React.ReactNode;
   className?:string;
   back?:()=>void;
@@ -24,43 +24,37 @@ const StepCard: React.FC<StepCardProps> = ({
       w-[512px] min-h-[430px]
       p-[48px]
       flex flex-col gap-8
-      bg-white/90
-      border border-slate-100
+      bg-surface-overlay-90
+      border border-border-light
       rounded-[32px]
-      shadow-[0px_32px_80px_-24px_rgba(0,0,0,0.15)]
+      shadow-[var(--shadow-lg)]
 
       ${className}
      `}   >
 
-    {/* Back */}
        {back && <button
-          className="flex items-center justify-center w-[40px] h-[40px] bg-[#F1F5F9] rounded-full"
+          className="flex items-center justify-center w-[40px] h-[40px] bg-muted rounded-full"
           onClick={back}
         >
           <ArrowLeft className="w-5 h-5" />
         </button>}
 
-      {/* Header */}
       <div className="flex flex-col gap-4">
-        {/* Icon */}
         {icon && (
-          <div className="w-12 h-12 flex items-center justify-center rounded-full bg-indigo-50 text-indigo-600">
+          <div className="w-12 h-12 flex items-center justify-center rounded-full bg-primary-muted text-primary">
             {icon}
           </div>
         )}
 
-        {/* Title */}
-        <h2 className="text-[30px] leading-[36px] font-extrabold tracking-[-0.75px] text-[#0F172B]">
+        <h2 className="text-[30px] leading-[36px] font-extrabold tracking-[-0.75px] text-text-heading">
           {title}
         </h2>
 
-        {/* Subtitle */}
-        <p className="text-[14px] text-slate-500">
+        <p className="text-[14px] text-text-muted">
           {subtitle}
         </p>
       </div>
 
-      {/* Content */}
       <div className="w-full flex-1">
         {children}
       </div>

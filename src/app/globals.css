@@ -1,44 +1,76 @@
 @import "tailwindcss";
 
 :root {
-  /* Primary - Figma: #3737C1 (Blue-Purple) */
   --primary: #3737C1;
   --primary-foreground: #ffffff;
-  
-  /* Secondary - Figma: #00C89C (Teal-Green) */
+  --primary-light: #5a56d4;
+  --primary-muted: rgba(55, 55, 193, 0.1);
+
   --secondary: #00C89C;
   --secondary-foreground: #000000;
-  
-  /* Background & Foreground */
+  --secondary-light: #33d9b5;
+  --secondary-gradient-start: #6FFFD2;
+  --secondary-gradient-end: #00C89C;
+
   --background: #ffffff;
   --foreground: #171717;
-  
-  /* Muted */
+
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --surface-overlay: rgba(255, 255, 255, 0.8);
+  --surface-overlay-90: rgba(255, 255, 255, 0.9);
+  --surface-overlay-95: rgba(255, 255, 255, 0.95);
+
   --muted: #f3f4f6;
   --muted-foreground: #6b7280;
-  
-  /* Accent */
+
   --accent: #f3f4f6;
   --accent-foreground: #171717;
-  
-  /* Destructive (Error) */
+
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  
-  /* Border & Input */
+
   --border: #e5e7eb;
+  --border-light: #f1f5f9;
   --input: #e5e7eb;
-  
-  /* Ring (focus) */
+  --input-bg: #f8fafc;
+  --input-border: #e2e8f0;
+
   --ring: #3737C1;
-  
-  /* Radius */
-  --radius: 0.5rem;
-  
-  /* Success - using secondary */
+
+  --text-primary: #0f172b;
+  --text-secondary: #45556c;
+  --text-muted: #94a3b8;
+  --text-label: #64748b;
+  --text-heading: #0f172b;
+
   --success: #00C89C;
+  --success-foreground: #ffffff;
   --warning: #f59e0b;
+  --warning-foreground: #ffffff;
   --info: #3737C1;
+  --info-foreground: #ffffff;
+
+  --shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0px 32px 64px -16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0px 32px 80px -24px rgba(0, 0, 0, 0.15);
+  --shadow-button: 0px 12px 24px -8px rgba(0, 200, 156, 0.4);
+
+  --card-border: #f1f5f9;
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --card-icon-bg-start: #6FFFD2;
+  --card-icon-bg-end: #00C89C;
+  --card-icon-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3), inset 0px -2px 0px rgba(0, 0, 0, 0.2);
+
+  --sidebar-from: #00C89C;
+  --sidebar-to: #00a882;
+
+  --stepper-complete: #00C89C;
+  --stepper-progress: #3737C1;
+  --stepper-pending: #e5e7eb;
+  --stepper-pending-text: #9ca3af;
+
+  --radius: 0.5rem;
 }
 
 @theme inline {
@@ -46,8 +78,11 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-light: var(--primary-light);
+  --color-primary-muted: var(--primary-muted);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-light: var(--secondary-light);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
@@ -55,11 +90,31 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
+  --color-border-light: var(--border-light);
   --color-input: var(--input);
+  --color-input-bg: var(--input-bg);
+  --color-input-border: var(--input-border);
   --color-ring: var(--ring);
   --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
   --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
   --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-label: var(--text-label);
+  --color-text-heading: var(--text-heading);
+  --color-card-border: var(--card-border);
+  --color-card-icon-bg-start: var(--card-icon-bg-start);
+  --color-card-icon-bg-end: var(--card-icon-bg-end);
+  --color-stepper-complete: var(--stepper-complete);
+  --color-stepper-progress: var(--stepper-progress);
+  --color-stepper-pending: var(--stepper-pending);
+  --color-stepper-pending-text: var(--stepper-pending-text);
   --radius-sm: calc(var(--radius) - 0.125rem);
   --radius-md: calc(var(--radius));
   --radius-lg: calc(var(--radius) + 0.125rem);
@@ -71,12 +126,18 @@
 .dark {
   --background: #0a0a0a;
   --foreground: #ededed;
-  /* Primary - lighter version for dark mode */
   --primary: #5a56d4;
   --primary-foreground: #ffffff;
-  /* Secondary - lighter version for dark mode */
+  --primary-light: #7b78e0;
+  --primary-muted: rgba(90, 86, 212, 0.15);
   --secondary: #33d9b5;
   --secondary-foreground: #000000;
+  --secondary-light: #66e8cc;
+  --surface: #0a0a0a;
+  --surface-muted: #1f2937;
+  --surface-overlay: rgba(10, 10, 10, 0.8);
+  --surface-overlay-90: rgba(10, 10, 10, 0.9);
+  --surface-overlay-95: rgba(10, 10, 10, 0.95);
   --muted: #1f2937;
   --muted-foreground: #9ca3af;
   --accent: #1f2937;
@@ -84,8 +145,37 @@
   --destructive: #7f1d1d;
   --destructive-foreground: #fef2f2;
   --border: #374151;
+  --border-light: #4b5563;
   --input: #374151;
+  --input-bg: #1f2937;
+  --input-border: #4b5563;
   --ring: #5a56d4;
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #6b7280;
+  --text-label: #9ca3af;
+  --text-heading: #f9fafb;
+  --success: #33d9b5;
+  --success-foreground: #000000;
+  --warning: #fbbf24;
+  --warning-foreground: #000000;
+  --info: #5a56d4;
+  --info-foreground: #ffffff;
+  --card-border: #4b5563;
+  --card-bg: rgba(10, 10, 10, 0.8);
+  --card-icon-bg-start: #6FFFD2;
+  --card-icon-bg-end: #33d9b5;
+  --card-icon-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5), inset 0px -2px 0px rgba(0, 0, 0, 0.3);
+  --sidebar-from: #33d9b5;
+  --sidebar-to: #00a882;
+  --stepper-complete: #33d9b5;
+  --stepper-progress: #5a56d4;
+  --stepper-pending: #374151;
+  --stepper-pending-text: #6b7280;
+  --shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.3), 0px 1px 2px -1px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0px 32px 64px -16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0px 32px 80px -24px rgba(0, 0, 0, 0.4);
+  --shadow-button: 0px 12px 24px -8px rgba(51, 217, 181, 0.3);
 }
 
 body {

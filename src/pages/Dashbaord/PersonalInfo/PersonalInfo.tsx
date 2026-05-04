@@ -128,7 +128,7 @@ function PersonalInfo() {
           />
 
           <div>
-            <p className="text-sm mb-2 text-gray-600">Gender</p>
+            <p className="text-sm mb-2 text-text-secondary">Gender</p>
             <div className="flex gap-2 flex-wrap">
               {genders.map((g) => (
                 <button
@@ -137,8 +137,8 @@ function PersonalInfo() {
                   onClick={() => handleChange('gender', g)}
                   className={`px-4 py-2 rounded-xl border
                     ${form.gender === g
-                      ? 'border-blue-600 text-blue-600 bg-blue-50'
-                      : 'border-gray-300 text-gray-600'
+                      ? 'border-primary text-primary bg-primary-muted'
+                      : 'border-border text-text-secondary'
                     }`}
                 >
                   {g}
@@ -160,7 +160,7 @@ function PersonalInfo() {
           />
 
           <div>
-            <p className="text-sm mb-2 text-gray-600">Employment Type</p>
+            <p className="text-sm mb-2 text-text-secondary">Employment Type</p>
             <div className="flex gap-2 flex-wrap">
               {employmentTypes.map((type) => (
                 <button
@@ -169,8 +169,8 @@ function PersonalInfo() {
                   onClick={() => handleChange('employmentType', type)}
                   className={`px-4 py-2 rounded-xl border
                     ${form.employmentType === type
-                      ? 'border-blue-600 text-blue-600 bg-blue-50'
-                      : 'border-gray-300 text-gray-600'
+                      ? 'border-primary text-primary bg-primary-muted'
+                      : 'border-border text-text-secondary'
                     }`}
                 >
                   {type}

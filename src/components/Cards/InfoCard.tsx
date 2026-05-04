@@ -15,17 +15,16 @@ const InfoCard: React.FC<InfoCardProps> = ({
 }) => {
   return (
     <div
-      className={`flex items-center gap-4 p-4 w-[384px] h-[82px] bg-white border border-white/40 shadow-sm rounded-2xl ${className}`}
+      className={`flex items-center gap-4 p-4 w-[384px] h-[82px] bg-surface border border-white/40 shadow-sm rounded-2xl ${className}`}
     >
-      {/* Icon */}
       <div
         className="w-12 h-12 flex items-center justify-center rounded-xl 
-        bg-gradient-to-br from-[#6FFFD2] to-[#00C89C]
-        shadow-[0px_10px_30px_rgba(0,0,0,0.3),inset_0px_-2px_0px_rgba(0,0,0,0.2)]"
+        bg-gradient-to-br from-card-icon-bg-start to-card-icon-bg-end
+        shadow-[var(--card-icon-shadow)]"
       >
         {icon ?? (
           <svg
-            className="w-6 h-6 text-white"
+            className="w-6 h-6 text-primary-foreground"
             fill="none"
             stroke="currentColor"
             strokeWidth={2}
@@ -37,12 +36,11 @@ const InfoCard: React.FC<InfoCardProps> = ({
         )}
       </div>
 
-      {/* Text */}
       <div className="flex flex-col">
-        <h3 className="text-[18px] font-semibold text-[#0F172B] leading-[27px]">
+        <h3 className="text-[18px] font-semibold text-text-heading leading-[27px]">
           {title}
         </h3>
-        <p className="text-[14px] text-[#45556C] leading-[20px]">
+        <p className="text-[14px] text-text-secondary leading-[20px]">
           {description}
         </p>
       </div>

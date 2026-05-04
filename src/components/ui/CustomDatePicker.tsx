@@ -28,9 +28,9 @@ const CustomDatePicker = ({
     <div className="w-full">
       <div
         className={`relative flex items-center w-full h-[64px] px-[20px] pt-[24px] pb-[8px] 
-        bg-[#F8FAFC] rounded-[16px] 
-        shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)]
-        ${error ? "border border-red-500" : "border border-transparent"}`}
+        bg-input-bg rounded-[16px] 
+        shadow-[var(--shadow-sm)]
+        ${error ? "border border-destructive" : "border border-transparent"}`}
       >
         {leftIcon && <div className="mr-[10px] flex items-center">{leftIcon}</div>}
 
@@ -48,10 +48,10 @@ const CustomDatePicker = ({
           {label && (
             <label
               className={`absolute left-0 font-medium transition-all duration-200 pointer-events-none
-                ${error ? "text-red-500" : "text-[#94A3B8]"}
+                ${error ? "text-destructive" : "text-text-muted"}
                 ${
                   isActive
-                    ? "top-0 text-[12px] text-[#64748B]"
+                    ? "top-0 text-[12px] text-text-label"
                     : "top-[10px] -translate-y-1/2 text-[16px]"
                 }
               `}
@@ -64,7 +64,7 @@ const CustomDatePicker = ({
         {rightIcon && <div className="ml-[10px] flex items-center">{rightIcon}</div>}
       </div>
 
-      {error && <p className="mt-1 text-sm text-red-500 px-1">{error}</p>}
+      {error && <p className="mt-1 text-sm text-destructive px-1">{error}</p>}
     </div>
   )
 }

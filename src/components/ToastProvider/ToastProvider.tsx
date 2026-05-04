@@ -11,21 +11,21 @@ function ToastProvider() {
       toastOptions={{
         duration: 3000,
         className:
-          'rounded-xl shadow-lg border border-gray-200 text-sm px-4 py-3',
+          'rounded-xl shadow-lg border border-border text-sm px-4 py-3',
         style: {
-          background: '#ffffff',
-          color: '#0f172a',
+          background: 'var(--surface)',
+          color: 'var(--text-primary)',
         },
         success: {
           iconTheme: {
-            primary: '#16a34a',
-            secondary: '#fff',
+            primary: 'var(--success)',
+            secondary: 'var(--success-foreground)',
           },
         },
         error: {
           iconTheme: {
-            primary: '#dc2626',
-            secondary: '#fff',
+            primary: 'var(--destructive)',
+            secondary: 'var(--destructive-foreground)',
           },
         },
       }}

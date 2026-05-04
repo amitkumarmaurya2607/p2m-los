@@ -87,10 +87,10 @@ const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo" }) => {
       {/* Camera Frame */}
       <div className="relative w-[220px] h-[220px]">
         {/* Dotted Circle */}
-        <div className="absolute inset-0 rounded-full border-2 border-dashed border-slate-300" />
+        <div className="absolute inset-0 rounded-full border-2 border-dashed border-border" />
 
         {/* Video Preview */}
-        <div className="absolute inset-3 rounded-[24px] overflow-hidden border-2 border-emerald-500">
+        <div className="absolute inset-3 rounded-[24px] overflow-hidden border-2 border-success">
           <video
             ref={videoRef}
             autoPlay
