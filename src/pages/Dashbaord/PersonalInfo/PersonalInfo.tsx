@@ -122,8 +122,8 @@ function PersonalInfo() {
           <CustomDatePicker
            
             label="Date of Birth"
-            value={form.dob}
-            onChange={(e) => handleChange('dob', e)}
+            value={form.dob ? new Date(form.dob) : (null as any)}
+            onChange={(date: Date | null) => handleChange('dob', date ? date.toISOString() : '')}
             error={errors.dob}
           />
 

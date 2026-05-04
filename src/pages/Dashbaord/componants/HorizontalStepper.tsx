@@ -13,7 +13,6 @@ const steps: Step[] = [
   { id: 1, title: "Mobile", status: "complete" },
   { id: 2, title: "PAN", status: "complete" },
   { id: 3, title: "Personal", status: "progress" },
-  { id: 4, title: "Email", status: "pending" },
   { id: 5, title: "Aadhaar", status: "pending" },
   { id: 6, title: "Bank", status: "pending" },
   { id: 7, title: "Selfie", status: "pending" },
@@ -28,21 +27,20 @@ const HorizontalStepper = () => {
 
           return (
             <div key={step.id} className="flex items-center flex-shrink-0 md:flex-1">
-              
+
               {/* Step */}
               <div className="flex flex-col items-center text-center min-w-[70px] md:min-w-[100px]">
-                
+
                 {/* Circle */}
                 <div
                   className={`
                   w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-xs md:text-sm font-semibold
-                  ${
-                    step.status === "complete"
+                  ${step.status === "complete"
                       ? "bg-stepper-complete text-white"
                       : step.status === "progress"
-                      ? "bg-stepper-progress text-white"
-                      : "bg-stepper-pending text-stepper-pending-text"
-                  }
+                        ? "bg-stepper-progress text-white"
+                        : "bg-stepper-pending text-stepper-pending-text"
+                    }
                 `}
                 >
                   {step.status === "complete" ? (
@@ -56,13 +54,12 @@ const HorizontalStepper = () => {
                 <p
                   className={`
                   mt-1 md:mt-2 text-[10px] md:text-xs font-semibold whitespace-nowrap
-                  ${
-                    step.status === "progress"
+                  ${step.status === "progress"
                       ? "text-primary"
                       : step.status === "complete"
-                      ? "text-text-heading"
-                      : "text-stepper-pending-text"
-                  }
+                        ? "text-text-heading"
+                        : "text-stepper-pending-text"
+                    }
                 `}
                 >
                   {step.title}
@@ -74,11 +71,10 @@ const HorizontalStepper = () => {
                 <div
                   className={`
                   h-[2px] mx-2 w-8 md:w-full
-                  ${
-                    step.status === "complete"
+                  ${step.status === "complete"
                       ? "bg-stepper-complete"
                       : "bg-border"
-                  }
+                    }
                 `}
                 />
               )}

@@ -1,5 +1,7 @@
-import React from "react";
-import { ArrowLeft, Clock, Save } from "lucide-react";
+'use client'
+import React, { useRef, useEffect } from "react";
+import { ArrowLeft, Moon, Sun, User } from "lucide-react";
+import { useThemeContext } from "@/components/theme/ThemeProvider";
 
 type HeaderProps = {
   title?: string;
@@ -14,6 +16,20 @@ const Header: React.FC<HeaderProps> = ({
   onBack,
   onSave,
 }) => {
+  const [dropdownOpen, setDropdownOpen] = React.useState(false);
+  const { theme, toggleTheme, mounted } = useThemeContext();
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div
       className="
@@ -44,18 +60,37 @@ const Header: React.FC<HeaderProps> = ({
       </div>
 
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-full text-sm text-text-muted">
-          <Clock size={14} />
-          <span>Auto-saving...</span>
-        </div>
+        {mounted && (
+          <button
+            onClick={toggleTheme}
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-muted text-text-muted hover:text-text-heading transition-colors"
+            title="Toggle Theme"
+          >
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+        )}
 
-        <button
-          onClick={onSave}
-          className="flex items-center gap-2 px-4 py-2 bg-primary-muted text-primary rounded-full font-medium"
-        >
-          <Save size={16} />
-          Save & Exit
-        </button>
+        <div className="relative" ref={dropdownRef}>
+          <button
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-muted"
+          >
+            <User size={18} />
+          </button>
+          {dropdownOpen && (
+            <div className="absolute right-0 mt-2 w-40 bg-surface border border-border rounded-md shadow-md z-10">
+              <a href="/profile" className="block px-4 py-2 text-sm text-text-heading hover:bg-muted">
+                Profile
+              </a>
+              <button
+                onClick={() => console.log('Logout')}
+                className="w-full text-left px-4 py-2 text-sm text-text-heading hover:bg-muted"
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

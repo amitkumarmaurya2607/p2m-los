@@ -2,7 +2,7 @@ import { ArrowRight, Check, Shield } from "lucide-react";
 
 export default function HeroBanner() {
   return (
-    <section className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-[#3737C1] via-[#2487B5] to-[#00C89C]">
+    <section className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-primary via-primary-light to-secondary">
 
       {/* Glow Effects */}
       <div className="absolute w-[400px] h-[400px] bg-white/10 blur-[80px] rounded-full top-[-120px] right-[-80px]" />
@@ -38,7 +38,7 @@ export default function HeroBanner() {
 
           {/* CTA */}
           <div className="flex flex-wrap gap-4">
-            <button className="flex items-center gap-2 px-6 py-3 bg-white text-[#3737C1] font-semibold rounded-full shadow-lg">
+            <button className="flex items-center gap-2 px-6 py-3 bg-white text-primary font-semibold rounded-full shadow-lg">
               Apply Now <ArrowRight size={18} />
             </button>
 

@@ -14,7 +14,6 @@ const steps: Step[] = [
   { id: 1, title: "Mobile Verification", status: "complete" },
   { id: 2, title: "PAN Verification", status: "complete" },
   { id: 3, title: "Personal Details", status: "progress" },
-  { id: 4, title: "Email Verification", status: "pending" },
   { id: 5, title: "Aadhaar Verification", status: "pending" },
   { id: 6, title: "Bank Details", status: "pending" },
   { id: 7, title: "Selfie Verification", status: "pending" },
@@ -30,23 +29,21 @@ export const StepperAlt = () => {
               key={step.id}
               className={`
               flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all
-              ${
-                step.status === "progress"
+              ${step.status === "progress"
                   ? "bg-primary-muted border border-primary/20"
                   : "hover:bg-muted"
-              }
+                }
             `}
             >
               <div
                 className={`
                 w-9 h-9 flex items-center justify-center rounded-full text-sm font-medium
-                ${
-                  step.status === "complete"
+                ${step.status === "complete"
                     ? "bg-stepper-complete text-primary-foreground"
                     : step.status === "progress"
-                    ? "bg-stepper-progress text-primary-foreground"
-                    : "bg-stepper-pending text-stepper-pending-text"
-                }
+                      ? "bg-stepper-progress text-primary-foreground"
+                      : "bg-stepper-pending text-stepper-pending-text"
+                  }
               `}
               >
                 {step.status === "complete" ? (
@@ -60,13 +57,12 @@ export const StepperAlt = () => {
                 <p
                   className={`
                   text-sm font-semibold
-                  ${
-                    step.status === "progress"
+                  ${step.status === "progress"
                       ? "text-primary"
                       : step.status === "complete"
-                      ? "text-text-heading"
-                      : "text-stepper-pending-text"
-                  }
+                        ? "text-text-heading"
+                        : "text-stepper-pending-text"
+                    }
                 `}
                 >
                   {step.title}

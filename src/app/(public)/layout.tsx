@@ -12,9 +12,14 @@ export default function PublicLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>
+  return (
+
+    <div className="min-h-screen bg-background font-sans text-foreground">
   <Navbar />
+  <main>
   {children}
+  </main>
+
   <Footer />
-  </>;
+  </div>);
 }

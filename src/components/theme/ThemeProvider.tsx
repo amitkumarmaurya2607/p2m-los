@@ -4,7 +4,8 @@ import {
   createContext,
   useContext,
   useCallback,
-  useSyncExternalStore,
+  useState,
+  useEffect,
   type ReactNode,
 } from "react";
 import type { Theme } from "@/types";
@@ -17,7 +18,7 @@ interface ThemeContextValue {
 
 const defaultValue: ThemeContextValue = {
   theme: "light",
-  toggleTheme: () => {},
+  toggleTheme: () => { },
   mounted: false,
 };
 
@@ -34,10 +35,7 @@ function getStoredTheme() {
   }
 }
 
-function subscribeToThemeChanges(callback: () => void) {
-  window.addEventListener("storage", callback);
-  return () => window.removeEventListener("storage", callback);
-}
+
 
 function applyTheme(theme: Theme) {
   const root = document.documentElement;
@@ -50,27 +48,40 @@ export function useThemeContext() {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const mounted = useSyncExternalStore(
-    () => () => {},
-    () => true,
-    () => false
-  );
+  const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState<Theme>("light");
 
-  const theme = useSyncExternalStore(
-    subscribeToThemeChanges,
-    getStoredTheme,
-    () => "light" as Theme
-  );
+  useEffect(() => {
+    setMounted(true);
+    const stored = getStoredTheme();
+    setTheme(stored);
+    applyTheme(stored);
+  }, []);
+
+  useEffect(() => {
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === "theme") {
+        const newTheme = (e.newValue === "dark" ? "dark" : "light") as Theme;
+        setTheme(newTheme);
+        applyTheme(newTheme);
+      }
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
 
   const toggleTheme = useCallback(() => {
-    const next = theme === "light" ? "dark" : "light";
-    applyTheme(next);
-    try {
-      localStorage.setItem("theme", next);
-    } catch {
-      // ignore storage errors
-    }
-  }, [theme]);
+    setTheme((prev) => {
+      const next = prev === "light" ? "dark" : "light";
+      applyTheme(next);
+      try {
+        localStorage.setItem("theme", next);
+      } catch {
+        // ignore storage errors
+      }
+      return next;
+    });
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, mounted }}>

@@ -1,4 +1,6 @@
-import toast, { type ToastPosition, type ToastOptions } from 'react-hot-toast'
+import React from 'react'
+import toast, { type ToastPosition, type ToastOptions, type Renderable } from 'react-hot-toast'
+import { CheckCircle2, XCircle, AlertTriangle, Info, Loader2 } from 'lucide-react'
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info' | 'loading' | 'custom'
 
@@ -8,7 +10,7 @@ export interface ToastConfig {
   position?: ToastPosition
   duration?: number
   id?: string
-  icon?: string
+  icon?: Renderable
   style?: React.CSSProperties
   className?: string
   onClose?: () => void
@@ -19,44 +21,45 @@ const defaultOptions: ToastOptions = {
   position: 'top-right',
 }
 
-const typeStyles: Record<ToastType, { icon?: string; style?: React.CSSProperties }> = {
+const typeStyles: Record<ToastType, { icon?: Renderable; style?: React.CSSProperties }> = {
   success: {
-    icon: '✅',
+    icon: React.createElement(CheckCircle2, { className: 'w-5 h-5 text-success' }),
     style: {
-      border: '1px solid var(--success)',
-      background: 'var(--surface-muted)',
-      color: 'var(--success)',
+      border: '1px solid var(--border)',
+      background: 'var(--surface)',
+      color: 'var(--text-heading)',
     },
   },
   error: {
-    icon: '❌',
+    icon: React.createElement(XCircle, { className: 'w-5 h-5 text-destructive' }),
     style: {
-      border: '1px solid var(--destructive)',
-      background: 'var(--surface-muted)',
-      color: 'var(--destructive)',
+      border: '1px solid var(--border)',
+      background: 'var(--surface)',
+      color: 'var(--text-heading)',
     },
   },
   warning: {
-    icon: '⚠️',
+    icon: React.createElement(AlertTriangle, { className: 'w-5 h-5 text-warning' }),
     style: {
-      border: '1px solid var(--warning)',
-      background: 'var(--surface-muted)',
-      color: 'var(--warning)',
+      border: '1px solid var(--border)',
+      background: 'var(--surface)',
+      color: 'var(--text-heading)',
     },
   },
   info: {
-    icon: 'ℹ️',
+    icon: React.createElement(Info, { className: 'w-5 h-5 text-primary' }),
     style: {
-      border: '1px solid var(--info)',
-      background: 'var(--surface-muted)',
-      color: 'var(--info)',
+      border: '1px solid var(--border)',
+      background: 'var(--surface)',
+      color: 'var(--text-heading)',
     },
   },
   loading: {
+    icon: React.createElement(Loader2, { className: 'w-5 h-5 text-primary animate-spin' }),
     style: {
-      border: '1px solid var(--muted-foreground)',
-      background: 'var(--surface-muted)',
-      color: 'var(--foreground)',
+      border: '1px solid var(--border)',
+      background: 'var(--surface)',
+      color: 'var(--text-heading)',
     },
   },
   custom: {},
@@ -86,6 +89,8 @@ export function showToast({
   }
 
   if (onClose) {
+    // @ts-expect-error: react-hot-toast's ToastOptions doesn't officially support onDismiss, 
+    // but we inject it here in case a custom wrapper or higher-level hook consumes it.
     options.onDismiss = onClose
   }
 

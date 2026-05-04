@@ -118,10 +118,10 @@ function UploadDocuments() {
     <div className="w-full px-6 py-24">
       <div className="mx-auto w-full max-w-[768px]">
         <div className="text-center">
-          <h2 className="text-[36px] font-extrabold leading-10 tracking-[-0.9px] text-[#0F172B]">
+          <h2 className="text-[36px] font-extrabold leading-10 tracking-[-0.9px] text-text-heading">
             Upload Documents
           </h2>
-          <p className="mt-4 text-[18px] text-[#62748E]">
+          <p className="mt-4 text-[18px] text-muted-foreground">
             Please provide the necessary documents to process your application.
           </p>
         </div>
@@ -146,14 +146,14 @@ function UploadDocuments() {
           onDragLeave={() => setDragActive(false)}
           onDrop={handleDrop}
           className={`mt-10 flex h-[256px] cursor-pointer flex-col items-center justify-center rounded-[24px] border-2 border-dashed bg-white transition ${
-            dragActive ? 'border-[#00C89C]' : 'border-[#CAD5E2]'
+            dragActive ? 'border-secondary' : 'border-muted'
           }`}
         >
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#F1F5F9]">
-            <UploadCloud className="h-8 w-8 text-[#62748E]" />
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-surface">
+            <UploadCloud className="h-8 w-8 text-muted-foreground" />
           </div>
 
-          <h3 className="mt-5 text-[18px] font-bold text-[#0F172B]">
+          <h3 className="mt-5 text-[18px] font-bold text-text-heading">
             Click or drag files here
           </h3>
           <p className="mt-1 text-[14px] text-[#62748E]">
@@ -170,11 +170,11 @@ function UploadDocuments() {
             {docs.map((doc) => (
               <div
                 key={doc.key}
-                className="flex items-center justify-between rounded-[16px] border border-[#F1F5F9] bg-[#F8FAFC] p-4"
+                className="flex items-center justify-between rounded-[16px] border border-border bg-surface p-4"
               >
                 <div className="flex min-w-0 items-center gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[14px] border border-[#E2E8F0] bg-white">
-                    <FileText className="h-5 w-5 text-[#90A1B9]" />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[14px] border border-muted bg-white">
+                    <FileText className="h-5 w-5 text-muted-foreground" />
                   </div>
 
                   <div className="min-w-0">
@@ -189,7 +189,7 @@ function UploadDocuments() {
 
                     <p
                       className={`mt-0.5 truncate text-[12px] ${
-                        doc.error ? 'text-[#FB2C36]' : 'text-[#62748E]'
+                        doc.error ? 'text-destructive' : 'text-muted-foreground'
                       }`}
                     >
                       {doc.error ||
@@ -200,7 +200,7 @@ function UploadDocuments() {
 
                 {doc.file ? (
                   <div className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-[#00C89C]" />
+                    <CheckCircle className="h-5 w-5 text-secondary" />
                     <button
                       type="button"
                       onClick={() => removeFile(doc.key)}
@@ -225,7 +225,7 @@ function UploadDocuments() {
           <button
             type="button"
             onClick={handleSubmit}
-            className="mt-8 h-14 w-full rounded-[14px] bg-gradient-to-r from-[#00C89C] to-[#00A882] text-[18px] font-semibold text-white shadow-[0px_12px_24px_-8px_rgba(0,200,156,0.4)]"
+            className="mt-8 h-14 w-full rounded-[14px] bg-gradient-to-r from-secondary to-secondary text-[18px] font-semibold text-white shadow-[0px_12px_24px_-8px_rgba(0,200,156,0.4)]"
           >
             Review Application
           </button>

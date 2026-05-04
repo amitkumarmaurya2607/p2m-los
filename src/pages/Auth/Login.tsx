@@ -40,7 +40,7 @@ const Login = () => {
 
   const switchMethod = (
   e: React.MouseEvent<HTMLElement>,
-  type: string
+  type: 'mobile' | 'email'
 ) => {
   e.stopPropagation();
   setMethod(type);

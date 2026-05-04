@@ -1,8 +1,5 @@
 import {
- Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
+
   MapPin,
   Phone,
   Mail,
