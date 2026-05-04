@@ -1,0 +1,15 @@
+validation:
+  pre_commit:
+    - "npm run lint"
+
+  task_completion:
+    - "lint_check"
+    - "no_hardcoded_colors"
+    - "no_console_logs"
+
+quality_gates:
+  lint_errors: 0
+
+file_requirements:
+  typescript: true
+  no_hardcoded_colors: true

@@ -1,0 +1,32 @@
+patterns:
+  components:
+    structure: "functional-components"
+    naming: "PascalCase"
+    file_extension: ".tsx"
+    props_interface: true
+
+  functions:
+    naming: "camelCase"
+    arrow_functions: true
+    async_preferred: true
+
+  imports:
+    order: ["react", "next", "third-party", "local"]
+    absolute_paths: true
+    alias_prefix: "@/"
+
+  css:
+    use_variables: true
+    no_hardcoded_colors: true
+    tailwind_utilities: true
+    dark_mode_support: true
+
+  state:
+    form_pattern: "local-state-with-validation"
+    error_pattern: "error-object-per-field"
+
+standards:
+  max_function_lines: 50
+  max_file_lines: 300
+  comments: "only-when-necessary"
+  no_unused_imports: true

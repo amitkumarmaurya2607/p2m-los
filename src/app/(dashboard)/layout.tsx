@@ -1,4 +1,5 @@
 import Header from "@/pages/Dashbaord/componants/Header";
+import HorizontalStepper from "@/pages/Dashbaord/componants/HorizontalStepper";
 import ProgressBar from "@/pages/Dashbaord/componants/ProgressBar";
 import { StepperAlt } from "@/pages/Dashbaord/componants/Stepper";
 
@@ -20,9 +21,12 @@ export default function DashboardLayout({
       <Header />
     
         <div className="flex">
-          <StepperAlt />
+          {/* <StepperAlt /> */}
            <div className=" grow-1 ">
               <ProgressBar />
+               <div className="flex justify-center p-8">
+                <HorizontalStepper />
+               </div>
               <div className="flex justify-center px-4 pt-12 pb-6">
                 {children}
               </div>

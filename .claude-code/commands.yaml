@@ -1,0 +1,16 @@
+commands:
+  dev:
+    command: "npm run dev"
+    description: "Start development server"
+
+  build:
+    command: "npm run build"
+    description: "Build production version"
+
+  start:
+    command: "npm run start"
+    description: "Start production server"
+
+  lint:
+    command: "npm run lint"
+    description: "Run ESLint checks"

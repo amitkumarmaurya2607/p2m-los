@@ -1,0 +1,26 @@
+project:
+  name: "P2M LOS"
+  type: "web-app"
+  language: "typescript"
+  framework: "nextjs"
+
+memory_bank:
+  required_files:
+    - "00-project-brief.md"
+    - "01-product-context.md"
+    - "02-active-context.md"
+    - "03-system-patterns.md"
+    - "04-tech-context.md"
+    - "05-progress-log.md"
+  conditional_files:
+    components: "06-components.md"
+    api: "07-api-documentation.md"
+
+preferences:
+  code_style: "functional"
+  component_naming: "PascalCase"
+  function_naming: "camelCase"
+  imports_order: ["react", "third-party", "local"]
+  absolute_paths: true
+  no_emojis: true
+  concise_output: true
