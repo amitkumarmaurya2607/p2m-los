@@ -36,7 +36,7 @@ const SelectBox = ({
       <div
         className={cn(
           "relative flex items-center w-full h-[64px]",
-          "px-[20px] pt-[24px] pb-[8px]",
+          "",
           "bg-input-bg rounded-[16px]",
           "shadow-[var(--shadow-sm)]",
           error ? "border border-destructive" : "border border-transparent"
@@ -48,7 +48,7 @@ const SelectBox = ({
           </div>
         )}
 
-        <div className="relative flex-1">
+        <div className="relative flex-1 ">
           <Select
             {...props}
             inputId={id}
@@ -64,20 +64,20 @@ const SelectBox = ({
             }}
             classNames={{
               control: () =>
-                "bg-transparent border-none shadow-none min-h-0 h-auto",
+            "bg-transparent border-none shadow-none min-h-0 h-auto px-[20px] pt-[24px] pb-[8px]",
               valueContainer: () => "p-0 m-0",
-              input: () => "m-0 p-0 text-[14px]",
+              input: () => "m-0 p-0 text-[14px] ",
               singleValue: () => "text-[14px]",
               indicatorsContainer: () => "p-0 ml-2",
-              dropdownIndicator: () => "p-0",
+              dropdownIndicator: () => "p-0  ",
               clearIndicator: () => "p-0",
               menu: () =>
-                "mt-2 bg-surface border rounded-md shadow-lg z-50",
+                "mt-2 bg-surface border rounded-md shadow-lg z-50 w-full",
               option: ({ isFocused, isSelected }) =>
                 cn(
                   "px-3 py-2 text-sm cursor-pointer",
                   isFocused && "bg-muted",
-                  isSelected && "bg-foreground text-background"
+                  isSelected && "bg-info/10 text-info"
                 ),
             }}
           />
@@ -86,15 +86,15 @@ const SelectBox = ({
             <label
               htmlFor={id}
               className={cn(
-                "absolute font-medium pointer-events-none transition-all duration-200",
-                leftIcon ? "left-[0px]" : "left-0",
+                "absolute left-0 font-medium  -translate-y-1/2 text-[16px] transition-all duration-200 ",
+                leftIcon ? "left-[20px]" : "left-[20px]",
 
                 error ? "text-destructive" : "text-text-muted",
 
                 !isActive &&
-                  "top-[10px] -translate-y-1/2 text-[16px]",
+                  "top-[24px] ",
                 isActive &&
-                  "top-0 text-[12px] text-text-label"
+                  "top-[16px]  text-text-label"
               )}
             >
               {label} {required && "*"}

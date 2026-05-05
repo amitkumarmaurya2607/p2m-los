@@ -35,24 +35,30 @@ const CustomDatePicker = ({
         {leftIcon && <div className="mr-[10px] flex items-center">{leftIcon}</div>}
 
         <div className="relative flex-1">
-          <DatePicker
-            selected={value}
-            onChange={onChange}
-            dateFormat="dd/MM/yyyy"
-            placeholderText=""
-            className="w-full bg-transparent outline-none text-[14px] pt-[12px]"
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-          />
+         <DatePicker
+  selected={value}
+  onChange={onChange}
+  dateFormat="dd/MM/yyyy"
+  className="w-full bg-transparent outline-none text-[14px] pt-[12px]"
+  onFocus={() => setIsFocused(true)}
+  onBlur={() => setIsFocused(false)}
+
+  showMonthDropdown
+  showYearDropdown
+  dropdownMode="select"
+  yearDropdownItemNumber={100}
+  scrollableYearDropdown
+  maxDate={new Date()}
+/>
 
           {label && (
             <label
-              className={`absolute left-0 font-medium transition-all duration-200 pointer-events-none
+              className={`absolute left-0 text-[16px] font-medium transition-all duration-200 
                 ${error ? "text-destructive" : "text-text-muted"}
                 ${
                   isActive
-                    ? "top-0 text-[12px] text-text-label"
-                    : "top-[10px] -translate-y-1/2 text-[16px]"
+                    ? "top-[-10px]  text-text-label"
+                    : "top-[0px] "
                 }
               `}
             >

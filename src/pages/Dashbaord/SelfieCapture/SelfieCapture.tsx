@@ -2,20 +2,28 @@ import GradientButton from "@/components/ui/GradientButton";
 import React, { useEffect, useRef, useState } from "react";
 
 type CaptureProps = {
-  mode?: "photo" | "video"; // flag
+  mode?: "photo" | "video";
+  onSubmit?: (file: Blob) => void;
 };
 
-const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo" }) => {
+const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
 
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [recording, setRecording] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [capturedBlob, setCapturedBlob] = useState<Blob | null>(null);
 
   useEffect(() => {
     startCamera();
-    return () => stopCamera();
+
+    return () => {
+      stopCamera();
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const startCamera = async () => {
@@ -24,7 +32,9 @@ const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo" }) => {
         video: true,
         audio: mode === "video",
       });
+
       setStream(media);
+
       if (videoRef.current) {
         videoRef.current.srcObject = media;
       }
@@ -37,26 +47,33 @@ const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo" }) => {
     stream?.getTracks().forEach((track) => track.stop());
   };
 
-  // 📸 Capture Image
   const capturePhoto = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
 
-    if (video && canvas) {
-      const ctx = canvas.getContext("2d");
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+    if (!video || !canvas) return;
 
-      ctx?.drawImage(video, 0, 0);
-      const image = canvas.toDataURL("image/png");
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-      console.log("Captured Image:", image);
-    }
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+
+      const imageUrl = URL.createObjectURL(blob);
+
+      setCapturedBlob(blob);
+      setPreviewUrl(imageUrl);
+      stopCamera();
+    }, "image/png");
   };
 
-  // 🎥 Record Video (20s)
   const startRecording = () => {
-    if (!stream) return;
+    if (!stream || recording) return;
 
     const recorder = new MediaRecorder(stream);
     mediaRecorderRef.current = recorder;
@@ -64,64 +81,110 @@ const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo" }) => {
     const chunks: Blob[] = [];
 
     recorder.ondataavailable = (e) => {
-      chunks.push(e.data);
+      if (e.data.size > 0) chunks.push(e.data);
     };
 
     recorder.onstop = () => {
       const blob = new Blob(chunks, { type: "video/webm" });
-      console.log("Recorded Video:", blob);
+      const videoUrl = URL.createObjectURL(blob);
+
+      setCapturedBlob(blob);
+      setPreviewUrl(videoUrl);
+      setRecording(false);
+      stopCamera();
     };
 
     recorder.start();
     setRecording(true);
 
-    // stop after 20 seconds
     setTimeout(() => {
-      recorder.stop();
-      setRecording(false);
+      if (recorder.state === "recording") {
+        recorder.stop();
+      }
     }, 20000);
+  };
+
+  const handleTryAgain = async () => {
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+
+    setPreviewUrl(null);
+    setCapturedBlob(null);
+    setRecording(false);
+
+    await startCamera();
+  };
+
+  const handleSubmit = () => {
+    if (!capturedBlob) return;
+
+    onSubmit?.(capturedBlob);
+    console.log("Submitted Blob:", capturedBlob);
   };
 
   return (
     <div className="flex flex-col items-center gap-6">
-      {/* Camera Frame */}
       <div className="relative w-[220px] h-[220px]">
-        {/* Dotted Circle */}
         <div className="absolute inset-0 rounded-full border-2 border-dashed border-border" />
 
-        {/* Video Preview */}
         <div className="absolute inset-3 rounded-[24px] overflow-hidden border-2 border-success">
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            playsInline
-            className="w-full h-full object-cover"
-          />
+          {previewUrl ? (
+            mode === "photo" ? (
+              <img
+                src={previewUrl}
+                alt="Selfie Preview"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <video
+                src={previewUrl}
+                controls
+                className="w-full h-full object-cover"
+              />
+            )
+          ) : (
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+            />
+          )}
         </div>
       </div>
 
-      {/* Hidden Canvas */}
       <canvas ref={canvasRef} className="hidden" />
 
-      {/* Button */}
-
+      {!previewUrl ? (
         <GradientButton
-         type="submit"
-           className='mt-8'
-           disabled={recording}
-               onClick={mode === "photo" ? capturePhoto : startRecording}
-           >
-                          <span className="flex items-center gap-2">
-{mode === "photo"
-          ? "Take Selfie"
-          : recording
-          ? "Recording..."
-          : "Record 20s Video"}
+          type="button"
+          className="mt-8"
+          disabled={recording}
+          onClick={mode === "photo" ? capturePhoto : startRecording}
+        >
+          <span className="flex items-center gap-2">
+            {mode === "photo"
+              ? "Take Selfie"
+              : recording
+              ? "Recording..."
+              : "Record 20s Video"}
+          </span>
+        </GradientButton>
+      ) : (
+        <div className="mt-8 flex flex-col items-center gap-3 w-full">
+          <GradientButton type="button" onClick={handleSubmit}>
+            <span className="flex items-center gap-2">Submit</span>
+          </GradientButton>
 
-</span>
-                        </GradientButton>
-  
+          <button
+            type="button"
+            onClick={handleTryAgain}
+            className="text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80"
+          >
+            Try again
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -73,6 +73,7 @@ function PanDetails() {
           onChange={handleChange}
           error={error}
           maxLength={10}
+          require
         />
 
         <GradientButton

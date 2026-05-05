@@ -118,12 +118,7 @@ const accountTypeOptions = [
             maxLength={11}
           />
 
-          <TextInput
-  label="Account Type"
-  value={form.accountType}
-  onChange={(e) => handleChange('accountType', e.target.value)}
-  error={errors.accountType}
-/>
+
 
          <SelectBox
   label="Account Type"

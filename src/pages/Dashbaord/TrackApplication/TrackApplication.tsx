@@ -68,7 +68,7 @@ function TrackApplication() {
         <div className="rounded-[32px] border border-[#F1F5F9] bg-white px-[48px] py-[48px] shadow-[0px_32px_80px_-24px_rgba(0,0,0,0.1)]">
           <div className="flex items-center gap-3">
             <Clock3 className="h-7 w-7 text-[#3737C1]" />
-            <h2 className="text-[24px] font-bold text-[#0F172B]">
+            <h2 className="text-[20px] font-bold text-[#0F172B]">
               Application Timeline
             </h2>
           </div>
@@ -87,7 +87,7 @@ function TrackApplication() {
                 />
 
                 <h3
-                  className={`text-[20px] font-bold leading-7 ${
+                  className={`text-[16px] font-bold leading-7 ${
                     step.status === 'active'
                       ? 'text-[#3737C1]'
                       : step.status === 'pending'
