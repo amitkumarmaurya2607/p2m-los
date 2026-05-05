@@ -6,20 +6,25 @@ import TextInput from '@/components/ui/TextInput'
 import GradientButton from '@/components/ui/GradientButton'
 import { Calendar, ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { setEmploymentDetails, selectApplication } from '@/features/application/applicationSlice'
 
 function EmploymentDetails() {
   const router = useRouter()
+  const dispatch = useAppDispatch()
+  const application = useAppSelector(selectApplication)
+  const saved = application.employmentDetails
 
   const [form, setForm] = useState({
-    companyName: '',
-    designation: '',
-    email: '',
-    salary: '',
-    salaryMode: '',
-    joiningDate: '',
-    uan: '',
-    city: '',
-    pincode: '',
+    companyName: saved?.companyName || '',
+    designation: saved?.designation || '',
+    email: saved?.email || '',
+    salary: saved?.salary || '',
+    salaryMode: saved?.salaryMode || '',
+    joiningDate: saved?.joiningDate || '',
+    uan: saved?.uan || '',
+    city: saved?.city || '',
+    pincode: saved?.pincode || '',
   })
 
   const [error, setError] = useState<any>({})
@@ -75,6 +80,8 @@ function EmploymentDetails() {
       await new Promise((res) => setTimeout(res, 1200))
 
       console.log('Employment Data:', form)
+
+      dispatch(setEmploymentDetails(form))
 
       router.push('/review') // next step
 

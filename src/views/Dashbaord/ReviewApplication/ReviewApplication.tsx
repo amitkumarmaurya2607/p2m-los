@@ -2,6 +2,10 @@
 
 import React, { useState } from 'react'
 import { CheckCircle, ClipboardList, Edit3, Shield } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { selectApplication, resetApplication } from '@/features/application/applicationSlice'
+import { logout } from '@/features/auth/authSlice'
 
 const ReviewField = ({ label, value }: { label: string; value: string }) => (
   <div>
@@ -42,8 +46,29 @@ const ReviewSection = ({
 )
 
 function ReviewApplication() {
+  const router = useRouter()
+  const dispatch = useAppDispatch()
   const [agree, setAgree] = useState(true)
   const [loading, setLoading] = useState(false)
+
+  const data = useAppSelector(selectApplication)
+
+  const personalFields = [
+    { label: 'Name', value: data.personalInfo?.fullName || 'N/A' },
+    { label: 'PAN', value: data.pan?.number || 'N/A' },
+    { label: 'DOB', value: data.personalInfo?.dob ? new Date(data.personalInfo.dob).toLocaleDateString() : 'N/A' },
+  ]
+
+  const employmentFields = [
+    { label: 'Type', value: data.personalInfo?.employmentType || 'N/A' },
+    { label: 'Company', value: data.employmentDetails?.companyName || 'N/A' },
+    { label: 'Income', value: data.employmentDetails?.salary ? `₹${Number(data.employmentDetails.salary).toLocaleString('en-IN')}/mo` : 'N/A' },
+  ]
+
+  const bankFields = [
+    { label: 'Account', value: data.bankDetails?.accountNumber ? `XXXX XXXX ${data.bankDetails.accountNumber.slice(-4)}` : 'N/A' },
+    { label: 'IFSC', value: data.bankDetails?.ifsc || 'N/A' },
+  ]
 
   const handleSubmit = async () => {
     if (!agree) return
@@ -52,7 +77,10 @@ function ReviewApplication() {
       setLoading(true)
       await new Promise((res) => setTimeout(res, 1200))
 
-      console.log('Application submitted')
+      dispatch(resetApplication())
+      dispatch(logout())
+
+      router.push('/track-application')
     } finally {
       setLoading(false)
     }
@@ -74,28 +102,17 @@ function ReviewApplication() {
           <div className="space-y-6">
             <ReviewSection
               title="Personal Details"
-              fields={[
-                { label: 'Name', value: 'Rahul Sharma' },
-                { label: 'PAN', value: 'ABCDE1234F' },
-                { label: 'DOB', value: '15/08/1990' },
-              ]}
+              fields={personalFields}
             />
 
             <ReviewSection
               title="Employment & Income"
-              fields={[
-                { label: 'Type', value: 'Salaried' },
-                { label: 'Company', value: 'TechCorp India' },
-                { label: 'Income', value: '₹1,20,000/mo' },
-              ]}
+              fields={employmentFields}
             />
 
             <ReviewSection
               title="Bank Information"
-              fields={[
-                { label: 'Account', value: 'XXXX XXXX 5678' },
-                { label: 'IFSC', value: 'HDFC0001234' },
-              ]}
+              fields={bankFields}
             />
           </div>
         </div>

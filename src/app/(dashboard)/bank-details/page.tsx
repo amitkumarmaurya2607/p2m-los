@@ -1,6 +1,6 @@
 
 
-import BankDetails from '@/pages/Dashbaord/BankDetails/BankDetails'
+import BankDetails from '@/views/Dashbaord/BankDetails/BankDetails'
 import React from 'react'
 
 function page() {

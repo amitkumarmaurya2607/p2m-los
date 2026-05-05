@@ -1,5 +1,5 @@
 
-import AadhaarDetails from '@/pages/Dashbaord/AadhaarDetails/AadhaarDetails'
+import AadhaarDetails from '@/views/Dashbaord/AadhaarDetails/AadhaarDetails'
 
 import React from 'react'
 

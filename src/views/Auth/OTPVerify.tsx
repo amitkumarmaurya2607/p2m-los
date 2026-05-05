@@ -6,6 +6,9 @@ import { ArrowLeft } from 'lucide-react'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { showToast } from '@/lib/toast'
+import { useAppDispatch } from '@/store/hooks'
+import { setMobileData } from '@/features/application/applicationSlice'
+import { login } from '@/features/auth/authSlice'
 
 type OTPVerifyProps = {
   resend?: () => void
@@ -22,6 +25,7 @@ function OTPVerify({
 }: OTPVerifyProps) {
 
   const router = useRouter()
+  const dispatch = useAppDispatch()
 
   const [otp, setOtp] = useState('')
   const [error, setError] = useState('')
@@ -50,6 +54,9 @@ function OTPVerify({
 
       showToast({ message: 'OTP verified successfully!', type: 'success' })
       
+      dispatch(setMobileData({ number: userName, verified: true }))
+      dispatch(login({ method: method === 'email' ? 'email' : 'mobile', identifier: userName }))
+
       router.push('/pan-details')
 
     } catch (err) {

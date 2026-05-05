@@ -1,6 +1,6 @@
 
-import LoanCalculator from '@/pages/Dashbaord/LoanCalculator/LoanCalculator'
-import PanDetails from '@/pages/Dashbaord/PanDetails/PanDetails'
+import LoanCalculator from '@/views/Dashbaord/LoanCalculator/LoanCalculator'
+import PanDetails from '@/views/Dashbaord/PanDetails/PanDetails'
 import React from 'react'
 
 function page() {

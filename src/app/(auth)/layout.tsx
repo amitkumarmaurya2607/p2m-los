@@ -1,4 +1,5 @@
-import SideBar from "@/pages/Auth/SideBar";
+import SideBar from "@/views/Auth/SideBar";
+import AuthGuard from "@/components/AuthGuard";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -14,9 +15,11 @@ export default function layout({
 }) {
     return (
          <div className="flex w-full font-sans antialiased min-h-[100dvh]">
-          
+           
             <SideBar />
-            {children}
+            <AuthGuard>
+                {children}
+            </AuthGuard>
         </div>
     );
 }

@@ -1,7 +1,9 @@
-import Header from "@/pages/Dashbaord/componants/Header";
-import HorizontalStepper from "@/pages/Dashbaord/componants/HorizontalStepper";
-import ProgressBar from "@/pages/Dashbaord/componants/ProgressBar";
-import { StepperAlt } from "@/pages/Dashbaord/componants/Stepper";
+import Header from "@/views/Dashbaord/componants/Header";
+import HorizontalStepper from "@/views/Dashbaord/componants/HorizontalStepper";
+import ProgressBar from "@/views/Dashbaord/componants/ProgressBar";
+import StepperAlt from "@/views/Dashbaord/componants/Stepper";
+import StepRedirect from "@/components/StepRedirect";
+import AuthGuard from "@/components/AuthGuard";
 
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -28,7 +30,11 @@ export default function DashboardLayout({
                 <HorizontalStepper />
                </div>
               <div className="flex justify-center px-4 pt-12 pb-6">
-                {children}
+                <AuthGuard>
+                  <StepRedirect>
+                    {children}
+                  </StepRedirect>
+                </AuthGuard>
               </div>
              
            </div>

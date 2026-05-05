@@ -1,5 +1,5 @@
 
-import PanDetails from '@/pages/Dashbaord/PanDetails/PanDetails'
+import PanDetails from '@/views/Dashbaord/PanDetails/PanDetails'
 import React from 'react'
 
 function page() {

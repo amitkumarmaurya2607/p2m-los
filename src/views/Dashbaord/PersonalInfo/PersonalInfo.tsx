@@ -9,24 +9,30 @@ import CustomDatePicker from '@/components/ui/CustomDatePicker'
 import { useRouter } from 'next/navigation'
 import OTPInput from '@/components/OTPInput/OTPInput'
 import { CheckCircle } from 'lucide-react'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { setPersonalInfo, selectApplication } from '@/features/application/applicationSlice'
 
 const genders = ['Male', 'Female', 'Other']
 const employmentTypes = ['Salaried', 'Self-Employed']
 
 function PersonalInfo() {
+  const dispatch = useAppDispatch()
+  const application = useAppSelector(selectApplication)
+  const saved = application.personalInfo
+
   const [form, setForm] = useState({
-    fullName: '',
-    fatherName: '',
-    email: '',
-    dob: '',
-    gender: 'Male',
-    salary: '',
-    employmentType: 'Salaried',
-    address1: '',
-    address2: '',
-    pincode: '',
-    city: '',
-    state: '',
+    fullName: saved?.fullName || '',
+    fatherName: saved?.fatherName || '',
+    email: saved?.email || '',
+    dob: saved?.dob || '',
+    gender: saved?.gender || 'Male',
+    salary: saved?.salary || '',
+    employmentType: saved?.employmentType || 'Salaried',
+    address1: saved?.address1 || '',
+    address2: saved?.address2 || '',
+    pincode: saved?.pincode || '',
+    city: saved?.city || '',
+    state: saved?.state || '',
   })
 
   const [errors, setErrors] = useState<any>({})
@@ -136,6 +142,9 @@ function PersonalInfo() {
       await new Promise(res => setTimeout(res, 1500))
 
       console.log('Submitted:', form)
+
+      dispatch(setPersonalInfo(form))
+
             router.push('/aadhar-details')
     } catch (err) {
       console.error(err)

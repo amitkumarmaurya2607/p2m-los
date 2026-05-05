@@ -1,5 +1,5 @@
 
-import SelfiePage from '@/pages/Dashbaord/SelfieCapture/SelfiePage'
+import SelfiePage from '@/views/Dashbaord/SelfieCapture/SelfiePage'
 
 function page() {
   return (

@@ -1,6 +1,6 @@
 
 
-import TrackApplication from '@/pages/Dashbaord/TrackApplication/TrackApplication'
+import TrackApplication from '@/views/Dashbaord/TrackApplication/TrackApplication'
 
 function page() {
   return (

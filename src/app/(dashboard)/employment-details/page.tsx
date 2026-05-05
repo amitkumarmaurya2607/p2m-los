@@ -1,6 +1,6 @@
 
-import EmploymentDetails from '@/pages/Dashbaord/EmploymentDetails/EmploymentDetails'
-import PanDetails from '@/pages/Dashbaord/PanDetails/PanDetails'
+import EmploymentDetails from '@/views/Dashbaord/EmploymentDetails/EmploymentDetails'
+import PanDetails from '@/views/Dashbaord/PanDetails/PanDetails'
 import React from 'react'
 
 function page() {

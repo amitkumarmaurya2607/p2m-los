@@ -5,9 +5,13 @@ import TextInput from '@/components/ui/TextInput'
 import GradientButton from '@/components/ui/GradientButton'
 import { ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { setPanData, selectApplication } from '@/features/application/applicationSlice'
 
 function PanDetails() {
-  const [pan, setPan] = useState('')
+  const dispatch = useAppDispatch()
+  const application = useAppSelector(selectApplication)
+  const [pan, setPan] = useState(application.pan?.number || '')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -48,6 +52,8 @@ function PanDetails() {
       await new Promise((res) => setTimeout(res, 1200))
 
       console.log('PAN Submitted:', pan)
+
+      dispatch(setPanData({ number: pan }))
 
       // ✅ redirect to next step
       router.push('/personal-info')

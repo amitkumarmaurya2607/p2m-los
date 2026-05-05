@@ -7,14 +7,18 @@ import OTPInput from '@/components/OTPInput/OTPInput'
 import ResendTimer from '@/components/ResendTimer/ResendTimer'
 import { ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { setAadhaarData, selectApplication } from '@/features/application/applicationSlice'
 type AadhaarDetailsProps = {
   resend?: () => void
 }
 
 function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
   const router = useRouter()
+  const dispatch = useAppDispatch()
+  const application = useAppSelector(selectApplication)
 
-  const [aadhaar, setAadhaar] = useState('')
+  const [aadhaar, setAadhaar] = useState(application.aadhaar?.number || '')
   const [otp, setOtp] = useState('')
   const [step, setStep] = useState<'aadhaar' | 'otp'>('aadhaar')
 
@@ -70,6 +74,8 @@ function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
 
       // 👉 API call (verify OTP)
       await new Promise(res => setTimeout(res, 1200))
+
+      dispatch(setAadhaarData({ number: aadhaar, verified: true }))
 
       // ✅ next step
       router.push('/bank-details')

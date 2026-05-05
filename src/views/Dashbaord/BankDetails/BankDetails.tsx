@@ -5,14 +5,22 @@ import TextInput from '@/components/ui/TextInput'
 import GradientButton from '@/components/ui/GradientButton'
 import { CreditCard } from 'lucide-react'
 import SelectBox from '@/components/ui/SelectBox'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { setBankDetails, selectApplication } from '@/features/application/applicationSlice'
+import { useRouter } from 'next/navigation'
 
 
 function BankDetails() {
+  const router = useRouter()
+  const dispatch = useAppDispatch()
+  const application = useAppSelector(selectApplication)
+  const saved = application.bankDetails
+
   const [form, setForm] = useState({
-    accountNumber: '',
-    confirmAccountNumber: '',
-    ifsc: '',
-    accountType: '',
+    accountNumber: saved?.accountNumber || '',
+    confirmAccountNumber: saved?.accountNumber || '',
+    ifsc: saved?.ifsc || '',
+    accountType: saved?.accountType || '',
   })
 
   const [errors, setErrors] = useState<any>({})
@@ -67,7 +75,13 @@ function BankDetails() {
     try {
       setLoading(true)
       await new Promise(res => setTimeout(res, 1500))
+      dispatch(setBankDetails({
+        accountNumber: form.accountNumber,
+        ifsc: form.ifsc,
+        accountType: form.accountType,
+      }))
       console.log(form)
+      router.push('/bank-verified')
     } finally {
       setLoading(false)
     }

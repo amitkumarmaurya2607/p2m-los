@@ -1,5 +1,6 @@
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import PublicGuard from "@/components/PublicGuard";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -17,7 +18,9 @@ export default function PublicLayout({
     <div className="min-h-screen bg-background font-sans text-foreground">
   <Navbar />
   <main>
-  {children}
+  <PublicGuard>
+    {children}
+  </PublicGuard>
   </main>
 
   <Footer />
