@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/lib/toast";
+import { maskEmail, maskMobile } from "@/lib/utils";
 import { useAppDispatch } from "@/store/hooks";
 import { setMobileData } from "@/features/application/applicationSlice";
 import { login } from "@/features/auth/authSlice";
@@ -25,12 +26,7 @@ function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const maskedValue =
-    method === "email"
-      ? userName.replace(/(.{2}).+(@.+)/, "$1****$2")
-      : userName.startsWith("+91")
-        ? "+91" + userName.slice(3).replace(/.(?=.{4})/g, "*")
-        : userName.replace(/.(?=.{4})/g, "*");
+  const maskedValue = method === "email" ? maskEmail(userName) : maskMobile(userName);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -2,6 +2,10 @@
 import React, { useRef, useEffect } from "react";
 import { ArrowLeft, Moon, Sun, User } from "lucide-react";
 import { useThemeContext } from "@/components/theme/ThemeProvider";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/store/hooks";
+import { logout } from "@/features/auth/authSlice";
+import { resetApplication } from "@/features/application/applicationSlice";
 
 type HeaderProps = {
   title?: string;
@@ -19,6 +23,15 @@ const Header: React.FC<HeaderProps> = ({
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const { theme, toggleTheme, mounted } = useThemeContext();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(resetApplication());
+    setDropdownOpen(false);
+    router.push("/login");
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -80,7 +93,7 @@ const Header: React.FC<HeaderProps> = ({
                 Profile
               </a>
               <button
-                onClick={() => console.log("Logout")}
+                onClick={handleLogout}
                 className="w-full text-left px-4 py-2 text-sm text-text-heading hover:bg-muted"
               >
                 Logout

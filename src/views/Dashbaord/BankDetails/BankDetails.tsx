@@ -3,11 +3,12 @@ import React, { useState } from "react";
 import StepCard from "../componants/StepCard";
 import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
-import { CreditCard } from "lucide-react";
+import { CreditCard, Check, ChevronRight } from "lucide-react";
 import SelectBox from "@/components/ui/SelectBox";
+import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setBankDetails, selectApplication } from "@/features/application/applicationSlice";
-import { useRouter } from "next/navigation";
+import { isValidIFSCCode, sanitizeNumeric, sanitizeIFSC } from "@/lib/utils";
 
 function BankDetails() {
   const router = useRouter();
@@ -24,16 +25,17 @@ function BankDetails() {
 
   const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState(false);
+  const [verified, setVerified] = useState(false);
 
   const handleChange = (key: string, value: string) => {
     let v = value;
 
     if (key.includes("accountNumber")) {
-      v = value.replace(/\D/g, "");
+      v = sanitizeNumeric(value);
     }
 
     if (key === "ifsc") {
-      v = value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+      v = sanitizeIFSC(value);
     }
 
     setForm((prev) => ({ ...prev, [key]: v }));
@@ -53,7 +55,7 @@ function BankDetails() {
     }
 
     if (!form.ifsc) err.ifsc = "Required";
-    else if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(form.ifsc)) {
+    else if (!isValidIFSCCode(form.ifsc)) {
       err.ifsc = "Invalid IFSC";
     }
 
@@ -81,16 +83,88 @@ function BankDetails() {
           accountType: form.accountType,
         }),
       );
-      console.log(form);
-      router.push("/bank-verified");
+      setVerified(true);
     } finally {
       setLoading(false);
     }
   };
+
+  const maskedAccount = form.accountNumber
+    ? `XXXX XXXX ${form.accountNumber.slice(-4)}`
+    : "XXXX XXXX XXXX";
+
   const accountTypeOptions = [
     { label: "Savings Account", value: "savings" },
     { label: "Current Account", value: "current" },
   ];
+
+  if (verified) {
+    return (
+      <div
+        className="w-full max-w-[576px] bg-surface-overlay-90 border border-border-light p-8 lg:p-12
+          rounded-[16px] lg:rounded-[32px] shadow-[var(--shadow-lg)]"
+      >
+        <div
+          className="mx-auto flex h-16 w-16 lg:h-28 lg:w-28 items-center justify-center rounded-full
+            bg-gradient-to-r from-[#00C89C] to-[#00A882] shadow-[0px_0px_60px_rgba(0,200,156,0.6)]"
+        >
+          <Check className="h-8 w-8 lg:h-14 lg:w-14 text-white" strokeWidth={4} />
+        </div>
+
+        <h2
+          className="mt-6 lg:mt-8 text-center text-[28px] lg:text-[36px] font-extrabold leading-10
+            tracking-[-0.9px] text-[#0F172B]"
+        >
+          Bank Account Verified!
+        </h2>
+
+        <p
+          className="mt-4 text-center text-[14px] lg:text-[18px] font-medium leading-[29px]
+            text-[#62748E]"
+        >
+          Your bank account has been successfully verified. Proceed to the next step.
+        </p>
+
+        <div className="mt-10 rounded-[24px] border border-[#E2E8F0] bg-[#F8FAFC] px-6 py-6">
+          <div className="space-y-4">
+            <div>
+              <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-[#90A1B9]">
+                Account Number
+              </p>
+              <p className="mt-1 font-mono text-[20px] font-bold text-[#1D293D]">{maskedAccount}</p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-[#90A1B9]">
+                  IFSC Code
+                </p>
+                <p className="mt-1 font-mono text-[16px] font-bold text-[#1D293D]">{form.ifsc}</p>
+              </div>
+
+              <div>
+                <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-[#90A1B9]">
+                  Account Type
+                </p>
+                <p className="mt-1 text-[16px] font-bold capitalize text-[#1D293D]">{form.accountType}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10">
+          <GradientButton
+            onClick={() => router.push("/selfie-capture")}
+            type="button"
+            className="w-full mt-4 sm:mt-6 bg-gradient-to-r from-[#3737C1] to-[#2B2B9A]"
+          >
+            Next Step
+          </GradientButton>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       {/* Header */}
@@ -107,37 +181,40 @@ function BankDetails() {
       <StepCard
         title=" Bank Verification"
         subtitle="  Your loan amount will be disbursed to this verified account."
+        className="lg:w-[800px]"
       >
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-          <TextInput
-            label="Bank Account Number"
-            value={form.accountNumber}
-            onChange={(e) => handleChange("accountNumber", e.target.value)}
-            error={errors.accountNumber}
-          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <TextInput
+              label="Bank Account Number"
+              value={form.accountNumber}
+              onChange={(e) => handleChange("accountNumber", e.target.value)}
+              error={errors.accountNumber}
+            />
 
-          <TextInput
-            label="Re-enter Account Number"
-            value={form.confirmAccountNumber}
-            onChange={(e) => handleChange("confirmAccountNumber", e.target.value)}
-            error={errors.confirmAccountNumber}
-          />
+            <TextInput
+              label="Re-enter Account Number"
+              value={form.confirmAccountNumber}
+              onChange={(e) => handleChange("confirmAccountNumber", e.target.value)}
+              error={errors.confirmAccountNumber}
+            />
 
-          <TextInput
-            label="IFSC CODE"
-            value={form.ifsc}
-            onChange={(e) => handleChange("ifsc", e.target.value)}
-            error={errors.ifsc}
-            maxLength={11}
-          />
+            <TextInput
+              label="IFSC CODE"
+              value={form.ifsc}
+              onChange={(e) => handleChange("ifsc", e.target.value)}
+              error={errors.ifsc}
+              maxLength={11}
+            />
 
-          <SelectBox
-            label="Account Type"
-            options={accountTypeOptions}
-            value={accountTypeOptions.find((opt) => opt.value === form.accountType)}
-            onChange={(selected: any) => handleChange("accountType", selected?.value || "")}
-            error={errors.accountType}
-          />
+            <SelectBox
+              label="Account Type"
+              options={accountTypeOptions}
+              value={accountTypeOptions.find((opt) => opt.value === form.accountType)}
+              onChange={(selected: any) => handleChange("accountType", selected?.value || "")}
+              error={errors.accountType}
+            />
+          </div>
 
           {/* Info Box */}
           <div

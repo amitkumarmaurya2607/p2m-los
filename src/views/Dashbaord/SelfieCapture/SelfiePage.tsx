@@ -1,12 +1,11 @@
 "use client";
 
-import React from "react";
 import StepCard from "../componants/StepCard";
 import SelfieCapture from "./SelfieCapture";
 
 function SelfiePage() {
   return (
-    <StepCard title="PAN Verification" subtitle="Please enter your 10-digit PAN number.">
+    <StepCard title="Capture Your Selfie" subtitle="Position your face clearly within the frame and ensure good lighting for quick verification">
       <div className="space-y-4">
         <SelfieCapture />
       </div>

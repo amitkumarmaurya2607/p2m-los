@@ -11,6 +11,7 @@ import OTPInput from "@/components/OTPInput/OTPInput";
 import { CheckCircle } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setPersonalInfo, selectApplication } from "@/features/application/applicationSlice";
+import { isValidEmail, sanitizeNumeric } from "@/lib/utils";
 
 const genders = ["Male", "Female", "Other"];
 const employmentTypes = ["Salaried", "Self-Employed"];
@@ -58,8 +59,6 @@ function PersonalInfo() {
       setErrors((prev: any) => ({ ...prev, [key]: "" }));
     }
   };
-
-  const isValidEmail = (email: string) => /^\S+@\S+\.\S+$/.test(email);
 
   const handleSendOtp = () => {
     if (!form.email) {
@@ -154,7 +153,11 @@ function PersonalInfo() {
   };
 
   return (
-    <StepCard title="Basic Info" subtitle="" className="lg:w-[800px] mx-auto">
+    <StepCard
+      title="Basic Info"
+      subtitle="To continue, please share some basic personal information. It helps us confirm your identity and ensure everything is ready for a seamless experience."
+      className="lg:w-[800px] mx-auto"
+    >
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Personal Details */}
         <div>
@@ -189,7 +192,7 @@ function PersonalInfo() {
           <TextInput
             label="Monthly Salary"
             value={form.salary}
-            onChange={(e) => handleChange("salary", e.target.value.replace(/\D/g, ""))}
+            onChange={(e) => handleChange("salary", sanitizeNumeric(e.target.value))}
             error={errors.salary}
           />
         </div>
@@ -321,7 +324,7 @@ function PersonalInfo() {
               <TextInput
                 label="Pincode"
                 value={form.pincode}
-                onChange={(e) => handleChange("pincode", e.target.value.replace(/\D/g, ""))}
+                onChange={(e) => handleChange("pincode", sanitizeNumeric(e.target.value))}
                 maxLength={6}
                 error={errors.pincode}
               />

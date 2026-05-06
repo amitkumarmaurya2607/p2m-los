@@ -7,7 +7,7 @@ import { ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setPanData, selectApplication } from "@/features/application/applicationSlice";
-
+import { isValidPAN, sanitizePAN } from "@/lib/utils";
 function PanDetails() {
   const dispatch = useAppDispatch();
   const application = useAppSelector(selectApplication);
@@ -17,13 +17,8 @@ function PanDetails() {
 
   const router = useRouter();
 
-  const validatePan = (value: string) => {
-    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-    return panRegex.test(value);
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+    const value = sanitizePAN(e.target.value);
 
     setPan(value);
 
@@ -38,7 +33,7 @@ function PanDetails() {
       return;
     }
 
-    if (!validatePan(pan)) {
+    if (!isValidPAN(pan)) {
       setError("Invalid PAN format");
       return;
     }

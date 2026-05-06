@@ -2,19 +2,23 @@
 
 import GradientButton from "@/components/ui/GradientButton";
 import { ArrowRight } from "lucide-react";
-import React, { ButtonHTMLAttributes, useState } from "react";
+import React, { useState, useEffect } from "react";
 import OTPVerify from "./OTPVerify";
 import TextInput from "@/components/ui/TextInput";
-import { isValidEmail, isValidMobile } from "@/lib/utils";
+import { isValidEmail, isValidMobile, sanitizeEmail, sanitizeNumeric } from "@/lib/utils";
 import { showToast } from "@/lib/toast";
 import Logo from "@/assets/icon/Logo";
+import { Popup } from "@/components/ui/Popup";
 
 const Login = () => {
   const [method, setMethod] = useState<"mobile" | "email">("mobile");
   const [sendOtp, setSendOtp] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [userName, setUserName] = useState<string>(""); // ✅ no +91 initially
-  const [error, setError] = useState<string>("");
+  const [userName, setUserName] = useState<string>("");
+  const [error, setError] = useState("");
+
+  const [accepted, setAccepted] = useState(false);
+  const [openTnc, setOpenTnc] = useState(false);
 
   const validate = () => {
     if (method === "mobile") return isValidMobile(userName);
@@ -23,6 +27,11 @@ const Login = () => {
 
   const submitHandler = (e?: React.FormEvent | null, type?: "resend") => {
     e?.preventDefault();
+
+    if (!accepted) {
+      showToast({ message: "Please accept Terms & Conditions", type: "error" });
+      return;
+    }
 
     const isValid = validate();
 
@@ -48,31 +57,19 @@ const Login = () => {
     }, 1500);
   };
 
-  const switchMethod = (e: React.MouseEvent<HTMLElement>, type: "mobile" | "email") => {
-    e.stopPropagation();
-    setMethod(type);
-    setUserName("");
-    setError("");
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
 
     if (method === "email") {
-      value = value.replace(/[^a-zA-Z0-9@._-]/g, "");
+      value = sanitizeEmail(value);
       setUserName(value);
       return;
     }
 
-    // MOBILE LOGIC
     let raw = value.replace("+91", "");
-    let digits = raw.replace(/\D/g, "").slice(0, 10);
+    let digits = sanitizeNumeric(raw).slice(0, 10);
 
-    if (digits.length > 0) {
-      setUserName("+91" + digits);
-    } else {
-      setUserName("");
-    }
+    setUserName(digits ? "+91" + digits : "");
   };
 
   return (
@@ -82,24 +79,23 @@ const Login = () => {
           className="w-full lg:w-1/2 bg-surface-muted flex items-center justify-center flex-col
             lg:flex-row p-6 bg-[url('/images/boginBanner.webp')] lg:bg-none"
         >
+          {/* Mobile Header */}
           <div className="lg:hidden text-primary-foreground max-w-[400px] mx-auto mb-8">
-            <div>
-              <Logo />
-            </div>
+            <Logo />
             <h1 className="text-[32px] font-extrabold leading-[40.8px]">
-              Access your <br />
-              financial dashboard
+              Access your <br /> financial dashboard
             </h1>
-            <p className="text-[15.6px] font-normal leading-[19.04px] tracking-[0px]">
-              Instant loans, seamless process, and secure digital journeys. Empowering your
-              financial future.
+            <p className="text-[15.6px]">
+              Instant loans, seamless process, and secure digital journeys.
             </p>
           </div>
+
+          {/* Form */}
           <form
             onSubmit={submitHandler}
             className="w-full max-w-[448px] flex flex-col gap-2 p-8 lg:p-12 bg-card-bg border
               border-card-border bg-background text-foreground lg:rounded-[32px] rounded-[16px]
-              shadow-[var(--shadow-md)] [&>*]:w-full"
+              shadow-[var(--shadow-md)]"
           >
             <header className="mb-8">
               <h2 className="text-2xl font-bold text-text-heading">Welcome back</h2>
@@ -115,7 +111,29 @@ const Login = () => {
                 error={error}
               />
 
-              <GradientButton type="submit" loading={loading} className="mt-6">
+              {/* ✅ Checkbox */}
+              <div className="flex items-start gap-2">
+                <input
+                  type="checkbox"
+                  checked={accepted}
+                  onChange={(e) => setAccepted(e.target.checked)}
+                  className="mt-1 w-4 h-4 accent-secondary cursor-pointer"
+                />
+
+                <p className="text-sm text-text-secondary">
+                  I agree to the{" "}
+                  <button
+                    type="button"
+                    onClick={() => setOpenTnc(true)}
+                    className="text-primary font-medium underline"
+                  >
+                    Terms & Conditions
+                  </button>
+                </p>
+              </div>
+
+              {/* Button */}
+              <GradientButton type="submit" loading={loading} disabled={!accepted} className="mt-6">
                 <span className="flex items-center gap-2">
                   Get OTP
                   <ArrowRight className="w-5 h-5" />
@@ -132,6 +150,22 @@ const Login = () => {
           userName={userName}
         />
       )}
+
+      {/* ✅ Terms Modal */}
+      <Popup open={openTnc} onClose={() => setOpenTnc(false)} title="Terms & Conditions" size="md">
+        <p className="text-sm text-text-secondary mb-6">
+          By using this platform, you agree to our terms and policies.
+        </p>
+        <button
+          onClick={() => {
+            setAccepted(true);
+            setOpenTnc(false);
+          }}
+          className="mt-6 w-full py-2 bg-primary text-white rounded-lg"
+        >
+          Accept
+        </button>
+      </Popup>
     </>
   );
 };

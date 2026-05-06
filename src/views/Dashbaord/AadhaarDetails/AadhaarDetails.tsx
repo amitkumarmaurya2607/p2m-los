@@ -5,10 +5,11 @@ import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import OTPInput from "@/components/OTPInput/OTPInput";
 import ResendTimer from "@/components/ResendTimer/ResendTimer";
-import { ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setAadhaarData, selectApplication } from "@/features/application/applicationSlice";
+import { isValidAadhaar, sanitizeNumeric } from "@/lib/utils";
+
 type AadhaarDetailsProps = {
   resend?: () => void;
 };
@@ -25,16 +26,12 @@ function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // ✅ Aadhaar validation
-  const validateAadhaar = (val: string) => /^\d{12}$/.test(val);
-
   const handleAadhaarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, "");
+    const value = sanitizeNumeric(e.target.value);
     setAadhaar(value);
     if (error) setError("");
   };
 
-  // 👉 Step 1: Send OTP
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -43,7 +40,7 @@ function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
       return;
     }
 
-    if (!validateAadhaar(aadhaar)) {
+    if (!isValidAadhaar(aadhaar)) {
       setError("Enter valid 12-digit Aadhaar");
       return;
     }

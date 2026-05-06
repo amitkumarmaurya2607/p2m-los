@@ -13,7 +13,7 @@ function Logo() {
         <path
           d="M12 16C12 8.26801 18.268 2 26 2H38C45.732 2 52 8.26801 52 16V28C52 35.732 45.732 42 38 42H26C18.268 42 12 35.732 12 28V16Z"
           fill="url(#paint0_linear_252_1491)"
-          shape-rendering="crispEdges"
+          shapeRendering="crispEdges"
         />
         <path
           d="M27.2642 29V14.4545H36.8949V16.9901H30.3395V20.456H36.2557V22.9915H30.3395V29H27.2642Z"
@@ -32,9 +32,9 @@ function Logo() {
           width="64"
           height="64"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -88,21 +88,21 @@ function Logo() {
           y2="2"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#00C89C" />
-          <stop offset="0.0714286" stop-color="#07BFA1" />
-          <stop offset="0.142857" stop-color="#0EB6A5" />
-          <stop offset="0.214286" stop-color="#14ADA9" />
-          <stop offset="0.285714" stop-color="#18A3AC" />
-          <stop offset="0.357143" stop-color="#1C9AB0" />
-          <stop offset="0.428571" stop-color="#2091B2" />
-          <stop offset="0.5" stop-color="#2487B5" />
-          <stop offset="0.571429" stop-color="#277DB7" />
-          <stop offset="0.642857" stop-color="#2A73B9" />
-          <stop offset="0.714286" stop-color="#2D69BB" />
-          <stop offset="0.785714" stop-color="#305EBD" />
-          <stop offset="0.857143" stop-color="#3252BF" />
-          <stop offset="0.928571" stop-color="#3546C0" />
-          <stop offset="1" stop-color="#3737C1" />
+          <stop stopColor="#00C89C" />
+          <stop offset="0.0714286" stopColor="#07BFA1" />
+          <stop offset="0.142857" stopColor="#0EB6A5" />
+          <stop offset="0.214286" stopColor="#14ADA9" />
+          <stop offset="0.285714" stopColor="#18A3AC" />
+          <stop offset="0.357143" stopColor="#1C9AB0" />
+          <stop offset="0.428571" stopColor="#2091B2" />
+          <stop offset="0.5" stopColor="#2487B5" />
+          <stop offset="0.571429" stopColor="#277DB7" />
+          <stop offset="0.642857" stopColor="#2A73B9" />
+          <stop offset="0.714286" stopColor="#2D69BB" />
+          <stop offset="0.785714" stopColor="#305EBD" />
+          <stop offset="0.857143" stopColor="#3252BF" />
+          <stop offset="0.928571" stopColor="#3546C0" />
+          <stop offset="1" stopColor="#3737C1" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_252_1491"
@@ -112,8 +112,8 @@ function Logo() {
           y2="22"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#0F172B" />
-          <stop offset="1" stop-color="#314158" />
+          <stop stopColor="#0F172B" />
+          <stop offset="1" stopColor="#314158" />
         </linearGradient>
       </defs>
     </svg>

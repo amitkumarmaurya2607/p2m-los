@@ -8,6 +8,7 @@ import { Calendar, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setEmploymentDetails, selectApplication } from "@/features/application/applicationSlice";
+import { isValidEmail, isValidPinCode, sanitizeNumeric } from "@/lib/utils";
 
 function EmploymentDetails() {
   const router = useRouter();
@@ -47,7 +48,7 @@ function EmploymentDetails() {
 
     if (!form.email) {
       newError.email = "Email is required";
-    } else if (!/^\S+@\S+\.\S+$/.test(form.email)) {
+    } else if (!isValidEmail(form.email)) {
       newError.email = "Invalid email";
     }
 
@@ -59,7 +60,7 @@ function EmploymentDetails() {
 
     if (!form.pincode) {
       newError.pincode = "Pincode required";
-    } else if (!/^[0-9]{6}$/.test(form.pincode)) {
+    } else if (!isValidPinCode(form.pincode)) {
       newError.pincode = "Invalid pincode";
     }
 
@@ -95,7 +96,7 @@ function EmploymentDetails() {
     <StepCard
       title="Employment Details"
       subtitle="We use this to verify your income and determine the best loan offer."
-      className="w-[812px]"
+      className="lg:w-[812px]"
     >
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -123,7 +124,7 @@ function EmploymentDetails() {
           <TextInput
             label="Monthly Net Salary (₹)"
             value={form.salary}
-            onChange={(e) => handleChange("salary", e.target.value.replace(/[^0-9]/g, ""))}
+            onChange={(e) => handleChange("salary", sanitizeNumeric(e.target.value))}
             error={error.salary}
           />
 
@@ -144,7 +145,7 @@ function EmploymentDetails() {
           <TextInput
             label="UAN Number (Optional)"
             value={form.uan}
-            onChange={(e) => handleChange("uan", e.target.value.replace(/[^0-9]/g, ""))}
+            onChange={(e) => handleChange("uan", sanitizeNumeric(e.target.value))}
           />
         </div>
 
@@ -163,7 +164,7 @@ function EmploymentDetails() {
             <TextInput
               label="Company Pincode"
               value={form.pincode}
-              onChange={(e) => handleChange("pincode", e.target.value.replace(/[^0-9]/g, ""))}
+              onChange={(e) => handleChange("pincode", sanitizeNumeric(e.target.value))}
               maxLength={6}
               error={error.pincode}
             />

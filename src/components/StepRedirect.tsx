@@ -31,7 +31,7 @@ export default function StepRedirect({ children }: { children: React.ReactNode }
       }
     }
 
-    if (pathname === "/bank-verified" || pathname === "/review") {
+    if (pathname === "/review") {
       return;
     }
 
