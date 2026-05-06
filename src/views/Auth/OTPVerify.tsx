@@ -61,10 +61,18 @@ function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps
   };
 
   return (
-    <div className="w-full lg:w-1/2 bg-surface-muted flex items-center justify-center p-6 bg-[url('/images/boginBanner.webp')] lg:bg-none">
-      <div className="w-full max-w-[500px] flex flex-col items-start gap-2 p-[48px] bg-card-bg border border-card-border rounded-[32px] shadow-[var(--shadow-md)] [&>*]:w-full">
+    <div
+      className="w-full lg:w-1/2 bg-surface-muted flex items-center justify-center p-6
+        bg-[url('/images/boginBanner.webp')] lg:bg-none"
+    >
+      <div
+        className="w-full max-w-[500px] flex flex-col items-start gap-2 p-8 lg:p-12 bg-background
+          lg:bg-card-bg border border-card-border rounded-[16px] lg:rounded-[32px]
+          shadow-[var(--shadow-md)] [&>*]:w-full"
+      >
         <button
-          className="flex items-center justify-center w-[40px] h-[40px] bg-muted rounded-full"
+          className="flex items-center justify-center w-[40px] h-[40px] bg-muted rounded-full
+            max-w-[40px]"
           onClick={back}
         >
           <ArrowLeft className="w-5 h-5" />

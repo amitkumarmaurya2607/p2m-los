@@ -2,17 +2,32 @@ import { ArrowRight, Check, Shield } from "lucide-react";
 
 export default function HeroBanner() {
   return (
-    <section className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-primary via-primary-light to-secondary">
+    <section
+      className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-primary
+        via-primary-light to-secondary"
+    >
       {/* Glow Effects */}
-      <div className="absolute w-[400px] h-[400px] bg-white/10 blur-[80px] rounded-full top-[-120px] right-[-80px]" />
-      <div className="absolute w-[350px] h-[350px] bg-[#00C89C]/20 blur-[80px] rounded-full bottom-[-120px] left-[-80px]" />
+      <div
+        className="absolute w-[400px] h-[400px] bg-white/10 blur-[80px] rounded-full top-[-120px]
+          right-[-80px]"
+      />
+      <div
+        className="absolute w-[350px] h-[350px] bg-[#00C89C]/20 blur-[80px] rounded-full
+          bottom-[-120px] left-[-80px]"
+      />
 
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-12 pt-32 pb-20 grid lg:grid-cols-2 gap-12 items-center">
+      <div
+        className="relative max-w-7xl mx-auto px-6 lg:px-12 pt-32 pb-20 grid lg:grid-cols-2 gap-12
+          items-center"
+      >
         {/* LEFT */}
         <div className="space-y-8">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 rounded-full text-white text-sm">
+          <div
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20
+              rounded-full text-white text-sm"
+          >
             <Shield className="w-4 h-4 text-green-400" />
             RBI Registered NBFC Partner
           </div>
@@ -22,7 +37,10 @@ export default function HeroBanner() {
             <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
               Instant Loans for
             </h1>
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-white to-green-200 bg-clip-text text-transparent">
+            <h1
+              className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-white to-green-200
+                bg-clip-text text-transparent"
+            >
               Every Indian 🇮🇳
             </h1>
           </div>
@@ -35,11 +53,16 @@ export default function HeroBanner() {
 
           {/* CTA */}
           <div className="flex flex-wrap gap-4">
-            <button className="flex items-center gap-2 px-6 py-3 bg-white text-primary font-semibold rounded-full shadow-lg">
+            <button
+              className="flex items-center gap-2 px-6 py-3 bg-white text-primary font-semibold
+                rounded-full shadow-lg"
+            >
               Apply Now <ArrowRight size={18} />
             </button>
 
-            <button className="px-6 py-3 border-2 border-white/50 text-white rounded-full font-semibold">
+            <button
+              className="px-6 py-3 border-2 border-white/50 text-white rounded-full font-semibold"
+            >
               Check Eligibility
             </button>
           </div>
@@ -65,7 +88,10 @@ export default function HeroBanner() {
         {/* RIGHT FLOATING CARDS */}
         <div className="relative hidden lg:block">
           {/* Approved Amount */}
-          <div className="absolute top-0 left-10 bg-white/10 border border-white/20 backdrop-blur-md rounded-xl p-4 flex items-center gap-3 shadow-lg">
+          <div
+            className="absolute top-0 left-10 bg-white/10 border border-white/20 backdrop-blur-md
+              rounded-xl p-4 flex items-center gap-3 shadow-lg"
+          >
             <div className="w-10 h-10 flex items-center justify-center bg-green-100 rounded-full">
               <Check className="text-green-600" size={18} />
             </div>
@@ -85,7 +111,10 @@ export default function HeroBanner() {
           </div>
 
           {/* EMI Card */}
-          <div className="absolute bottom-10 right-0 bg-white rounded-xl p-4 shadow-lg flex items-center gap-3">
+          <div
+            className="absolute bottom-10 right-0 bg-white rounded-xl p-4 shadow-lg flex
+              items-center gap-3"
+          >
             <div className="w-9 h-9 bg-orange-100 flex items-center justify-center rounded-full">
               ₹
             </div>

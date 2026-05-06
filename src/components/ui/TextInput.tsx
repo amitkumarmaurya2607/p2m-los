@@ -20,14 +20,12 @@ const TextInput = ({
   return (
     <div className="w-full">
       <div
-        className={`relative flex items-center w-full h-[64px] px-[20px] pt-[24px] pb-[8px] 
-        bg-input-bg rounded-[16px] 
-        shadow-[var(--shadow-sm)]
-        ${error ? "border border-destructive" : "border border-transparent"}
-        `}
+        className={`relative flex items-center w-full h-[64px] px-[20px] pt-[24px] pb-[8px]
+          bg-input-bg rounded-[16px] shadow-[var(--shadow-sm)]
+          ${error ? "border border-destructive" : "border border-transparent"} `}
       >
         {leftIcon && (
-          <div className="mr-[10px] h-[64px] mt-[-15px]   flex items-center">{leftIcon}</div>
+          <div className="mr-[10px] h-[64px] mt-[-15px] flex items-center">{leftIcon}</div>
         )}
 
         <div className="relative flex-1">
@@ -39,10 +37,9 @@ const TextInput = ({
 
           {label && (
             <label
-              className={`absolute left-0 font-medium top-[10px] -translate-y-1/2 text-[16px] transition-all duration-200 pointer-events-none text-text-muted
-            
-              peer-focus:top-0 peer-focus:text-text-label
-              peer-[&:not(:placeholder-shown)]:top-0
+              className={`absolute left-0 font-medium top-[10px] -translate-y-1/2 text-[16px]
+              transition-all duration-200 pointer-events-none text-text-muted peer-focus:top-0
+              peer-focus:text-text-label peer-[&:not(:placeholder-shown)]:top-0
               peer-[&:not(:placeholder-shown)]:text-text-label`}
             >
               {label}

@@ -95,7 +95,7 @@ function EmploymentDetails() {
     <StepCard
       title="Employment Details"
       subtitle="We use this to verify your income and determine the best loan offer."
-      className="  w-[812px]"
+      className="w-[812px]"
     >
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

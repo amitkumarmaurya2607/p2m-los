@@ -39,7 +39,8 @@ export default function TrustStats() {
           {stats.map((stat, idx) => (
             <div
               key={idx}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col items-center"
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col
+                items-center"
             >
               <div className="mb-4">{stat.icon}</div>
               <h3 className="text-3xl font-extrabold text-white mb-1">{stat.value}</h3>

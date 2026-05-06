@@ -154,7 +154,7 @@ function PersonalInfo() {
   };
 
   return (
-    <StepCard title="Basic Info" subtitle="" className="w-full max-w-3xl mx-auto">
+    <StepCard title="Basic Info" subtitle="" className="lg:w-[800px] mx-auto">
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Personal Details */}
         <div>
@@ -256,7 +256,8 @@ function PersonalInfo() {
                       <button
                         type="button"
                         onClick={handleSendOtp}
-                        className="h-[36px] px-4 rounded-xl border border-primary text-primary text-sm font-medium hover:bg-primary-muted whitespace-nowrap"
+                        className="h-[36px] px-4 rounded-xl border border-primary text-primary
+                          text-sm font-medium hover:bg-primary-muted whitespace-nowrap"
                       >
                         Verify Email
                       </button>
@@ -281,7 +282,8 @@ function PersonalInfo() {
                   <button
                     type="button"
                     onClick={handleVerifyOtp}
-                    className="h-[48px] px-5 rounded-xl bg-primary text-white text-sm font-medium whitespace-nowrap"
+                    className="h-[48px] px-5 rounded-xl bg-primary text-white text-sm font-medium
+                      whitespace-nowrap"
                   >
                     Verify
                   </button>

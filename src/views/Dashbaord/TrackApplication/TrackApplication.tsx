@@ -43,21 +43,30 @@ function TrackApplication() {
           </h1>
 
           <div className="mt-2 flex items-center gap-2">
-            <span className="rounded-full bg-[#FEF3C6] px-3 py-1 text-[12px] font-bold uppercase tracking-[1.2px] text-[#E17100]">
+            <span
+              className="rounded-full bg-[#FEF3C6] px-3 py-1 text-[12px] font-bold uppercase
+                tracking-[1.2px] text-[#E17100]"
+            >
               In Progress
             </span>
             <span className="text-[16px] font-medium text-[#62748E]">ID: APP-9874-FX21</span>
           </div>
         </div>
 
-        <button className="flex h-12 items-center gap-2 rounded-[16px] bg-[#3737C1]/10 px-6 text-[16px] font-bold text-[#3737C1]">
+        <button
+          className="flex h-12 items-center gap-2 rounded-[16px] bg-[#3737C1]/10 px-6 text-[16px]
+            font-bold text-[#3737C1]"
+        >
           <Headphones className="h-5 w-5" />
           Support
         </button>
       </div>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[672px_320px]">
-        <div className="rounded-[32px] border border-[#F1F5F9] bg-white px-[48px] py-[48px] shadow-[0px_32px_80px_-24px_rgba(0,0,0,0.1)]">
+        <div
+          className="rounded-[32px] border border-[#F1F5F9] bg-white px-[48px] py-[48px]
+            shadow-[0px_32px_80px_-24px_rgba(0,0,0,0.1)]"
+        >
           <div className="flex items-center gap-3">
             <Clock3 className="h-7 w-7 text-[#3737C1]" />
             <h2 className="text-[20px] font-bold text-[#0F172B]">Application Timeline</h2>
@@ -69,9 +78,11 @@ function TrackApplication() {
                 <span
                   className={`absolute -left-[43px] top-1 h-5 w-5 rounded-full border-4 ${
                     step.status === "done"
-                      ? "border-[#00C89C]/20 bg-[#00C89C] shadow-[0px_0px_0px_4px_rgba(0,200,156,0.2)]"
+                      ? `border-[#00C89C]/20 bg-[#00C89C]
+                        shadow-[0px_0px_0px_4px_rgba(0,200,156,0.2)]`
                       : step.status === "active"
-                        ? "border-[#3737C1]/20 bg-[#3737C1] shadow-[0px_0px_0px_4px_rgba(55,55,193,0.2)]"
+                        ? `border-[#3737C1]/20 bg-[#3737C1]
+                          shadow-[0px_0px_0px_4px_rgba(55,55,193,0.2)]`
                         : "border-white bg-[#CAD5E2]"
                   }`}
                 />
@@ -89,7 +100,10 @@ function TrackApplication() {
                 </h3>
 
                 {step.status === "active" ? (
-                  <div className="mt-4 flex items-center gap-2 rounded-[14px] border border-[#F1F5F9] bg-[#F8FAFC] px-4 py-4 text-[16px] font-medium text-[#45556C]">
+                  <div
+                    className="mt-4 flex items-center gap-2 rounded-[14px] border border-[#F1F5F9]
+                      bg-[#F8FAFC] px-4 py-4 text-[16px] font-medium text-[#45556C]"
+                  >
                     <Info className="h-4 w-4 text-[#3737C1]" />
                     {step.desc}
                   </div>
@@ -102,8 +116,14 @@ function TrackApplication() {
         </div>
 
         <div className="space-y-6">
-          <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-[#0F172B] to-[#1D293D] p-8 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
-            <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/5 blur-[40px]" />
+          <div
+            className="relative overflow-hidden rounded-[32px] border border-white/10
+              bg-gradient-to-br from-[#0F172B] to-[#1D293D] p-8
+              shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]"
+          >
+            <div
+              className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/5 blur-[40px]"
+            />
 
             <div className="border-b border-white/10 pb-4">
               <div className="flex items-center gap-3">
@@ -120,7 +140,9 @@ function TrackApplication() {
               @ 10.5% p.a. for 36 months
             </p>
 
-            <div className="mt-9 rounded-[16px] border border-[#3737C1]/50 bg-[#3737C1]/30 px-4 py-4">
+            <div
+              className="mt-9 rounded-[16px] border border-[#3737C1]/50 bg-[#3737C1]/30 px-4 py-4"
+            >
               <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-[#CAD5E2]">
                 Est. EMI
               </p>
@@ -130,7 +152,10 @@ function TrackApplication() {
             </div>
           </div>
 
-          <div className="rounded-[32px] border border-[#F1F5F9] bg-white p-8 shadow-[0px_16px_40px_-12px_rgba(0,0,0,0.05)]">
+          <div
+            className="rounded-[32px] border border-[#F1F5F9] bg-white p-8
+              shadow-[0px_16px_40px_-12px_rgba(0,0,0,0.05)]"
+          >
             <div className="flex items-center gap-3">
               <FileText className="h-5 w-5 text-[#3737C1]" />
               <h3 className="text-[18px] font-bold text-[#0F172B]">Submitted Docs</h3>
@@ -140,7 +165,8 @@ function TrackApplication() {
               {docs.map((doc) => (
                 <div
                   key={doc}
-                  className="flex items-center justify-between rounded-[16px] border border-[#F1F5F9] bg-[#F8FAFC] px-4 py-4"
+                  className="flex items-center justify-between rounded-[16px] border
+                    border-[#F1F5F9] bg-[#F8FAFC] px-4 py-4"
                 >
                   <span className="text-[16px] font-semibold text-[#314158]">{doc}</span>
                   <CheckCircle className="h-5 w-5 text-[#00C89C]" />

@@ -38,16 +38,28 @@ export default function HowItWorks() {
 
         <div className="relative">
           {/* Connecting line for desktop */}
-          <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-border border-dashed border-t-2"></div>
+          <div
+            className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-border border-dashed
+              border-t-2"
+          ></div>
 
           <div className="grid md:grid-cols-4 gap-12 relative z-10">
             {steps.map((step, idx) => (
               <div key={idx} className="flex flex-col items-center">
-                <div className="w-24 h-24 rounded-full bg-surface border-4 border-white shadow-xl flex items-center justify-center mb-6 relative">
-                  <div className="w-16 h-16 rounded-full bg-primary-muted flex items-center justify-center">
+                <div
+                  className="w-24 h-24 rounded-full bg-surface border-4 border-white shadow-xl flex
+                    items-center justify-center mb-6 relative"
+                >
+                  <div
+                    className="w-16 h-16 rounded-full bg-primary-muted flex items-center
+                      justify-center"
+                  >
                     {step.icon}
                   </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-secondary text-white font-bold flex items-center justify-center border-4 border-white">
+                  <div
+                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-secondary text-white
+                      font-bold flex items-center justify-center border-4 border-white"
+                  >
                     {idx + 1}
                   </div>
                 </div>

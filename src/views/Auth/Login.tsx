@@ -7,6 +7,7 @@ import OTPVerify from "./OTPVerify";
 import TextInput from "@/components/ui/TextInput";
 import { isValidEmail, isValidMobile } from "@/lib/utils";
 import { showToast } from "@/lib/toast";
+import Logo from "@/assets/icon/Logo";
 
 const Login = () => {
   const [method, setMethod] = useState<"mobile" | "email">("mobile");
@@ -77,21 +78,28 @@ const Login = () => {
   return (
     <>
       {!sendOtp ? (
-        <form
-          onSubmit={submitHandler}
-          className="w-full lg:w-1/2 bg-surface-muted flex items-center justify-center p-6 bg-[url('/images/boginBanner.webp')] lg:bg-none"
+        <div
+          className="w-full lg:w-1/2 bg-surface-muted flex items-center justify-center flex-col
+            lg:flex-row p-6 bg-[url('/images/boginBanner.webp')] lg:bg-none"
         >
-          <div
-            className="
-              w-full max-w-[448px] 
-              flex flex-col gap-2
-              p-[48px]
-              bg-card-bg
-              border border-card-border
-              rounded-[32px]
-              shadow-[var(--shadow-md)]
-              [&>*]:w-full
-            "
+          <div className="lg:hidden text-primary-foreground max-w-[400px] mx-auto mb-8">
+            <div>
+              <Logo />
+            </div>
+            <h1 className="text-[32px] font-extrabold leading-[40.8px]">
+              Access your <br />
+              financial dashboard
+            </h1>
+            <p className="text-[15.6px] font-normal leading-[19.04px] tracking-[0px]">
+              Instant loans, seamless process, and secure digital journeys. Empowering your
+              financial future.
+            </p>
+          </div>
+          <form
+            onSubmit={submitHandler}
+            className="w-full max-w-[448px] flex flex-col gap-2 p-8 lg:p-12 bg-card-bg border
+              border-card-border bg-background text-foreground lg:rounded-[32px] rounded-[16px]
+              shadow-[var(--shadow-md)] [&>*]:w-full"
           >
             <header className="mb-8">
               <h2 className="text-2xl font-bold text-text-heading">Welcome back</h2>
@@ -114,8 +122,8 @@ const Login = () => {
                 </span>
               </GradientButton>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       ) : (
         <OTPVerify
           back={() => setSendOtp(false)}

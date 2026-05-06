@@ -140,7 +140,10 @@ function BankDetails() {
           />
 
           {/* Info Box */}
-          <div className="flex items-start gap-3 p-4 sm:p-5 rounded-xl border border-info/30 bg-info/10 text-info">
+          <div
+            className="flex items-start gap-3 p-4 sm:p-5 rounded-xl border border-info/30 bg-info/10
+              text-info"
+          >
             <CreditCard className="w-5 h-5 mt-1 shrink-0" />
             <p className="text-xs sm:text-sm leading-relaxed">
               We will deposit <b>₹1.00</b> to verify this account securely. Your data is encrypted

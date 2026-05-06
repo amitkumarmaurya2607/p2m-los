@@ -175,7 +175,8 @@ const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => 
           <button
             type="button"
             onClick={handleTryAgain}
-            className="text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80"
+            className="text-sm font-medium text-primary underline underline-offset-4
+              hover:text-primary/80"
           >
             Try again
           </button>

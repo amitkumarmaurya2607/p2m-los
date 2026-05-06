@@ -21,25 +21,20 @@ const GradientButton = ({
     <button
       {...props}
       disabled={isDisabled}
-      className={`
-        w-full h-[60px]
-        rounded-[16px]
-        text-primary-foreground font-medium
-        flex items-center justify-center gap-2
-        bg-gradient-to-r from-secondary to-secondary/90
-        shadow-[var(--shadow-button)]
-        hover:opacity-90
-        active:scale-[0.98]
-        transition-all duration-200
-        disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100
-        ${className}
-      `}
+      className={` w-full h-[60px] rounded-[16px] text-primary-foreground font-medium flex
+        items-center justify-center gap-2 bg-gradient-to-r from-secondary to-secondary/90
+        shadow-[var(--shadow-button)] hover:opacity-90 active:scale-[0.98] transition-all
+        duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100
+        ${className} `}
     >
       {!loading && leftIcon && <span className="flex items-center">{leftIcon}</span>}
 
       {loading ? (
         <span className="flex items-center gap-2">
-          <span className="inline-block w-4 h-4 border-2 border-primary-foreground border-r-transparent border-b-transparent rounded-full animate-spin" />
+          <span
+            className="inline-block w-4 h-4 border-2 border-primary-foreground border-r-transparent
+              border-b-transparent rounded-full animate-spin"
+          />
           Loading...
         </span>
       ) : (

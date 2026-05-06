@@ -37,7 +37,10 @@ function LoanCalculator() {
   };
 
   return (
-    <div className="w-full max-w-[576px] rounded-[32px] border border-[#F1F5F9] bg-white/90 px-[48px] py-[48px] shadow-[0px_32px_80px_-24px_rgba(0,0,0,0.15)]">
+    <div
+      className="w-full max-w-[576px] rounded-[32px] border border-[#F1F5F9] bg-white/90 px-[48px]
+        py-[48px] shadow-[0px_32px_80px_-24px_rgba(0,0,0,0.15)]"
+    >
       <div>
         <h2 className="text-[30px] font-extrabold leading-9 tracking-[-0.75px] text-[#0F172B]">
           Configure Loan
@@ -47,7 +50,11 @@ function LoanCalculator() {
         </p>
       </div>
 
-      <div className="relative mt-8 overflow-hidden rounded-[24px] bg-gradient-to-br from-[#0F172B] to-[#1D293D] p-6 shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)]">
+      <div
+        className="relative mt-8 overflow-hidden rounded-[24px] bg-gradient-to-br from-[#0F172B]
+          to-[#1D293D] p-6
+          shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)]"
+      >
         <div className="absolute -right-2 -top-10 h-32 w-32 rounded-full bg-white/5 blur-[40px]" />
 
         <p className="text-[14px] font-semibold uppercase tracking-[0.7px] text-[#CAD5E2]">
@@ -59,7 +66,10 @@ function LoanCalculator() {
           <span className="pb-1 text-[18px] font-medium leading-7 text-[#90A1B9]">/mo</span>
         </div>
 
-        <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4 text-[14px] font-medium leading-5 text-[#CAD5E2]">
+        <div
+          className="mt-4 flex items-center justify-between border-t border-white/10 pt-4
+            text-[14px] font-medium leading-5 text-[#CAD5E2]"
+        >
           <span>Interest Rate: {interestRate}% p.a.</span>
           <span>Total Payable: ₹{formatINR(totalPayable)}</span>
         </div>
@@ -81,10 +91,13 @@ function LoanCalculator() {
             step={10000}
             value={loanAmount}
             onChange={(e) => setLoanAmount(Number(e.target.value))}
-            className="mt-7 h-2 w-full cursor-pointer appearance-none rounded-full bg-[#E2E8F0] accent-[#3737C1]"
+            className="mt-7 h-2 w-full cursor-pointer appearance-none rounded-full bg-[#E2E8F0]
+              accent-[#3737C1]"
           />
 
-          <div className="mt-3 flex justify-between text-[12px] font-semibold leading-4 text-[#90A1B9]">
+          <div
+            className="mt-3 flex justify-between text-[12px] font-semibold leading-4 text-[#90A1B9]"
+          >
             <span>₹1L</span>
             <span>₹15L</span>
           </div>
@@ -103,10 +116,13 @@ function LoanCalculator() {
             step={1}
             value={tenure}
             onChange={(e) => setTenure(Number(e.target.value))}
-            className="mt-7 h-2 w-full cursor-pointer appearance-none rounded-full bg-[#E2E8F0] accent-[#00C89C]"
+            className="mt-7 h-2 w-full cursor-pointer appearance-none rounded-full bg-[#E2E8F0]
+              accent-[#00C89C]"
           />
 
-          <div className="mt-3 flex justify-between text-[12px] font-semibold leading-4 text-[#90A1B9]">
+          <div
+            className="mt-3 flex justify-between text-[12px] font-semibold leading-4 text-[#90A1B9]"
+          >
             <span>12m</span>
             <span>60m</span>
           </div>
@@ -116,7 +132,9 @@ function LoanCalculator() {
       <button
         type="button"
         onClick={handleLockPlan}
-        className="mt-10 flex h-[60px] w-full items-center justify-center gap-2 rounded-[16px] bg-[#3737C1] text-[18px] font-bold leading-7 text-white shadow-[0px_12px_24px_-8px_rgba(55,55,193,0.4)]"
+        className="mt-10 flex h-[60px] w-full items-center justify-center gap-2 rounded-[16px]
+          bg-[#3737C1] text-[18px] font-bold leading-7 text-white
+          shadow-[0px_12px_24px_-8px_rgba(55,55,193,0.4)]"
       >
         Lock This Plan
         <ChevronRight className="h-5 w-5" />

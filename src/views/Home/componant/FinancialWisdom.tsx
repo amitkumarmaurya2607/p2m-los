@@ -47,13 +47,16 @@ export default function FinancialWisdom() {
           {blogs.map((blog, idx) => (
             <div
               key={idx}
-              className="bg-surface border border-border rounded-2xl overflow-hidden shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] transition-shadow group cursor-pointer"
+              className="bg-surface border border-border rounded-2xl overflow-hidden
+                shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] transition-shadow group
+                cursor-pointer"
             >
               <div className="h-48 overflow-hidden">
                 <img
                   src={blog.image}
                   alt={blog.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform
+                    duration-500"
                 />
               </div>
               <div className="p-6">
@@ -63,7 +66,10 @@ export default function FinancialWisdom() {
                   </span>
                   <span className="text-xs text-muted-foreground">{blog.date}</span>
                 </div>
-                <h3 className="text-lg font-bold text-text-heading mb-4 group-hover:text-primary transition-colors line-clamp-2">
+                <h3
+                  className="text-lg font-bold text-text-heading mb-4 group-hover:text-primary
+                    transition-colors line-clamp-2"
+                >
                   {blog.title}
                 </h3>
                 <div className="flex items-center gap-2 text-primary text-sm font-semibold">

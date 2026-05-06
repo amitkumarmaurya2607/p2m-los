@@ -13,23 +13,13 @@ const InfoCard: React.FC<InfoCardProps> = ({
 }) => {
   return (
     <div
-      className={`
-        flex items-center gap-4 p-4 
-        w-full max-w-[384px]
-        bg-surface 
-        border border-white/40
-        rounded-2xl 
-        shadow-[var(--shadow-sm)]
-      `}
+      className={` flex items-center gap-4 p-4 w-full max-w-[384px] bg-surface border
+        border-white/40 rounded-2xl shadow-[var(--shadow-sm)] `}
     >
       {/* Icon */}
       <div
-        className={`
-          flex items-center justify-center
-          w-[48px] h-[48px] rounded-[14px]
-          shadow-[var(--card-icon-shadow)]
-          ${className}
-        `}
+        className={` flex items-center justify-center w-[48px] h-[48px] rounded-[14px]
+          shadow-[var(--card-icon-shadow)] ${className} `}
       >
         {icon}
       </div>

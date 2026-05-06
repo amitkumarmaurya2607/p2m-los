@@ -143,9 +143,10 @@ function UploadDocuments() {
           }}
           onDragLeave={() => setDragActive(false)}
           onDrop={handleDrop}
-          className={`mt-10 flex h-[256px] cursor-pointer flex-col items-center justify-center rounded-[24px] border-2 border-dashed bg-white transition ${
-            dragActive ? "border-secondary" : "border-muted"
-          }`}
+          className={`mt-10 flex h-[256px] cursor-pointer flex-col items-center justify-center
+            rounded-[24px] border-2 border-dashed bg-white transition ${
+              dragActive ? "border-secondary" : "border-muted"
+            }`}
         >
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-surface">
             <UploadCloud className="h-8 w-8 text-muted-foreground" />
@@ -155,24 +156,34 @@ function UploadDocuments() {
           <p className="mt-1 text-[14px] text-[#62748E]">PDF, JPG or PNG (Max 5MB)</p>
         </div>
 
-        <div className="mt-8 rounded-[24px] border border-[#F1F5F9] bg-white p-8 shadow-[0px_20px_25px_-5px_rgba(226,232,240,0.4)]">
+        <div
+          className="mt-8 rounded-[24px] border border-[#F1F5F9] bg-white p-8
+            shadow-[0px_20px_25px_-5px_rgba(226,232,240,0.4)]"
+        >
           <h3 className="text-[18px] font-bold text-[#0F172B]">Required Documents</h3>
 
           <div className="mt-7 space-y-4">
             {docs.map((doc) => (
               <div
                 key={doc.key}
-                className="flex items-center justify-between rounded-[16px] border border-border bg-surface p-4"
+                className="flex items-center justify-between rounded-[16px] border border-border
+                  bg-surface p-4"
               >
                 <div className="flex min-w-0 items-center gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[14px] border border-muted bg-white">
+                  <div
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[14px]
+                      border border-muted bg-white"
+                  >
                     <FileText className="h-5 w-5 text-muted-foreground" />
                   </div>
 
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="text-[16px] font-semibold text-[#0F172B]">{doc.title}</p>
-                      <span className="rounded-full bg-[#FFE2E2] px-2 py-0.5 text-[10px] font-bold uppercase text-[#FB2C36]">
+                      <span
+                        className="rounded-full bg-[#FFE2E2] px-2 py-0.5 text-[10px] font-bold
+                          uppercase text-[#FB2C36]"
+                      >
                         Required
                       </span>
                     </div>
@@ -202,7 +213,8 @@ function UploadDocuments() {
                   <button
                     type="button"
                     onClick={() => handleUploadClick(doc.key)}
-                    className="h-10 rounded-[14px] border-2 border-[#E2E8F0] px-5 text-[14px] font-semibold text-[#314158]"
+                    className="h-10 rounded-[14px] border-2 border-[#E2E8F0] px-5 text-[14px]
+                      font-semibold text-[#314158]"
                   >
                     Upload
                   </button>
@@ -214,7 +226,8 @@ function UploadDocuments() {
           <button
             type="button"
             onClick={handleSubmit}
-            className="mt-8 h-14 w-full rounded-[14px] bg-gradient-to-r from-secondary to-secondary text-[18px] font-semibold text-white shadow-[0px_12px_24px_-8px_rgba(0,200,156,0.4)]"
+            className="mt-8 h-14 w-full rounded-[14px] bg-gradient-to-r from-secondary to-secondary
+              text-[18px] font-semibold text-white shadow-[0px_12px_24px_-8px_rgba(0,200,156,0.4)]"
           >
             Review Application
           </button>

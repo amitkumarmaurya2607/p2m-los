@@ -20,17 +20,9 @@ const StepCard: React.FC<StepCardProps> = ({
 }) => {
   return (
     <div
-      className={`
-      w-[512px] min-h-[430px]
-      p-[48px]
-      flex flex-col gap-8
-      bg-surface-overlay-90
-      border border-border-light
-      rounded-[32px]
-      shadow-[var(--shadow-lg)]
-
-      ${className}
-     `}
+      className={` w-full max-w-[512px] lg:max-w-none lg:w-[512px] min-h-[430px] p-8 lg:p-12 flex
+        flex-col gap-6 flex flex-col lg:gap-8 bg-surface-overlay-90 border border-border-light
+        rounded-[16px] lg:rounded-[32px] shadow-[var(--shadow-lg)] ${className} `}
     >
       {back && (
         <button
@@ -43,12 +35,17 @@ const StepCard: React.FC<StepCardProps> = ({
 
       <div className="flex flex-col gap-4">
         {icon && (
-          <div className="w-12 h-12 flex items-center justify-center rounded-full bg-primary-muted text-primary">
+          <div
+            className="w-12 h-12 flex items-center justify-center rounded-full bg-primary-muted
+              text-primary"
+          >
             {icon}
           </div>
         )}
 
-        <h2 className="text-[30px] leading-[36px] font-extrabold tracking-[-0.75px] text-text-heading">
+        <h2
+          className="text-[30px] leading-[36px] font-extrabold tracking-[-0.75px] text-text-heading"
+        >
           {title}
         </h2>
 

@@ -41,7 +41,7 @@ const SelectBox = ({
       >
         {leftIcon && <div className="mr-[10px] flex items-center">{leftIcon}</div>}
 
-        <div className="relative flex-1 ">
+        <div className="relative flex-1">
           <Select
             {...props}
             inputId={id}
@@ -78,13 +78,14 @@ const SelectBox = ({
             <label
               htmlFor={id}
               className={cn(
-                "absolute left-0 font-medium  -translate-y-1/2 text-[16px] transition-all duration-200 ",
+                `absolute left-0 font-medium -translate-y-1/2 text-[16px] transition-all
+                duration-200 `,
                 leftIcon ? "left-[20px]" : "left-[20px]",
 
                 error ? "text-destructive" : "text-text-muted",
 
                 !isActive && "top-[24px] ",
-                isActive && "top-[16px]  text-text-label",
+                isActive && "top-[16px] text-text-label",
               )}
             >
               {label} {required && "*"}

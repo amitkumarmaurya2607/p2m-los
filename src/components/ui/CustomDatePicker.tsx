@@ -20,10 +20,9 @@ const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon }
   return (
     <div className="w-full">
       <div
-        className={`relative flex items-center w-full h-[64px] px-[20px] pt-[24px] pb-[8px] 
-        bg-input-bg rounded-[16px] 
-        shadow-[var(--shadow-sm)]
-        ${error ? "border border-destructive" : "border border-transparent"}`}
+        className={`relative flex items-center w-full h-[64px] px-[20px] pt-[24px] pb-[8px]
+          bg-input-bg rounded-[16px] shadow-[var(--shadow-sm)]
+          ${error ? "border border-destructive" : "border border-transparent"}`}
       >
         {leftIcon && <div className="mr-[10px] flex items-center">{leftIcon}</div>}
 
@@ -45,10 +44,9 @@ const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon }
 
           {label && (
             <label
-              className={`absolute left-0 text-[16px] font-medium transition-all duration-200 
-                ${error ? "text-destructive" : "text-text-muted"}
-                ${isActive ? "top-[-10px]  text-text-label" : "top-[0px] "}
-              `}
+              className={`absolute left-0 text-[16px] font-medium transition-all duration-200
+              ${error ? "text-destructive" : "text-text-muted"}
+              ${isActive ? "top-[-10px] text-text-label" : "top-[0px] "} `}
             >
               {label}
             </label>

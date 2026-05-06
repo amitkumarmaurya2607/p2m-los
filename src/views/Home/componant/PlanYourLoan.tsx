@@ -24,7 +24,10 @@ export default function PlanYourLoan() {
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 bg-surface rounded-3xl p-6 md:p-10 shadow-[var(--shadow-lg)] border border-border">
+        <div
+          className="flex flex-col lg:flex-row gap-8 lg:gap-12 bg-surface rounded-3xl p-6 md:p-10
+            shadow-[var(--shadow-lg)] border border-border"
+        >
           {/* Sliders */}
           <div className="flex-1 space-y-8">
             <div>
@@ -41,7 +44,8 @@ export default function PlanYourLoan() {
                 step="5000"
                 value={amount}
                 onChange={(e) => setAmount(Number(e.target.value))}
-                className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+                className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer
+                  accent-primary"
               />
               <div className="flex justify-between mt-2 text-xs text-muted-foreground font-medium">
                 <span>₹10,000</span>
@@ -52,7 +56,10 @@ export default function PlanYourLoan() {
             <div>
               <div className="flex justify-between mb-4">
                 <label className="text-text-heading font-semibold">Tenure (Months)</label>
-                <span className="text-secondary font-bold bg-secondary/10 px-3 py-1 rounded-md text-secondary">
+                <span
+                  className="text-secondary font-bold bg-secondary/10 px-3 py-1 rounded-md
+                    text-secondary"
+                >
                   {months} Months
                 </span>
               </div>
@@ -63,7 +70,8 @@ export default function PlanYourLoan() {
                 step="1"
                 value={months}
                 onChange={(e) => setMonths(Number(e.target.value))}
-                className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-secondary"
+                className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer
+                  accent-secondary"
               />
               <div className="flex justify-between mt-2 text-xs text-muted-foreground font-medium">
                 <span>3 Months</span>
@@ -82,13 +90,17 @@ export default function PlanYourLoan() {
                 max="24"
                 value={interest}
                 disabled
-                className="w-full h-2 bg-muted rounded-lg appearance-none cursor-not-allowed opacity-50"
+                className="w-full h-2 bg-muted rounded-lg appearance-none cursor-not-allowed
+                  opacity-50"
               />
             </div>
           </div>
 
           {/* Results Card */}
-          <div className="lg:w-[400px] bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 text-white shadow-xl flex flex-col justify-center">
+          <div
+            className="lg:w-[400px] bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8
+              text-white shadow-xl flex flex-col justify-center"
+          >
             <h3 className="text-gray-400 font-medium mb-2">Monthly EMI</h3>
             <p className="text-4xl font-extrabold text-secondary mb-8">
               ₹ {Math.round(emi).toLocaleString()}
@@ -111,7 +123,10 @@ export default function PlanYourLoan() {
               </div>
             </div>
 
-            <button className="w-full py-4 bg-primary hover:bg-primary-light transition-colors text-white font-bold rounded-xl shadow-lg">
+            <button
+              className="w-full py-4 bg-primary hover:bg-primary-light transition-colors text-white
+                font-bold rounded-xl shadow-lg"
+            >
               Apply for this Loan
             </button>
           </div>

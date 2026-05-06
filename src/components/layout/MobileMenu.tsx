@@ -17,7 +17,10 @@ export default function MobileMenu({ navItems }: Props) {
 
       {/* Drawer */}
       {open && (
-        <div className="absolute left-0 top-[70px] w-full bg-white border-t shadow-md p-4 space-y-4 z-50">
+        <div
+          className="absolute left-0 top-[70px] w-full bg-white border-t shadow-md p-4 space-y-4
+            z-50"
+        >
           {navItems.map((item, i) => (
             <Link
               key={i}

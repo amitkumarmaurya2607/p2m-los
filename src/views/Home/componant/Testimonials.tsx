@@ -40,7 +40,8 @@ export default function Testimonials() {
           {reviews.map((review, idx) => (
             <div
               key={idx}
-              className="bg-surface rounded-2xl p-8 shadow-[var(--shadow-md)] border border-border flex flex-col h-full"
+              className="bg-surface rounded-2xl p-8 shadow-[var(--shadow-md)] border border-border
+                flex flex-col h-full"
             >
               <div className="flex text-orange-400 mb-4">
                 {[...Array(review.rating)].map((_, i) => (
@@ -49,7 +50,10 @@ export default function Testimonials() {
               </div>
               <p className="text-muted-foreground mb-8 italic flex-1">"{review.text}"</p>
               <div className="flex items-center gap-4 mt-auto">
-                <div className="w-12 h-12 rounded-full bg-primary-muted text-primary font-bold flex items-center justify-center">
+                <div
+                  className="w-12 h-12 rounded-full bg-primary-muted text-primary font-bold flex
+                    items-center justify-center"
+                >
                   {review.avatar}
                 </div>
                 <div>

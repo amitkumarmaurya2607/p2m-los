@@ -21,7 +21,10 @@ const ReviewSection = ({
   title: string;
   fields: { label: string; value: string }[];
 }) => (
-  <div className="rounded-[24px] border border-[#E2E8F0] bg-white/80 p-6 shadow-[0px_8px_32px_-12px_rgba(0,0,0,0.05)]">
+  <div
+    className="rounded-[24px] border border-[#E2E8F0] bg-white/80 p-6
+      shadow-[0px_8px_32px_-12px_rgba(0,0,0,0.05)]"
+  >
     <div className="flex items-center justify-between border-b border-[#F1F5F9] pb-4">
       <div className="flex items-center gap-3">
         <span className="h-6 w-2 rounded-full bg-[#3737C1]" />
@@ -117,7 +120,10 @@ function ReviewApplication() {
           </div>
         </div>
 
-        <div className="rounded-[32px] border border-white/10 bg-gradient-to-br from-[#0F172B] to-[#1D293D] px-7 py-8 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
+        <div
+          className="rounded-[32px] border border-white/10 bg-gradient-to-br from-[#0F172B]
+            to-[#1D293D] px-7 py-8 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]"
+        >
           <div className="inline-flex items-center gap-3 rounded-[16px] bg-white/10 px-3 py-3">
             <ClipboardList className="h-5 w-5 text-[#00C89C]" />
             <span className="text-[14px] font-bold uppercase tracking-[0.7px] text-white">
@@ -144,7 +150,10 @@ function ReviewApplication() {
             </div>
           </div>
 
-          <label className="mt-7 flex cursor-pointer gap-3 rounded-[16px] border border-[#3737C1]/30 bg-[#3737C1]/20 p-4">
+          <label
+            className="mt-7 flex cursor-pointer gap-3 rounded-[16px] border border-[#3737C1]/30
+              bg-[#3737C1]/20 p-4"
+          >
             <input
               type="checkbox"
               checked={agree}
@@ -161,13 +170,19 @@ function ReviewApplication() {
             type="button"
             disabled={!agree || loading}
             onClick={handleSubmit}
-            className="mt-8 flex h-[86px] w-full items-center justify-center gap-4 rounded-[16px] bg-gradient-to-r from-[#00C89C] to-[#00A882] px-6 text-[18px] font-bold leading-7 text-white shadow-[0px_12px_24px_-8px_rgba(0,200,156,0.4)] disabled:cursor-not-allowed disabled:opacity-60"
+            className="mt-8 flex h-[86px] w-full items-center justify-center gap-4 rounded-[16px]
+              bg-gradient-to-r from-[#00C89C] to-[#00A882] px-6 text-[18px] font-bold leading-7
+              text-white shadow-[0px_12px_24px_-8px_rgba(0,200,156,0.4)] disabled:cursor-not-allowed
+              disabled:opacity-60"
           >
             <Shield className="h-5 w-5" />
             {loading ? "Submitting..." : "e-Sign & Submit"}
           </button>
 
-          <div className="mt-5 flex items-center justify-center gap-1 text-[12px] font-semibold text-[#90A1B9]">
+          <div
+            className="mt-5 flex items-center justify-center gap-1 text-[12px] font-semibold
+              text-[#90A1B9]"
+          >
             <CheckCircle className="h-3.5 w-3.5 text-[#00C89C]" />
             256-bit SSL Encrypted
           </div>

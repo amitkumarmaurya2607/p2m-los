@@ -64,15 +64,21 @@ export default function LoanProducts() {
           {products.map((product) => (
             <div
               key={product.id}
-              className="bg-surface border border-border rounded-2xl overflow-hidden flex flex-col sm:flex-row group shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] transition-all cursor-pointer"
+              className="bg-surface border border-border rounded-2xl overflow-hidden flex flex-col
+                sm:flex-row group shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)]
+                transition-all cursor-pointer"
             >
               <div className="p-8 flex-1 flex flex-col justify-center">
                 <div
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center mb-6 ${product.color}`}
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center mb-6
+                  ${product.color}`}
                 >
                   {product.icon}
                 </div>
-                <h3 className="text-xl font-bold text-text-heading mb-1 group-hover:text-primary transition-colors">
+                <h3
+                  className="text-xl font-bold text-text-heading mb-1 group-hover:text-primary
+                    transition-colors"
+                >
                   {product.title}
                 </h3>
                 <p className="text-secondary font-semibold mb-6">{product.amount}</p>
@@ -86,11 +92,15 @@ export default function LoanProducts() {
                 </div>
               </div>
               <div className="sm:w-2/5 h-48 sm:h-auto overflow-hidden relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-surface to-transparent z-10 hidden sm:block w-1/2"></div>
+                <div
+                  className="absolute inset-0 bg-gradient-to-r from-surface to-transparent z-10
+                    hidden sm:block w-1/2"
+                ></div>
                 <img
                   src={product.image}
                   alt={product.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform
+                    duration-500"
                 />
               </div>
             </div>

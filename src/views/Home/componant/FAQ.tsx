@@ -40,22 +40,27 @@ export default function FAQ() {
           {faqs.map((faq, idx) => (
             <div
               key={idx}
-              className="bg-surface border border-border rounded-xl overflow-hidden shadow-[var(--shadow-sm)]"
+              className="bg-surface border border-border rounded-xl overflow-hidden
+                shadow-[var(--shadow-sm)]"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                className="w-full px-6 py-4 flex justify-between items-center text-left hover:bg-muted/50 transition-colors"
+                className="w-full px-6 py-4 flex justify-between items-center text-left
+                  hover:bg-muted/50 transition-colors"
               >
                 <span className="font-semibold text-text-heading pr-8">{faq.q}</span>
                 <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 ${openIndex === idx ? "bg-primary text-white rotate-180" : "bg-muted text-text-muted"}`}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0
+                  transition-transform duration-300
+                  ${openIndex === idx ? "bg-primary text-white rotate-180" : "bg-muted text-text-muted"}`}
                 >
                   <ChevronDown size={20} />
                 </div>
               </button>
 
               <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${openIndex === idx ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}
+                className={`overflow-hidden transition-all duration-300 ease-in-out
+                ${openIndex === idx ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}
               >
                 <div className="px-6 pb-6 text-muted-foreground border-t border-border/50 pt-4">
                   {faq.a}

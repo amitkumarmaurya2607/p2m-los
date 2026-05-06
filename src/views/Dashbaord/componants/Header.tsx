@@ -32,14 +32,8 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <div
-      className="
-      flex items-center justify-between
-      w-full h-[80px]
-      px-[56px]
-      bg-surface-overlay-90
-      border-b border-border
-      shadow-[var(--shadow-sm)]
-    "
+      className="flex items-center justify-between w-full h-[80px] px-[56px] bg-surface-overlay-90
+        border-b border-border shadow-[var(--shadow-sm)]"
     >
       <div className="flex items-center gap-4">
         <button
@@ -59,7 +53,8 @@ const Header: React.FC<HeaderProps> = ({
         {mounted && (
           <button
             onClick={toggleTheme}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-muted text-text-muted hover:text-text-heading transition-colors"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-muted
+              text-text-muted hover:text-text-heading transition-colors"
             title="Toggle Theme"
           >
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
@@ -74,7 +69,10 @@ const Header: React.FC<HeaderProps> = ({
             <User size={18} />
           </button>
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-40 bg-surface border border-border rounded-md shadow-md z-10">
+            <div
+              className="absolute right-0 mt-2 w-40 bg-surface border border-border rounded-md
+                shadow-md z-10"
+            >
               <a
                 href="/profile"
                 className="block px-4 py-2 text-sm text-text-heading hover:bg-muted"

@@ -29,10 +29,12 @@ export default function FeatureCards() {
         {features.map((feature, idx) => (
           <div
             key={idx}
-            className="bg-surface rounded-2xl p-6 shadow-[var(--shadow-md)] border border-border flex items-start gap-4 transition-transform hover:-translate-y-1"
+            className="bg-surface rounded-2xl p-6 shadow-[var(--shadow-md)] border border-border
+              flex items-start gap-4 transition-transform hover:-translate-y-1"
           >
             <div
-              className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${feature.bgColor}`}
+              className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0
+              ${feature.bgColor}`}
             >
               {feature.icon}
             </div>

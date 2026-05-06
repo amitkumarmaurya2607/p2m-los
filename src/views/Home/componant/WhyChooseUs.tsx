@@ -43,7 +43,8 @@ export default function WhyChooseUs() {
           {reasons.map((reason, idx) => (
             <div key={idx} className="flex flex-col items-center text-center">
               <div
-                className={`w-20 h-20 rounded-2xl flex items-center justify-center mb-6 shadow-sm border ${reason.color}`}
+                className={`w-20 h-20 rounded-2xl flex items-center justify-center mb-6 shadow-sm
+                border ${reason.color}`}
               >
                 {reason.icon}
               </div>

@@ -20,11 +20,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       <div className="flex">
         {/* <StepperAlt /> */}
-        <div className=" grow-1 ">
+        <div className="grow-1">
           <ProgressBar />
-          <div className="flex justify-center p-8">
+          {/* <div className="flex justify-center p-8">
             <HorizontalStepper />
-          </div>
+          </div> */}
           <div className="flex justify-center px-4 pt-12 pb-6">
             <AuthGuard>
               <StepRedirect>{children}</StepRedirect>

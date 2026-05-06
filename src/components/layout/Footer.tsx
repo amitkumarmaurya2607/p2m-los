@@ -84,7 +84,10 @@ export default function Footer() {
         <div className="border-t border-white/10 my-8" />
 
         {/* Bottom */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+        <div
+          className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm
+            text-gray-400"
+        >
           {/* Left */}
           <div className="flex items-center gap-2">
             <ShieldCheck size={16} className="text-[#00C89C]" />

@@ -1,3 +1,4 @@
+import Logo from "@/assets/icon/Logo";
 import InfoCard from "@/components/Cards/InfoCard";
 import { ShieldCheck, TrendingUp, Users } from "lucide-react";
 
@@ -27,9 +28,14 @@ const SideBar = () => {
   ];
 
   return (
-    <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-sidebar-from to-sidebar-to p-16 flex-col justify-between text-primary-foreground bg-[url('/images/boginBanner.webp')]">
+    <div
+      className="hidden lg:flex w-1/2 bg-gradient-to-br from-sidebar-from to-sidebar-to p-16
+        flex-col justify-between text-primary-foreground bg-[url('/images/boginBanner.webp')]"
+    >
       <div>
-        <div className="text-2xl font-bold tracking-tight mb-20">FinSetu</div>
+        <div className="mb-16">
+          <Logo />
+        </div>
         <h1 className="text-5xl font-extrabold leading-[1.1] mb-6">
           Access your <br /> financial dashboard
         </h1>
@@ -52,7 +58,7 @@ const SideBar = () => {
           })}
         </div>
       </div>
-      <p className="text-sm  text-primary-foreground mt-4">© 2026 FinSetu Financial Services</p>
+      <p className="text-sm text-primary-foreground mt-4">© 2026 FinSetu Financial Services</p>
     </div>
   );
 };

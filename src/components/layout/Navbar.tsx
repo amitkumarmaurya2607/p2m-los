@@ -11,7 +11,10 @@ const navItems = [
 export default function Navbar() {
   return (
     <header className="w-full flex justify-center border-b bg-white">
-      <div className="w-full max-w-[1400px] flex items-center justify-between px-4 sm:px-6 md:px-8 py-4">
+      <div
+        className="w-full max-w-[1400px] flex items-center justify-between px-4 sm:px-6 md:px-8
+          py-4"
+      >
         {/* Logo */}
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-[#3737C1] flex items-center justify-center">
@@ -45,7 +48,8 @@ export default function Navbar() {
 
           <Link
             href={"/login"}
-            className="px-5 py-2 rounded-full bg-[#3737C1] text-white font-semibold shadow-[0px_10px_15px_-3px_#C6D2FF]"
+            className="px-5 py-2 rounded-full bg-[#3737C1] text-white font-semibold
+              shadow-[0px_10px_15px_-3px_#C6D2FF]"
           >
             Apply Now
           </Link>

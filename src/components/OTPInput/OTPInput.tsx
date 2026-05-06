@@ -11,11 +11,11 @@ const OTPInput = ({ length = 6, onComplete }: OTPInputProps) => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
-    if (inputRefs.current[0]) inputRefs.current[0].focus();
+    inputRefs.current[0]?.focus();
   }, []);
 
   const handleChange = (value: string, index: number) => {
-    if (isNaN(Number(value))) return;
+    if (!/^\d*$/.test(value)) return;
 
     const newOtp = [...otp];
     const val = value.slice(-1);
@@ -27,12 +27,20 @@ const OTPInput = ({ length = 6, onComplete }: OTPInputProps) => {
     }
 
     const combined = newOtp.join("");
-    if (combined.length === length) onComplete(combined);
+    if (combined.length === length && !newOtp.includes("")) {
+      onComplete(combined);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
-    if (e.key === "Backspace" && !otp[index] && index > 0) {
-      inputRefs.current[index - 1]?.focus();
+    if (e.key === "Backspace") {
+      if (otp[index]) {
+        const newOtp = [...otp];
+        newOtp[index] = "";
+        setOtp(newOtp);
+      } else if (index > 0) {
+        inputRefs.current[index - 1]?.focus();
+      }
     }
   };
 
@@ -41,49 +49,44 @@ const OTPInput = ({ length = 6, onComplete }: OTPInputProps) => {
     const data = e.clipboardData.getData("text").trim();
     if (!/^\d+$/.test(data)) return;
 
-    const pasteData = data.split("").slice(0, length);
+    const pasteData = data.slice(0, length).split("");
     const newOtp = [...otp];
 
     pasteData.forEach((char, i) => {
       newOtp[i] = char;
-      if (inputRefs.current[i]) {
-        inputRefs.current[i]!.value = char;
-      }
     });
 
     setOtp(newOtp);
-    const lastIdx = Math.min(pasteData.length, length - 1);
-    inputRefs.current[lastIdx]?.focus();
 
-    if (newOtp.join("").length === length) onComplete(newOtp.join(""));
+    const lastIndex = pasteData.length - 1;
+    inputRefs.current[lastIndex]?.focus();
+
+    if (newOtp.join("").length === length && !newOtp.includes("")) {
+      onComplete(newOtp.join(""));
+    }
   };
 
   return (
-    <div className="flex justify-between gap-2" onPaste={handlePaste}>
+    <div
+      className="flex justify-between gap-1 sm:gap-2 max-w-[360px] w-full mx-auto"
+      onPaste={handlePaste}
+    >
       {otp.map((digit, idx) => (
         <input
           key={idx}
-          ref={(el) => {
-            inputRefs.current[idx] = el;
-          }}
+          ref={(el) => (inputRefs.current[idx] = el)}
           type="text"
           inputMode="numeric"
+          autoComplete="one-time-code"
           maxLength={1}
           value={digit}
           onChange={(e) => handleChange(e.target.value, idx)}
           onKeyDown={(e) => handleKeyDown(e, idx)}
-          className="
-            w-[56px] h-[64px]
-            text-center text-[20px] font-bold
-            bg-input-bg
-            border-2 border-input-border
-            rounded-[16px]
-            shadow-[var(--shadow-sm)]
-            outline-none
-            transition-all duration-200
-            focus:border-secondary
-            focus:ring-2 focus:ring-secondary/30
-          "
+          onFocus={(e) => e.target.select()}
+          className="w-full max-w-[56px] aspect-[7/8] text-center text-[18px] sm:text-[20px]
+            font-bold bg-input-bg border-2 border-input-border rounded-[12px] sm:rounded-[16px]
+            shadow-[var(--shadow-sm)] outline-none transition-all duration-200
+            focus:border-secondary focus:ring-2 focus:ring-secondary/30"
         />
       ))}
     </div>

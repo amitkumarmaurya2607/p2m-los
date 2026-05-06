@@ -24,7 +24,8 @@ const ResendTimer: React.FC<ResendTimerProps> = ({ onResend, seconds = 48, icon 
       ) : (
         <button
           onClick={handleResendClick}
-          className="text-primary hover:text-primary/80 font-semibold cursor-pointer border-none bg-transparent p-0"
+          className="text-primary hover:text-primary/80 font-semibold cursor-pointer border-none
+            bg-transparent p-0"
         >
           Resend OTP
         </button>
