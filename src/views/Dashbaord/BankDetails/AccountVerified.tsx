@@ -1,22 +1,22 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { Check, ChevronRight } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { useAppSelector } from '@/store/hooks'
-import { selectApplication } from '@/features/application/applicationSlice'
+import React from "react";
+import { Check, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useAppSelector } from "@/store/hooks";
+import { selectApplication } from "@/features/application/applicationSlice";
 
 function AccountVerified() {
-  const router = useRouter()
-  const application = useAppSelector(selectApplication)
-  const bankData = application.bankDetails
+  const router = useRouter();
+  const application = useAppSelector(selectApplication);
+  const bankData = application.bankDetails;
 
   const maskedAccount = bankData?.accountNumber
     ? `XXXX XXXX ${bankData.accountNumber.slice(-4)}`
-    : 'XXXX XXXX XXXX'
+    : "XXXX XXXX XXXX";
 
-  const ifsc = bankData?.ifsc || 'N/A'
-  const accountType = bankData?.accountType || 'N/A'
+  const ifsc = bankData?.ifsc || "N/A";
+  const accountType = bankData?.accountType || "N/A";
 
   return (
     <div className="w-full max-w-[576px] rounded-[40px] border border-[#F1F5F9] bg-white/90 px-[64px] py-[64px] shadow-[0px_40px_100px_-24px_rgba(0,0,0,0.15)]">
@@ -38,9 +38,7 @@ function AccountVerified() {
             <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-[#90A1B9]">
               Account Number
             </p>
-            <p className="mt-1 font-mono text-[20px] font-bold text-[#1D293D]">
-              {maskedAccount}
-            </p>
+            <p className="mt-1 font-mono text-[20px] font-bold text-[#1D293D]">{maskedAccount}</p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -48,18 +46,14 @@ function AccountVerified() {
               <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-[#90A1B9]">
                 IFSC Code
               </p>
-              <p className="mt-1 font-mono text-[16px] font-bold text-[#1D293D]">
-                {ifsc}
-              </p>
+              <p className="mt-1 font-mono text-[16px] font-bold text-[#1D293D]">{ifsc}</p>
             </div>
 
             <div>
               <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-[#90A1B9]">
                 Account Type
               </p>
-              <p className="mt-1 text-[16px] font-bold capitalize text-[#1D293D]">
-                {accountType}
-              </p>
+              <p className="mt-1 text-[16px] font-bold capitalize text-[#1D293D]">{accountType}</p>
             </div>
           </div>
         </div>
@@ -68,7 +62,7 @@ function AccountVerified() {
       <div className="mt-10">
         <button
           type="button"
-          onClick={() => router.push('/selfie-capture')}
+          onClick={() => router.push("/selfie-capture")}
           className="flex h-[92px] w-full items-center justify-center gap-3 rounded-[16px] bg-gradient-to-r from-[#3737C1] to-[#2B2B9A] px-5 text-[18px] font-bold text-white shadow-[0px_12px_24px_-8px_rgba(55,55,193,0.4)]"
         >
           Next Step
@@ -76,7 +70,7 @@ function AccountVerified() {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
-export default AccountVerified
+export default AccountVerified;

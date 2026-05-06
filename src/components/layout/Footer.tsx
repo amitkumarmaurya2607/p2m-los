@@ -1,19 +1,11 @@
-import {
-
-  MapPin,
-  Phone,
-  Mail,
-  ShieldCheck,
-} from 'lucide-react'
+import { MapPin, Phone, Mail, ShieldCheck } from "lucide-react";
 
 export default function Footer() {
   return (
     <footer className="bg-[#0B1B3A] text-gray-300">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-12">
-
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
@@ -24,8 +16,8 @@ export default function Footer() {
             </div>
 
             <p className="text-sm leading-relaxed text-gray-400 mb-6">
-              Empowering India with fast, secure, and hassle-free digital loans.
-              We believe credit should be accessible to everyone, everywhere.
+              Empowering India with fast, secure, and hassle-free digital loans. We believe credit
+              should be accessible to everyone, everywhere.
             </p>
 
             {/* Social */}
@@ -70,13 +62,9 @@ export default function Footer() {
             <h3 className="text-white font-semibold mb-4">Contact Us</h3>
 
             <div className="space-y-4 text-sm">
-
               <div className="flex gap-3">
                 <MapPin className="text-[#6366F1] mt-1" size={18} />
-                <p>
-                  Level 4, Innov8 Coworking, Koramangala,
-                  Bengaluru, Karnataka 560034
-                </p>
+                <p>Level 4, Innov8 Coworking, Koramangala, Bengaluru, Karnataka 560034</p>
               </div>
 
               <div className="flex gap-3 items-center">
@@ -88,10 +76,8 @@ export default function Footer() {
                 <Mail className="text-[#6366F1]" size={18} />
                 <span>support@rinsetu.com</span>
               </div>
-
             </div>
           </div>
-
         </div>
 
         {/* Divider */}
@@ -99,7 +85,6 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-
           {/* Left */}
           <div className="flex items-center gap-2">
             <ShieldCheck size={16} className="text-[#00C89C]" />
@@ -117,9 +102,8 @@ export default function Footer() {
           <div className="text-center md:text-right">
             © 2026 RinSetu Finance. All rights reserved.
           </div>
-
         </div>
       </div>
     </footer>
-  )
+  );
 }

@@ -1,14 +1,13 @@
+import AadhaarDetails from "@/views/Dashbaord/AadhaarDetails/AadhaarDetails";
 
-import AadhaarDetails from '@/views/Dashbaord/AadhaarDetails/AadhaarDetails'
-
-import React from 'react'
+import React from "react";
 
 function page() {
   return (
-   <>
-<AadhaarDetails />
-   </>
-  )
+    <>
+      <AadhaarDetails />
+    </>
+  );
 }
 
-export default page
+export default page;

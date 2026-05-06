@@ -1,12 +1,15 @@
 # 02 - Active Context
 
 ## Current Date
+
 May 4, 2026
 
 ## Current Focus
+
 Foundation phase - Core UI components, theming system, and authentication flow are being established.
 
 ## Recent Changes
+
 1. **Toast System** - Implemented `react-hot-toast` with centralized `showToast()` method in `src/lib/toast.ts`
    - Supports: success, error, warning, info, loading, custom types
    - Configurable: position, duration, icon, style, className, onClose callback
@@ -29,11 +32,13 @@ Foundation phase - Core UI components, theming system, and authentication flow a
    - `ResendTimer` - OTP resend with timer
 
 ## Active Decisions
+
 - CSS variables used instead of Tailwind hardcoded colors for maintainability
 - `react-hot-toast` chosen over custom toast for reliability and bundle size
 - Tailwind CSS v4 native approach (no tailwind.config.js)
 
 ## Next Steps
+
 1. Fix pre-existing TypeScript errors in `src/pages/Home/Home.tsx` and `src/pages/VerifyOtpPage.tsx/VerifyOtpPage.tsx`
 2. Wire up actual API endpoints for OTP send/verify
 3. Complete remaining verification page integrations
@@ -41,9 +46,11 @@ Foundation phase - Core UI components, theming system, and authentication flow a
 5. Implement proper routing between steps after verification
 
 ## Blockers
+
 - Pre-existing TypeScript errors in `Home/Home.tsx` and `VerifyOtpPage.tsx` directory structure prevent clean build
 - No API endpoints connected yet - all verification flows use simulated delays
 
 ## Notes
+
 - Build compiles successfully in Turbopack, fails only on TypeScript type-checking for pre-existing files
 - All new code follows CSS variable patterns

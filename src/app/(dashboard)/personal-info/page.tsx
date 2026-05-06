@@ -1,13 +1,12 @@
-
-import PersonalInfo from '@/views/Dashbaord/PersonalInfo/PersonalInfo'
-import SelfiePage from '@/views/Dashbaord/SelfieCapture/SelfiePage'
+import PersonalInfo from "@/views/Dashbaord/PersonalInfo/PersonalInfo";
+import SelfiePage from "@/views/Dashbaord/SelfieCapture/SelfiePage";
 
 function page() {
   return (
-   <>
-   <PersonalInfo />
-   </>
-  )
+    <>
+      <PersonalInfo />
+    </>
+  );
 }
 
-export default page
+export default page;

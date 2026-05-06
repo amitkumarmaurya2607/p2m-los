@@ -1,12 +1,11 @@
-
-import SelfiePage from '@/views/Dashbaord/SelfieCapture/SelfiePage'
+import SelfiePage from "@/views/Dashbaord/SelfieCapture/SelfiePage";
 
 function page() {
   return (
-   <>
-<SelfiePage />
-   </>
-  )
+    <>
+      <SelfiePage />
+    </>
+  );
 }
 
-export default page
+export default page;

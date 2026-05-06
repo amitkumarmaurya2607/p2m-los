@@ -1,14 +1,13 @@
-
-import LoanCalculator from '@/views/Dashbaord/LoanCalculator/LoanCalculator'
-import PanDetails from '@/views/Dashbaord/PanDetails/PanDetails'
-import React from 'react'
+import LoanCalculator from "@/views/Dashbaord/LoanCalculator/LoanCalculator";
+import PanDetails from "@/views/Dashbaord/PanDetails/PanDetails";
+import React from "react";
 
 function page() {
   return (
-   <>
-<LoanCalculator />
-   </>
-  )
+    <>
+      <LoanCalculator />
+    </>
+  );
 }
 
-export default page
+export default page;

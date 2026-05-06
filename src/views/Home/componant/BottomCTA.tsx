@@ -1,5 +1,5 @@
-import React from 'react';
-import { ArrowRight, Download } from 'lucide-react';
+import React from "react";
+import { ArrowRight, Download } from "lucide-react";
 
 export default function BottomCTA() {
   return (
@@ -12,16 +12,16 @@ export default function BottomCTA() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-[3rem] p-8 md:p-16 flex flex-col md:flex-row items-center justify-between gap-12 shadow-2xl">
-          
           <div className="flex-1 text-white text-center md:text-left">
             <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
               Ready to Unlock <br />
               <span className="text-secondary-gradient-start">Your Dreams?</span>
             </h2>
             <p className="text-white/80 text-lg mb-10 max-w-xl mx-auto md:mx-0">
-              Join millions of Indians who have chosen FinSetu for their financial needs. Download the app or apply online in just 2 minutes.
+              Join millions of Indians who have chosen FinSetu for their financial needs. Download
+              the app or apply online in just 2 minutes.
             </p>
-            
+
             <div className="flex flex-wrap justify-center md:justify-start gap-4">
               <button className="bg-white text-primary px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all flex items-center gap-2">
                 Apply Now <ArrowRight size={20} />
@@ -49,7 +49,6 @@ export default function BottomCTA() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>

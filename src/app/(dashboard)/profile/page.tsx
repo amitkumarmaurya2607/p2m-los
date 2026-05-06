@@ -1,14 +1,12 @@
-
-
-import ReviewApplication from '@/views/Dashbaord/ReviewApplication/ReviewApplication'
-import TrackApplication from '@/views/Dashbaord/TrackApplication/TrackApplication'
+import ReviewApplication from "@/views/Dashbaord/ReviewApplication/ReviewApplication";
+import TrackApplication from "@/views/Dashbaord/TrackApplication/TrackApplication";
 
 function page() {
   return (
-   <>
-<ReviewApplication />
-   </>
-  )
+    <>
+      <ReviewApplication />
+    </>
+  );
 }
 
-export default page
+export default page;

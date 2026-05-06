@@ -1,30 +1,30 @@
-'use client'
+"use client";
 
-import React, { useMemo, useState } from 'react'
-import { ChevronRight } from 'lucide-react'
+import React, { useMemo, useState } from "react";
+import { ChevronRight } from "lucide-react";
 
 function LoanCalculator() {
-  const [loanAmount, setLoanAmount] = useState(500000)
-  const [tenure, setTenure] = useState(36)
+  const [loanAmount, setLoanAmount] = useState(500000);
+  const [tenure, setTenure] = useState(36);
 
-  const interestRate = 10.5
-  const maxEligible = 1500000
+  const interestRate = 10.5;
+  const maxEligible = 1500000;
 
   const emi = useMemo(() => {
-    const monthlyRate = interestRate / 12 / 100
+    const monthlyRate = interestRate / 12 / 100;
     const value =
       (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, tenure)) /
-      (Math.pow(1 + monthlyRate, tenure) - 1)
+      (Math.pow(1 + monthlyRate, tenure) - 1);
 
-    return Math.round(value)
-  }, [loanAmount, tenure])
+    return Math.round(value);
+  }, [loanAmount, tenure]);
 
-  const totalPayable = emi * tenure
+  const totalPayable = emi * tenure;
 
   const formatINR = (value: number) =>
-    new Intl.NumberFormat('en-IN', {
+    new Intl.NumberFormat("en-IN", {
       maximumFractionDigits: 0,
-    }).format(value)
+    }).format(value);
 
   const handleLockPlan = () => {
     console.log({
@@ -33,8 +33,8 @@ function LoanCalculator() {
       interestRate,
       emi,
       totalPayable,
-    })
-  }
+    });
+  };
 
   return (
     <div className="w-full max-w-[576px] rounded-[32px] border border-[#F1F5F9] bg-white/90 px-[48px] py-[48px] shadow-[0px_32px_80px_-24px_rgba(0,0,0,0.15)]">
@@ -55,12 +55,8 @@ function LoanCalculator() {
         </p>
 
         <div className="mt-1 flex items-end gap-1">
-          <h3 className="text-[36px] font-extrabold leading-10 text-white">
-            ₹{formatINR(emi)}
-          </h3>
-          <span className="pb-1 text-[18px] font-medium leading-7 text-[#90A1B9]">
-            /mo
-          </span>
+          <h3 className="text-[36px] font-extrabold leading-10 text-white">₹{formatINR(emi)}</h3>
+          <span className="pb-1 text-[18px] font-medium leading-7 text-[#90A1B9]">/mo</span>
         </div>
 
         <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4 text-[14px] font-medium leading-5 text-[#CAD5E2]">
@@ -72,9 +68,7 @@ function LoanCalculator() {
       <div className="mt-10 space-y-8">
         <div>
           <div className="flex items-center justify-between">
-            <p className="text-[16px] font-bold leading-6 text-[#314158]">
-              Loan Amount
-            </p>
+            <p className="text-[16px] font-bold leading-6 text-[#314158]">Loan Amount</p>
             <p className="text-[20px] font-bold leading-7 text-[#3737C1]">
               ₹{formatINR(loanAmount)}
             </p>
@@ -98,12 +92,8 @@ function LoanCalculator() {
 
         <div>
           <div className="flex items-center justify-between">
-            <p className="text-[16px] font-bold leading-6 text-[#314158]">
-              Tenure (Months)
-            </p>
-            <p className="text-[20px] font-bold leading-7 text-[#3737C1]">
-              {tenure} months
-            </p>
+            <p className="text-[16px] font-bold leading-6 text-[#314158]">Tenure (Months)</p>
+            <p className="text-[20px] font-bold leading-7 text-[#3737C1]">{tenure} months</p>
           </div>
 
           <input
@@ -132,7 +122,7 @@ function LoanCalculator() {
         <ChevronRight className="h-5 w-5" />
       </button>
     </div>
-  )
+  );
 }
 
-export default LoanCalculator
+export default LoanCalculator;

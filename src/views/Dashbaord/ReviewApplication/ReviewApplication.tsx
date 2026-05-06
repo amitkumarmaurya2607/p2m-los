@@ -1,29 +1,25 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
-import { CheckCircle, ClipboardList, Edit3, Shield } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { selectApplication, resetApplication } from '@/features/application/applicationSlice'
-import { logout } from '@/features/auth/authSlice'
+import React, { useState } from "react";
+import { CheckCircle, ClipboardList, Edit3, Shield } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { selectApplication, resetApplication } from "@/features/application/applicationSlice";
+import { logout } from "@/features/auth/authSlice";
 
 const ReviewField = ({ label, value }: { label: string; value: string }) => (
   <div>
-    <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-[#90A1B9]">
-      {label}
-    </p>
-    <p className="mt-1 text-[16px] font-semibold leading-6 text-[#1D293D]">
-      {value}
-    </p>
+    <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-[#90A1B9]">{label}</p>
+    <p className="mt-1 text-[16px] font-semibold leading-6 text-[#1D293D]">{value}</p>
   </div>
-)
+);
 
 const ReviewSection = ({
   title,
   fields,
 }: {
-  title: string
-  fields: { label: string; value: string }[]
+  title: string;
+  fields: { label: string; value: string }[];
 }) => (
   <div className="rounded-[24px] border border-[#E2E8F0] bg-white/80 p-6 shadow-[0px_8px_32px_-12px_rgba(0,0,0,0.05)]">
     <div className="flex items-center justify-between border-b border-[#F1F5F9] pb-4">
@@ -43,48 +39,61 @@ const ReviewSection = ({
       ))}
     </div>
   </div>
-)
+);
 
 function ReviewApplication() {
-  const router = useRouter()
-  const dispatch = useAppDispatch()
-  const [agree, setAgree] = useState(true)
-  const [loading, setLoading] = useState(false)
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const [agree, setAgree] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const data = useAppSelector(selectApplication)
+  const data = useAppSelector(selectApplication);
 
   const personalFields = [
-    { label: 'Name', value: data.personalInfo?.fullName || 'N/A' },
-    { label: 'PAN', value: data.pan?.number || 'N/A' },
-    { label: 'DOB', value: data.personalInfo?.dob ? new Date(data.personalInfo.dob).toLocaleDateString() : 'N/A' },
-  ]
+    { label: "Name", value: data.personalInfo?.fullName || "N/A" },
+    { label: "PAN", value: data.pan?.number || "N/A" },
+    {
+      label: "DOB",
+      value: data.personalInfo?.dob ? new Date(data.personalInfo.dob).toLocaleDateString() : "N/A",
+    },
+  ];
 
   const employmentFields = [
-    { label: 'Type', value: data.personalInfo?.employmentType || 'N/A' },
-    { label: 'Company', value: data.employmentDetails?.companyName || 'N/A' },
-    { label: 'Income', value: data.employmentDetails?.salary ? `₹${Number(data.employmentDetails.salary).toLocaleString('en-IN')}/mo` : 'N/A' },
-  ]
+    { label: "Type", value: data.personalInfo?.employmentType || "N/A" },
+    { label: "Company", value: data.employmentDetails?.companyName || "N/A" },
+    {
+      label: "Income",
+      value: data.employmentDetails?.salary
+        ? `₹${Number(data.employmentDetails.salary).toLocaleString("en-IN")}/mo`
+        : "N/A",
+    },
+  ];
 
   const bankFields = [
-    { label: 'Account', value: data.bankDetails?.accountNumber ? `XXXX XXXX ${data.bankDetails.accountNumber.slice(-4)}` : 'N/A' },
-    { label: 'IFSC', value: data.bankDetails?.ifsc || 'N/A' },
-  ]
+    {
+      label: "Account",
+      value: data.bankDetails?.accountNumber
+        ? `XXXX XXXX ${data.bankDetails.accountNumber.slice(-4)}`
+        : "N/A",
+    },
+    { label: "IFSC", value: data.bankDetails?.ifsc || "N/A" },
+  ];
 
   const handleSubmit = async () => {
-    if (!agree) return
+    if (!agree) return;
 
     try {
-      setLoading(true)
-      await new Promise((res) => setTimeout(res, 1200))
+      setLoading(true);
+      await new Promise((res) => setTimeout(res, 1200));
 
-      dispatch(resetApplication())
-      dispatch(logout())
+      dispatch(resetApplication());
+      dispatch(logout());
 
-      router.push('/track-application')
+      router.push("/track-application");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="w-full max-w-[896px]">
@@ -100,20 +109,11 @@ function ReviewApplication() {
           </div>
 
           <div className="space-y-6">
-            <ReviewSection
-              title="Personal Details"
-              fields={personalFields}
-            />
+            <ReviewSection title="Personal Details" fields={personalFields} />
 
-            <ReviewSection
-              title="Employment & Income"
-              fields={employmentFields}
-            />
+            <ReviewSection title="Employment & Income" fields={employmentFields} />
 
-            <ReviewSection
-              title="Bank Information"
-              fields={bankFields}
-            />
+            <ReviewSection title="Bank Information" fields={bankFields} />
           </div>
         </div>
 
@@ -130,9 +130,7 @@ function ReviewApplication() {
               <p className="text-[16px] font-medium text-[#90A1B9]">
                 Loan <br /> Amount
               </p>
-              <p className="text-[24px] font-extrabold text-white">
-                ₹5,00,000
-              </p>
+              <p className="text-[24px] font-extrabold text-white">₹5,00,000</p>
             </div>
 
             <div className="flex items-end justify-between border-b border-white/10 pb-4">
@@ -142,9 +140,7 @@ function ReviewApplication() {
 
             <div className="flex items-end justify-between pb-2">
               <p className="text-[16px] font-medium text-[#90A1B9]">EMI</p>
-              <p className="text-[30px] font-extrabold text-[#00C89C]">
-                ₹16,500
-              </p>
+              <p className="text-[30px] font-extrabold text-[#00C89C]">₹16,500</p>
             </div>
           </div>
 
@@ -156,9 +152,8 @@ function ReviewApplication() {
               className="mt-1 h-4 w-4 accent-[#3737C1]"
             />
             <span className="text-[12px] font-medium leading-5 text-[#CAD5E2]">
-              I agree to the{' '}
-              <span className="text-[#00C89C]">Terms & Conditions</span> and
-              consent to fetch my credit report from CICs.
+              I agree to the <span className="text-[#00C89C]">Terms & Conditions</span> and consent
+              to fetch my credit report from CICs.
             </span>
           </label>
 
@@ -169,7 +164,7 @@ function ReviewApplication() {
             className="mt-8 flex h-[86px] w-full items-center justify-center gap-4 rounded-[16px] bg-gradient-to-r from-[#00C89C] to-[#00A882] px-6 text-[18px] font-bold leading-7 text-white shadow-[0px_12px_24px_-8px_rgba(0,200,156,0.4)] disabled:cursor-not-allowed disabled:opacity-60"
           >
             <Shield className="h-5 w-5" />
-            {loading ? 'Submitting...' : 'e-Sign & Submit'}
+            {loading ? "Submitting..." : "e-Sign & Submit"}
           </button>
 
           <div className="mt-5 flex items-center justify-center gap-1 text-[12px] font-semibold text-[#90A1B9]">
@@ -179,7 +174,7 @@ function ReviewApplication() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default ReviewApplication
+export default ReviewApplication;

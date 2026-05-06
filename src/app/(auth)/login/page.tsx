@@ -1,19 +1,11 @@
-
-import Login from '@/views/Auth/Login'
-
-
+import Login from "@/views/Auth/Login";
 
 function page() {
   return (
     <>
       <Login />
-
     </>
-  )
+  );
 }
 
-export default page
-
-
-
-
+export default page;

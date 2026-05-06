@@ -3,17 +3,14 @@ import { ArrowRight, Check, Shield } from "lucide-react";
 export default function HeroBanner() {
   return (
     <section className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-primary via-primary-light to-secondary">
-
       {/* Glow Effects */}
       <div className="absolute w-[400px] h-[400px] bg-white/10 blur-[80px] rounded-full top-[-120px] right-[-80px]" />
       <div className="absolute w-[350px] h-[350px] bg-[#00C89C]/20 blur-[80px] rounded-full bottom-[-120px] left-[-80px]" />
 
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12 pt-32 pb-20 grid lg:grid-cols-2 gap-12 items-center">
-
         {/* LEFT */}
         <div className="space-y-8">
-
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 rounded-full text-white text-sm">
             <Shield className="w-4 h-4 text-green-400" />
@@ -32,8 +29,8 @@ export default function HeroBanner() {
 
           {/* Description */}
           <p className="text-white/80 text-lg max-w-xl">
-            Fast approvals, minimal documents, and secure digital process.
-            Jhatpat approval, bina kisi tension ke!
+            Fast approvals, minimal documents, and secure digital process. Jhatpat approval, bina
+            kisi tension ke!
           </p>
 
           {/* CTA */}
@@ -67,7 +64,6 @@ export default function HeroBanner() {
 
         {/* RIGHT FLOATING CARDS */}
         <div className="relative hidden lg:block">
-
           {/* Approved Amount */}
           <div className="absolute top-0 left-10 bg-white/10 border border-white/20 backdrop-blur-md rounded-xl p-4 flex items-center gap-3 shadow-lg">
             <div className="w-10 h-10 flex items-center justify-center bg-green-100 rounded-full">
@@ -98,7 +94,6 @@ export default function HeroBanner() {
               <p className="font-bold text-gray-900">₹5,240</p>
             </div>
           </div>
-
         </div>
       </div>
     </section>

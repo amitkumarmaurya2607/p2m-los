@@ -1,27 +1,23 @@
-'use client'
-import { useState } from 'react'
-import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
 
 type Props = {
-  navItems: { label: string; href: string }[]
-}
+  navItems: { label: string; href: string }[];
+};
 
 export default function MobileMenu({ navItems }: Props) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="md:hidden">
-      
       {/* Toggle Button */}
-      <button onClick={() => setOpen(!open)}>
-        {open ? <X /> : <Menu />}
-      </button>
+      <button onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button>
 
       {/* Drawer */}
       {open && (
         <div className="absolute left-0 top-[70px] w-full bg-white border-t shadow-md p-4 space-y-4 z-50">
-
           {navItems.map((item, i) => (
             <Link
               key={i}
@@ -42,9 +38,8 @@ export default function MobileMenu({ navItems }: Props) {
               Apply Now
             </button>
           </div>
-
         </div>
       )}
     </div>
-  )
+  );
 }

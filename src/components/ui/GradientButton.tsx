@@ -35,9 +35,7 @@ const GradientButton = ({
         ${className}
       `}
     >
-      {!loading && leftIcon && (
-        <span className="flex items-center">{leftIcon}</span>
-      )}
+      {!loading && leftIcon && <span className="flex items-center">{leftIcon}</span>}
 
       {loading ? (
         <span className="flex items-center gap-2">
@@ -48,9 +46,7 @@ const GradientButton = ({
         <span>{children}</span>
       )}
 
-      {!loading && rightIcon && (
-        <span className="flex items-center">{rightIcon}</span>
-      )}
+      {!loading && rightIcon && <span className="flex items-center">{rightIcon}</span>}
     </button>
   );
 };

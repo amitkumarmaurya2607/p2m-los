@@ -1,57 +1,57 @@
-'use client'
+"use client";
 
-import React, { useRef, useState } from 'react'
-import { CheckCircle, FileText, UploadCloud, X } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import React, { useRef, useState } from "react";
+import { CheckCircle, FileText, UploadCloud, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-type DocKey = 'pan' | 'aadhaar' | 'bank' | 'salary'
+type DocKey = "pan" | "aadhaar" | "bank" | "salary";
 
 type DocItem = {
-  key: DocKey
-  title: string
-  file: File | null
-  error: string
-}
+  key: DocKey;
+  title: string;
+  file: File | null;
+  error: string;
+};
 
 const initialDocs: DocItem[] = [
-  { key: 'pan', title: 'PAN Card Copy', file: null, error: '' },
-  { key: 'aadhaar', title: 'Aadhaar Card (Front & Back)', file: null, error: '' },
-  { key: 'bank', title: 'Bank Statement (Last 6 months)', file: null, error: '' },
-  { key: 'salary', title: 'Salary Slips / ITR', file: null, error: '' },
-]
+  { key: "pan", title: "PAN Card Copy", file: null, error: "" },
+  { key: "aadhaar", title: "Aadhaar Card (Front & Back)", file: null, error: "" },
+  { key: "bank", title: "Bank Statement (Last 6 months)", file: null, error: "" },
+  { key: "salary", title: "Salary Slips / ITR", file: null, error: "" },
+];
 
 function UploadDocuments() {
-  const router = useRouter()
-  const inputRef = useRef<HTMLInputElement | null>(null)
+  const router = useRouter();
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const [docs, setDocs] = useState<DocItem[]>(initialDocs)
-  const [selectedDoc, setSelectedDoc] = useState<DocKey | null>(null)
-  const [dragActive, setDragActive] = useState(false)
+  const [docs, setDocs] = useState<DocItem[]>(initialDocs);
+  const [selectedDoc, setSelectedDoc] = useState<DocKey | null>(null);
+  const [dragActive, setDragActive] = useState(false);
 
   const validateFile = (file: File) => {
-    const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png']
-    const maxSize = 5 * 1024 * 1024
+    const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
+    const maxSize = 5 * 1024 * 1024;
 
     if (!allowedTypes.includes(file.type)) {
-      return 'Only PDF, JPG or PNG files are allowed'
+      return "Only PDF, JPG or PNG files are allowed";
     }
 
     if (file.size > maxSize) {
-      return 'File size must be less than 5MB'
+      return "File size must be less than 5MB";
     }
 
-    return ''
-  }
+    return "";
+  };
 
   const uploadFile = (file: File, docKey?: DocKey | null) => {
-    const error = validateFile(file)
+    const error = validateFile(file);
 
     setDocs((prev) => {
       const index = docKey
         ? prev.findIndex((item) => item.key === docKey)
-        : prev.findIndex((item) => !item.file)
+        : prev.findIndex((item) => !item.file);
 
-      if (index === -1) return prev
+      if (index === -1) return prev;
 
       return prev.map((item, i) =>
         i === index
@@ -60,59 +60,57 @@ function UploadDocuments() {
               file: error ? null : file,
               error,
             }
-          : item
-      )
-    })
-  }
+          : item,
+      );
+    });
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-    uploadFile(file, selectedDoc)
-    e.target.value = ''
-    setSelectedDoc(null)
-  }
+    uploadFile(file, selectedDoc);
+    e.target.value = "";
+    setSelectedDoc(null);
+  };
 
   const handleUploadClick = (key: DocKey) => {
-    setSelectedDoc(key)
-    inputRef.current?.click()
-  }
+    setSelectedDoc(key);
+    inputRef.current?.click();
+  };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    setDragActive(false)
+    e.preventDefault();
+    setDragActive(false);
 
-    const file = e.dataTransfer.files?.[0]
-    if (!file) return
+    const file = e.dataTransfer.files?.[0];
+    if (!file) return;
 
-    uploadFile(file)
-  }
+    uploadFile(file);
+  };
 
   const removeFile = (key: DocKey) => {
     setDocs((prev) =>
-      prev.map((item) =>
-        item.key === key ? { ...item, file: null, error: '' } : item
-      )
-    )
-  }
+      prev.map((item) => (item.key === key ? { ...item, file: null, error: "" } : item)),
+    );
+  };
 
   const handleSubmit = () => {
-    const hasMissing = docs.some((item) => !item.file)
+    const hasMissing = docs.some((item) => !item.file);
 
     if (hasMissing) {
       setDocs((prev) =>
         prev.map((item) => ({
           ...item,
-          error: item.file ? item.error : 'This document is required',
-        }))
-      )
-      return
+          error: item.file ? item.error : "This document is required",
+        })),
+      );
+      return;
     }
 
-    console.log('Uploaded docs:', docs)
-    router.push('/review-application')
-  }
+    console.log("Uploaded docs:", docs);
+    router.push("/review-application");
+  };
 
   return (
     <div className="w-full px-6 py-24">
@@ -136,35 +134,29 @@ function UploadDocuments() {
 
         <div
           onClick={() => {
-            setSelectedDoc(null)
-            inputRef.current?.click()
+            setSelectedDoc(null);
+            inputRef.current?.click();
           }}
           onDragOver={(e) => {
-            e.preventDefault()
-            setDragActive(true)
+            e.preventDefault();
+            setDragActive(true);
           }}
           onDragLeave={() => setDragActive(false)}
           onDrop={handleDrop}
           className={`mt-10 flex h-[256px] cursor-pointer flex-col items-center justify-center rounded-[24px] border-2 border-dashed bg-white transition ${
-            dragActive ? 'border-secondary' : 'border-muted'
+            dragActive ? "border-secondary" : "border-muted"
           }`}
         >
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-surface">
             <UploadCloud className="h-8 w-8 text-muted-foreground" />
           </div>
 
-          <h3 className="mt-5 text-[18px] font-bold text-text-heading">
-            Click or drag files here
-          </h3>
-          <p className="mt-1 text-[14px] text-[#62748E]">
-            PDF, JPG or PNG (Max 5MB)
-          </p>
+          <h3 className="mt-5 text-[18px] font-bold text-text-heading">Click or drag files here</h3>
+          <p className="mt-1 text-[14px] text-[#62748E]">PDF, JPG or PNG (Max 5MB)</p>
         </div>
 
         <div className="mt-8 rounded-[24px] border border-[#F1F5F9] bg-white p-8 shadow-[0px_20px_25px_-5px_rgba(226,232,240,0.4)]">
-          <h3 className="text-[18px] font-bold text-[#0F172B]">
-            Required Documents
-          </h3>
+          <h3 className="text-[18px] font-bold text-[#0F172B]">Required Documents</h3>
 
           <div className="mt-7 space-y-4">
             {docs.map((doc) => (
@@ -179,9 +171,7 @@ function UploadDocuments() {
 
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="text-[16px] font-semibold text-[#0F172B]">
-                        {doc.title}
-                      </p>
+                      <p className="text-[16px] font-semibold text-[#0F172B]">{doc.title}</p>
                       <span className="rounded-full bg-[#FFE2E2] px-2 py-0.5 text-[10px] font-bold uppercase text-[#FB2C36]">
                         Required
                       </span>
@@ -189,11 +179,10 @@ function UploadDocuments() {
 
                     <p
                       className={`mt-0.5 truncate text-[12px] ${
-                        doc.error ? 'text-destructive' : 'text-muted-foreground'
+                        doc.error ? "text-destructive" : "text-muted-foreground"
                       }`}
                     >
-                      {doc.error ||
-                        (doc.file ? doc.file.name : 'Pending upload')}
+                      {doc.error || (doc.file ? doc.file.name : "Pending upload")}
                     </p>
                   </div>
                 </div>
@@ -232,7 +221,7 @@ function UploadDocuments() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default UploadDocuments
+export default UploadDocuments;

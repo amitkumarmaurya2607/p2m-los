@@ -5,7 +5,7 @@ type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   error?: string;
-  require?:boolean;
+  require?: boolean;
 };
 
 const TextInput = ({
@@ -26,7 +26,9 @@ const TextInput = ({
         ${error ? "border border-destructive" : "border border-transparent"}
         `}
       >
-        {leftIcon && <div className="mr-[10px] h-[64px] mt-[-15px]   flex items-center">{leftIcon}</div>}
+        {leftIcon && (
+          <div className="mr-[10px] h-[64px] mt-[-15px]   flex items-center">{leftIcon}</div>
+        )}
 
         <div className="relative flex-1">
           <input
@@ -44,19 +46,17 @@ const TextInput = ({
               peer-[&:not(:placeholder-shown)]:text-text-label`}
             >
               {label}
-                {require && <span className="text-destructive ml-0.5">*</span>}
+              {require && <span className="text-destructive ml-0.5">*</span>}
             </label>
           )}
         </div>
 
-        {rightIcon && <div className="ml-[10px] h-[64px] mt-[-15px] flex items-center">{rightIcon}</div>}
+        {rightIcon && (
+          <div className="ml-[10px] h-[64px] mt-[-15px] flex items-center">{rightIcon}</div>
+        )}
       </div>
 
-      {error && (
-        <p className="mt-1 text-sm text-destructive px-1">
-          {error}
-        </p>
-      )}
+      {error && <p className="mt-1 text-sm text-destructive px-1">{error}</p>}
     </div>
   );
 };

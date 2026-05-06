@@ -17,7 +17,6 @@ const HorizontalStepper = () => {
 
           return (
             <div key={step.id} className="flex items-center flex-shrink-0 md:flex-1">
-
               {/* Step */}
               <div
                 className={`
@@ -26,36 +25,33 @@ const HorizontalStepper = () => {
                 `}
                 onClick={() => status !== "pending" && goToStep(index)}
               >
-
                 {/* Circle */}
                 <div
                   className={`
                   w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-xs md:text-sm font-semibold
-                  ${status === "complete"
+                  ${
+                    status === "complete"
                       ? "bg-stepper-complete text-white"
                       : status === "progress"
                         ? "bg-stepper-progress text-white"
                         : "bg-stepper-pending text-stepper-pending-text"
-                    }
+                  }
                 `}
                 >
-                  {status === "complete" ? (
-                    <Check size={14} className="md:w-4 md:h-4" />
-                  ) : (
-                    step.id
-                  )}
+                  {status === "complete" ? <Check size={14} className="md:w-4 md:h-4" /> : step.id}
                 </div>
 
                 {/* Title */}
                 <p
                   className={`
                   mt-1 md:mt-2 text-[10px] md:text-xs font-semibold whitespace-nowrap
-                  ${status === "progress"
+                  ${
+                    status === "progress"
                       ? "text-primary"
                       : status === "complete"
                         ? "text-text-heading"
                         : "text-stepper-pending-text"
-                    }
+                  }
                 `}
                 >
                   {step.title}
@@ -67,10 +63,7 @@ const HorizontalStepper = () => {
                 <div
                   className={`
                   h-[2px] mx-2 w-8 md:w-full
-                  ${status === "complete"
-                      ? "bg-stepper-complete"
-                      : "bg-border"
-                    }
+                  ${status === "complete" ? "bg-stepper-complete" : "bg-border"}
                 `}
                 />
               )}

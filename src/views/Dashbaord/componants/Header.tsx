@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useRef, useEffect } from "react";
 import { ArrowLeft, Moon, Sun, User } from "lucide-react";
 import { useThemeContext } from "@/components/theme/ThemeProvider";
@@ -50,12 +50,8 @@ const Header: React.FC<HeaderProps> = ({
         </button>
 
         <div>
-          <p className="text-xs tracking-widest text-text-muted font-semibold">
-            {subtitle}
-          </p>
-          <h1 className="text-lg font-semibold text-text-heading">
-            {title}
-          </h1>
+          <p className="text-xs tracking-widest text-text-muted font-semibold">{subtitle}</p>
+          <h1 className="text-lg font-semibold text-text-heading">{title}</h1>
         </div>
       </div>
 
@@ -66,7 +62,7 @@ const Header: React.FC<HeaderProps> = ({
             className="flex items-center justify-center w-10 h-10 rounded-full bg-muted text-text-muted hover:text-text-heading transition-colors"
             title="Toggle Theme"
           >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
         )}
 
@@ -79,11 +75,14 @@ const Header: React.FC<HeaderProps> = ({
           </button>
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-40 bg-surface border border-border rounded-md shadow-md z-10">
-              <a href="/profile" className="block px-4 py-2 text-sm text-text-heading hover:bg-muted">
+              <a
+                href="/profile"
+                className="block px-4 py-2 text-sm text-text-heading hover:bg-muted"
+              >
                 Profile
               </a>
               <button
-                onClick={() => console.log('Logout')}
+                onClick={() => console.log("Logout")}
                 className="w-full text-left px-4 py-2 text-sm text-text-heading hover:bg-muted"
               >
                 Logout

@@ -1,19 +1,19 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
-import { Check, Copy, ExternalLink, ShieldCheck } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import React, { useState } from "react";
+import { Check, Copy, ExternalLink, ShieldCheck } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 function ApplicationSubmitted() {
-  const router = useRouter()
-  const applicationId = 'APP-9874-FX21'
-  const [copied, setCopied] = useState(false)
+  const router = useRouter();
+  const applicationId = "APP-9874-FX21";
+  const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(applicationId)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 1200)
-  }
+    await navigator.clipboard.writeText(applicationId);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
+  };
 
   return (
     <div className="w-full max-w-[576px] rounded-[40px] border border-[#F1F5F9] bg-white/90 px-[64px] py-[64px] shadow-[0px_40px_100px_-24px_rgba(0,0,0,0.15)]">
@@ -26,8 +26,7 @@ function ApplicationSubmitted() {
       </h2>
 
       <p className="mt-4 text-center text-[18px] font-medium leading-[29px] text-[#62748E]">
-        Your loan application is under review. We typically process approvals
-        within 2 hours.
+        Your loan application is under review. We typically process approvals within 2 hours.
       </p>
 
       <div className="mt-10 rounded-[24px] border border-[#E2E8F0] bg-[#F8FAFC] px-6 py-6 text-center">
@@ -45,15 +44,13 @@ function ApplicationSubmitted() {
           </button>
         </div>
 
-        {copied && (
-          <p className="mt-1 text-xs font-semibold text-[#00A882]">Copied</p>
-        )}
+        {copied && <p className="mt-1 text-xs font-semibold text-[#00A882]">Copied</p>}
       </div>
 
       <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-[193px_1fr]">
         <button
           type="button"
-          onClick={() => router.push('/track-status')}
+          onClick={() => router.push("/track-status")}
           className="flex h-[92px] items-center justify-center gap-3 rounded-[16px] bg-gradient-to-r from-[#3737C1] to-[#2B2B9A] px-5 text-[18px] font-bold text-white shadow-[0px_12px_24px_-8px_rgba(55,55,193,0.4)]"
         >
           <ShieldCheck className="h-5 w-5" />
@@ -62,7 +59,7 @@ function ApplicationSubmitted() {
 
         <button
           type="button"
-          onClick={() => router.push('/dashboard')}
+          onClick={() => router.push("/dashboard")}
           className="flex h-[92px] items-center justify-center gap-3 rounded-[16px] border-2 border-[#E2E8F0] bg-white px-6 text-[18px] font-bold text-[#314158] shadow-sm"
         >
           Go to Dashboard
@@ -70,7 +67,7 @@ function ApplicationSubmitted() {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
-export default ApplicationSubmitted
+export default ApplicationSubmitted;

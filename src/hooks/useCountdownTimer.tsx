@@ -1,6 +1,5 @@
-'use client'
-import { useState, useEffect, useCallback } from 'react';
-
+"use client";
+import { useState, useEffect, useCallback } from "react";
 
 export const useCountdownTimer = (initialSeconds: number) => {
   const [timeLeft, setTimeLeft] = useState(initialSeconds);

@@ -1,5 +1,5 @@
-'use client'
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 
 export default function PlanYourLoan() {
   const [amount, setAmount] = useState(100000);
@@ -30,14 +30,16 @@ export default function PlanYourLoan() {
             <div>
               <div className="flex justify-between mb-4">
                 <label className="text-text-heading font-semibold">Loan Amount</label>
-                <span className="text-primary font-bold bg-primary-muted px-3 py-1 rounded-md">₹ {amount.toLocaleString()}</span>
+                <span className="text-primary font-bold bg-primary-muted px-3 py-1 rounded-md">
+                  ₹ {amount.toLocaleString()}
+                </span>
               </div>
-              <input 
-                type="range" 
-                min="10000" 
-                max="500000" 
+              <input
+                type="range"
+                min="10000"
+                max="500000"
                 step="5000"
-                value={amount} 
+                value={amount}
                 onChange={(e) => setAmount(Number(e.target.value))}
                 className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
               />
@@ -50,14 +52,16 @@ export default function PlanYourLoan() {
             <div>
               <div className="flex justify-between mb-4">
                 <label className="text-text-heading font-semibold">Tenure (Months)</label>
-                <span className="text-secondary font-bold bg-secondary/10 px-3 py-1 rounded-md text-secondary">{months} Months</span>
+                <span className="text-secondary font-bold bg-secondary/10 px-3 py-1 rounded-md text-secondary">
+                  {months} Months
+                </span>
               </div>
-              <input 
-                type="range" 
-                min="3" 
-                max="60" 
+              <input
+                type="range"
+                min="3"
+                max="60"
                 step="1"
-                value={months} 
+                value={months}
                 onChange={(e) => setMonths(Number(e.target.value))}
                 className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-secondary"
               />
@@ -66,17 +70,17 @@ export default function PlanYourLoan() {
                 <span>60 Months</span>
               </div>
             </div>
-            
+
             <div>
               <div className="flex justify-between mb-4">
                 <label className="text-text-heading font-semibold">Interest Rate (p.a)</label>
                 <span className="text-text-heading font-bold">{interest}%</span>
               </div>
-              <input 
-                type="range" 
-                min="10" 
-                max="24" 
-                value={interest} 
+              <input
+                type="range"
+                min="10"
+                max="24"
+                value={interest}
                 disabled
                 className="w-full h-2 bg-muted rounded-lg appearance-none cursor-not-allowed opacity-50"
               />
@@ -86,8 +90,10 @@ export default function PlanYourLoan() {
           {/* Results Card */}
           <div className="lg:w-[400px] bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 text-white shadow-xl flex flex-col justify-center">
             <h3 className="text-gray-400 font-medium mb-2">Monthly EMI</h3>
-            <p className="text-4xl font-extrabold text-secondary mb-8">₹ {Math.round(emi).toLocaleString()}</p>
-            
+            <p className="text-4xl font-extrabold text-secondary mb-8">
+              ₹ {Math.round(emi).toLocaleString()}
+            </p>
+
             <div className="space-y-4 mb-8">
               <div className="flex justify-between pb-4 border-b border-gray-700">
                 <span className="text-gray-400">Principal Amount</span>
@@ -95,7 +101,9 @@ export default function PlanYourLoan() {
               </div>
               <div className="flex justify-between pb-4 border-b border-gray-700">
                 <span className="text-gray-400">Total Interest</span>
-                <span className="font-semibold text-orange-400">₹ {Math.round(totalInterest).toLocaleString()}</span>
+                <span className="font-semibold text-orange-400">
+                  ₹ {Math.round(totalInterest).toLocaleString()}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Total Payable</span>

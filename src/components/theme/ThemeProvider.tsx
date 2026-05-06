@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useCallback,
-  useState,
-  useEffect,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, useCallback, useState, useEffect, type ReactNode } from "react";
 import type { Theme } from "@/types";
 
 interface ThemeContextValue {
@@ -18,7 +11,7 @@ interface ThemeContextValue {
 
 const defaultValue: ThemeContextValue = {
   theme: "light",
-  toggleTheme: () => { },
+  toggleTheme: () => {},
   mounted: false,
 };
 
@@ -34,8 +27,6 @@ function getStoredTheme() {
     return "light" as Theme;
   }
 }
-
-
 
 function applyTheme(theme: Theme) {
   const root = document.documentElement;

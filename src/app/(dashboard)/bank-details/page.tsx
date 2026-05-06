@@ -1,14 +1,12 @@
-
-
-import BankDetails from '@/views/Dashbaord/BankDetails/BankDetails'
-import React from 'react'
+import BankDetails from "@/views/Dashbaord/BankDetails/BankDetails";
+import React from "react";
 
 function page() {
   return (
-   <>
-   <BankDetails />
-   </>
-  )
+    <>
+      <BankDetails />
+    </>
+  );
 }
 
-export default page
+export default page;

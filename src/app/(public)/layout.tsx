@@ -8,21 +8,15 @@ export const metadata: Metadata = {
   description: "Public pages",
 };
 
-export default function PublicLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-
     <div className="min-h-screen bg-background font-sans text-foreground">
-  <Navbar />
-  <main>
-  <PublicGuard>
-    {children}
-  </PublicGuard>
-  </main>
+      <Navbar />
+      <main>
+        <PublicGuard>{children}</PublicGuard>
+      </main>
 
-  <Footer />
-  </div>);
+      <Footer />
+    </div>
+  );
 }

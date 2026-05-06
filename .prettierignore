@@ -1,0 +1,9 @@
+node_modules
+.next
+.claude-code
+memory-bank
+dist
+build
+coverage
+package-lock.json
+AGENTS.md

@@ -1,28 +1,21 @@
-'use client'
-import React, { useState } from 'react'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
+"use client";
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 type Props = {
-  label?: string
-  value?: Date | null
-  onChange: (date: Date | null) => void
-  error?: string
-  leftIcon?: React.ReactNode
-  rightIcon?: React.ReactNode
-}
+  label?: string;
+  value?: Date | null;
+  onChange: (date: Date | null) => void;
+  error?: string;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+};
 
-const CustomDatePicker = ({
-  label,
-  value,
-  onChange,
-  error,
-  leftIcon,
-  rightIcon,
-}: Props) => {
-  const [isFocused, setIsFocused] = useState(false)
+const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon }: Props) => {
+  const [isFocused, setIsFocused] = useState(false);
 
-  const isActive = isFocused || value
+  const isActive = isFocused || value;
 
   return (
     <div className="w-full">
@@ -35,31 +28,26 @@ const CustomDatePicker = ({
         {leftIcon && <div className="mr-[10px] flex items-center">{leftIcon}</div>}
 
         <div className="relative flex-1">
-         <DatePicker
-  selected={value}
-  onChange={onChange}
-  dateFormat="dd/MM/yyyy"
-  className="w-full bg-transparent outline-none text-[14px] pt-[12px]"
-  onFocus={() => setIsFocused(true)}
-  onBlur={() => setIsFocused(false)}
-
-  showMonthDropdown
-  showYearDropdown
-  dropdownMode="select"
-  yearDropdownItemNumber={100}
-  scrollableYearDropdown
-  maxDate={new Date()}
-/>
+          <DatePicker
+            selected={value}
+            onChange={onChange}
+            dateFormat="dd/MM/yyyy"
+            className="w-full bg-transparent outline-none text-[14px] pt-[12px]"
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
+            yearDropdownItemNumber={100}
+            scrollableYearDropdown
+            maxDate={new Date()}
+          />
 
           {label && (
             <label
               className={`absolute left-0 text-[16px] font-medium transition-all duration-200 
                 ${error ? "text-destructive" : "text-text-muted"}
-                ${
-                  isActive
-                    ? "top-[-10px]  text-text-label"
-                    : "top-[0px] "
-                }
+                ${isActive ? "top-[-10px]  text-text-label" : "top-[0px] "}
               `}
             >
               {label}
@@ -72,7 +60,7 @@ const CustomDatePicker = ({
 
       {error && <p className="mt-1 text-sm text-destructive px-1">{error}</p>}
     </div>
-  )
-}
+  );
+};
 
-export default CustomDatePicker
+export default CustomDatePicker;

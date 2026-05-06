@@ -1,10 +1,13 @@
 <!-- BEGIN:nextjs-agent-rules -->
+
 # This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+
 <!-- END:nextjs-agent-rules -->
 
 <!-- BEGIN:memory-bank-rules -->
+
 # Memory Bank Rules
 
 This project uses a Memory Bank system to persist project knowledge between sessions.
@@ -80,6 +83,7 @@ Update the following files when relevant:
 ## Goal of Memory Bank
 
 The Memory Bank ensures that:
+
 - Project context persists across development sessions
 - Future contributors or agents understand the system quickly
 - Architecture and product decisions remain documented

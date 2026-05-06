@@ -1,5 +1,5 @@
-import React from 'react';
-import { Star } from 'lucide-react';
+import React from "react";
+import { Star } from "lucide-react";
 
 export default function Testimonials() {
   const reviews = [
@@ -8,22 +8,22 @@ export default function Testimonials() {
       role: "Small Business Owner",
       text: "FinSetu helped me expand my shop when banks refused. The process was entirely digital and money was in my account the same day.",
       rating: 5,
-      avatar: "AP"
+      avatar: "AP",
     },
     {
       name: "Priya Sharma",
       role: "Software Engineer",
       text: "I needed a personal loan for a medical emergency. The AI approval system is amazing. Highly recommend to everyone looking for fast loans.",
       rating: 5,
-      avatar: "PS"
+      avatar: "PS",
     },
     {
       name: "Rahul Verma",
       role: "Freelancer",
       text: "As a freelancer, getting loans is tough. FinSetu looked at my actual cash flow instead of just traditional score. Best experience ever.",
       rating: 5,
-      avatar: "RV"
-    }
+      avatar: "RV",
+    },
   ];
 
   return (
@@ -38,15 +38,16 @@ export default function Testimonials() {
 
         <div className="grid md:grid-cols-3 gap-8 text-left">
           {reviews.map((review, idx) => (
-            <div key={idx} className="bg-surface rounded-2xl p-8 shadow-[var(--shadow-md)] border border-border flex flex-col h-full">
+            <div
+              key={idx}
+              className="bg-surface rounded-2xl p-8 shadow-[var(--shadow-md)] border border-border flex flex-col h-full"
+            >
               <div className="flex text-orange-400 mb-4">
                 {[...Array(review.rating)].map((_, i) => (
                   <Star key={i} className="w-5 h-5 fill-current" />
                 ))}
               </div>
-              <p className="text-muted-foreground mb-8 italic flex-1">
-                "{review.text}"
-              </p>
+              <p className="text-muted-foreground mb-8 italic flex-1">"{review.text}"</p>
               <div className="flex items-center gap-4 mt-auto">
                 <div className="w-12 h-12 rounded-full bg-primary-muted text-primary font-bold flex items-center justify-center">
                   {review.avatar}

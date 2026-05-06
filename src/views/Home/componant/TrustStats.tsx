@@ -1,28 +1,28 @@
-import React from 'react';
-import { ArrowUpRight, Clock, Users, Star } from 'lucide-react';
+import React from "react";
+import { ArrowUpRight, Clock, Users, Star } from "lucide-react";
 
 export default function TrustStats() {
   const stats = [
     {
       icon: <ArrowUpRight className="w-6 h-6 text-secondary" />,
       value: "99%",
-      label: "Approval Rate"
+      label: "Approval Rate",
     },
     {
       icon: <Clock className="w-6 h-6 text-primary" />,
       value: "5 Min",
-      label: "Disbursal Time"
+      label: "Disbursal Time",
     },
     {
       icon: <Users className="w-6 h-6 text-orange-400" />,
       value: "2M+",
-      label: "Happy Customers"
+      label: "Happy Customers",
     },
     {
       icon: <Star className="w-6 h-6 text-pink-400" />,
       value: "4.9",
-      label: "App Rating"
-    }
+      label: "App Rating",
+    },
   ];
 
   return (
@@ -37,10 +37,11 @@ export default function TrustStats() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {stats.map((stat, idx) => (
-            <div key={idx} className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col items-center">
-              <div className="mb-4">
-                {stat.icon}
-              </div>
+            <div
+              key={idx}
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col items-center"
+            >
+              <div className="mb-4">{stat.icon}</div>
               <h3 className="text-3xl font-extrabold text-white mb-1">{stat.value}</h3>
               <p className="text-sm text-gray-400">{stat.label}</p>
             </div>

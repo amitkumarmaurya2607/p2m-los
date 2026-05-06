@@ -13,32 +13,25 @@ export const metadata: Metadata = {
   description: "Dashboard pages",
 };
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-    
-        <div className="flex">
-          {/* <StepperAlt /> */}
-           <div className=" grow-1 ">
-              <ProgressBar />
-               <div className="flex justify-center p-8">
-                <HorizontalStepper />
-               </div>
-              <div className="flex justify-center px-4 pt-12 pb-6">
-                <AuthGuard>
-                  <StepRedirect>
-                    {children}
-                  </StepRedirect>
-                </AuthGuard>
-              </div>
-             
-           </div>
+
+      <div className="flex">
+        {/* <StepperAlt /> */}
+        <div className=" grow-1 ">
+          <ProgressBar />
+          <div className="flex justify-center p-8">
+            <HorizontalStepper />
+          </div>
+          <div className="flex justify-center px-4 pt-12 pb-6">
+            <AuthGuard>
+              <StepRedirect>{children}</StepRedirect>
+            </AuthGuard>
+          </div>
         </div>
+      </div>
     </div>
   );
 }

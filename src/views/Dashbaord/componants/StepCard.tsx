@@ -6,8 +6,8 @@ type StepCardProps = {
   subtitle?: string;
   icon?: React.ReactNode;
   children?: React.ReactNode;
-  className?:string;
-  back?:()=>void;
+  className?: string;
+  back?: () => void;
 };
 
 const StepCard: React.FC<StepCardProps> = ({
@@ -15,8 +15,8 @@ const StepCard: React.FC<StepCardProps> = ({
   subtitle,
   icon,
   children,
-  className="",
-  back
+  className = "",
+  back,
 }) => {
   return (
     <div
@@ -30,14 +30,16 @@ const StepCard: React.FC<StepCardProps> = ({
       shadow-[var(--shadow-lg)]
 
       ${className}
-     `}   >
-
-       {back && <button
+     `}
+    >
+      {back && (
+        <button
           className="flex items-center justify-center w-[40px] h-[40px] bg-muted rounded-full"
           onClick={back}
         >
           <ArrowLeft className="w-5 h-5" />
-        </button>}
+        </button>
+      )}
 
       <div className="flex flex-col gap-4">
         {icon && (
@@ -50,14 +52,10 @@ const StepCard: React.FC<StepCardProps> = ({
           {title}
         </h2>
 
-        <p className="text-[14px] text-text-muted">
-          {subtitle}
-        </p>
+        <p className="text-[14px] text-text-muted">{subtitle}</p>
       </div>
 
-      <div className="w-full flex-1">
-        {children}
-      </div>
+      <div className="w-full flex-1">{children}</div>
     </div>
   );
 };

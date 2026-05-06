@@ -1,16 +1,14 @@
-import React from 'react';
-import { Timer } from 'lucide-react';
-import { useCountdownTimer } from '@/hooks/useCountdownTimer';
-
+import React from "react";
+import { Timer } from "lucide-react";
+import { useCountdownTimer } from "@/hooks/useCountdownTimer";
 
 interface ResendTimerProps {
   onResend: () => void;
   seconds?: number;
-  icon?:boolean
-  
+  icon?: boolean;
 }
 
-const ResendTimer: React.FC<ResendTimerProps> = ({ onResend, seconds = 48,icon }) => {
+const ResendTimer: React.FC<ResendTimerProps> = ({ onResend, seconds = 48, icon }) => {
   const { timeLeft, isActive, resetTimer } = useCountdownTimer(seconds);
 
   const handleResendClick = () => {

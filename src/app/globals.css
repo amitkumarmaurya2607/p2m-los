@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #3737C1;
+  --primary: #3737c1;
   --primary-foreground: #ffffff;
   --primary-light: #5a56d4;
   --primary-muted: rgba(55, 55, 193, 0.1);
 
-  --secondary: #00C89C;
+  --secondary: #00c89c;
   --secondary-foreground: #000000;
   --secondary-light: #33d9b5;
-  --secondary-gradient-start: #6FFFD2;
-  --secondary-gradient-end: #00C89C;
+  --secondary-gradient-start: #6fffd2;
+  --secondary-gradient-end: #00c89c;
 
   --background: #ffffff;
   --foreground: #171717;
@@ -36,7 +36,7 @@
   --input-bg: #f8fafc;
   --input-border: #e2e8f0;
 
-  --ring: #3737C1;
+  --ring: #3737c1;
 
   --text-primary: #0f172b;
   --text-secondary: #45556c;
@@ -44,11 +44,11 @@
   --text-label: #64748b;
   --text-heading: #0f172b;
 
-  --success: #00C89C;
+  --success: #00c89c;
   --success-foreground: #ffffff;
   --warning: #f59e0b;
   --warning-foreground: #ffffff;
-  --info: #3737C1;
+  --info: #3737c1;
   --info-foreground: #ffffff;
 
   --shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
@@ -58,15 +58,15 @@
 
   --card-border: #f1f5f9;
   --card-bg: rgba(255, 255, 255, 0.8);
-  --card-icon-bg-start: #6FFFD2;
-  --card-icon-bg-end: #00C89C;
+  --card-icon-bg-start: #6fffd2;
+  --card-icon-bg-end: #00c89c;
   --card-icon-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3), inset 0px -2px 0px rgba(0, 0, 0, 0.2);
 
-  --sidebar-from: #00C89C;
+  --sidebar-from: #00c89c;
   --sidebar-to: #00a882;
 
-  --stepper-complete: #00C89C;
-  --stepper-progress: #3737C1;
+  --stepper-complete: #00c89c;
+  --stepper-progress: #3737c1;
   --stepper-pending: #e5e7eb;
   --stepper-pending-text: #9ca3af;
 
@@ -163,7 +163,7 @@
   --info-foreground: #ffffff;
   --card-border: #4b5563;
   --card-bg: rgba(10, 10, 10, 0.8);
-  --card-icon-bg-start: #6FFFD2;
+  --card-icon-bg-start: #6fffd2;
   --card-icon-bg-end: #33d9b5;
   --card-icon-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5), inset 0px -2px 0px rgba(0, 0, 0, 0.3);
   --sidebar-from: #33d9b5;
@@ -208,9 +208,6 @@ select {
 .react-datepicker__header {
   @apply !bg-muted !border-input;
 }
-
-
-
 
 .react-datepicker__month-select,
 .react-datepicker__year-select {

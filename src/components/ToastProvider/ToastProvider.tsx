@@ -1,6 +1,6 @@
 // components/ui/ToastProvider.tsx
-'use client'
-import { Toaster } from 'react-hot-toast'
+"use client";
+import { Toaster } from "react-hot-toast";
 
 function ToastProvider() {
   return (
@@ -10,27 +10,26 @@ function ToastProvider() {
       gutter={8}
       toastOptions={{
         duration: 3000,
-        className:
-          'rounded-xl shadow-lg border border-border text-sm px-4 py-3',
+        className: "rounded-xl shadow-lg border border-border text-sm px-4 py-3",
         style: {
-          background: 'var(--surface)',
-          color: 'var(--text-primary)',
+          background: "var(--surface)",
+          color: "var(--text-primary)",
         },
         success: {
           iconTheme: {
-            primary: 'var(--success)',
-            secondary: 'var(--success-foreground)',
+            primary: "var(--success)",
+            secondary: "var(--success-foreground)",
           },
         },
         error: {
           iconTheme: {
-            primary: 'var(--destructive)',
-            secondary: 'var(--destructive-foreground)',
+            primary: "var(--destructive)",
+            secondary: "var(--destructive-foreground)",
           },
         },
       }}
     />
-  )
+  );
 }
 
-export default ToastProvider
+export default ToastProvider;

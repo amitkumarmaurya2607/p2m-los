@@ -22,15 +22,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${inter.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-background text-foreground font-sans" cz-shortcut-listen="true">
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} h-full antialiased`}>
+      <body
+        className="min-h-full flex flex-col bg-background text-foreground font-sans"
+        cz-shortcut-listen="true"
+      >
         <ErrorBoundary>
           <Providers>{children}</Providers>
-          <ToastProvider  />
+          <ToastProvider />
         </ErrorBoundary>
       </body>
     </html>

@@ -10,8 +10,8 @@ type CaptureProps = {
 };
 
 const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => {
-  const router = useRouter()
-  const dispatch = useAppDispatch()
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -125,8 +125,8 @@ const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => 
     onSubmit?.(capturedBlob);
     console.log("Submitted Blob:", capturedBlob);
 
-    dispatch(setSelfieData({ captured: true }))
-    router.push('/employment-details')
+    dispatch(setSelfieData({ captured: true }));
+    router.push("/employment-details");
   };
 
   return (
@@ -137,17 +137,9 @@ const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => 
         <div className="absolute inset-3 rounded-[24px] overflow-hidden border-2 border-success">
           {previewUrl ? (
             mode === "photo" ? (
-              <img
-                src={previewUrl}
-                alt="Selfie Preview"
-                className="w-full h-full object-cover"
-              />
+              <img src={previewUrl} alt="Selfie Preview" className="w-full h-full object-cover" />
             ) : (
-              <video
-                src={previewUrl}
-                controls
-                className="w-full h-full object-cover"
-              />
+              <video src={previewUrl} controls className="w-full h-full object-cover" />
             )
           ) : (
             <video
@@ -171,11 +163,7 @@ const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => 
           onClick={mode === "photo" ? capturePhoto : startRecording}
         >
           <span className="flex items-center gap-2">
-            {mode === "photo"
-              ? "Take Selfie"
-              : recording
-              ? "Recording..."
-              : "Record 20s Video"}
+            {mode === "photo" ? "Take Selfie" : recording ? "Recording..." : "Record 20s Video"}
           </span>
         </GradientButton>
       ) : (

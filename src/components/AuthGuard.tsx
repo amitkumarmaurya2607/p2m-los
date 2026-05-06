@@ -1,38 +1,38 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
-import { useAppSelector } from '@/store/hooks'
-import { selectIsLoggedIn } from '@/features/auth/authSlice'
+import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { useAppSelector } from "@/store/hooks";
+import { selectIsLoggedIn } from "@/features/auth/authSlice";
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
-  const router = useRouter()
-  const pathname = usePathname()
-  const isLoggedIn = useAppSelector(selectIsLoggedIn)
-  const [checked, setChecked] = useState(false)
+  const router = useRouter();
+  const pathname = usePathname();
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     if (!checked) {
-      if (pathname === '/login') {
+      if (pathname === "/login") {
         if (isLoggedIn) {
-          router.replace('/review')
+          router.replace("/review");
         } else {
-          setChecked(true)
+          setChecked(true);
         }
-        return
+        return;
       }
 
       if (!isLoggedIn) {
-        router.push('/login')
+        router.push("/login");
       } else {
-        setChecked(true)
+        setChecked(true);
       }
     }
-  }, [isLoggedIn, checked, router, pathname])
+  }, [isLoggedIn, checked, router, pathname]);
 
-  if (!checked) return null
+  if (!checked) return null;
 
-  if (!isLoggedIn && pathname !== '/login') return null
+  if (!isLoggedIn && pathname !== "/login") return null;
 
-  return <>{children}</>
+  return <>{children}</>;
 }

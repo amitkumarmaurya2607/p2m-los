@@ -1,28 +1,28 @@
-import React from 'react';
-import { ClipboardCheck, CreditCard, Landmark, UserCheck } from 'lucide-react';
+import React from "react";
+import { ClipboardCheck, CreditCard, Landmark, UserCheck } from "lucide-react";
 
 export default function HowItWorks() {
   const steps = [
     {
       icon: <ClipboardCheck className="w-8 h-8 text-primary" />,
       title: "Check Eligibility",
-      desc: "Enter basic details and check your loan limit in 2 mins."
+      desc: "Enter basic details and check your loan limit in 2 mins.",
     },
     {
       icon: <UserCheck className="w-8 h-8 text-primary" />,
       title: "Complete KYC",
-      desc: "Verify your identity with PAN and Aadhaar seamlessly."
+      desc: "Verify your identity with PAN and Aadhaar seamlessly.",
     },
     {
       icon: <Landmark className="w-8 h-8 text-primary" />,
       title: "Bank Verification",
-      desc: "Set up auto-repay securely with your bank account."
+      desc: "Set up auto-repay securely with your bank account.",
     },
     {
       icon: <CreditCard className="w-8 h-8 text-primary" />,
       title: "Instant Disbursal",
-      desc: "Money is transferred directly to your bank account."
-    }
+      desc: "Money is transferred directly to your bank account.",
+    },
   ];
 
   return (
@@ -32,13 +32,14 @@ export default function HowItWorks() {
           How it <span className="text-primary">Works</span>
         </h2>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-16">
-          Follow these simple steps to get your loan approved and disbursed instantly without any branch visits.
+          Follow these simple steps to get your loan approved and disbursed instantly without any
+          branch visits.
         </p>
 
         <div className="relative">
           {/* Connecting line for desktop */}
           <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-border border-dashed border-t-2"></div>
-          
+
           <div className="grid md:grid-cols-4 gap-12 relative z-10">
             {steps.map((step, idx) => (
               <div key={idx} className="flex flex-col items-center">

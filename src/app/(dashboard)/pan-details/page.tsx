@@ -1,13 +1,12 @@
-
-import PanDetails from '@/views/Dashbaord/PanDetails/PanDetails'
-import React from 'react'
+import PanDetails from "@/views/Dashbaord/PanDetails/PanDetails";
+import React from "react";
 
 function page() {
   return (
-   <>
-<PanDetails />
-   </>
-  )
+    <>
+      <PanDetails />
+    </>
+  );
 }
 
-export default page
+export default page;

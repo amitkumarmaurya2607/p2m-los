@@ -1,14 +1,13 @@
-
-import EmploymentDetails from '@/views/Dashbaord/EmploymentDetails/EmploymentDetails'
-import PanDetails from '@/views/Dashbaord/PanDetails/PanDetails'
-import React from 'react'
+import EmploymentDetails from "@/views/Dashbaord/EmploymentDetails/EmploymentDetails";
+import PanDetails from "@/views/Dashbaord/PanDetails/PanDetails";
+import React from "react";
 
 function page() {
   return (
-   <>
-<EmploymentDetails />
-   </>
-  )
+    <>
+      <EmploymentDetails />
+    </>
+  );
 }
 
-export default page
+export default page;

@@ -1,5 +1,5 @@
-'use client'
-import React, { useState, useEffect, useRef } from 'react';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
 
 interface OTPInputProps {
   length?: number;
@@ -43,7 +43,7 @@ const OTPInput = ({ length = 6, onComplete }: OTPInputProps) => {
 
     const pasteData = data.split("").slice(0, length);
     const newOtp = [...otp];
-    
+
     pasteData.forEach((char, i) => {
       newOtp[i] = char;
       if (inputRefs.current[i]) {
@@ -63,7 +63,9 @@ const OTPInput = ({ length = 6, onComplete }: OTPInputProps) => {
       {otp.map((digit, idx) => (
         <input
           key={idx}
-          ref={(el) => { inputRefs.current[idx] = el }}
+          ref={(el) => {
+            inputRefs.current[idx] = el;
+          }}
           type="text"
           inputMode="numeric"
           maxLength={1}
