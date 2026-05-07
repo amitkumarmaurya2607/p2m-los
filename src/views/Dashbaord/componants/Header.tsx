@@ -69,8 +69,8 @@ const Icon = progressItem?.icon;
 
   return (
     <div
-      className="flex items-center justify-between w-full h-[80px] px-[56px] bg-surface-overlay-90
-        border-b border-border shadow-[var(--shadow-sm)]"
+      className="sticky top-0 z-50 flex items-center justify-between w-full h-[80px] px-[56px] bg-surface-overlay-90
+        bg-background border-b border-border shadow-[var(--shadow-sm)]"
     >
       <div className="flex items-center gap-4">
         <button
@@ -81,7 +81,7 @@ const Icon = progressItem?.icon;
             ${progressItem?.iconContainerClassName}
           `}
         >
-        <Icon className={progressItem?.iconClassName} />
+        {Icon && <Icon className={progressItem?.iconClassName} />}
         </button>
 
         <div>

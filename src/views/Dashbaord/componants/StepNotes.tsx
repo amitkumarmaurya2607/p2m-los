@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
 import { Fingerprint, ShieldCheck } from "lucide-react";
+
+import { useStickyOnScroll } from "../../../hooks/useStickyOnScroll";
 
 type StepNotesProps = {
   title?: string;
@@ -11,6 +14,7 @@ type StepNotesProps = {
   noteIcon?: React.ReactNode;
 
   className?: string;
+  stickyOffset?: number;
 };
 
 const StepNotes = ({
@@ -24,11 +28,27 @@ const StepNotes = ({
   noteIcon,
 
   className = "",
+  stickyOffset = 10,
 }: StepNotesProps) => {
-  return (
-    <div
-      className={`hidden lg:flex w-full max-w-[464px] mt-5 flex-col items-start gap-[29px] ${className}`}
-    >
+  const [wrapperRef, isSticky] = useStickyOnScroll<HTMLDivElement>(stickyOffset);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+
+    const measure = () => {
+      const rect = el.getBoundingClientRect();
+      setDimensions({ width: rect.width, height: rect.height });
+    };
+
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [wrapperRef]);
+
+  const content = (
+    <>
       {/* Top Icon */}
       <div className="flex h-[56px] w-[56px] items-center justify-center rounded-[16px] bg-[rgba(55,55,193,0.1)]">
         {icon || (
@@ -75,6 +95,27 @@ const StepNotes = ({
             {noteDescription}
           </p>
         </div>
+      </div>
+    </>
+  );
+
+  return (
+    <div ref={wrapperRef} className="relative">
+      {isSticky && (
+        <div
+          style={{ width: dimensions.width, height: dimensions.height }}
+        />
+      )}
+
+      <div
+        className={`hidden lg:flex w-full max-w-[464px] flex-col items-start gap-[29px] ${
+          isSticky
+            ? "fixed z-10 mt-0"
+            : "mt-5"
+        } ${className}`}
+        style={isSticky ? { top: stickyOffset, width: dimensions.width } : undefined}
+      >
+        {content}
       </div>
     </div>
   );
