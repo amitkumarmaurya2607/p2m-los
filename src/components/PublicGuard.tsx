@@ -21,7 +21,21 @@ export default function PublicGuard({ children }: { children: React.ReactNode })
     }
   }, [isLoggedIn, checked, router, pathname]);
 
-  if (!checked || isLoggedIn) return null;
+  if (!checked) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    );
+  }
+
+  if (isLoggedIn) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    );
+  }
 
   return <>{children}</>;
 }

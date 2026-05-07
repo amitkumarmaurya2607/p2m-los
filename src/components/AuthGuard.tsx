@@ -30,9 +30,21 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     }
   }, [isLoggedIn, checked, router, pathname]);
 
-  if (!checked) return null;
+  if (!checked) {
+    return (
+      <div className="flex flex-1 items-center justify-center py-20">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    );
+  }
 
-  if (!isLoggedIn && pathname !== "/login") return null;
+  if (!isLoggedIn && pathname !== "/login") {
+    return (
+      <div className="flex flex-1 items-center justify-center py-20">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    );
+  }
 
   return <>{children}</>;
 }

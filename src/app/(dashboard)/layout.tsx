@@ -4,6 +4,7 @@ import ProgressBar from "@/views/Dashbaord/componants/ProgressBar";
 import StepperAlt from "@/views/Dashbaord/componants/Stepper";
 import StepRedirect from "@/components/StepRedirect";
 import AuthGuard from "@/components/AuthGuard";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -26,9 +27,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <HorizontalStepper />
           </div> */}
           <div className="flex justify-center px-4 pt-12 pb-6">
-            <AuthGuard>
-              <StepRedirect>{children}</StepRedirect>
-            </AuthGuard>
+            <ErrorBoundary label="Dashboard">
+              <AuthGuard>
+                <StepRedirect>{children}</StepRedirect>
+              </AuthGuard>
+            </ErrorBoundary>
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { Button } from "./ui/Button";
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
+  label?: string;
 }
 
 interface State {
@@ -40,6 +41,11 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="flex min-h-[400px] flex-col items-center justify-center p-8">
           <div className="text-center">
+            {this.props.label && (
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                {this.props.label}
+              </p>
+            )}
             <h2 className="mb-4 text-2xl font-bold text-destructive">Something went wrong</h2>
             <p className="mb-6 text-muted-foreground">
               {this.state.error?.message || "An unexpected error occurred"}

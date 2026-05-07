@@ -1,5 +1,6 @@
 import SideBar from "@/views/Auth/SideBar";
 import AuthGuard from "@/components/AuthGuard";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -12,7 +13,9 @@ export default function layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex w-full font-sans antialiased min-h-[100dvh]">
       <SideBar />
-      <AuthGuard>{children}</AuthGuard>
+      <ErrorBoundary label="Authentication">
+        <AuthGuard>{children}</AuthGuard>
+      </ErrorBoundary>
     </div>
   );
 }
