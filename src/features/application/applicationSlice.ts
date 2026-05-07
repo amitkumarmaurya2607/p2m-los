@@ -35,6 +35,15 @@ type EmploymentData = {
   city: string;
   pincode: string;
 };
+type LoanCalculatorData = {
+  viewed: boolean;
+  loanAmount: number;
+  tenure: number;
+  interestRate: number;
+  emi: number;
+  totalPayable: number;
+};
+type ReviewData = { submitted: boolean };
 
 export interface ApplicationState {
   mobile: MobileData | null;
@@ -44,6 +53,8 @@ export interface ApplicationState {
   bankDetails: BankDetailsData | null;
   selfie: SelfieData | null;
   employmentDetails: EmploymentData | null;
+  loanCalculator: LoanCalculatorData | null;
+  review: ReviewData | null;
 }
 
 const getInitialState = (): ApplicationState => {
@@ -60,6 +71,8 @@ const getInitialState = (): ApplicationState => {
         bankDetails: parsed.bankDetails ?? null,
         selfie: parsed.selfie ?? null,
         employmentDetails: parsed.employmentDetails ?? null,
+        loanCalculator: parsed.loanCalculator ?? null,
+        review: parsed.review ?? null,
       };
     }
   } catch {
@@ -77,6 +90,8 @@ function getDefaultState(): ApplicationState {
     bankDetails: null,
     selfie: null,
     employmentDetails: null,
+    loanCalculator: null,
+    review: null,
   };
 }
 
@@ -107,6 +122,12 @@ const applicationSlice = createSlice({
     setEmploymentDetails: (state, action: PayloadAction<EmploymentData>) => {
       state.employmentDetails = action.payload;
     },
+    setLoanCalculatorData: (state, action: PayloadAction<LoanCalculatorData>) => {
+      state.loanCalculator = action.payload;
+    },
+    setReviewData: (state, action: PayloadAction<ReviewData>) => {
+      state.review = action.payload;
+    },
     resetApplication: (state) => {
       state.mobile = null;
       state.pan = null;
@@ -115,6 +136,8 @@ const applicationSlice = createSlice({
       state.bankDetails = null;
       state.selfie = null;
       state.employmentDetails = null;
+      state.loanCalculator = null;
+      state.review = null;
     },
   },
 });
@@ -127,6 +150,8 @@ export const {
   setBankDetails,
   setSelfieData,
   setEmploymentDetails,
+  setLoanCalculatorData,
+  setReviewData,
   resetApplication,
 } = applicationSlice.actions;
 

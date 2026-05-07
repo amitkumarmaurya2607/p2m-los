@@ -8,4 +8,6 @@ export const steps = [
   { id: 5, key: "bankDetails", title: "Bank", fullTitle: "Bank Details" },
   { id: 6, key: "selfie", title: "Selfie", fullTitle: "Selfie Verification" },
   { id: 7, key: "employmentDetails", title: "Employment", fullTitle: "Employment Details" },
+  { id: 8, key: "loanCalculator", title: "Loan Calculator", fullTitle: "Loan Calculator" },
+  { id: 9, key: "review", title: "Review", fullTitle: "Review Application" },
 ] as const;

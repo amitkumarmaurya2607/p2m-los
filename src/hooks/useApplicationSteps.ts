@@ -49,6 +49,8 @@ export function useApplicationSteps() {
             bankDetails: "/bank-details",
             selfie: "/selfie-capture",
             employmentDetails: "/employment-details",
+            loanCalculator: "/loan-calculator",
+            review: "/review",
           };
           const route = routeMap[step.key];
           if (route) router.push(route);

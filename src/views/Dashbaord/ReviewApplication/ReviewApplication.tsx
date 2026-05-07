@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { CheckCircle, ClipboardList, Edit3, Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { selectApplication, resetApplication } from "@/features/application/applicationSlice";
+import { selectApplication, resetApplication, setReviewData } from "@/features/application/applicationSlice";
 import { logout } from "@/features/auth/authSlice";
 
 const ReviewField = ({ label, value }: { label: string; value: string }) => (
@@ -51,6 +51,7 @@ function ReviewApplication() {
   const [loading, setLoading] = useState(false);
 
   const data = useAppSelector(selectApplication);
+  const loanData = data.loanCalculator;
 
   const personalFields = [
     { label: "Name", value: data.personalInfo?.fullName || "N/A" },
@@ -89,6 +90,7 @@ function ReviewApplication() {
       setLoading(true);
       await new Promise((res) => setTimeout(res, 1200));
 
+      dispatch(setReviewData({ submitted: true }));
       dispatch(resetApplication());
       dispatch(logout());
 
@@ -136,17 +138,23 @@ function ReviewApplication() {
               <p className="text-[16px] font-medium text-[#90A1B9]">
                 Loan <br /> Amount
               </p>
-              <p className="text-[24px] font-extrabold text-white">₹5,00,000</p>
+              <p className="text-[24px] font-extrabold text-white">
+                ₹{loanData?.loanAmount ? Number(loanData.loanAmount).toLocaleString("en-IN") : "5,00,000"}
+              </p>
             </div>
 
             <div className="flex items-end justify-between border-b border-white/10 pb-4">
               <p className="text-[16px] font-medium text-[#90A1B9]">Tenure</p>
-              <p className="text-[20px] font-bold text-white">36 Months</p>
+              <p className="text-[20px] font-bold text-white">
+                {loanData?.tenure || 36} Months
+              </p>
             </div>
 
             <div className="flex items-end justify-between pb-2">
               <p className="text-[16px] font-medium text-[#90A1B9]">EMI</p>
-              <p className="text-[30px] font-extrabold text-[#00C89C]">₹16,500</p>
+              <p className="text-[30px] font-extrabold text-[#00C89C]">
+                ₹{loanData?.emi ? Number(loanData.emi).toLocaleString("en-IN") : "16,500"}
+              </p>
             </div>
           </div>
 

@@ -2,8 +2,13 @@
 
 import React, { useMemo, useState } from "react";
 import { ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/store/hooks";
+import { setLoanCalculatorData } from "@/features/application/applicationSlice";
 
 function LoanCalculator() {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const [loanAmount, setLoanAmount] = useState(500000);
   const [tenure, setTenure] = useState(36);
 
@@ -27,13 +32,15 @@ function LoanCalculator() {
     }).format(value);
 
   const handleLockPlan = () => {
-    console.log({
+    dispatch(setLoanCalculatorData({
+      viewed: true,
       loanAmount,
       tenure,
       interestRate,
       emi,
       totalPayable,
-    });
+    }));
+    router.push("/review");
   };
 
   return (

@@ -6,7 +6,7 @@ import { useAppSelector } from "@/store/hooks";
 import { selectCompletedSteps } from "@/features/application/applicationSlice";
 import { steps as allSteps } from "@/lib/sessionStorage";
 
-const bypassRoutes = ["/track-application", "/loan-calculator", "/profile"];
+const bypassRoutes = ["/track-application", "/profile"];
 
 const stepRouteMap: Record<string, string> = {
   mobile: "/login",
@@ -16,6 +16,8 @@ const stepRouteMap: Record<string, string> = {
   bankDetails: "/bank-details",
   selfie: "/selfie-capture",
   employmentDetails: "/employment-details",
+  loanCalculator: "/loan-calculator",
+  review: "/review",
 };
 
 export default function StepRedirect({ children }: { children: React.ReactNode }) {
@@ -31,16 +33,16 @@ export default function StepRedirect({ children }: { children: React.ReactNode }
       }
     }
 
-    if (pathname === "/review") {
+    if (pathname === "/review" || pathname === "/track-application") {
       return;
     }
 
     const allComplete = allSteps.every((step) => completedSteps.has(step.key));
 
     if (allComplete) {
-      if (pathname !== "/review" && !hasRedirected.current) {
+      if (pathname !== "/track-application" && !hasRedirected.current) {
         hasRedirected.current = true;
-        router.replace("/review");
+        router.replace("/track-application");
       }
       return;
     }

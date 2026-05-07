@@ -9,6 +9,7 @@ import { isValidEmail, isValidMobile, sanitizeEmail, sanitizeNumeric } from "@/l
 import { showToast } from "@/lib/toast";
 import Logo from "@/assets/icon/Logo";
 import { Popup } from "@/components/ui/Popup";
+import StepCard from "../Dashbaord/componants/StepCard";
 
 const Login = () => {
   const [method, setMethod] = useState<"mobile" | "email">("mobile");
@@ -90,17 +91,16 @@ const Login = () => {
             </p>
           </div>
 
-          {/* Form */}
-          <form
-            onSubmit={submitHandler}
-            className="w-full max-w-[448px] flex flex-col gap-2 p-8 lg:p-12 bg-card-bg border
-              border-card-border bg-background text-foreground lg:rounded-[32px] rounded-[16px]
-              shadow-[var(--shadow-md)]"
+          <StepCard
+            title="Welcome back"
+            subtitle="Please enter your details to sign in."
+            className="w-full max-w-[448px]" 
           >
-            <header className="mb-8">
-              <h2 className="text-2xl font-bold text-text-heading">Welcome back</h2>
-              <p className="text-text-muted text-sm mt-3">Please enter your details to sign in.</p>
-            </header>
+ <form
+            onSubmit={submitHandler}
+           
+          >
+           
 
             <div className="space-y-4">
               <TextInput
@@ -141,6 +141,9 @@ const Login = () => {
               </GradientButton>
             </div>
           </form>
+
+          </StepCard>
+         
         </div>
       ) : (
         <OTPVerify

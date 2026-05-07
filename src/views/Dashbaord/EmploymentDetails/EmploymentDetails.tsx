@@ -84,7 +84,7 @@ function EmploymentDetails() {
 
       dispatch(setEmploymentDetails(form));
 
-      router.push("/review"); // next step
+      router.push("/loan-calculator"); // next step
     } catch (err) {
       console.error(err);
     } finally {

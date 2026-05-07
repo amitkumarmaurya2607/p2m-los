@@ -2,7 +2,6 @@
 import OTPInput from "@/components/OTPInput/OTPInput";
 import ResendTimer from "@/components/ResendTimer/ResendTimer";
 import GradientButton from "@/components/ui/GradientButton";
-import { ArrowLeft } from "lucide-react";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/lib/toast";
@@ -10,6 +9,7 @@ import { maskEmail, maskMobile } from "@/lib/utils";
 import { useAppDispatch } from "@/store/hooks";
 import { setMobileData } from "@/features/application/applicationSlice";
 import { login } from "@/features/auth/authSlice";
+import StepCard from "../Dashbaord/componants/StepCard";
 
 type OTPVerifyProps = {
   resend?: () => void;
@@ -60,30 +60,17 @@ function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps
     <div
       className="w-full lg:w-1/2 bg-surface-muted flex items-center justify-center p-6
         bg-[url('/images/boginBanner.webp')] lg:bg-none"
-    >
-      <div
-        className="w-full max-w-[500px] flex flex-col items-start gap-2 p-8 lg:p-12 bg-background
-          lg:bg-card-bg border border-card-border rounded-[16px] lg:rounded-[32px]
-          shadow-[var(--shadow-md)] [&>*]:w-full"
-      >
-        <button
-          className="flex items-center justify-center w-[40px] h-[40px] bg-muted rounded-full
-            max-w-[40px]"
-          onClick={back}
-        >
-          <ArrowLeft className="w-5 h-5" />
-        </button>
+    > 
+         <StepCard
+            title="Verify OTP"
+            subtitle= {`We've sent a 6-digit code to your ${
+                method === "email" ? "email" : "mobile number"
+              } (${maskedValue})`}
+            className="w-full max-w-[448px]" 
+             back={back}
+          >
 
-        <header className="mb-6">
-          <h2 className="text-2xl font-bold text-text-heading">Verify OTP</h2>
-          <p className="text-text-muted text-sm mt-3">
-            {`We've sent a 6-digit code to your ${
-              method === "email" ? "email" : "mobile number"
-            } (${maskedValue})`}
-          </p>
-        </header>
-
-        <form className="space-y-4" onSubmit={handleSubmit}>
+  <form className="space-y-4" onSubmit={handleSubmit}>
           <OTPInput
             length={6}
             onComplete={(code) => {
@@ -103,7 +90,7 @@ function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps
             <ResendTimer onResend={resend} />
           </p>
         </form>
-      </div>
+          </StepCard>
     </div>
   );
 }
