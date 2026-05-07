@@ -1,11 +1,13 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 import { ArrowLeft, Moon, Sun, User } from "lucide-react";
 import { useThemeContext } from "@/components/theme/ThemeProvider";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAppDispatch } from "@/store/hooks";
 import { logout } from "@/features/auth/authSlice";
 import { resetApplication } from "@/features/application/applicationSlice";
+import { useApplicationSteps } from "@/hooks/useApplicationSteps";
+import { steps as allSteps, StepItem } from "@/lib/sessionStorage";
 
 type HeaderProps = {
   title?: string;
@@ -43,6 +45,28 @@ const Header: React.FC<HeaderProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+
+ const { stepStatuses } = useApplicationSteps();
+
+const pathname = usePathname();
+
+const progressItem: StepItem | null = useMemo(() => {
+  const progressStepKey =
+    [...stepStatuses.entries()].find(
+      ([_, status]) => status === "progress"
+    )?.[0] ?? null;
+
+  return (
+    allSteps.find(
+      (step: StepItem) => step.key === progressStepKey
+    ) ?? null
+  );
+}, [pathname, stepStatuses, allSteps]);
+
+console.log("Progress Item:", progressItem);
+
+const Icon = progressItem?.icon;
+
   return (
     <div
       className="flex items-center justify-between w-full h-[80px] px-[56px] bg-surface-overlay-90
@@ -51,14 +75,18 @@ const Header: React.FC<HeaderProps> = ({
       <div className="flex items-center gap-4">
         <button
           onClick={onBack}
-          className="flex items-center justify-center w-10 h-10 rounded-full bg-muted"
+            className={`
+            w-10 h-10 rounded-xl flex items-center justify-center
+            shadow-[0px_10px_30px_rgba(0,0,0,0.2)]
+            ${progressItem?.iconContainerClassName}
+          `}
         >
-          <ArrowLeft size={18} />
+        <Icon className={progressItem?.iconClassName} />
         </button>
 
         <div>
-          <p className="text-xs tracking-widest text-text-muted font-semibold">{subtitle}</p>
-          <h1 className="text-lg font-semibold text-text-heading">{title}</h1>
+          <p className="text-xs tracking-widest text-text-muted font-semibold">{(progressItem?.fullTitle || "").toLocaleUpperCase()}</p>
+          <h1 className="text-lg font-semibold text-text-heading">{`STEP ${progressItem?.id || ""}`}</h1>
         </div>
       </div>
 

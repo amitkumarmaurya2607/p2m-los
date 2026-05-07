@@ -1,10 +1,13 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { ChevronRight } from "lucide-react";
+import { Calculator, ChevronRight, Lightbulb } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/store/hooks";
 import { setLoanCalculatorData } from "@/features/application/applicationSlice";
+import StepNotes from "../componants/StepNotes";
+import StepCard from "../componants/StepCard";
+import GradientButton from "@/components/ui/GradientButton";
 
 function LoanCalculator() {
   const router = useRouter();
@@ -44,20 +47,43 @@ function LoanCalculator() {
   };
 
   return (
-    <div
-      className="w-full max-w-[576px] rounded-[32px] border border-[#F1F5F9] bg-white/90 px-[48px]
-        py-[48px] shadow-[0px_32px_80px_-24px_rgba(0,0,0,0.15)]"
-    >
-      <div>
-        <h2 className="text-[30px] font-extrabold leading-9 tracking-[-0.75px] text-[#0F172B]">
-          Configure Loan
-        </h2>
-        <p className="mt-2 text-[16px] font-medium leading-6 text-[#62748E]">
-          You are eligible for up to ₹{formatINR(maxEligible)}
-        </p>
-      </div>
+  <div className="flex gap-12">
 
-      <div
+    <StepNotes
+  title="Configure Your Loan"
+  description="Customize your loan amount and repayment tenure to find a plan that best suits your financial needs and monthly budget."
+
+  noteTitle="Smart Borrowing Tips"
+  noteDescription={
+    <ul className="space-y-2 text-sm leading-6">
+      <li className="flex items-start gap-2">
+        <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+        Choose a loan amount based on your repayment capacity.
+      </li>
+
+      <li className="flex items-start gap-2">
+        <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+        Longer repayment tenures may reduce your monthly EMI amount.
+      </li>
+
+      <li className="flex items-start gap-2">
+        <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+        Review interest rates and EMI estimates carefully before proceeding.
+      </li>
+    </ul>
+  }
+
+  icon={<Calculator className="w-6 h-6 text-primary" />}
+  noteIcon={<Lightbulb className="w-5 h-5 text-secondary" />}
+/>
+
+<StepCard
+      title="Configure Loan"
+      subtitle={`You are eligible for up to ₹${formatINR(maxEligible)}`}
+      className=""
+    >
+
+       <div
         className="relative mt-8 overflow-hidden rounded-[24px] bg-gradient-to-br from-[#0F172B]
           to-[#1D293D] p-6
           shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)]"
@@ -136,17 +162,19 @@ function LoanCalculator() {
         </div>
       </div>
 
-      <button
-        type="button"
-        onClick={handleLockPlan}
-        className="mt-10 flex h-[60px] w-full items-center justify-center gap-2 rounded-[16px]
-          bg-[#3737C1] text-[18px] font-bold leading-7 text-white
-          shadow-[0px_12px_24px_-8px_rgba(55,55,193,0.4)]"
-      >
-        Lock This Plan
-        <ChevronRight className="h-5 w-5" />
-      </button>
-    </div>
+      <GradientButton type="button" className="mt-6 w-full"    onClick={handleLockPlan}>
+          <span className="flex items-center justify-center gap-2">
+            {"  Lock This Plan"}
+         
+          </span>
+        </GradientButton>
+
+    </StepCard>
+
+
+
+  </div>
+   
   );
 }
 

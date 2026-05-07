@@ -12,6 +12,8 @@ import { CheckCircle } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setPersonalInfo, selectApplication } from "@/features/application/applicationSlice";
 import { isValidEmail, sanitizeNumeric } from "@/lib/utils";
+import StepNotes from "../componants/StepNotes";
+import { Lightbulb } from "lucide-react";
 
 const genders = ["Male", "Female", "Other"];
 const employmentTypes = ["Salaried", "Self-Employed"];
@@ -153,7 +155,37 @@ function PersonalInfo() {
   };
 
   return (
-    <StepCard
+   <div className="flex gap-12">
+    <StepNotes
+    title = "Personal Details"
+description =
+  "Please provide your personal information accurately to help us verify your identity, communicate important updates, and complete your application process smoothly."
+
+noteTitle = "Important Tips"
+noteDescription = {
+  ( <ul className="space-y-2 text-sm leading-6">
+    <li className="flex items-start gap-2">
+      <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
+      Enter your active email address and verify it before continuing.
+    </li>
+
+    <li className="flex items-start gap-2">
+      <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
+      Ensure your name matches your PAN and Aadhaar records.
+    </li>
+
+    <li className="flex items-start gap-2">
+      <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
+      Double-check your mobile number for important application updates.
+    </li>
+  </ul>)
+}
+ noteIcon={<Lightbulb className="w-6 h-6 text-secondary" />}
+
+
+    />
+
+        <StepCard
       title="Basic Info"
       subtitle="To continue, please share some basic personal information. It helps us confirm your identity and ensure everything is ready for a seamless experience."
       className="lg:w-[800px] mx-auto"
@@ -351,6 +383,7 @@ function PersonalInfo() {
         </GradientButton>
       </form>
     </StepCard>
+   </div>
   );
 }
 

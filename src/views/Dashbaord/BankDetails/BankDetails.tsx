@@ -3,12 +3,13 @@ import React, { useState } from "react";
 import StepCard from "../componants/StepCard";
 import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
-import { CreditCard, Check, ChevronRight } from "lucide-react";
+import { CreditCard, Check, ChevronRight, Landmark, ShieldCheck } from "lucide-react";
 import SelectBox from "@/components/ui/SelectBox";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setBankDetails, selectApplication } from "@/features/application/applicationSlice";
 import { isValidIFSCCode, sanitizeNumeric, sanitizeIFSC } from "@/lib/utils";
+import StepNotes from "../componants/StepNotes";
 
 function BankDetails() {
   const router = useRouter();
@@ -166,7 +167,7 @@ function BankDetails() {
   }
 
   return (
-    <>
+    <div className="flex gap-12">
       {/* Header */}
       {/* <div className="text-center mb-6 sm:mb-8">
         <h2 className="text-xl sm:text-2xl font-semibold">
@@ -178,13 +179,23 @@ function BankDetails() {
       </div> */}
 
       {/* Card */}
+      <StepNotes
+  title="Bank Account Verification"
+  description="Please provide your bank account details accurately to enable secure loan disbursement, EMI processing, and seamless transaction verification."
+
+  noteTitle="Safe Banking Information"
+  noteDescription="Your banking details are securely encrypted and used only for verification, disbursement, and repayment-related processes."
+
+  icon={<Landmark className="w-6 h-6 text-primary" />}
+  noteIcon={<ShieldCheck className="w-5 h-5 text-secondary" />}
+/>
       <StepCard
         title=" Bank Verification"
         subtitle="  Your loan amount will be disbursed to this verified account."
-        className="lg:w-[800px]"
+        className=""
       >
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
             <TextInput
               label="Bank Account Number"
               value={form.accountNumber}
@@ -207,13 +218,13 @@ function BankDetails() {
               maxLength={11}
             />
 
-            <SelectBox
+            {/* <SelectBox
               label="Account Type"
               options={accountTypeOptions}
               value={accountTypeOptions.find((opt) => opt.value === form.accountType)}
               onChange={(selected: any) => handleChange("accountType", selected?.value || "")}
               error={errors.accountType}
-            />
+            /> */}
           </div>
 
           {/* Info Box */}
@@ -234,7 +245,7 @@ function BankDetails() {
           </GradientButton>
         </form>
       </StepCard>
-    </>
+    </div>
   );
 }
 

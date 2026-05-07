@@ -19,7 +19,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <Header />
 
       <div className="flex">
-         <StepperAlt /> 
+         {/* <StepperAlt />  */}
         <div className="grow-1">
           <ProgressBar />
           {/* <div className="flex justify-center p-8">

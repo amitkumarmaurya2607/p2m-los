@@ -3,11 +3,12 @@ import React, { useState } from "react";
 import StepCard from "../componants/StepCard";
 import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ShieldCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setPanData, selectApplication } from "@/features/application/applicationSlice";
 import { isValidPAN, sanitizePAN } from "@/lib/utils";
+import StepNotes from "../componants/StepNotes";
 function PanDetails() {
   const dispatch = useAppDispatch();
   const application = useAppSelector(selectApplication);
@@ -58,7 +59,17 @@ function PanDetails() {
   };
 
   return (
-    <StepCard title="PAN Verification" subtitle="Please enter your 10-digit PAN number.">
+     <div className="flex gap-12">
+
+
+<StepNotes
+  icon={<ShieldCheck className="w-5 h-5 text-primary" />}
+  title="Verify Your PAN"
+  description="To continue your application, please enter your valid PAN number. Your information is protected with advanced encryption and used only for secure identity verification and regulatory compliance."
+  noteTitle="Protected Information"
+  noteDescription="Your PAN information is securely encrypted and processed in compliance with financial security standards."
+/>
+      <StepCard title="PAN Verification" subtitle="Please enter your 10-digit PAN number.">
       <form onSubmit={handleSubmit} className="space-y-4">
         <TextInput
           type="text"
@@ -78,6 +89,7 @@ function PanDetails() {
         </GradientButton>
       </form>
     </StepCard>
+     </div>
   );
 }
 
