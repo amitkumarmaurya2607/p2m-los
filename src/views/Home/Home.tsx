@@ -1,36 +1,34 @@
-import React from "react";
-import Navbar from "@/components/layout/Navbar";
-import HeroBanner from "./componant/HeroBanner";
-import FeatureCards from "./componant/FeatureCards";
-import LoanProducts from "./componant/LoanProducts";
-import WhyChooseUs from "./componant/WhyChooseUs";
-import PlanYourLoan from "./componant/PlanYourLoan";
-import CreditScore from "./componant/CreditScore";
-import HowItWorks from "./componant/HowItWorks";
-import TrustStats from "./componant/TrustStats";
-import Testimonials from "./componant/Testimonials";
-import FinancialWisdom from "./componant/FinancialWisdom";
-import FAQ from "./componant/FAQ";
-import BottomCTA from "./componant/BottomCTA";
-import Footer from "@/components/layout/Footer";
 
-function Home() {
+import HeroSection from "./componant/HeroSection";
+import LoanProducts from "./componant/LoanProducts";
+import EmiDashboard from "./componant/EmiDashboard";
+import CategoryMarquee from "./componant/CategoryMarquee";
+import QuickEasySection from "./componant/QuickEasySection";
+import StepProcess from "./componant/StepProcess";
+import RatingReviews from "./componant/RatingReviews";
+import TrustStats from "./componant/TrustStats";
+import WhyChoose from "./componant/WhyChoose";
+import SocialProof from "./componant/SocialProof";
+import FAQ from "./componant/FAQ";
+import FinalCTA from "./componant/FinalCTA";
+
+export default function Home() {
   return (
-    <div>
-      <HeroBanner />
-      <FeatureCards />
+    <div className="min-h-screen bg-background text-foreground font-sans transition-colors duration-300 overflow-x-hidden">
+      
+      <HeroSection />
       <LoanProducts />
-      <WhyChooseUs />
-      <PlanYourLoan />
-      <CreditScore />
-      <HowItWorks />
+      <EmiDashboard />
+      <CategoryMarquee />
+      <QuickEasySection />
+      <StepProcess />
+      <RatingReviews />
       <TrustStats />
-      <Testimonials />
-      <FinancialWisdom />
+      <WhyChoose />
+      <SocialProof />
       <FAQ />
-      <BottomCTA />
+      <FinalCTA />
+
     </div>
   );
 }
-
-export default Home;

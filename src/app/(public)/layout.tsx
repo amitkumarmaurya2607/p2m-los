@@ -1,5 +1,5 @@
 import Footer from "@/components/layout/Footer";
-import Navbar from "@/components/layout/Navbar";
+import Header from "@/components/layout/Header";
 import PublicGuard from "@/components/PublicGuard";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import type { Metadata } from "next";
@@ -12,11 +12,11 @@ export const metadata: Metadata = {
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background font-sans text-foreground">
-      <Navbar />
+      <Header />
       <main>
-        <ErrorBoundary label="Public Pages">
-          <PublicGuard>{children}</PublicGuard>
-        </ErrorBoundary>
+  
+         {children}
+  
       </main>
 
       <Footer />

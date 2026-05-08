@@ -1,112 +1,153 @@
 import React from "react";
-import { Briefcase, GraduationCap, Home as HomeIcon, User } from "lucide-react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Briefcase, UserRound, Zap, CircleAlert } from "lucide-react";
 
-export default function LoanProducts() {
-  const products = [
-    {
-      id: 1,
-      title: "Personal Loan",
-      amount: "Up to ₹5 Lakhs",
-      icon: <User className="w-5 h-5 text-primary" />,
-      color: "bg-blue-50 text-primary",
-      image:
-        "https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=400&h=300",
-    },
-    {
-      id: 2,
-      title: "Business Loan",
-      amount: "Up to ₹50 Lakhs",
-      icon: <Briefcase className="w-5 h-5 text-secondary" />,
-      color: "bg-green-50 text-secondary",
-      image:
-        "https://images.unsplash.com/photo-1556761175-5973dc0f32d7?auto=format&fit=crop&q=80&w=400&h=300",
-    },
-    {
-      id: 3,
-      title: "Education Loan",
-      amount: "Up to ₹20 Lakhs",
-      icon: <GraduationCap className="w-5 h-5 text-purple-500" />,
-      color: "bg-purple-50 text-purple-500",
-      image:
-        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=400&h=300",
-    },
-    {
-      id: 4,
-      title: "Home Renovation",
-      amount: "Up to ₹10 Lakhs",
-      icon: <HomeIcon className="w-5 h-5 text-orange-500" />,
-      color: "bg-orange-50 text-orange-500",
-      image:
-        "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=400&h=300",
-    },
-  ];
+const loanProducts = [
+  {
+    title: "Personal Loan",
+    desc: "Achieve your personal goals instantly.",
+    limit: "Up to ₹5 Lakhs",
+    bg: "bg-[#3737C1]",
+    text: "text-white",
+    icon: UserRound,
+    iconBox: "bg-white/20 text-white",
+    image: "/images/coin.png",
+    imageClass: "w-[112px] right-10 -top-6",
+  },
+  {
+    title: "Salary Advance",
+    desc: "Get your salary early, interest-free.",
+    limit: "Up to ₹1 Lakh",
+    bg: "bg-[#00C89C]",
+    text: "text-white",
+    icon: Zap,
+    iconBox: "bg-white/20 text-white",
+    image: "/images/shield.png",
+    imageClass: "w-[112px] right-8 top-5",
+  },
+  {
+    title: "Business Loan",
+    desc: "Scale your business without limits.",
+    limit: "Up to ₹50 Lakhs",
+    bg: "bg-white border border-[#E2E8F0]",
+    text: "text-[#0F172A]",
+    icon: Briefcase,
+    iconBox: "bg-[#EEF2FF] text-[#3737C1]",
+    image: "/images/wallet.png",
+    imageClass: "w-[121px] right-6 top-5",
+  },
+  {
+    title: "Emergency Loan",
+    desc: "Funds disbursed in 10 minutes flat.",
+    limit: "Up to ₹2 Lakhs",
+    bg: "bg-[#0F172A]",
+    text: "text-white",
+    icon: CircleAlert,
+    iconBox: "bg-[#FF9F1C]/20 text-[#FF9F1C]",
+    image: "/images/money-bag.png",
+    imageClass: "w-[97px] right-10 top-5",
+  },
+];
 
+const LoanProducts = () => {
   return (
-    <section className="py-20 bg-muted/30">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-text-heading mb-4">
-              <span className="text-primary">Loan Products</span> for Every Need
-            </h2>
-            <p className="text-muted-foreground text-lg">
-              Tailored financial solutions designed to help you achieve your goals, whether personal
-              or professional.
-            </p>
-          </div>
-          <button className="flex items-center gap-2 text-primary font-semibold hover:underline">
-            View all products <ArrowRight size={18} />
-          </button>
+    <section className="w-full bg-white px-5 py-16 font-[Inter] md:px-10 lg:px-20 lg:py-[96px]">
+      <div className="mx-auto max-w-[1280px]">
+        <div className="mx-auto max-w-[672px] text-center">
+          <h2 className="text-[34px] font-black leading-tight tracking-[-1px] text-[#0F172A] md:text-[48px] md:leading-[48px] md:tracking-[-1.2px]">
+            A loan for{" "}
+            <span className="text-[#00C89C]">every need</span>
+          </h2>
+
+          <p className="mt-6 text-[16px] leading-[26px] text-[#45556C] md:text-[18px] md:leading-[29px]">
+            Whether it's a dream wedding, scaling your business, or an
+            unexpected emergency, RinSetu has you covered.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="bg-surface border border-border rounded-2xl overflow-hidden flex flex-col
-                sm:flex-row group shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)]
-                transition-all cursor-pointer"
-            >
-              <div className="p-8 flex-1 flex flex-col justify-center">
-                <div
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center mb-6
-                  ${product.color}`}
-                >
-                  {product.icon}
-                </div>
-                <h3
-                  className="text-xl font-bold text-text-heading mb-1 group-hover:text-primary
-                    transition-colors"
-                >
-                  {product.title}
-                </h3>
-                <p className="text-secondary font-semibold mb-6">{product.amount}</p>
-
-                <div className="mt-auto flex items-center gap-2 text-primary text-sm font-semibold">
-                  Apply Now{" "}
-                  <ArrowRight
-                    size={16}
-                    className="group-hover:translate-x-1 transition-transform"
-                  />
-                </div>
-              </div>
-              <div className="sm:w-2/5 h-48 sm:h-auto overflow-hidden relative">
-                <div
-                  className="absolute inset-0 bg-gradient-to-r from-surface to-transparent z-10
-                    hidden sm:block w-1/2"
-                ></div>
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform
-                    duration-500"
-                />
-              </div>
-            </div>
+        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:mt-16 lg:gap-12">
+          {loanProducts.map((item) => (
+            <LoanCard key={item.title} {...item} />
           ))}
         </div>
       </div>
     </section>
   );
-}
+};
+
+const LoanCard = ({
+  title,
+  desc,
+  limit,
+  bg,
+  text,
+  icon: Icon,
+  iconBox,
+  image,
+  imageClass,
+}: any) => {
+  const isLight = text.includes("#0F172A");
+
+  return (
+    <div
+      className={`relative min-h-[280px] overflow-hidden rounded-[32px] p-8 shadow-[0px_20px_50px_rgba(15,23,42,0.1)] md:min-h-[320px] md:p-10 ${bg} ${text}`}
+    >
+      <img
+        src={image}
+        alt=""
+        className={`absolute z-10 object-contain ${imageClass}`}
+      />
+
+      <div
+        className={`flex h-14 w-14 items-center justify-center rounded-2xl shadow-[inset_0px_2px_4px_rgba(0,0,0,0.05)] ${iconBox}`}
+      >
+        <Icon size={28} strokeWidth={2.3} />
+      </div>
+
+      <div className="mt-6">
+        <h3 className="text-[24px] font-bold leading-8">{title}</h3>
+        <p
+          className={`mt-2 text-[14px] font-medium leading-5 ${
+            isLight ? "text-[#0F172A]/80" : "text-white/80"
+          }`}
+        >
+          {desc}
+        </p>
+      </div>
+
+      <div
+        className={`absolute bottom-10 left-8 right-8 flex items-center justify-between border-t pt-4 md:left-10 md:right-10 ${
+          isLight ? "border-[#E2E8F0]" : "border-white/10"
+        }`}
+      >
+        <div>
+          <p
+            className={`text-[12px] font-semibold uppercase leading-4 tracking-[0.6px] ${
+              isLight ? "text-[#0F172A]/60" : "text-white/60"
+            }`}
+          >
+            Limit
+          </p>
+          <p className="mt-1 text-[20px] font-bold leading-7">{limit}</p>
+        </div>
+
+        <button
+          className={`flex h-10 w-10 items-center justify-center rounded-full ${
+            isLight ? "bg-[#F8FAFC] text-[#0F172A]" : "bg-white/10 text-white"
+          }`}
+        >
+          <ArrowRight size={20} />
+        </button>
+      </div>
+
+      <div
+        className={`absolute -bottom-6 -right-6 flex h-32 w-32 items-center justify-center rounded-full ${
+          isLight ? "bg-[#BABABA]/5 text-[#0F172A]/10" : "bg-white/5 text-white/10"
+        }`}
+      >
+        <span className="text-[80px] font-semibold leading-none">₹</span>
+      </div>
+    </div>
+  );
+};
+
+export default LoanProducts;

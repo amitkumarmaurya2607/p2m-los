@@ -1,112 +1,138 @@
-import { MapPin, Phone, Mail, ShieldCheck } from "lucide-react";
+import React from "react";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 
-export default function Footer() {
+const company = ["About Us", "Careers", "Press", "Contact", "Partners"];
+
+const products = [
+  "Personal Loan",
+  "Business Loan",
+  "Medical Emergency",
+  "Salary Advance",
+  "EMI Calculator",
+];
+
+const Footer = () => {
   return (
-    <footer className="bg-[#0B1B3A] text-gray-300">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-12">
-        {/* Top Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+    <footer className="border-t border-white/5 bg-[#0F172A] px-5 py-10 font-[Inter] md:px-10 lg:px-20">
+      <div className="mx-auto h-px max-w-[1013px] bg-[linear-gradient(90deg,rgba(0,0,0,0)_0%,rgba(0,200,156,0.5)_50%,rgba(0,0,0,0)_100%)]" />
+      <div className="mx-auto h-3 w-[338px] bg-[#00C89C]/20 blur-[20px]" />
+
+      <div className="mx-auto mt-8 max-w-[1232px]">
+        <div className="grid gap-10 lg:grid-cols-[1.4fr_0.6fr_0.7fr_1.4fr] lg:gap-12">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-[#3737C1] rounded-lg flex items-center justify-center">
-                <div className="w-3 h-3 bg-[#00C89C] rounded-full" />
-              </div>
-              <h2 className="text-white text-xl font-bold">RinSetu</h2>
+            <div className="flex items-center gap-2">
+              <span className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#00C89C] text-[18px] font-bold leading-none text-white">
+                R
+              </span>
+              <span className="text-[24px] font-bold leading-8 tracking-[-0.6px] text-white">
+                RinSetu
+              </span>
             </div>
 
-            <p className="text-sm leading-relaxed text-gray-400 mb-6">
-              Empowering India with fast, secure, and hassle-free digital loans. We believe credit
-              should be accessible to everyone, everywhere.
+            <p className="mt-6 max-w-[379px] text-[16px] leading-[26px] text-[#90A1B9]">
+              India's premium digital lending platform. Fast, transparent, and
+              built to fuel your ambitions without the traditional banking
+              stress.
             </p>
 
-            {/* Social */}
-            {/* <div className="flex gap-3">
-              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, i) => (
-                <div
-                  key={i}
-                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition"
-                >
-                  <Icon size={18} />
-                </div>
-              ))}
-            </div> */}
-          </div>
-
-          {/* Products */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Products</h3>
-            <ul className="space-y-3 text-sm">
-              <li>Personal Loan</li>
-              <li>Business Loan</li>
-              <li>Education Loan</li>
-              <li>Home Renovation</li>
-              <li>Check Credit Score</li>
-            </ul>
+            <div className="mt-9 flex items-center gap-4">
+              {[ArrowRight, ArrowRight, ArrowRight, ArrowRight].map(
+                (Icon, index) => (
+                  <a
+                    key={index}
+                    href="#"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-[#90A1B9] transition hover:bg-white/10 hover:text-white"
+                  >
+                    <Icon size={16} />
+                  </a>
+                )
+              )}
+            </div>
           </div>
 
           {/* Company */}
+          <FooterLinks title="Company" links={company} />
+
+          {/* Products */}
+          <FooterLinks title="Products" links={products} />
+
+          {/* Stay Updated */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Company</h3>
-            <ul className="space-y-3 text-sm">
-              <li>About Us</li>
-              <li>Careers</li>
-              <li>Partners</li>
-              <li>Blog</li>
-              <li>Contact</li>
-            </ul>
-          </div>
+            <h4 className="text-[16px] font-bold leading-6 text-white">
+              Stay Updated
+            </h4>
 
-          {/* Contact */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Contact Us</h3>
+            <p className="mt-6 max-w-[379px] text-[14px] leading-5 text-[#90A1B9]">
+              Get the latest financial insights and offers directly in your
+              inbox.
+            </p>
 
-            <div className="space-y-4 text-sm">
-              <div className="flex gap-3">
-                <MapPin className="text-[#6366F1] mt-1" size={18} />
-                <p>Level 4, Innov8 Coworking, Koramangala, Bengaluru, Karnataka 560034</p>
-              </div>
+            <form className="mt-5 flex h-[50px] rounded-full border border-white/10 bg-white/5 p-1">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="min-w-0 flex-1 bg-transparent px-4 text-[14px] text-white outline-none placeholder:text-[#62748E]"
+              />
+              <button
+                type="submit"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#00C89C] text-white"
+              >
+                <ArrowRight size={16} />
+              </button>
+            </form>
 
-              <div className="flex gap-3 items-center">
-                <Phone className="text-[#6366F1]" size={18} />
-                <span>1800-123-4567</span>
-              </div>
-
-              <div className="flex gap-3 items-center">
-                <Mail className="text-[#6366F1]" size={18} />
-                <span>support@rinsetu.com</span>
+            <div className="mt-6 flex items-center gap-2 rounded-[14px] border border-white/5 bg-white/5 p-3">
+              <ShieldCheck size={24} className="shrink-0 text-[#00C89C]" />
+              <div>
+                <p className="text-[12px] font-bold leading-4 text-white">
+                  RBI Registered NBFC Partner
+                </p>
+                <p className="text-[10px] leading-[15px] text-[#90A1B9]">
+                  100% Safe & Secure
+                </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-white/10 my-8" />
-
         {/* Bottom */}
-        <div
-          className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm
-            text-gray-400"
-        >
-          {/* Left */}
-          <div className="flex items-center gap-2">
-            <ShieldCheck size={16} className="text-[#00C89C]" />
-            <span>RBI Registered NBFC</span>
-          </div>
+        <div className="mt-16 flex flex-col gap-5 border-t border-white/10 pt-8 text-[14px] leading-5 text-[#62748E] md:flex-row md:items-center md:justify-between">
+          <p>© 2026 RinSetu Finance. All rights reserved.</p>
 
-          {/* Center */}
-          <div className="flex gap-6 flex-wrap justify-center">
-            <span>Terms of Service</span>
-            <span>Privacy Policy</span>
-            <span>Grievance Redressal</span>
-          </div>
-
-          {/* Right */}
-          <div className="text-center md:text-right">
-            © 2026 RinSetu Finance. All rights reserved.
+          <div className="flex flex-wrap gap-6">
+            <a href="#" className="hover:text-white">
+              Privacy Policy
+            </a>
+            <a href="#" className="hover:text-white">
+              Terms of Service
+            </a>
+            <a href="#" className="hover:text-white">
+              Grievance Redressal
+            </a>
           </div>
         </div>
       </div>
     </footer>
   );
-}
+};
+
+const FooterLinks = ({ title, links }: { title: string; links: string[] }) => {
+  return (
+    <div>
+      <h4 className="text-[16px] font-bold leading-6 text-white">{title}</h4>
+
+      <ul className="mt-6 space-y-3">
+        {links.map((link) => (
+          <li key={link}>
+            <a href="#" className="text-[14px] font-medium leading-5 text-[#90A1B9] hover:text-white">
+              {link}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default Footer;

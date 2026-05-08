@@ -21,5 +21,10 @@
   },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "builder.serverUrl": "http://localhost:3000",
+  "builder.command": "npm run dev",
+  "builder.runDevServer": false,
+  "builder.autoDetectDevServer": true,
+  "builder.launchType": "editor"
 }

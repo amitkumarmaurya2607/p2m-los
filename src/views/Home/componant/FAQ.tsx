@@ -1,75 +1,91 @@
 "use client";
+
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
-export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+const faqs = [
+  {
+    question: "How quickly can I get my loan approved?",
+    answer:
+      "Our AI-powered engine approves most loans within 60 seconds of applying. Disbursal to your bank account typically happens within 5-10 minutes after approval.",
+  },
+  {
+    question: "What documents are required for application?",
+    answer: "You only need Aadhaar, PAN, and basic bank details to apply.",
+  },
+  {
+    question: "Are there any hidden fees or pre-closure charges?",
+    answer:
+      "No hidden fees. Any charges are shown clearly before you confirm your loan.",
+  },
+  {
+    question: "What is the minimum CIBIL score required?",
+    answer:
+      "Eligibility depends on multiple factors, but a higher CIBIL score improves your approval chances.",
+  },
+];
 
-  const faqs = [
-    {
-      q: "What is the maximum loan amount I can get?",
-      a: "You can get a personal loan up to ₹5 Lakhs and business loans up to ₹50 Lakhs depending on your eligibility and credit profile.",
-    },
-    {
-      q: "Do I need to visit a branch for KYC?",
-      a: "No! The entire process is 100% digital. You can complete your Video KYC from the comfort of your home.",
-    },
-    {
-      q: "How long does the disbursal take?",
-      a: "Once approved and bank verification is complete, the loan amount is typically disbursed to your account within 5-10 minutes.",
-    },
-    {
-      q: "Are there any hidden charges?",
-      a: "Absolutely not. We maintain 100% transparency. All processing fees and charges are clearly communicated before you accept the loan.",
-    },
-    {
-      q: "Can I prepay my loan early?",
-      a: "Yes, you can prepay your loan anytime. Foreclosure charges may apply depending on the loan product and terms.",
-    },
-  ];
+const FAQ = () => {
+  const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="py-20 bg-surface">
-      <div className="max-w-3xl mx-auto px-6 lg:px-12 text-center">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-text-heading mb-4">
-          Frequently Asked <span className="text-primary">Questions</span>
-        </h2>
-        <p className="text-muted-foreground text-lg mb-12">Got questions? We've got answers.</p>
+    <section className="bg-white px-5 py-16 font-[Inter] md:px-10 lg:py-24">
+      <div className="mx-auto max-w-[720px]">
+        <div className="text-center">
+          <h2 className="text-[32px] font-black leading-10 text-[#0F172A] md:text-[36px]">
+            Frequently Asked{" "}
+            <span className="text-[#3737C1]">Questions</span>
+          </h2>
+          <p className="mt-4 text-[16px] leading-6 text-[#62748E]">
+            Everything you need to know about our lending process.
+          </p>
+        </div>
 
-        <div className="text-left space-y-4">
-          {faqs.map((faq, idx) => (
-            <div
-              key={idx}
-              className="bg-surface border border-border rounded-xl overflow-hidden
-                shadow-[var(--shadow-sm)]"
-            >
-              <button
-                onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                className="w-full px-6 py-4 flex justify-between items-center text-left
-                  hover:bg-muted/50 transition-colors"
-              >
-                <span className="font-semibold text-text-heading pr-8">{faq.q}</span>
-                <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0
-                  transition-transform duration-300
-                  ${openIndex === idx ? "bg-primary text-white rotate-180" : "bg-muted text-text-muted"}`}
-                >
-                  <ChevronDown size={20} />
-                </div>
-              </button>
+        <div className="mt-12 space-y-4 lg:mt-16">
+          {faqs.map((faq, index) => {
+            const isOpen = openIndex === index;
 
+            return (
               <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out
-                ${openIndex === idx ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}
+                key={faq.question}
+                className={`overflow-hidden rounded-2xl border border-[#F1F5F9] transition-all ${
+                  isOpen
+                    ? "bg-white shadow-[0px_10px_40px_rgba(0,0,0,0.05)]"
+                    : "bg-[#F8FAFC]/50"
+                }`}
               >
-                <div className="px-6 pb-6 text-muted-foreground border-t border-border/50 pt-4">
-                  {faq.a}
-                </div>
+                <button
+                  onClick={() => setOpenIndex(isOpen ? -1 : index)}
+                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
+                >
+                  <span
+                    className={`text-[16px] font-bold leading-6 ${
+                      isOpen ? "text-[#3737C1]" : "text-[#314158]"
+                    }`}
+                  >
+                    {faq.question}
+                  </span>
+
+                  <ChevronDown
+                    size={20}
+                    className={`shrink-0 text-[#90A1B9] transition-transform ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {isOpen && (
+                  <div className="px-6 pb-7 text-[16px] leading-[26px] text-[#45556C]">
+                    {faq.answer}
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default FAQ;

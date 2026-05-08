@@ -1,54 +1,40 @@
 import React from "react";
-import { ArrowUpRight, Clock, Users, Star } from "lucide-react";
 
-export default function TrustStats() {
-  const stats = [
-    {
-      icon: <ArrowUpRight className="w-6 h-6 text-secondary" />,
-      value: "99%",
-      label: "Approval Rate",
-    },
-    {
-      icon: <Clock className="w-6 h-6 text-primary" />,
-      value: "5 Min",
-      label: "Disbursal Time",
-    },
-    {
-      icon: <Users className="w-6 h-6 text-orange-400" />,
-      value: "2M+",
-      label: "Happy Customers",
-    },
-    {
-      icon: <Star className="w-6 h-6 text-pink-400" />,
-      value: "4.9",
-      label: "App Rating",
-    },
-  ];
+const stats = [
+  { value: "₹500Cr+", label: "Loans Disbursed", color: "text-[#00C89C]" },
+  { value: "1L+", label: "Happy Customers", color: "text-[#3737C1]" },
+  { value: "50+", label: "Cities Covered", color: "text-[#FF9F1C]" },
+  { value: "4.9★", label: "App Rating", color: "text-[#0F172A]" },
+];
 
+const TrustStats = () => {
   return (
-    <section className="py-20 bg-[#1D293D]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 text-center">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">
-          Building Trust Across India
-        </h2>
-        <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-16">
-          Numbers that speak for themselves. Join millions of Indians who trust us.
-        </p>
+    <section className="bg-[#F1F5F9]/50 px-5 py-16 font-[Inter] md:px-10 lg:px-20">
+      <div className="mx-auto max-w-[1232px] overflow-hidden rounded-[32px] border border-[#F1F5F9] bg-white shadow-[0px_20px_50px_rgba(0,0,0,0.03)]">
+        <div className="relative grid gap-8 px-6 py-12 sm:grid-cols-2 lg:grid-cols-4 lg:px-12 lg:py-[65px]">
+          <div className="absolute -left-10 -top-10 h-64 w-64 rounded-full bg-[#3737C1]/5 blur-[64px]" />
+          <div className="absolute -right-10 top-0 h-64 w-64 rounded-full bg-[#00C89C]/5 blur-[64px]" />
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {stats.map((stat, idx) => (
+          {stats.map((item, index) => (
             <div
-              key={idx}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col
-                items-center"
+              key={item.label}
+              className="relative flex flex-col items-center gap-2 text-center lg:border-r lg:border-[#E2E8F0] lg:last:border-r-0"
             >
-              <div className="mb-4">{stat.icon}</div>
-              <h3 className="text-3xl font-extrabold text-white mb-1">{stat.value}</h3>
-              <p className="text-sm text-gray-400">{stat.label}</p>
+              <h3
+                className={`text-[44px] font-black leading-none drop-shadow-[0px_1px_4px_rgba(0,0,0,0.15)] md:text-[60px] ${item.color}`}
+              >
+                {item.value}
+              </h3>
+
+              <p className="text-[14px] font-semibold uppercase leading-5 tracking-[0.7px] text-[#62748E]">
+                {item.label}
+              </p>
             </div>
           ))}
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default TrustStats;
