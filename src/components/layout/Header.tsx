@@ -12,7 +12,7 @@ const navLinks = [
 const Header = () => {
   return (
     <header className="sticky top-0 z-50 h-20 bg-white/90 shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] backdrop-blur-md">
-      <div className="mx-auto flex h-full max-w-[1280px] items-center justify-between px-5 md:px-8 lg:px-6">
+      <div className="mx-auto flex h-full max-w-[var(--max-width-section)] items-center justify-between px-5 md:px-8 lg:px-0">
         <Link href="/" className="flex items-center gap-2">
           <span className="h-8 w-8 rotate-12 rounded-[10px] bg-[linear-gradient(135deg,#00C89C_0%,#3737C1_100%)]" />
           <span className="text-[24px] font-black leading-8 tracking-[-1.2px] text-[#0F172A]">

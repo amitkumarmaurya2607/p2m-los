@@ -7,7 +7,7 @@ const loanProducts = [
     title: "Personal Loan",
     desc: "Achieve your personal goals instantly.",
     limit: "Up to ₹5 Lakhs",
-    bg: "bg-[#3737C1]",
+    bg: "bg-primary",
     text: "text-white",
     icon: UserRound,
     iconBox: "bg-white/20 text-white",
@@ -17,7 +17,7 @@ const loanProducts = [
     title: "Salary Advance",
     desc: "Get your salary early, interest-free.",
     limit: "Up to ₹1 Lakh",
-    bg: "bg-[#00C89C]",
+    bg: "bg-secondary",
     text: "text-white",
     icon: Zap,
     iconBox: "bg-white/20 text-white",
@@ -27,20 +27,20 @@ const loanProducts = [
     title: "Business Loan",
     desc: "Scale your business without limits.",
     limit: "Up to ₹50 Lakhs",
-    bg: "bg-white border border-[#E2E8F0]",
-    text: "text-[#0F172A]",
+    bg: "bg-surface border border-border-medium",
+    text: "text-dark-navy",
     icon: Briefcase,
-    iconBox: "bg-[#EEF2FF] text-[#3737C1]",
+    iconBox: "bg-surface-accent text-primary",
     image: "/images/wallet.png",
   },
   {
     title: "Emergency Loan",
     desc: "Funds disbursed in 10 minutes flat.",
     limit: "Up to ₹2 Lakhs",
-    bg: "bg-[#0F172A]",
+    bg: "bg-dark-navy",
     text: "text-white",
     icon: CircleAlert,
-    iconBox: "bg-[#FF9F1C]/20 text-[#FF9F1C]",
+    iconBox: "bg-accent-orange/20 text-accent-orange",
     image: "/images/money-bag.png",
 
   },
@@ -48,15 +48,15 @@ const loanProducts = [
 
 const LoanProducts = () => {
   return (
-    <section className="w-full bg-white px-5 py-16 font-[Inter] md:px-10 lg:px-20 lg:py-[96px]">
-      <div className="mx-auto max-w-[1280px]">
-        <div className="mx-auto max-w-[672px] text-center">
-          <h2 className="text-[34px] font-black leading-tight tracking-[-1px] text-[#0F172A] md:text-[48px] md:leading-[48px] md:tracking-[-1.2px]">
+    <section className="w-full bg-surface px-5 py-16 font-[Inter] md:px-10 lg:px-20 lg:py-[96px]">
+      <div className="mx-auto max-w-[var(--max-width-section)]">
+        <div className="mx-auto max-w-[var(--max-width-text)] text-center">
+          <h2 className="text-[34px] font-black leading-tight tracking-[-1px] text-text-heading md:text-[48px] md:leading-[48px] md:tracking-[-1.2px]">
             A loan for{" "}
-            <span className="text-[#00C89C]">every need</span>
+            <span className="text-secondary">every need</span>
           </h2>
 
-          <p className="mt-6 text-[16px] leading-[26px] text-[#45556C] md:text-[18px] md:leading-[29px]">
+          <p className="mt-6 text-[16px] leading-[26px] text-text-body md:text-[18px] md:leading-[29px]">
             Whether it's a dream wedding, scaling your business, or an
             unexpected emergency, RinSetu has you covered.
           </p>
@@ -83,7 +83,7 @@ const LoanCard = ({
   image,
 
 }: any) => {
-  const isLight = text.includes("#0F172A");
+  const isLight = text.includes("dark-navy");
 
   return (
    <div
@@ -116,7 +116,7 @@ const LoanCard = ({
 
     <p
       className={`mt-2 text-[14px] font-medium leading-5 transition-all duration-300 ${
-        isLight ? "text-[#0F172A]/80" : "text-white/80"
+        isLight ? "text-dark-navy/80" : "text-white/80"
       }`}
     >
       {desc}
@@ -126,13 +126,13 @@ const LoanCard = ({
   {/* Bottom */}
   <div
     className={`absolute bottom-10 left-8 right-8 flex items-center justify-between border-t pt-4 md:left-10 md:right-10 ${
-      isLight ? "border-[#E2E8F0]" : "border-white/10"
+      isLight ? "border-border-medium" : "border-white/10"
     }`}
   >
     <div>
       <p
         className={`text-[12px] font-semibold uppercase leading-4 tracking-[0.6px] ${
-          isLight ? "text-[#0F172A]/60" : "text-white/60"
+          isLight ? "text-dark-navy/60" : "text-white/60"
         }`}
       >
         Limit
@@ -145,14 +145,14 @@ const LoanCard = ({
   href="/login"
   className={`group/btn relative z-10 flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border transition-all duration-500 ${
     isLight
-      ? "border-[#E2E8F0] bg-white text-[#0F172A] hover:border-[#0F172A]"
+      ? "border-border-medium bg-surface text-dark-navy hover:border-dark-navy"
       : "border-white/10 bg-white/10 text-white hover:border-white"
   }`}
 >
   {/* Sliding Background */}
   <span
     className={`absolute inset-0 translate-y-full transition-transform duration-500 group-hover/btn:translate-y-0 ${
-      isLight ? "bg-[#0F172A]" : "bg-white"
+      isLight ? "bg-dark-navy" : "bg-surface"
     }`}
   />
 
@@ -162,14 +162,14 @@ const LoanCard = ({
     className={`relative z-10 transition-all duration-500 group-hover/btn:translate-x-1 ${
       isLight
         ? "group-hover/btn:text-white"
-        : "group-hover/btn:text-[#0F172A]"
+        : "group-hover/btn:text-dark-navy"
     }`}
   />
 
   {/* Pulse Ring */}
   <span
     className={`absolute inset-0 rounded-full opacity-0 transition-all duration-700 group-hover/btn:scale-150 group-hover/btn:opacity-20 ${
-      isLight ? "bg-[#0F172A]" : "bg-white"
+      isLight ? "bg-dark-navy" : "bg-surface"
     }`}
   />
 </Link>
@@ -179,7 +179,7 @@ const LoanCard = ({
   <div
     className={`absolute -bottom-6 -right-6 flex h-32 w-32 items-center justify-center rounded-full transition-all duration-500 group-hover:scale-110 ${
       isLight
-        ? "bg-[#BABABA]/5 text-[#0F172A]/10"
+        ? "bg-[#BABABA]/5 text-dark-navy/10"
         : "bg-white/5 text-white/10"
     }`}
   >

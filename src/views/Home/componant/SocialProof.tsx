@@ -30,7 +30,7 @@ const socials = [
     meta: "200K+",
     icon: FacebookIcon,
     cardBg: "bg-[#4F39F6]/10",
-    iconBg: "bg-[#EEF2FF]",
+    iconBg: "bg-surface-accent",
     color: "#4F39F6",
   },
   {
@@ -47,13 +47,13 @@ const socials = [
 
 const SocialProof = () => {
   return (
-    <section className="border-b border-[#F1F5F9] bg-white px-5 py-16 font-[Inter] md:px-10 lg:px-20 lg:py-24">
-      <div className="mx-auto max-w-[1280px]">
+    <section className="border-b border-border-light bg-surface px-5 py-16 font-[Inter] md:px-10 lg:px-20 lg:py-24">
+      <div className="mx-auto max-w-[var(--max-width-section)]">
         <div className="text-center">
-          <h2 className="text-[32px] font-black leading-10 text-[#0F172A] md:text-[36px]">
-            Join our <span className="text-[#00C89C]">community</span>
+          <h2 className="text-[32px] font-black leading-10 text-text-heading md:text-[36px]">
+            Join our <span className="text-secondary">community</span>
           </h2>
-          <p className="mt-4 text-[16px] leading-6 text-[#62748E]">
+          <p className="mt-4 text-[16px] leading-6 text-text-muted-dark">
             Connect with us on your favorite platforms
           </p>
         </div>
@@ -65,7 +65,7 @@ const SocialProof = () => {
             return (
               <div
                 key={item.title}
-                className={`rounded-[24px] border border-[#F1F5F9] p-6 shadow-[0px_10px_40px_rgba(0,0,0,0.03)] transition hover:-translate-y-1 ${item.cardBg}`}
+                className={`rounded-[24px] border border-border-light p-6 shadow-[0px_10px_40px_rgba(0,0,0,0.03)] transition hover:-translate-y-1 ${item.cardBg}`}
               >
                 <div
                   className={`flex h-14 w-14 items-center justify-center rounded-2xl ${item.iconBg}`}
@@ -76,13 +76,13 @@ const SocialProof = () => {
                   />
                 </div>
 
-                <h4 className="mt-6 text-[20px] font-bold leading-7 text-[#0F172A]">
+                <h4 className="mt-6 text-[20px] font-bold leading-7 text-text-heading">
                   {item.title}
                 </h4>
-                <p className="mt-1 text-[14px] font-semibold leading-5 text-[#62748E]">
+                <p className="mt-1 text-[14px] font-semibold leading-5 text-text-muted-dark">
                   {item.subTitle}
                 </p>
-                <p className="mt-1 text-[12px] leading-4 text-[#90A1B9]">
+                <p className="mt-1 text-[12px] leading-4 text-text-muted-light">
                   {item.meta}
                 </p>
               </div>

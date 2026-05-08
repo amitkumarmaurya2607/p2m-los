@@ -1,17 +1,38 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #3737c1;
+  /* Primary */
+  --primary: #1E40AF;
   --primary-foreground: #ffffff;
-  --primary-light: #5a56d4;
-  --primary-muted: rgba(55, 55, 193, 0.1);
+  --primary-light: #3B82F6;
+  --primary-muted: rgba(30, 64, 175, 0.1);
 
-  --secondary: #00c89c;
-  --secondary-foreground: #000000;
-  --secondary-light: #33d9b5;
-  --secondary-gradient-start: #6fffd2;
-  --secondary-gradient-end: #00c89c;
+  /* Secondary */
+  --secondary: #0D9488;
+  --secondary-foreground: #ffffff;
+  --secondary-light: #14B8A6;
+  --secondary-gradient-start: #5EEAD4;
+  --secondary-gradient-end: #0D9488;
 
+  /* Accent / Utility colors */
+  --accent-orange: #FF9F1C;
+  --accent-orange-foreground: #ffffff;
+  --accent-orange-muted: rgba(255, 159, 28, 0.1);
+
+  --color-dark-navy: #0F172A;
+  --color-dark-navy-foreground: #ffffff;
+
+  --text-body: #45556C;
+  --text-muted-dark: #62748E;
+  --text-muted-light: #90A1B9;
+  --text-dark-blue: #314158;
+  --text-on-dark-muted: #CAD5E2;
+
+  --surface-accent: #EEF2FF;
+
+  --border-medium: #E2E8F0;
+
+  /* Core backgrounds / surfaces */
   --background: #ffffff;
   --foreground: #171717;
 
@@ -36,7 +57,7 @@
   --input-bg: #f8fafc;
   --input-border: #e2e8f0;
 
-  --ring: #3737c1;
+  --ring: #1E40AF;
 
   --text-primary: #0f172b;
   --text-secondary: #45556c;
@@ -44,82 +65,126 @@
   --text-label: #64748b;
   --text-heading: #0f172b;
 
-  --success: #00c89c;
+  --success: #0D9488;
   --success-foreground: #ffffff;
   --warning: #f59e0b;
   --warning-foreground: #ffffff;
-  --info: #3737c1;
+  --info: #1E40AF;
   --info-foreground: #ffffff;
 
---shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.1),
-             0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.1),
+               0px 1px 2px -1px rgba(0, 0, 0, 0.1);
   --shadow-md: 0px 32px 64px -16px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0px 32px 80px -24px rgba(0, 0, 0, 0.15);
-  --shadow-button: 0px 12px 24px -8px rgba(0, 200, 156, 0.4);
+  --shadow-button: 0px 12px 24px -8px rgba(13, 148, 136, 0.4);
 
+  /* Card */
   --card-border: #f1f5f9;
   --card-bg: rgba(255, 255, 255, 0.8);
-  --card-icon-bg-start: #6fffd2;
-  --card-icon-bg-end: #00c89c;
+  --card-icon-bg-start: #5EEAD4;
+  --card-icon-bg-end: #0D9488;
   --card-icon-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3), inset 0px -2px 0px rgba(0, 0, 0, 0.2);
 
-  --sidebar-from: #00c89c;
-  --sidebar-to: #00a882;
+  /* Sidebar */
+  --sidebar-from: #0D9488;
+  --sidebar-to: #0F766E;
 
-  --stepper-complete: #00c89c;
-  --stepper-progress: #3737c1;
+  /* Stepper */
+  --stepper-complete: #0D9488;
+  --stepper-progress: #1E40AF;
   --stepper-pending: #e5e7eb;
   --stepper-pending-text: #9ca3af;
 
+  /* Border radius */
   --radius: 0.5rem;
+
+  /* Width / sizing system */
+  --max-width-hero: 1440px;
+  --max-width-section: 1280px;
+  --max-width-narrow: 720px;
+  --max-width-text: 672px;
+  --padding-section-x: 1.25rem;
+  --padding-section-x-md: 2.5rem;
+  --padding-section-x-lg: 5rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary-light: var(--primary-light);
   --color-primary-muted: var(--primary-muted);
+
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary-light: var(--secondary-light);
+
+  --color-accent-orange: var(--accent-orange);
+  --color-accent-orange-foreground: var(--accent-orange-foreground);
+  --color-accent-orange-muted: var(--accent-orange-muted);
+
+  --color-dark-navy: var(--color-dark-navy);
+  --color-dark-navy-foreground: var(--color-dark-navy-foreground);
+
+  --color-text-body: var(--text-body);
+  --color-text-muted-dark: var(--text-muted-dark);
+  --color-text-muted-light: var(--text-muted-light);
+  --color-text-dark-blue: var(--text-dark-blue);
+  --color-text-on-dark-muted: var(--text-on-dark-muted);
+
+  --color-surface-accent: var(--surface-accent);
+
+  --color-border-medium: var(--border-medium);
+
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+
   --color-border: var(--border);
   --color-border-light: var(--border-light);
   --color-input: var(--input);
   --color-input-bg: var(--input-bg);
   --color-input-border: var(--input-border);
+
   --color-ring: var(--ring);
+
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
+
   --color-surface: var(--surface);
   --color-surface-muted: var(--surface-muted);
+
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
   --color-text-label: var(--text-label);
   --color-text-heading: var(--text-heading);
+
   --color-card-border: var(--card-border);
   --color-card-icon-bg-start: var(--card-icon-bg-start);
   --color-card-icon-bg-end: var(--card-icon-bg-end);
+
   --color-stepper-complete: var(--stepper-complete);
   --color-stepper-progress: var(--stepper-progress);
   --color-stepper-pending: var(--stepper-pending);
   --color-stepper-pending-text: var(--stepper-pending-text);
+
   --radius-sm: calc(var(--radius) - 0.125rem);
   --radius-md: calc(var(--radius));
   --radius-lg: calc(var(--radius) + 0.125rem);
   --radius-xl: calc(var(--radius) + 0.25rem);
+
   --font-sans: var(--font-inter);
   --font-mono: ui-monospace, SFMono-Regular, monospace;
 }
@@ -127,56 +192,87 @@
 .dark {
   --background: #0a0a0a;
   --foreground: #ededed;
-  --primary: #5a56d4;
+
+  --primary: #3B82F6;
   --primary-foreground: #ffffff;
-  --primary-light: #7b78e0;
-  --primary-muted: rgba(90, 86, 212, 0.15);
-  --secondary: #33d9b5;
+  --primary-light: #60A5FA;
+  --primary-muted: rgba(59, 130, 246, 0.15);
+
+  --secondary: #14B8A6;
   --secondary-foreground: #000000;
-  --secondary-light: #66e8cc;
+  --secondary-light: #2DD4BF;
+
+  --accent-orange: #FBBF24;
+  --accent-orange-foreground: #000000;
+  --accent-orange-muted: rgba(251, 191, 36, 0.15);
+
+  --color-dark-navy: #1E293B;
+  --color-dark-navy-foreground: #f9fafb;
+
+  --text-body: #d1d5db;
+  --text-muted-dark: #9ca3af;
+  --text-muted-light: #6b7280;
+  --text-dark-blue: #d1d5db;
+  --text-on-dark-muted: #94a3b8;
+
+  --surface-accent: #1e1b4b;
+
+  --border-medium: #4b5563;
+
   --surface: #0a0a0a;
   --surface-muted: #1f2937;
   --surface-overlay: rgba(10, 10, 10, 0.8);
   --surface-overlay-90: rgba(10, 10, 10, 0.9);
   --surface-overlay-95: rgba(10, 10, 10, 0.95);
+
   --muted: #1f2937;
   --muted-foreground: #9ca3af;
+
   --accent: #1f2937;
   --accent-foreground: #ededed;
+
   --destructive: #7f1d1d;
   --destructive-foreground: #fef2f2;
+
   --border: #374151;
   --border-light: #4b5563;
   --input: #374151;
   --input-bg: #1f2937;
   --input-border: #4b5563;
-  --ring: #5a56d4;
+
+  --ring: #3B82F6;
+
   --text-primary: #f9fafb;
   --text-secondary: #d1d5db;
   --text-muted: #6b7280;
   --text-label: #9ca3af;
   --text-heading: #f9fafb;
-  --success: #33d9b5;
+
+  --success: #14B8A6;
   --success-foreground: #000000;
   --warning: #fbbf24;
   --warning-foreground: #000000;
-  --info: #5a56d4;
+  --info: #3B82F6;
   --info-foreground: #ffffff;
+
   --card-border: #4b5563;
   --card-bg: rgba(10, 10, 10, 0.8);
-  --card-icon-bg-start: #6fffd2;
-  --card-icon-bg-end: #33d9b5;
+  --card-icon-bg-start: #5EEAD4;
+  --card-icon-bg-end: #14B8A6;
   --card-icon-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5), inset 0px -2px 0px rgba(0, 0, 0, 0.3);
-  --sidebar-from: #33d9b5;
-  --sidebar-to: #00a882;
-  --stepper-complete: #33d9b5;
-  --stepper-progress: #5a56d4;
+
+  --sidebar-from: #14B8A6;
+  --sidebar-to: #0D9488;
+
+  --stepper-complete: #14B8A6;
+  --stepper-progress: #3B82F6;
   --stepper-pending: #374151;
   --stepper-pending-text: #6b7280;
+
   --shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.3), 0px 1px 2px -1px rgba(0, 0, 0, 0.3);
   --shadow-md: 0px 32px 64px -16px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0px 32px 80px -24px rgba(0, 0, 0, 0.4);
-  --shadow-button: 0px 12px 24px -8px rgba(51, 217, 181, 0.3);
+  --shadow-button: 0px 12px 24px -8px rgba(20, 184, 166, 0.3);
 }
 
 

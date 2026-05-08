@@ -29,14 +29,14 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="bg-white px-5 py-16 font-[Inter] md:px-10 lg:py-24">
-      <div className="mx-auto max-w-[720px]">
+    <section className="bg-surface px-5 py-16 font-[Inter] md:px-10 lg:py-24">
+      <div className="mx-auto max-w-[var(--max-width-narrow)]">
         <div className="text-center">
-          <h2 className="text-[32px] font-black leading-10 text-[#0F172A] md:text-[36px]">
+          <h2 className="text-[32px] font-black leading-10 text-text-heading md:text-[36px]">
             Frequently Asked{" "}
-            <span className="text-[#3737C1]">Questions</span>
+            <span className="text-primary">Questions</span>
           </h2>
-          <p className="mt-4 text-[16px] leading-6 text-[#62748E]">
+          <p className="mt-4 text-[16px] leading-6 text-text-muted-dark">
             Everything you need to know about our lending process.
           </p>
         </div>
@@ -48,10 +48,10 @@ const FAQ = () => {
             return (
               <div
                 key={faq.question}
-                className={`overflow-hidden rounded-2xl border border-[#F1F5F9] transition-all ${
+                className={`overflow-hidden rounded-2xl border border-border-light transition-all ${
                   isOpen
-                    ? "bg-white shadow-[0px_10px_40px_rgba(0,0,0,0.05)]"
-                    : "bg-[#F8FAFC]/50"
+                    ? "bg-surface shadow-[0px_10px_40px_rgba(0,0,0,0.05)]"
+                    : "bg-surface-muted/50"
                 }`}
               >
                 <button
@@ -60,7 +60,7 @@ const FAQ = () => {
                 >
                   <span
                     className={`text-[16px] font-bold leading-6 ${
-                      isOpen ? "text-[#3737C1]" : "text-[#314158]"
+                      isOpen ? "text-primary" : "text-text-dark-blue"
                     }`}
                   >
                     {faq.question}
@@ -68,14 +68,14 @@ const FAQ = () => {
 
                   <ChevronDown
                     size={20}
-                    className={`shrink-0 text-[#90A1B9] transition-transform ${
+                    className={`shrink-0 text-text-muted-light transition-transform ${
                       isOpen ? "rotate-180" : ""
                     }`}
                   />
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 pb-7 text-[16px] leading-[26px] text-[#45556C]">
+                  <div className="px-6 pb-7 text-[16px] leading-[26px] text-text-body">
                     {faq.answer}
                   </div>
                 )}

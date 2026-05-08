@@ -22,7 +22,7 @@ const Footer = () => {
       <div className="mx-auto h-px max-w-[1013px] bg-[linear-gradient(90deg,rgba(0,0,0,0)_0%,rgba(0,200,156,0.5)_50%,rgba(0,0,0,0)_100%)]" />
       <div className="mx-auto h-3 w-[338px] bg-[#00C89C]/20 blur-[20px]" />
 
-      <div className="mx-auto mt-8 max-w-[1232px]">
+      <div className="mx-auto mt-8 max-w-[var(--max-width-section)]">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_0.6fr_0.7fr_1.4fr] lg:gap-12">
           {/* Brand */}
           <div>

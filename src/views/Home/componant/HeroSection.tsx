@@ -11,7 +11,7 @@ function HeroSection() {
         <div className="absolute top-[-200px] right-[-100px] w-[800px] h-[800px] bg-primary/10 blur-[64px] rounded-full"></div>
         <div className="absolute top-[288px] left-[-41px] w-[600px] h-[600px] bg-secondary/10 blur-[64px] rounded-full"></div>
         
-        <div className="max-w-[1440px] mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10">
+         <div className="max-w-[var(--max-width-section)] mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10">
           <div className="space-y-8 pb-16 pt-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-border shadow-[var(--shadow-sm)] text-primary text-sm font-semibold">
               <span className="relative flex h-2 w-2">
