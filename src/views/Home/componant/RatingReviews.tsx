@@ -1,35 +1,35 @@
 "use client";
 
 import React from "react";
-import { Star, Quote } from "lucide-react";
+import { Star, Quote, UserIcon } from "lucide-react";
 
 const reviews = [
   {
     name: "Rahul Sharma",
     role: "Business Owner",
     text: `"The process was incredibly smooth. I got my business loan approved in just 4 hours without any paperwork hassle."`,
-    image: "/images/user-1.jpg",
+    image: "",
     border: "border-t-[#3737C1]",
   },
   {
     name: "Priya Desai",
     role: "Software Engineer",
     text: `"RinSetu's EMI calculator is a lifesaver. Transparent fees, instant transfer, and a clean dashboard."`,
-    image: "/images/user-2.jpg",
+    image: "",
     border: "border-t-[#3737C1]",
   },
   {
     name: "Amit Patel",
     role: "Freelance Designer",
     text: `"I needed emergency funds for medical reasons. RinSetu delivered when my own bank asked for a week's time."`,
-    image: "/images/user-3.jpg",
+    image: "",
     border: "border-t-[#00C89C]",
   },
   {
     name: "Anjali Gupta",
     role: "Marketing Manager",
     text: `"Highly recommend for anyone looking for quick personal loans. Customer service is top-notch and always available."`,
-    image: "/images/user-4.jpg",
+    image: "",
     border: "border-t-[#FF9F1C]",
   },
 ];
@@ -117,11 +117,13 @@ const ReviewCard = ({ name, role, text, image, border }: any) => {
       </p>
 
       <div className="absolute bottom-6 left-[25px] flex items-center gap-4">
-        <img
+       {image? <img
           src={image}
           alt={name}
           className="h-12 w-12 rounded-full object-cover"
-        />
+        />:
+        <UserIcon   className="h-12 w-12 rounded-full object-cover" />
+       }
 
         <div>
           <h4 className="text-[14px] font-bold leading-5 text-[#0F172A]">

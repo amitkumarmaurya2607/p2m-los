@@ -179,6 +179,8 @@
   --shadow-button: 0px 12px 24px -8px rgba(51, 217, 181, 0.3);
 }
 
+
+
 body {
   background-color: var(--background);
   color: var(--foreground);
@@ -195,7 +197,10 @@ textarea,
 select {
   font-family: inherit;
 }
+input:-internal-autofill-selected{
+  background-color: transparent !important;
 
+}
 /* Fix for DatePicker to take full width of container */
 .react-datepicker-wrapper {
   width: 100%;

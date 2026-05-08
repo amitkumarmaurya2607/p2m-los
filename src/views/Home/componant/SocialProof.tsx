@@ -1,45 +1,46 @@
 import React from "react";
-import {
 
-  Star,
-} from "lucide-react";
+import InnkedIcon from "@/assets/icon/InnkedIcon";
+import FacebookIcon from "@/assets/icon/FacebookIcon";
+import StarIcon from "@/assets/icon/StarIcon";
+import InstagramIcon from "@/assets/icon/InstagramIcon";
 
 const socials = [
   {
     title: "Instagram",
     subTitle: "@rinsetu_hq",
     meta: "150K+",
-    icon: Star,
+    icon: InstagramIcon,
     cardBg: "bg-[#F6339A]/10",
     iconBg: "bg-[#FDF2F8]",
-    color: "text-[#F6339A]",
+    color: "#F6339A",
   },
   {
     title: "LinkedIn",
     subTitle: "RinSetu Finance",
     meta: "85K+",
-    icon: Star,
+    icon: InnkedIcon,
     cardBg: "bg-[#155DFC]/10",
     iconBg: "bg-[#EFF6FF]",
-    color: "text-[#155DFC]",
+    color: "#155DFC",
   },
   {
     title: "Facebook",
     subTitle: "RinSetuIndia",
     meta: "200K+",
-    icon: Star,
+    icon: FacebookIcon,
     cardBg: "bg-[#4F39F6]/10",
     iconBg: "bg-[#EEF2FF]",
-    color: "text-[#4F39F6]",
+    color: "#4F39F6",
   },
   {
     title: "Google",
     subTitle: "Verified Business",
     meta: "4.9/5 Rating",
-    icon: Star,
+    icon: StarIcon,
     cardBg: "bg-[#F0B100]/10",
     iconBg: "bg-[#FEFCE8]",
-    color: "text-[#F0B100]",
+    color: "#F0B100",
     fill: true,
   },
 ];
@@ -71,9 +72,7 @@ const SocialProof = () => {
                 >
                   <Icon
                     size={28}
-                    strokeWidth={2.3}
-                    className={item.color}
-                    fill={item.fill ? "currentColor" : "none"}
+                    color={item.color}
                   />
                 </div>
 

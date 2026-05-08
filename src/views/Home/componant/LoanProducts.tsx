@@ -1,5 +1,6 @@
 import React from "react";
 import { ArrowRight, Briefcase, UserRound, Zap, CircleAlert } from "lucide-react";
+import Link from "next/link";
 
 const loanProducts = [
   {
@@ -11,7 +12,6 @@ const loanProducts = [
     icon: UserRound,
     iconBox: "bg-white/20 text-white",
     image: "/images/coin.png",
-    imageClass: "w-[112px] right-10 -top-6",
   },
   {
     title: "Salary Advance",
@@ -22,7 +22,6 @@ const loanProducts = [
     icon: Zap,
     iconBox: "bg-white/20 text-white",
     image: "/images/shield.png",
-    imageClass: "w-[112px] right-8 top-5",
   },
   {
     title: "Business Loan",
@@ -33,7 +32,6 @@ const loanProducts = [
     icon: Briefcase,
     iconBox: "bg-[#EEF2FF] text-[#3737C1]",
     image: "/images/wallet.png",
-    imageClass: "w-[121px] right-6 top-5",
   },
   {
     title: "Emergency Loan",
@@ -44,7 +42,7 @@ const loanProducts = [
     icon: CircleAlert,
     iconBox: "bg-[#FF9F1C]/20 text-[#FF9F1C]",
     image: "/images/money-bag.png",
-    imageClass: "w-[97px] right-10 top-5",
+
   },
 ];
 
@@ -83,70 +81,113 @@ const LoanCard = ({
   icon: Icon,
   iconBox,
   image,
-  imageClass,
+
 }: any) => {
   const isLight = text.includes("#0F172A");
 
   return (
-    <div
-      className={`relative min-h-[280px] overflow-hidden rounded-[32px] p-8 shadow-[0px_20px_50px_rgba(15,23,42,0.1)] md:min-h-[320px] md:p-10 ${bg} ${text}`}
+   <div
+  className={`group relative min-h-[280px] overflow-hidden rounded-[32px] p-8 shadow-[0px_20px_50px_rgba(15,23,42,0.1)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0px_30px_80px_rgba(15,23,42,0.18)] md:min-h-[320px] md:p-10 ${bg} ${text}`}
+>
+  {/* Glow */}
+  <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+    <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
+  </div>
+
+  {/* Floating image */}
+  <img
+    src={image}
+    alt=""
+    className={`absolute z-10 object-contain transition-all duration-500 group-hover:-translate-y-2 group-hover:scale-105 w-[112px] right-8 top-5" `}
+  />
+
+  {/* Icon */}
+  <div
+    className={`flex h-14 w-14 items-center justify-center rounded-2xl shadow-[inset_0px_2px_4px_rgba(0,0,0,0.05)] transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 ${iconBox}`}
+  >
+    <Icon size={28} strokeWidth={2.3} />
+  </div>
+
+  {/* Content */}
+  <div className="mt-6">
+    <h3 className="text-[24px] font-bold leading-8 transition-all duration-300 group-hover:translate-x-1">
+      {title}
+    </h3>
+
+    <p
+      className={`mt-2 text-[14px] font-medium leading-5 transition-all duration-300 ${
+        isLight ? "text-[#0F172A]/80" : "text-white/80"
+      }`}
     >
-      <img
-        src={image}
-        alt=""
-        className={`absolute z-10 object-contain ${imageClass}`}
-      />
+      {desc}
+    </p>
+  </div>
 
-      <div
-        className={`flex h-14 w-14 items-center justify-center rounded-2xl shadow-[inset_0px_2px_4px_rgba(0,0,0,0.05)] ${iconBox}`}
-      >
-        <Icon size={28} strokeWidth={2.3} />
-      </div>
-
-      <div className="mt-6">
-        <h3 className="text-[24px] font-bold leading-8">{title}</h3>
-        <p
-          className={`mt-2 text-[14px] font-medium leading-5 ${
-            isLight ? "text-[#0F172A]/80" : "text-white/80"
-          }`}
-        >
-          {desc}
-        </p>
-      </div>
-
-      <div
-        className={`absolute bottom-10 left-8 right-8 flex items-center justify-between border-t pt-4 md:left-10 md:right-10 ${
-          isLight ? "border-[#E2E8F0]" : "border-white/10"
+  {/* Bottom */}
+  <div
+    className={`absolute bottom-10 left-8 right-8 flex items-center justify-between border-t pt-4 md:left-10 md:right-10 ${
+      isLight ? "border-[#E2E8F0]" : "border-white/10"
+    }`}
+  >
+    <div>
+      <p
+        className={`text-[12px] font-semibold uppercase leading-4 tracking-[0.6px] ${
+          isLight ? "text-[#0F172A]/60" : "text-white/60"
         }`}
       >
-        <div>
-          <p
-            className={`text-[12px] font-semibold uppercase leading-4 tracking-[0.6px] ${
-              isLight ? "text-[#0F172A]/60" : "text-white/60"
-            }`}
-          >
-            Limit
-          </p>
-          <p className="mt-1 text-[20px] font-bold leading-7">{limit}</p>
-        </div>
+        Limit
+      </p>
 
-        <button
-          className={`flex h-10 w-10 items-center justify-center rounded-full ${
-            isLight ? "bg-[#F8FAFC] text-[#0F172A]" : "bg-white/10 text-white"
-          }`}
-        >
-          <ArrowRight size={20} />
-        </button>
-      </div>
-
-      <div
-        className={`absolute -bottom-6 -right-6 flex h-32 w-32 items-center justify-center rounded-full ${
-          isLight ? "bg-[#BABABA]/5 text-[#0F172A]/10" : "bg-white/5 text-white/10"
-        }`}
-      >
-        <span className="text-[80px] font-semibold leading-none">₹</span>
-      </div>
+      <p className="mt-1 text-[20px] font-bold leading-7">{limit}</p>
     </div>
+
+  <Link
+  href="/login"
+  className={`group/btn relative z-10 flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border transition-all duration-500 ${
+    isLight
+      ? "border-[#E2E8F0] bg-white text-[#0F172A] hover:border-[#0F172A]"
+      : "border-white/10 bg-white/10 text-white hover:border-white"
+  }`}
+>
+  {/* Sliding Background */}
+  <span
+    className={`absolute inset-0 translate-y-full transition-transform duration-500 group-hover/btn:translate-y-0 ${
+      isLight ? "bg-[#0F172A]" : "bg-white"
+    }`}
+  />
+
+  {/* Arrow */}
+  <ArrowRight
+    size={20}
+    className={`relative z-10 transition-all duration-500 group-hover/btn:translate-x-1 ${
+      isLight
+        ? "group-hover/btn:text-white"
+        : "group-hover/btn:text-[#0F172A]"
+    }`}
+  />
+
+  {/* Pulse Ring */}
+  <span
+    className={`absolute inset-0 rounded-full opacity-0 transition-all duration-700 group-hover/btn:scale-150 group-hover/btn:opacity-20 ${
+      isLight ? "bg-[#0F172A]" : "bg-white"
+    }`}
+  />
+</Link>
+  </div>
+
+  {/* ₹ Circle */}
+  <div
+    className={`absolute -bottom-6 -right-6 flex h-32 w-32 items-center justify-center rounded-full transition-all duration-500 group-hover:scale-110 ${
+      isLight
+        ? "bg-[#BABABA]/5 text-[#0F172A]/10"
+        : "bg-white/5 text-white/10"
+    }`}
+  >
+    <span className="text-[80px] font-semibold leading-none transition-transform duration-500 group-hover:rotate-12">
+      ₹
+    </span>
+  </div>
+</div>
   );
 };
 

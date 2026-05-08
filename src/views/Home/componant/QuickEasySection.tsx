@@ -1,5 +1,6 @@
 import React from "react";
 import { Check } from "lucide-react";
+import Link from "next/link";
 
 const points = [
   "No mountains of paperwork, just your Aadhaar and PAN.",
@@ -17,14 +18,27 @@ const QuickEasySection = () => {
           <img
             src="/images/family.png"
             alt="Happy family"
-            className="w-full max-w-[772px] object-contain lg:-ml-24"
+            className="w-full max-w-[772px] object-contain "
           />
 
-          <div className="absolute bottom-0 right-[8%] flex h-24 w-24 items-center justify-center rounded-full border-8 border-white bg-[#00C89C] text-center text-[20px] font-bold leading-[25px] text-white shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)] lg:right-6">
-            100%
-            <br />
-            Safe
-          </div>
+         <div className="absolute bottom-0 right-[8%] lg:right-6">
+  {/* Ripple Rings */}
+  <span className="absolute inset-0 rounded-full bg-[#00C89C]/30 animate-ping" />
+
+  <span
+    className="absolute inset-0 rounded-full bg-[#00C89C]/20 animate-ping"
+    style={{
+      animationDelay: "1s",
+    }}
+  />
+
+  {/* Main Circle */}
+  <div className="relative flex h-24 w-24 items-center justify-center rounded-full border-8 border-white bg-[#00C89C] text-center text-[20px] font-bold leading-[25px] text-white shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)]">
+    100%
+    <br />
+    Safe
+  </div>
+</div>
         </div>
 
         {/* Right Content */}
@@ -51,9 +65,9 @@ const QuickEasySection = () => {
             ))}
           </div>
 
-          <button className="mt-3 h-[60px] rounded-full bg-[#3737C1] px-[27px] text-[18px] font-bold text-white shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)] transition hover:scale-[1.02]">
+          <Link href="/login" className="inline-flex items-center justify-center mt-3 h-[60px] rounded-full bg-[#3737C1] px-[27px] text-[18px] font-bold text-white shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)] transition hover:scale-[1.02]">
             Start Your Journey
-          </button>
+          </Link>
         </div>
       </div>
     </section>

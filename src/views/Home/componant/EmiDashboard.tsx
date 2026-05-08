@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { Calculator, Target, PieChart, IndianRupee } from "lucide-react";
+import Link from "next/link";
 
 const formatINR = (value: number) =>
   new Intl.NumberFormat("en-IN", {
@@ -60,9 +61,10 @@ const EmiDashboard = () => {
               "Zero hidden charges",
             ].map((item) => (
               <div key={item} className="flex items-center gap-3">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#00C89C]/20">
-                  <span className="h-2 w-2 rounded-full bg-[#00C89C]" />
-                </span>
+                 <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+              </span>
                 <span className="text-[16px] font-semibold text-[#314158]">
                   {item}
                 </span>
@@ -137,10 +139,25 @@ const EmiDashboard = () => {
               </div>
             </div>
 
-            <button className="mt-8 flex h-14 w-full items-center justify-center gap-2 rounded-[14px] bg-[#0F172A] text-[16px] font-bold text-white shadow-lg">
-              <IndianRupee size={20} />
-              Proceed with this EMI
-            </button>
+           <Link
+  href="/login"
+  className="group relative mt-8 flex h-14 w-full items-center justify-center overflow-hidden rounded-[14px] bg-[#0F172A] text-[16px] font-bold text-white shadow-lg transition-all duration-500 hover:scale-[1.02]"
+>
+  {/* Expanding Hover Background */}
+  <span className="absolute left-0 top-0 h-full w-0 bg-[#3737C1] transition-all duration-500 group-hover:w-full" />
+
+  {/* Content */}
+  <span className="relative z-10 flex items-center gap-2">
+    <IndianRupee
+      size={20}
+      className="transition-transform duration-500 group-hover:rotate-12"
+    />
+
+    <span className="transition-all duration-500 group-hover:tracking-wide">
+      Proceed with this EMI
+    </span>
+  </span>
+</Link>
           </div>
         </div>
       </div>

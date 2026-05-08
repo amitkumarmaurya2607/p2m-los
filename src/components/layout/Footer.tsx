@@ -1,5 +1,10 @@
 import React from "react";
 import { ArrowRight, ShieldCheck } from "lucide-react";
+import Link from "next/link";
+import FacebookIcon from "@/assets/icon/FacebookIcon";
+import InnkedIcon from "@/assets/icon/InnkedIcon";
+import InstagramIcon from "@/assets/icon/InstagramIcon";
+import TwittarIcon from "@/assets/icon/TwittarIcon";
 
 const company = ["About Us", "Careers", "Press", "Contact", "Partners"];
 
@@ -37,14 +42,14 @@ const Footer = () => {
             </p>
 
             <div className="mt-9 flex items-center gap-4">
-              {[ArrowRight, ArrowRight, ArrowRight, ArrowRight].map(
+              {[FacebookIcon, InnkedIcon, InstagramIcon, TwittarIcon].map(
                 (Icon, index) => (
                   <a
                     key={index}
                     href="#"
                     className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-[#90A1B9] transition hover:bg-white/10 hover:text-white"
                   >
-                    <Icon size={16} />
+                    <Icon size={16} color={"#90A1B9"} />
                   </a>
                 )
               )}
@@ -68,10 +73,14 @@ const Footer = () => {
               inbox.
             </p>
 
-            <form className="mt-5 flex h-[50px] rounded-full border border-white/10 bg-white/5 p-1">
+            <form className="mt-5 flex h-[50px] rounded-full border border-white/10 bg-white/5 p-1 overflow-hidden">
               <input
                 type="email"
                 placeholder="Enter your email"
+                autoComplete="off"
+                autoCapitalize="none"
+                autoCorrect="off"
+           
                 className="min-w-0 flex-1 bg-transparent px-4 text-[14px] text-white outline-none placeholder:text-[#62748E]"
               />
               <button
@@ -101,15 +110,15 @@ const Footer = () => {
           <p>© 2026 RinSetu Finance. All rights reserved.</p>
 
           <div className="flex flex-wrap gap-6">
-            <a href="#" className="hover:text-white">
+            <Link href="#" className="hover:text-white">
               Privacy Policy
-            </a>
-            <a href="#" className="hover:text-white">
+            </Link>
+            <Link href="#" className="hover:text-white">
               Terms of Service
-            </a>
-            <a href="#" className="hover:text-white">
+            </Link>
+            <Link href="#" className="hover:text-white">
               Grievance Redressal
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -125,9 +134,9 @@ const FooterLinks = ({ title, links }: { title: string; links: string[] }) => {
       <ul className="mt-6 space-y-3">
         {links.map((link) => (
           <li key={link}>
-            <a href="#" className="text-[14px] font-medium leading-5 text-[#90A1B9] hover:text-white">
+            <Link href="#" className="text-[14px] font-medium leading-5 text-[#90A1B9] hover:text-white">
               {link}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

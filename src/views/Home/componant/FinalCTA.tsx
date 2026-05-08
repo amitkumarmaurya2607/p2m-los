@@ -1,6 +1,8 @@
 import React from "react";
 import { ChevronRight, IndianRupee, ShieldCheck, Clock3 } from "lucide-react";
 
+import Link from "next/link";
+
 const FinalCTA = () => {
   return (
     <section className="bg-white px-5 py-16 font-[Inter] md:px-10 lg:px-[125px] lg:py-20">
@@ -36,10 +38,10 @@ const FinalCTA = () => {
             documents, transparent terms, instant disbursal.
           </p>
 
-          <button className="mx-auto mt-10 flex h-[68px] items-center justify-center gap-3 rounded-full bg-[#3737C1] px-10 text-[18px] font-bold text-white shadow-[0px_10px_30px_rgba(55,55,193,0.4)] transition hover:scale-[1.02]">
+          <Link href="/login" className="mx-auto mt-10 inline-flex h-[68px] items-center justify-center gap-3 rounded-full bg-[#3737C1] px-10 text-[18px] font-bold text-white shadow-[0px_10px_30px_rgba(55,55,193,0.4)] transition hover:scale-[1.02]">
             Apply Now
             <ChevronRight size={20} />
-          </button>
+          </Link>
 
           <p className="mt-8 flex items-center justify-center gap-2 text-[14px] font-medium text-white/40">
             <span className="h-2 w-2 rounded-full bg-[#00C89C]" />

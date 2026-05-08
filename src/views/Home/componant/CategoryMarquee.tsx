@@ -51,10 +51,10 @@ const categories = [
 
 const CategoryMarquee = () => {
   return (
-    <section className="overflow-hidden border-y border-[#F1F5F9] bg-white py-12">
+    <section className="overflow-hidden border-y border-[#F1F5F9] bg-white py-8">
       <div className="relative flex overflow-hidden">
         {/* Track */}
-        <div className="marquee flex min-w-max gap-6 px-6">
+        <div className="marquee flex min-w-max gap-6 px-6 py-4">
           {[...categories, ...categories, ...categories].map(
             (item, index) => {
               const Icon = item.icon;

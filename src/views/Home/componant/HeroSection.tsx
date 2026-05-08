@@ -1,6 +1,7 @@
 
 
 import { ArrowRight, Lock, ShieldCheck, Zap } from 'lucide-react'
+import Link from 'next/link'
 
 
 function HeroSection() {
@@ -29,12 +30,12 @@ function HeroSection() {
               Fast approvals, minimal documents, and secure digital process. Get approved in minutes, not days.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <button className="px-8 py-4 rounded-full bg-secondary hover:brightness-110 text-surface font-bold text-lg shadow-[var(--shadow-button)] transition-all flex items-center justify-center gap-2">
+              <Link href="/login" className="px-8 py-4 rounded-full bg-secondary hover:brightness-110 text-surface font-bold text-lg shadow-[var(--shadow-button)] transition-all flex items-center justify-center gap-2">
                 Apply Now <ArrowRight size={20} />
-              </button>
-              <button className="px-8 py-4 rounded-full bg-surface text-primary font-bold text-lg border-2 border-primary hover:bg-primary/5 transition-all flex items-center justify-center">
+              </Link>
+              <Link href="/login" className="px-8 py-4 rounded-full bg-surface text-primary font-bold text-lg border-2 border-primary hover:bg-primary/5 transition-all flex items-center justify-center">
                 Check Eligibility
-              </button>
+              </Link>
             </div>
             <div className="flex flex-wrap items-center gap-6 text-sm text-text-secondary font-medium">
               <div className="flex items-center gap-2"><ShieldCheck className="text-secondary" size={20} /> RBI compliant</div>

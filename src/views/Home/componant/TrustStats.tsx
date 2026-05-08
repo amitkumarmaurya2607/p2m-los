@@ -1,8 +1,7 @@
-import React from "react";
 
 const stats = [
-  { value: "₹500Cr+", label: "Loans Disbursed", color: "text-[#00C89C]" },
-  { value: "1L+", label: "Happy Customers", color: "text-[#3737C1]" },
+  { value: "₹50Cr+", label: "Loans Disbursed", color: "text-[#00C89C]" },
+  { value: "10K+", label: "Happy Customers", color: "text-[#3737C1]" },
   { value: "50+", label: "Cities Covered", color: "text-[#FF9F1C]" },
   { value: "4.9★", label: "App Rating", color: "text-[#0F172A]" },
 ];
