@@ -38,7 +38,7 @@ const FinalCTA = () => {
             documents, transparent terms, instant disbursal.
           </p>
 
-          <Link href="/login" className="mx-auto mt-10 inline-flex h-[68px] items-center justify-center gap-3 rounded-full bg-primary px-10 text-[18px] font-bold text-primary-foreground shadow-[0px_10px_30px_rgba(30,64,175,0.4)] transition hover:scale-[1.02]">
+          <Link href="/apply" className="mx-auto mt-10 inline-flex h-[68px] items-center justify-center gap-3 rounded-full bg-primary px-10 text-[18px] font-bold text-primary-foreground shadow-[0px_10px_30px_rgba(30,64,175,0.4)] transition hover:scale-[1.02]">
             Apply Now
             <ChevronRight size={20} />
           </Link>

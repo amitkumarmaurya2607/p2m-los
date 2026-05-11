@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({
     logout();
     resetApplication();
     setDropdownOpen(false);
-    router.push("/login");
+    router.push("/apply");
   };
 
   useEffect(() => {

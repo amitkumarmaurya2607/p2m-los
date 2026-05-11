@@ -31,7 +31,7 @@ export function useApplicationSteps() {
       const step = allSteps[index];
       if (step) {
         if (step.key === "mobile") {
-          router.push("/login");
+          router.push("/apply");
         } else {
           const routeMap: Record<string, string> = {
             pan: "/pan-details",

@@ -65,7 +65,7 @@ const QuickEasySection = () => {
             ))}
           </div>
 
-          <Link href="/login" className="inline-flex items-center justify-center mt-3 h-[60px] rounded-full bg-primary px-[27px] text-[18px] font-bold text-primary-foreground shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)] transition hover:scale-[1.02]">
+          <Link href="/apply" className="inline-flex items-center justify-center mt-3 h-[60px] rounded-full bg-primary px-[27px] text-[18px] font-bold text-primary-foreground shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)] transition hover:scale-[1.02]">
             Start Your Journey
           </Link>
         </div>

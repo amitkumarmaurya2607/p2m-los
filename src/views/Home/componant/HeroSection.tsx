@@ -30,10 +30,10 @@ function HeroSection() {
               Fast approvals, minimal documents, and secure digital process. Get approved in minutes, not days.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Link href="/login" className="px-8 py-4 rounded-full bg-secondary hover:brightness-110 text-surface font-bold text-lg shadow-[var(--shadow-button)] transition-all flex items-center justify-center gap-2">
+              <Link href="/apply" className="px-8 py-4 rounded-full bg-secondary hover:brightness-110 text-surface font-bold text-lg shadow-[var(--shadow-button)] transition-all flex items-center justify-center gap-2">
                 Apply Now <ArrowRight size={20} />
               </Link>
-              <Link href="/login" className="px-8 py-4 rounded-full bg-surface text-primary font-bold text-lg border-2 border-primary hover:bg-primary/5 transition-all flex items-center justify-center">
+              <Link href="/apply" className="px-8 py-4 rounded-full bg-surface text-primary font-bold text-lg border-2 border-primary hover:bg-primary/5 transition-all flex items-center justify-center">
                 Check Eligibility
               </Link>
             </div>

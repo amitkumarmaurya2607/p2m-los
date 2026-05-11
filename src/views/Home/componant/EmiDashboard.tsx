@@ -140,7 +140,7 @@ const EmiDashboard = () => {
             </div>
 
            <Link
-  href="/login"
+  href="/apply"
   className="group relative mt-8 flex h-14 w-full items-center justify-center overflow-hidden rounded-[14px] bg-dark-navy text-[16px] font-bold text-dark-navy-foreground shadow-lg transition-all duration-500 hover:scale-[1.02]"
 >
   {/* Expanding Hover Background */}

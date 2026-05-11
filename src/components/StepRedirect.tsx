@@ -8,7 +8,7 @@ import { steps as allSteps } from "@/lib/sessionStorage";
 const bypassRoutes = ["/track-application", "/profile"];
 
 const stepRouteMap: Record<string, string> = {
-  mobile: "/login",
+    mobile: "/apply",
   pan: "/pan-details",
   personalInfo: "/personal-info",
   aadhaar: "/aadhar-details",

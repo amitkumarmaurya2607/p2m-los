@@ -142,7 +142,7 @@ const LoanCard = ({
     </div>
 
   <Link
-  href="/login"
+  href="/apply"
   className={`group/btn relative z-10 flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border transition-all duration-500 ${
     isLight
       ? "border-border-medium bg-surface text-dark-navy hover:border-dark-navy"

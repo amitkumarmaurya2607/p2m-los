@@ -12,7 +12,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!checked) {
-      if (pathname === "/login") {
+      if (pathname === "/apply") {
         if (isLoggedIn) {
           router.replace("/review");
         } else {
@@ -22,7 +22,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       }
 
       if (!isLoggedIn) {
-        router.push("/login");
+        router.push("/apply");
       } else {
         setChecked(true);
       }
@@ -37,7 +37,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     );
   }
 
-  if (!isLoggedIn && pathname !== "/login") {
+  if (!isLoggedIn && pathname !== "/apply") {
     return (
       <div className="flex flex-1 items-center justify-center py-20">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />

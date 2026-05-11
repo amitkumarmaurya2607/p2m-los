@@ -34,10 +34,10 @@ const Header = () => {
 
         <div className="hidden items-center gap-4 lg:flex">
           <Link
-            href="/login"
+            href="/apply"
             className="px-[15px] text-[16px] font-bold text-primary hover:text-primary-light transition-colors"
           >
-            Login
+            Apply
           </Link>
 
           <Link
@@ -69,10 +69,10 @@ const Header = () => {
 
             <div className="mt-5 flex gap-3">
               <Link
-                href="/login"
+                href="/apply"
                 className="flex h-11 flex-1 items-center justify-center rounded-full border border-primary font-bold text-primary hover:bg-primary/5 transition-all"
               >
-                Login
+                Apply
               </Link>
 
               <Link

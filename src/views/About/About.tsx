@@ -316,7 +316,7 @@ const FinalCTA = () => (
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-          <Link href="/login" className="px-10 py-5 bg-secondary hover:brightness-110 text-white rounded-full font-bold text-lg shadow-[var(--shadow-button)] transition-all flex items-center gap-3 group active:scale-95">
+          <Link href="/apply" className="px-10 py-5 bg-secondary hover:brightness-110 text-white rounded-full font-bold text-lg shadow-[var(--shadow-button)] transition-all flex items-center gap-3 group active:scale-95">
             Apply for a Loan
             <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
