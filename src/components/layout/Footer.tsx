@@ -10,11 +10,8 @@ import { COMPANY_DETAILS } from "@/config/company";
 
 const company = [
   { label: "About Us", href: "/about" },
-  { label: "Careers", href: "#" },
-  { label: "Press", href: "#" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
-  { label: "Partners", href: "#" },
 ];
 
 const products = [
@@ -121,7 +118,7 @@ const Footer = () => {
             <Link href="/terms-and-conditions" className="hover:text-white transition-colors">
               Terms & Conditions
             </Link>
-            <Link href="#" className="hover:text-white transition-colors">
+            <Link href="/grievance-redressal" className="hover:text-white transition-colors">
               Grievance Redressal
             </Link>
           </div>

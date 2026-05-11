@@ -3,8 +3,7 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 
 const navLinks = [
-  { label: "Products", href: "/#products" },
-  { label: "How it works", href: "/#how-it-works" },
+  { label: "Home", href: "/" },
   { label: "EMI Calculator", href: "/#emi-calculator" },
   { label: "About Us", href: "/about" },
   { label: "Contact", href: "/contact" },

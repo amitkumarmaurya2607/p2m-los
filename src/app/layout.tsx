@@ -12,8 +12,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "P2M LOS",
-  description: "Production-ready Next.js application",
+  title: "RinSetu | Premium Digital Lending Platform",
+  description: "Experience fast, transparent, and secure digital lending. RinSetu connects you with RBI-registered partners for instant loan approvals.",
+  keywords: ["loan", "fintech", "personal loan", "digital lending", "RinSetu", "credit"],
+  authors: [{ name: "RinSetu Team" }],
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
 };
 
 export default function RootLayout({

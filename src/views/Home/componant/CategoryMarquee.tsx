@@ -80,24 +80,7 @@ const CategoryMarquee = () => {
         </div>
       </div>
 
-      <style jsx>{`
-        .marquee {
-          animation: marquee 28s linear infinite;
-        }
 
-        .marquee:hover {
-          animation-play-state: paused;
-        }
-
-        @keyframes marquee {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-33.333%);
-          }
-        }
-      `}</style>
     </section>
   );
 };

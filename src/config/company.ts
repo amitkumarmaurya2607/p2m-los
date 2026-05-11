@@ -10,7 +10,7 @@ export const COMPANY_DETAILS = {
   officeAddress: "12th Floor, Cyber Hub Tower B, DLF Phase 3, Gurgaon, Haryana - 122002",
   
   grievanceOfficer: {
-    name: "Mr. Rajesh Kumar",
+    name: "RinSetu",
     designation: "Nodal Officer",
     email: "grievance@rinsetu.com",
     address: "12th Floor, Cyber Hub Tower B, DLF Phase 3, Gurgaon, Haryana - 122002",

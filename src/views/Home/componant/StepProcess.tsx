@@ -113,26 +113,7 @@ const StepProcess = () => {
         </div>
       </section>
 
-      {/* Floating Animation */}
-      <style jsx>{`
-        @keyframes phoneFloat {
-          0%,
-          100% {
-            transform: translateY(0px);
-          }
 
-          50% {
-            transform: translateY(-14px);
-          }
-        }
-
-        .phone-float {
-          animation: phoneFloat 4s
-            cubic-bezier(0.45, 0, 0.55, 1)
-            infinite;
-          will-change: transform;
-        }
-      `}</style>
     </>
   );
 };

@@ -1,271 +1,195 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { 
-  Phone, 
   Mail, 
+  Phone, 
   MapPin, 
   Clock, 
   MessageSquare, 
-  ShieldCheck, 
-  Send,
   ChevronRight,
-  User,
-  AtSign,
-  Smartphone,
-  BookOpen
+  ShieldCheck,
+  Zap,
+  Globe
 } from "lucide-react";
-import TextInput from "@/components/ui/TextInput";
-import GradientButton from "@/components/ui/GradientButton";
 import { COMPANY_DETAILS } from "@/config/company";
+import ContactForm from "./ContactForm";
 
-const HeroSection = () => (
-  <section className="relative pt-20 pb-32 px-6 lg:px-12 bg-surface-muted overflow-hidden">
-    {/* Abstract Shapes */}
-    <div className="absolute top-[-200px] right-[-100px] w-[800px] h-[800px] bg-primary/10 blur-[64px] rounded-full" />
-    <div className="absolute top-[288px] left-[-41px] w-[600px] h-[600px] bg-secondary/10 blur-[64px] rounded-full" />
-    
-    <div className="container mx-auto text-center relative z-10">
-      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-border shadow-[var(--shadow-sm)] text-primary text-sm font-semibold mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-secondary" />
-        </span>
-        <span className="tracking-wide uppercase text-xs">Contact Us</span>
-      </div>
-      
-      <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-text-heading leading-[1.1] mb-8">
-        Get in Touch with Our <br />
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-          Financial Advisors
-        </span>
-      </h1>
-      
-      <p className="text-lg md:text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
-        Have questions about our loan products or need assistance with your application? 
-        Our team is here to provide you with expert guidance and support.
-      </p>
-    </div>
-  </section>
-);
-
-const ContactInfo = () => {
-  const infoCards = [
-    {
-      title: "Quick Contact",
-      details: [COMPANY_DETAILS.supportPhone],
-      icon: Phone,
-      color: "text-primary",
-      bg: "bg-primary/10",
-      link: `tel:${COMPANY_DETAILS.supportPhone.replace(/\s+/g, '')}`
-    },
-    {
-      title: "Email Support",
-      details: [COMPANY_DETAILS.supportEmail],
-      icon: Mail,
-      color: "text-secondary",
-      bg: "bg-secondary/10",
-      link: `mailto:${COMPANY_DETAILS.supportEmail}`
-    },
-    {
-      title: "Registered Office",
-      details: [COMPANY_DETAILS.officeAddress],
-      icon: MapPin,
-      color: "text-accent-orange",
-      bg: "bg-accent-orange/10",
-      link: "#"
-    },
-    {
-      title: "Grievance Redressal",
-      details: [COMPANY_DETAILS.grievanceOfficer.email, "Response: Within 5 working days"],
-      icon: ShieldCheck,
-      color: "text-success",
-      bg: "bg-success/10",
-      link: `mailto:${COMPANY_DETAILS.grievanceOfficer.email}`
-    }
-  ];
-
+const ContactView = () => {
   return (
-    <div className="grid sm:grid-cols-2 gap-6">
-      {infoCards.map((card, index) => (
-        <a 
-          key={index} 
-          href={card.link}
-          className="bg-surface border border-border p-8 rounded-3xl hover:border-primary/30 transition-all shadow-[var(--shadow-sm)] group"
-        >
-          <div className={`w-14 h-14 ${card.bg} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-            <card.icon className={`w-7 h-7 ${card.color}`} />
-          </div>
-          <h3 className="text-xl font-bold text-text-heading mb-3">{card.title}</h3>
-          <div className="space-y-1">
-            {card.details.map((detail, idx) => (
-              <p key={idx} className="text-text-secondary font-medium leading-relaxed">{detail}</p>
-            ))}
-          </div>
-        </a>
-      ))}
-    </div>
-  );
-};
-
-const ContactForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: ""
-  });
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      alert("Message sent successfully!");
-      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-    }, 1500);
-  };
-
-  return (
-    <div className="bg-surface border border-border rounded-[40px] p-8 md:p-12 shadow-xl relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16" />
-      
-      <div className="mb-10">
-        <h2 className="text-3xl font-bold text-text-heading mb-4 tracking-tight">Leave us a message</h2>
-        <p className="text-text-secondary">Fill out the form below and we'll get back to you as soon as possible.</p>
-      </div>
-      
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid md:grid-cols-2 gap-6">
-          <TextInput 
-            label="Full Name" 
-            placeholder="Enter your name" 
-            require
-            leftIcon={<User className="text-text-muted" size={20} />}
-            value={formData.name}
-            onChange={(e) => setFormData({...formData, name: e.target.value})}
-          />
-          <TextInput 
-            label="Email Address" 
-            type="email"
-            placeholder="Enter your email" 
-            require
-            leftIcon={<AtSign className="text-text-muted" size={20} />}
-            value={formData.email}
-            onChange={(e) => setFormData({...formData, email: e.target.value})}
-          />
-        </div>
+    <div className="min-h-screen bg-background text-foreground font-sans">
+      {/* Hero Section - SSR */}
+      <section className="relative pt-24 pb-32 px-6 lg:px-12 bg-surface-muted overflow-hidden">
+        <div className="absolute top-[-100px] left-[-100px] w-[600px] h-[600px] bg-primary/10 blur-[100px] rounded-full" />
+        <div className="absolute bottom-[-200px] right-[-100px] w-[800px] h-[800px] bg-secondary/10 blur-[120px] rounded-full" />
         
-        <div className="grid md:grid-cols-2 gap-6">
-          <TextInput 
-            label="Phone Number" 
-            placeholder="Enter phone number" 
-            require
-            leftIcon={<Smartphone className="text-text-muted" size={20} />}
-            value={formData.phone}
-            onChange={(e) => setFormData({...formData, phone: e.target.value})}
-          />
-          <TextInput 
-            label="Subject" 
-            placeholder="How can we help?" 
-            leftIcon={<BookOpen className="text-text-muted" size={20} />}
-            value={formData.subject}
-            onChange={(e) => setFormData({...formData, subject: e.target.value})}
-          />
-        </div>
-        
-        <div className="w-full">
-          <div className="relative flex w-full min-h-[160px] px-[20px] pt-[24px] pb-[8px] bg-input-bg rounded-[16px] border border-transparent shadow-[var(--shadow-sm)] focus-within:border-primary/30 transition-all">
-            <div className="mr-[10px] h-full flex items-start pt-2">
-              <MessageSquare className="text-text-muted" size={20} />
-            </div>
-            <div className="relative flex-1">
-              <textarea 
-                placeholder=" "
-                className="peer w-full h-full bg-transparent outline-none text-[14px] pt-[12px] resize-none"
-                value={formData.message}
-                onChange={(e) => setFormData({...formData, message: e.target.value})}
-              />
-              <label className="absolute left-0 font-medium top-[10px] -translate-y-1/2 text-[16px] transition-all duration-200 pointer-events-none text-text-muted peer-focus:top-0 peer-focus:text-text-label peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:text-text-label">
-                Your Message
-              </label>
-            </div>
+        <div className="container mx-auto text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-border shadow-sm text-primary text-sm font-bold mb-8">
+            <MessageSquare size={18} className="text-secondary" />
+            <span className="tracking-wide uppercase text-xs">Contact Us</span>
           </div>
+          
+          <h1 className="text-5xl lg:text-7xl font-black tracking-tight text-text-heading leading-tight mb-8">
+            Let's Start a <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+              Conversation
+            </span>
+          </h1>
+          <p className="text-text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+            Have questions about a loan? Our financial experts are here to help you navigate your financial journey with ease.
+          </p>
         </div>
-        
-        <GradientButton type="submit" loading={loading} rightIcon={<Send size={20} />}>
-          Send Message
-        </GradientButton>
-      </form>
-    </div>
-  );
-};
+      </section>
 
-const FAQSection = () => (
-  <section className="py-24 bg-surface-muted">
-    <div className="container mx-auto px-4 text-center">
-      <h2 className="text-3xl font-bold text-text-heading mb-6 tracking-tight">Have more questions?</h2>
-      <p className="text-text-secondary max-w-2xl mx-auto mb-10">
-        Check out our frequently asked questions to find quick answers to common queries about our loans and processes.
-      </p>
-      <Link 
-        href="/#faq" 
-        className="inline-flex items-center gap-2 px-8 py-4 bg-background border border-border rounded-full font-bold text-text-heading hover:bg-surface transition-all shadow-[var(--shadow-sm)]"
-      >
-        View FAQ
-        <ChevronRight size={20} />
-      </Link>
-    </div>
-  </section>
-);
-
-export default function Contact() {
-  return (
-    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/20 selection:text-primary">
-      <HeroSection />
-      
-      <section className="py-24 bg-background">
+      {/* Contact Content - SSR & Client Hybrid */}
+      <section className="py-20 -mt-16 relative z-20">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row gap-16">
-            <div className="lg:w-5/12">
-              <div className="mb-12">
-                <h2 className="text-3xl md:text-4xl font-extrabold text-text-heading mb-6 tracking-tight">Contact Information</h2>
-                <p className="text-text-secondary text-lg leading-relaxed">
-                  We're here to help you get past the unique financial obstacles that your business faces. 
-                  Reach out to us through any of the following channels.
+          <div className="grid lg:grid-cols-12 gap-12">
+            
+            {/* Contact Info - SSR */}
+            <div className="lg:col-span-5 space-y-8">
+              <div className="bg-surface rounded-[32px] p-8 border border-border shadow-xl space-y-10">
+                <h3 className="text-2xl font-black text-text-heading">Get in Touch</h3>
+                
+                <div className="space-y-8">
+                  <div className="flex gap-5 group">
+                    <div className="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                      <Mail size={24} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-text-secondary uppercase tracking-widest mb-1">Email Us</p>
+                      <a href={`mailto:${COMPANY_DETAILS.supportEmail}`} className="text-xl font-black text-text-heading hover:text-primary transition-colors">
+                        {COMPANY_DETAILS.supportEmail}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-5 group">
+                    <div className="w-14 h-14 bg-secondary/10 text-secondary rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-secondary group-hover:text-white transition-all duration-300">
+                      <Phone size={24} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-text-secondary uppercase tracking-widest mb-1">Call Us</p>
+                      <a href={`tel:${COMPANY_DETAILS.supportPhone}`} className="text-xl font-black text-text-heading hover:text-secondary transition-colors">
+                        {COMPANY_DETAILS.supportPhone}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-5 group">
+                    <div className="w-14 h-14 bg-accent-orange/10 text-accent-orange rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-accent-orange group-hover:text-white transition-all duration-300">
+                      <MapPin size={24} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-text-secondary uppercase tracking-widest mb-1">Visit Us</p>
+                      <p className="text-lg font-bold text-text-heading leading-relaxed">
+                        {COMPANY_DETAILS.address}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-8 border-t border-border flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-text-secondary">
+                    <Clock size={18} className="text-primary" />
+                    <span className="text-sm font-medium">Mon - Sat: 9AM - 6PM</span>
+                  </div>
+                  <div className="flex -space-x-2">
+                    {[1, 2, 3, 4].map(i => (
+                      <div key={i} className="w-8 h-8 rounded-full bg-surface-muted border-2 border-surface flex items-center justify-center overflow-hidden">
+                        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Trust Badge - SSR */}
+              <div className="bg-dark-navy rounded-[32px] p-8 text-white relative overflow-hidden">
+                <div className="absolute top-[-50px] right-[-50px] w-40 h-40 bg-white/5 blur-3xl rounded-full" />
+                <div className="flex items-center gap-4 mb-4">
+                  <ShieldCheck className="text-primary" size={32} />
+                  <h4 className="text-xl font-bold">Authorized Platform</h4>
+                </div>
+                <p className="text-text-on-dark-muted leading-relaxed">
+                  RinSetu is a registered digital platform partnering only with RBI-regulated financial institutions.
                 </p>
               </div>
-              <ContactInfo />
             </div>
-            
-            <div className="lg:w-7/12">
+
+            {/* Contact Form - Client */}
+            <div className="lg:col-span-7">
               <ContactForm />
             </div>
+
           </div>
         </div>
       </section>
-      
-      <FAQSection />
-      
-      {/* Map Section Placeholder */}
-      <section className="py-24 bg-background">
+
+      {/* Grievance Section - SSR */}
+      <section className="py-24 bg-surface-muted border-y border-border">
         <div className="container mx-auto px-4">
-          <div className="w-full h-[450px] bg-surface-muted rounded-[40px] border border-border overflow-hidden relative shadow-lg">
-             {/* Replace with real Google Maps iframe if needed */}
-             <div className="absolute inset-0 flex items-center justify-center bg-primary/5">
-                <div className="text-center">
-                  <MapPin className="w-16 h-16 text-primary/40 mx-auto mb-4" />
-                  <p className="text-text-muted font-medium">Interactive Map Placeholder</p>
-                  <p className="text-text-muted text-sm">2nd Floor, C-56/32, Industrial Area, Sector 62, Noida</p>
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black text-text-heading mb-6">Grievance Redressal</h2>
+            <p className="text-text-secondary text-lg">We are committed to resolving your concerns promptly. If you have an unresolved issue, please contact our Nodal Officer.</p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="bg-surface p-8 rounded-3xl border border-border shadow-sm text-center">
+              <div className="w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                <Zap size={30} />
+              </div>
+              <h4 className="text-lg font-bold text-text-heading mb-2">Step 1</h4>
+              <p className="text-sm text-text-secondary">Contact our support team via email or phone for immediate assistance.</p>
+            </div>
+            
+            <div className="bg-surface p-8 rounded-3xl border border-border shadow-sm text-center relative">
+              <div className="hidden md:block absolute top-1/2 -right-4 translate-y-[-50%] z-10 text-border">
+                <ChevronRight size={32} />
+              </div>
+              <div className="w-16 h-16 bg-secondary/10 text-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+                <Clock size={30} />
+              </div>
+              <h4 className="text-lg font-bold text-text-heading mb-2">Step 2</h4>
+              <p className="text-sm text-text-secondary">Most issues are resolved within 24-48 business hours by our team.</p>
+            </div>
+
+            <div className="bg-surface p-8 rounded-3xl border border-border shadow-sm text-center">
+              <div className="w-16 h-16 bg-accent-orange/10 text-accent-orange rounded-full flex items-center justify-center mx-auto mb-6">
+                <Globe size={30} />
+              </div>
+              <h4 className="text-lg font-bold text-text-heading mb-2">Step 3</h4>
+              <p className="text-sm text-text-secondary">Escalate to the Nodal Officer if you are not satisfied with the resolution.</p>
+            </div>
+          </div>
+
+          <div className="mt-16 bg-surface p-8 lg:p-12 rounded-[40px] border border-border max-w-4xl mx-auto shadow-xl">
+            <div className="flex flex-col md:flex-row gap-8 items-center">
+              <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                <ShieldCheck className="text-primary" size={48} />
+              </div>
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="text-2xl font-black text-text-heading mb-2">{COMPANY_DETAILS.grievanceOfficer.name}</h3>
+                <p className="text-primary font-bold mb-4">{COMPANY_DETAILS.grievanceOfficer.designation}</p>
+                <div className="grid md:grid-cols-2 gap-4 text-sm text-text-secondary">
+                  <div className="flex items-center gap-2 justify-center md:justify-start">
+                    <Mail size={16} className="text-primary" />
+                    <span>{COMPANY_DETAILS.grievanceOfficer.email}</span>
+                  </div>
+                  <div className="flex items-center gap-2 justify-center md:justify-start">
+                    <MapPin size={16} className="text-primary" />
+                    <span>Gurgaon, Haryana</span>
+                  </div>
                 </div>
-             </div>
+              </div>
+              <Link href="/faq" className="px-8 py-4 bg-surface-muted hover:bg-surface border border-border rounded-full font-bold transition-all text-sm whitespace-nowrap">
+                View Policy Details
+              </Link>
+            </div>
           </div>
         </div>
       </section>
     </div>
   );
-}
+};
+
+export default ContactView;

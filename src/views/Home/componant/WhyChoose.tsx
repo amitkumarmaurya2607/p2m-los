@@ -86,43 +86,7 @@ const WhyChoose = () => {
         </div>
       </section>
 
-      {/* Animations */}
-      <style jsx>{`
-        @keyframes fadeUp {
-          0% {
-            opacity: 0;
-            transform: translateY(40px) scale(0.96);
-          }
 
-          100% {
-            opacity: 1;
-            transform: translateY(0px) scale(1);
-          }
-        }
-
-        @keyframes glowPulse {
-          0%,
-          100% {
-            opacity: 0.4;
-            transform: scale(1);
-          }
-
-          50% {
-            opacity: 0.8;
-            transform: scale(1.08);
-          }
-        }
-
-        .feature-card {
-          opacity: 0;
-          animation: fadeUp 0.8s ease forwards;
-          will-change: transform, opacity;
-        }
-
-        .feature-glow {
-          animation: glowPulse 4s ease-in-out infinite;
-        }
-      `}</style>
     </>
   );
 };

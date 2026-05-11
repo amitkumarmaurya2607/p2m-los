@@ -73,24 +73,7 @@ const RatingReviews = () => {
       <span className="mx-auto mt-5 block h-2 w-2 rounded-full bg-primary/40 blur-[1px]" />
       <span className="absolute left-10 top-[260px] h-3 w-3 rounded-full bg-secondary/40 blur-[1px]" />
 
-      <style jsx>{`
-        .review-marquee {
-          animation: reviewMarquee 35s linear infinite;
-        }
 
-        .review-marquee:hover {
-          animation-play-state: paused;
-        }
-
-        @keyframes reviewMarquee {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-33.333%);
-          }
-        }
-      `}</style>
     </section>
   );
 };

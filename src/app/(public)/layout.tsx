@@ -4,8 +4,11 @@ import Header from "@/components/layout/Header";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "P2M LOS - Public",
-  description: "Public pages",
+  title: {
+    template: "%s | RinSetu",
+    default: "RinSetu - Modern Digital Lending",
+  },
+  description: "RinSetu provides fast and transparent financial solutions.",
 };
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
