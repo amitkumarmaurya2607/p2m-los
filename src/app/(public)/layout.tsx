@@ -1,7 +1,6 @@
+
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
-import PublicGuard from "@/components/PublicGuard";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

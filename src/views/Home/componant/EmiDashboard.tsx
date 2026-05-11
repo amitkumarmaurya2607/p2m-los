@@ -34,7 +34,7 @@ const EmiDashboard = () => {
   }, [amount, tenure]);
 
   return (
-    <section className="relative overflow-hidden bg-surface-muted px-5 py-16 font-[Inter] md:px-10 lg:px-20 lg:py-24">
+    <section id="emi-calculator" className="relative overflow-hidden bg-surface-muted px-5 py-16 font-[Inter] md:px-10 lg:px-20 lg:py-24">
       <div className="mx-auto grid max-w-[var(--max-width-section)] items-center gap-12 lg:grid-cols-2">
         {/* Left */}
         <div>

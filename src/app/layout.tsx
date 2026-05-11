@@ -24,8 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} h-full antialiased`}>
       <body
-        className="min-h-full flex flex-col bg-background text-foreground font-sans"
+        className="min-h-full flex flex-col bg-background text-foreground font-sans scroll-smooth"
         cz-shortcut-listen="true"
+      
       >
         <ErrorBoundary>
           <Providers>{children}</Providers>
