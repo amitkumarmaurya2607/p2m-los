@@ -2,22 +2,13 @@
 
 import { useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/store/hooks";
-import {
-  selectCompletedSteps,
-  selectProgressPercentage,
-  selectCurrentStep,
-  selectApplication,
-} from "@/features/application/applicationSlice";
+import { useApplicationContext } from "@/context/ApplicationContext";
 import { steps as allSteps, type StepStatus } from "@/lib/sessionStorage";
 
 export function useApplicationSteps() {
   const router = useRouter();
 
-  const completedSteps = useAppSelector(selectCompletedSteps);
-  const currentStep = useAppSelector(selectCurrentStep);
-  const progress = useAppSelector(selectProgressPercentage);
-  const application = useAppSelector(selectApplication);
+  const { completedSteps, currentStep, progressPercentage: progress, application } = useApplicationContext();
 
   const stepStatuses = useCallback(() => {
     const map = new Map<string, StepStatus>();

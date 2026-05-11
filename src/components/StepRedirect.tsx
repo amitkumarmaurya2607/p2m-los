@@ -2,8 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useAppSelector } from "@/store/hooks";
-import { selectCompletedSteps } from "@/features/application/applicationSlice";
+import { useApplicationContext } from "@/context/ApplicationContext";
 import { steps as allSteps } from "@/lib/sessionStorage";
 
 const bypassRoutes = ["/track-application", "/profile"];
@@ -23,7 +22,7 @@ const stepRouteMap: Record<string, string> = {
 export default function StepRedirect({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const completedSteps = useAppSelector(selectCompletedSteps);
+  const { completedSteps } = useApplicationContext();
   const hasRedirected = useRef(false);
 
   useEffect(() => {

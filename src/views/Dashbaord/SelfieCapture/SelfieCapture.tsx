@@ -1,8 +1,7 @@
 import GradientButton from "@/components/ui/GradientButton";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/store/hooks";
-import { setSelfieData } from "@/features/application/applicationSlice";
+import { useApplicationContext } from "@/context/ApplicationContext";
 
 type CaptureProps = {
   mode?: "photo" | "video";
@@ -11,7 +10,7 @@ type CaptureProps = {
 
 const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => {
   const router = useRouter();
-  const dispatch = useAppDispatch();
+  const { setSelfieData } = useApplicationContext();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -125,7 +124,7 @@ const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => 
     onSubmit?.(capturedBlob);
     console.log("Submitted Blob:", capturedBlob);
 
-    dispatch(setSelfieData({ captured: true }));
+    setSelfieData({ captured: true });
     router.push("/employment-details");
   };
 

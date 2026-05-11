@@ -6,40 +6,29 @@ May 4, 2026
 
 ## Current Focus
 
-Foundation phase - Core UI components, theming system, and authentication flow are being established.
+State management refactor completed - Redux replaced with React Context API. Now focusing on fixing pre-existing type errors and API integration.
 
 ## Recent Changes
 
-1. **Toast System** - Implemented `react-hot-toast` with centralized `showToast()` method in `src/lib/toast.ts`
-   - Supports: success, error, warning, info, loading, custom types
-   - Configurable: position, duration, icon, style, className, onClose callback
-   - Integrated into Login and OTP verification flows
-
-2. **CSS Variables / Theming** - Replaced ALL hardcoded colors with CSS custom properties
-   - Updated `globals.css` with 40+ CSS variables
-   - Full dark mode support with corresponding dark variables
-   - Updated 20+ component files to use theme variables
-   - Tailwind CSS v4 `@theme inline` directive maps all variables
-
-3. **Component Updates** - All UI components now use CSS variables:
-   - `TextInput`, `OTPInput`, `SelectBox`, `CustomDatePicker` - form inputs
-   - `GradientButton` - primary CTA with secondary gradient
-   - `ToastProvider` - toast notifications with theme colors
-   - `Login`, `OTPVerify` - authentication pages
-   - `SideBar`, `InfoCard` - auth sidebar
-   - `StepCard`, `Header`, `Stepper`, `ProgressBar` - dashboard components
-   - `SelfieCapture`, `PersonalInfo`, `BankDetails`, `AadhaarDetails` - verification pages
-   - `ResendTimer` - OTP resend with timer
+1. **Redux Removed → Replaced with React Context API**
+   - Created `src/context/AuthContext.tsx` - Auth state (`isLoggedIn`, `user`) with `login()`/`logout()` actions, persisted to sessionStorage
+   - Created `src/context/ApplicationContext.tsx` - All application form data with setter methods and computed selectors (`completedSteps`, `stepStatuses`, `progressPercentage`, `currentStep`), persisted to sessionStorage
+   - Updated `src/app/providers.tsx` - `ReduxProvider` → `AuthProvider` + `ApplicationProvider`
+   - Updated 15 consumer files across guards, hooks, and views to use `useAuthContext()` / `useApplicationContext()` instead of `useAppDispatch()` / `useAppSelector()`
+   - Deleted `src/store/`, `src/features/`, `src/components/ReduxProvider.tsx` (6 files, ~300 lines)
+   - Uninstalled `@reduxjs/toolkit` and `react-redux`
+   - Build passes successfully (only pre-existing Contact.tsx error remains)
 
 ## Active Decisions
 
 - CSS variables used instead of Tailwind hardcoded colors for maintainability
 - `react-hot-toast` chosen over custom toast for reliability and bundle size
 - Tailwind CSS v4 native approach (no tailwind.config.js)
+- Context API over Redux to reduce bundle size and complexity for simple CRUD state
 
 ## Next Steps
 
-1. Fix pre-existing TypeScript errors in `src/pages/Home/Home.tsx` and `src/pages/VerifyOtpPage.tsx/VerifyOtpPage.tsx`
+1. Fix pre-existing TypeScript errors in `src/pages/Home/Home.tsx`, `src/pages/VerifyOtpPage.tsx/VerifyOtpPage.tsx`, and `src/views/Contact/Contact.tsx`
 2. Wire up actual API endpoints for OTP send/verify
 3. Complete remaining verification page integrations
 4. Add form submission handlers with backend communication
@@ -47,7 +36,7 @@ Foundation phase - Core UI components, theming system, and authentication flow a
 
 ## Blockers
 
-- Pre-existing TypeScript errors in `Home/Home.tsx` and `VerifyOtpPage.tsx` directory structure prevent clean build
+- Pre-existing TypeScript errors in `Home/Home.tsx`, `VerifyOtpPage.tsx`, and `Contact.tsx` prevent clean build
 - No API endpoints connected yet - all verification flows use simulated delays
 
 ## Notes

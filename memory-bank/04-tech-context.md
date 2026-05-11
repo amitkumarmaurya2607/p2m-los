@@ -17,8 +17,7 @@
 
 ### State Management
 
-- **Redux Toolkit** 2.11.2 - Global state management
-- **React Redux** 9.2.0 - React bindings for Redux
+- **React Context API** - Global state management via AuthContext and ApplicationContext with sessionStorage persistence
 
 ### UI Libraries
 
@@ -78,7 +77,7 @@ p2m-los/
       utils.ts             # Helper functions (cn, validations)
       toast.ts             # Toast helper
     hooks/                 # Custom hooks
-    store/                 # Redux store
+    context/               # React Context providers (Auth, Application)
     types/                 # TypeScript types
   memory-bank/             # Project documentation
   .claude-code/            # AI assistant config
@@ -103,5 +102,5 @@ p2m-los/
 1. Directory name typo: `Dashbaord` instead of `Dashboard`
 2. `VerifyOtpPage.tsx` is a directory containing `VerifyOtpPage.tsx` (invalid for Pages Router)
 3. `Home/Home.tsx` has no proper export
-4. Redux configured but only has counter slice (unused)
+4. (Fixed) Redux replaced with React Context API
 5. Many commented-out code blocks across files

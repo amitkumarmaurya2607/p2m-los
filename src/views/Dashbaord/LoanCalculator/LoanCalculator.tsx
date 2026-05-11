@@ -3,15 +3,14 @@
 import React, { useMemo, useState } from "react";
 import { Calculator, ChevronRight, Lightbulb } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/store/hooks";
-import { setLoanCalculatorData } from "@/features/application/applicationSlice";
+import { useApplicationContext } from "@/context/ApplicationContext";
 import StepNotes from "../componants/StepNotes";
 import StepCard from "../componants/StepCard";
 import GradientButton from "@/components/ui/GradientButton";
 
 function LoanCalculator() {
   const router = useRouter();
-  const dispatch = useAppDispatch();
+  const { setLoanCalculatorData } = useApplicationContext();
   const [loanAmount, setLoanAmount] = useState(500000);
   const [tenure, setTenure] = useState(36);
 
@@ -35,14 +34,14 @@ function LoanCalculator() {
     }).format(value);
 
   const handleLockPlan = () => {
-    dispatch(setLoanCalculatorData({
+    setLoanCalculatorData({
       viewed: true,
       loanAmount,
       tenure,
       interestRate,
       emi,
       totalPayable,
-    }));
+    });
     router.push("/review");
   };
 

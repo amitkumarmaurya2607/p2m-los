@@ -6,8 +6,7 @@ import GradientButton from "@/components/ui/GradientButton";
 import OTPInput from "@/components/OTPInput/OTPInput";
 import ResendTimer from "@/components/ResendTimer/ResendTimer";
 import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setAadhaarData, selectApplication } from "@/features/application/applicationSlice";
+import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidAadhaar, sanitizeNumeric } from "@/lib/utils";
 import StepNotes from "../componants/StepNotes";
 
@@ -17,8 +16,7 @@ type AadhaarDetailsProps = {
 
 function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const application = useAppSelector(selectApplication);
+  const { application, setAadhaarData } = useApplicationContext();
 
   const [aadhaar, setAadhaar] = useState(application.aadhaar?.number || "");
   const [otp, setOtp] = useState("");
@@ -73,7 +71,7 @@ function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
       // 👉 API call (verify OTP)
       await new Promise((res) => setTimeout(res, 1200));
 
-      dispatch(setAadhaarData({ number: aadhaar, verified: true }));
+      setAadhaarData({ number: aadhaar, verified: true });
 
       // ✅ next step
       router.push("/bank-details");

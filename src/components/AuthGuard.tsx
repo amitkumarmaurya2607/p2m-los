@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useAppSelector } from "@/store/hooks";
-import { selectIsLoggedIn } from "@/features/auth/authSlice";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const { isLoggedIn } = useAuthContext();
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {

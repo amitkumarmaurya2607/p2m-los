@@ -3,9 +3,8 @@
 import React, { useState } from "react";
 import { CheckCircle, ClipboardList, Edit3, Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { selectApplication, resetApplication, setReviewData } from "@/features/application/applicationSlice";
-import { logout } from "@/features/auth/authSlice";
+import { useAuthContext } from "@/context/AuthContext";
+import { useApplicationContext } from "@/context/ApplicationContext";
 
 const ReviewField = ({ label, value }: { label: string; value: string }) => (
   <div>
@@ -46,11 +45,12 @@ const ReviewSection = ({
 
 function ReviewApplication() {
   const router = useRouter();
-  const dispatch = useAppDispatch();
+  const { logout } = useAuthContext();
+  const { application: data, setReviewData, resetApplication } = useApplicationContext();
   const [agree, setAgree] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const data = useAppSelector(selectApplication);
+
   const loanData = data.loanCalculator;
 
   const personalFields = [
@@ -90,9 +90,9 @@ function ReviewApplication() {
       setLoading(true);
       await new Promise((res) => setTimeout(res, 1200));
 
-      dispatch(setReviewData({ submitted: true }));
-      dispatch(resetApplication());
-      dispatch(logout());
+      setReviewData({ submitted: true });
+      resetApplication();
+      logout();
 
       router.push("/track-application");
     } finally {

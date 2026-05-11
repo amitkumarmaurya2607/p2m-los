@@ -3,9 +3,8 @@ import React, { useRef, useEffect, useMemo } from "react";
 import { ArrowLeft, Moon, Sun, User } from "lucide-react";
 import { useThemeContext } from "@/components/theme/ThemeProvider";
 import { usePathname, useRouter } from "next/navigation";
-import { useAppDispatch } from "@/store/hooks";
-import { logout } from "@/features/auth/authSlice";
-import { resetApplication } from "@/features/application/applicationSlice";
+import { useAuthContext } from "@/context/AuthContext";
+import { useApplicationContext } from "@/context/ApplicationContext";
 import { useApplicationSteps } from "@/hooks/useApplicationSteps";
 import { steps as allSteps, StepItem } from "@/lib/sessionStorage";
 
@@ -25,12 +24,13 @@ const Header: React.FC<HeaderProps> = ({
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const { theme, toggleTheme, mounted } = useThemeContext();
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
+  const { logout } = useAuthContext();
+  const { resetApplication } = useApplicationContext();
   const router = useRouter();
 
   const handleLogout = () => {
-    dispatch(logout());
-    dispatch(resetApplication());
+    logout();
+    resetApplication();
     setDropdownOpen(false);
     router.push("/login");
   };

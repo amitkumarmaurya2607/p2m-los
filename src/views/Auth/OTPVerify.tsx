@@ -6,9 +6,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/lib/toast";
 import { maskEmail, maskMobile } from "@/lib/utils";
-import { useAppDispatch } from "@/store/hooks";
-import { setMobileData } from "@/features/application/applicationSlice";
-import { login } from "@/features/auth/authSlice";
+import { useAuthContext } from "@/context/AuthContext";
+import { useApplicationContext } from "@/context/ApplicationContext";
 import StepCard from "../Dashbaord/componants/StepCard";
 
 type OTPVerifyProps = {
@@ -20,7 +19,8 @@ type OTPVerifyProps = {
 
 function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps) {
   const router = useRouter();
-  const dispatch = useAppDispatch();
+  const { login } = useAuthContext();
+  const { setMobileData } = useApplicationContext();
 
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
@@ -44,8 +44,8 @@ function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps
 
       showToast({ message: "OTP verified successfully!", type: "success" });
 
-      dispatch(setMobileData({ number: userName, verified: true }));
-      dispatch(login({ method: method === "email" ? "email" : "mobile", identifier: userName }));
+      setMobileData({ number: userName, verified: true });
+      login({ method: method === "email" ? "email" : "mobile", identifier: userName });
 
       router.push("/pan-details");
     } catch (err) {

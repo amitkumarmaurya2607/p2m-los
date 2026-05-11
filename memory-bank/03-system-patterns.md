@@ -93,8 +93,9 @@ User Input → Form Component → validate() → if valid → API call → redir
 ## State Management
 
 - **Local state** - Form data and UI state via `useState`
-- **Redux** - Configured but currently only has counter slice (placeholder)
-- **Context** - Theme provider for dark/light mode
+- **Auth Context** (`AuthContext`) - Login state and user info, persisted to sessionStorage
+- **Application Context** (`ApplicationContext`) - All application form data with derived selectors (completedSteps, stepStatuses, progressPercentage, currentStep), persisted to sessionStorage
+- **Theme Context** (`ThemeContext`) - Dark/light mode with localStorage persistence
 
 ## CSS Variable Naming Convention
 

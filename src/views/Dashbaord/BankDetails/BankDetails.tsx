@@ -6,15 +6,13 @@ import GradientButton from "@/components/ui/GradientButton";
 import { CreditCard, Check, ChevronRight, Landmark, ShieldCheck } from "lucide-react";
 import SelectBox from "@/components/ui/SelectBox";
 import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setBankDetails, selectApplication } from "@/features/application/applicationSlice";
+import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidIFSCCode, sanitizeNumeric, sanitizeIFSC } from "@/lib/utils";
 import StepNotes from "../componants/StepNotes";
 
 function BankDetails() {
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const application = useAppSelector(selectApplication);
+  const { application, setBankDetails } = useApplicationContext();
   const saved = application.bankDetails;
 
   const [form, setForm] = useState({
@@ -77,13 +75,11 @@ function BankDetails() {
     try {
       setLoading(true);
       await new Promise((res) => setTimeout(res, 1500));
-      dispatch(
-        setBankDetails({
-          accountNumber: form.accountNumber,
-          ifsc: form.ifsc,
-          accountType: form.accountType,
-        }),
-      );
+      setBankDetails({
+        accountNumber: form.accountNumber,
+        ifsc: form.ifsc,
+        accountType: form.accountType,
+      });
       setVerified(true);
     } finally {
       setLoading(false);

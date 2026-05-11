@@ -5,13 +5,11 @@ import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import { ChevronRight, ShieldCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setPanData, selectApplication } from "@/features/application/applicationSlice";
+import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidPAN, sanitizePAN } from "@/lib/utils";
 import StepNotes from "../componants/StepNotes";
 function PanDetails() {
-  const dispatch = useAppDispatch();
-  const application = useAppSelector(selectApplication);
+  const { application, setPanData } = useApplicationContext();
   const [pan, setPan] = useState(application.pan?.number || "");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -47,7 +45,7 @@ function PanDetails() {
 
       console.log("PAN Submitted:", pan);
 
-      dispatch(setPanData({ number: pan }));
+      setPanData({ number: pan });
 
       // ✅ redirect to next step
       router.push("/personal-info");

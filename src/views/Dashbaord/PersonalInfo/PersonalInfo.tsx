@@ -9,8 +9,7 @@ import CustomDatePicker from "@/components/ui/CustomDatePicker";
 import { useRouter } from "next/navigation";
 import OTPInput from "@/components/OTPInput/OTPInput";
 import { CheckCircle } from "lucide-react";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setPersonalInfo, selectApplication } from "@/features/application/applicationSlice";
+import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidEmail, sanitizeNumeric } from "@/lib/utils";
 import StepNotes from "../componants/StepNotes";
 import { Lightbulb } from "lucide-react";
@@ -19,8 +18,7 @@ const genders = ["Male", "Female", "Other"];
 const employmentTypes = ["Salaried", "Self-Employed"];
 
 function PersonalInfo() {
-  const dispatch = useAppDispatch();
-  const application = useAppSelector(selectApplication);
+  const { application, setPersonalInfo } = useApplicationContext();
   const saved = application.personalInfo;
 
   const [form, setForm] = useState({
@@ -144,7 +142,7 @@ function PersonalInfo() {
 
       console.log("Submitted:", form);
 
-      dispatch(setPersonalInfo(form));
+      setPersonalInfo(form);
 
       router.push("/aadhar-details");
     } catch (err) {

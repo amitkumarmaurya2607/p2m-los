@@ -6,15 +6,13 @@ import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import { Briefcase, Calendar, ChevronRight, Lightbulb } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setEmploymentDetails, selectApplication } from "@/features/application/applicationSlice";
+import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidEmail, isValidPinCode, sanitizeNumeric } from "@/lib/utils";
 import StepNotes from "../componants/StepNotes";
 
 function EmploymentDetails() {
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const application = useAppSelector(selectApplication);
+  const { application, setEmploymentDetails } = useApplicationContext();
   const saved = application.employmentDetails;
 
   const [form, setForm] = useState({
@@ -83,7 +81,7 @@ function EmploymentDetails() {
 
       console.log("Employment Data:", form);
 
-      dispatch(setEmploymentDetails(form));
+      setEmploymentDetails(form);
 
       router.push("/loan-calculator"); // next step
     } catch (err) {
