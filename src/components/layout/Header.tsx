@@ -3,20 +3,21 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 
 const navLinks = [
-  { label: "Products", href: "#products" },
-  { label: "How it works", href: "#how-it-works" },
-  { label: "EMI Calculator", href: "#emi-calculator" },
-  { label: "About Us", href: "#about-us" },
+  { label: "Products", href: "/#products" },
+  { label: "How it works", href: "/#how-it-works" },
+  { label: "EMI Calculator", href: "/#emi-calculator" },
+  { label: "About Us", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const Header = () => {
   return (
-    <header className="sticky top-0 z-50 h-20 bg-white/90 shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] backdrop-blur-md">
+    <header className="sticky top-0 z-50 h-20 bg-surface/90 shadow-sm backdrop-blur-md transition-colors duration-300">
       <div className="mx-auto flex h-full max-w-[var(--max-width-section)] items-center justify-between px-5 md:px-8 lg:px-0">
         <Link href="/" className="flex items-center gap-2">
-          <span className="h-8 w-8 rotate-12 rounded-[10px] bg-[linear-gradient(135deg,#00C89C_0%,#3737C1_100%)]" />
-          <span className="text-[24px] font-black leading-8 tracking-[-1.2px] text-[#0F172A]">
-            RinSetu<span className="text-[#00C89C]">.</span>
+          <span className="h-8 w-8 rotate-12 rounded-[10px] bg-gradient-to-br from-secondary to-primary shadow-lg shadow-primary/20" />
+          <span className="text-[24px] font-black leading-8 tracking-[-1.2px] text-text-heading">
+            RinSetu<span className="text-secondary">.</span>
           </span>
         </Link>
 
@@ -25,7 +26,7 @@ const Header = () => {
             <Link
               key={link.label}
               href={link.href}
-              className="text-[16px] font-semibold leading-6 text-[#4A5565] transition hover:text-[#3737C1]"
+              className="text-[16px] font-semibold leading-6 text-text-secondary transition hover:text-primary"
             >
               {link.label}
             </Link>
@@ -35,32 +36,32 @@ const Header = () => {
         <div className="hidden items-center gap-4 lg:flex">
           <Link
             href="/login"
-            className="px-[15px] text-[16px] font-bold text-[#3737C1]"
+            className="px-[15px] text-[16px] font-bold text-primary hover:text-primary-light transition-colors"
           >
             Login
           </Link>
 
-          <a
+          <Link
             href="/get-app"
-            className="flex h-11 items-center rounded-full bg-[#0F172A] px-[23px] text-[16px] font-bold text-white"
+            className="flex h-11 items-center rounded-full bg-dark-navy text-dark-navy-foreground px-[23px] text-[16px] font-bold hover:bg-dark-navy/90 transition-all shadow-md active:scale-95"
           >
             Get App
-          </a>
+          </Link>
         </div>
 
         {/* CSS-only responsive menu, no state/client JS */}
         <details className="group relative lg:hidden">
-          <summary className="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-full bg-[#0F172A] text-white [&::-webkit-details-marker]:hidden">
+          <summary className="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-full bg-dark-navy text-dark-navy-foreground [&::-webkit-details-marker]:hidden">
             <Menu size={22} />
           </summary>
 
-          <div className="absolute right-0 top-12 w-[calc(100vw-40px)] max-w-[320px] rounded-2xl border border-[#F1F5F9] bg-white p-5 shadow-xl">
+          <div className="absolute right-0 top-12 w-[calc(100vw-40px)] max-w-[320px] rounded-2xl border border-border bg-surface p-5 shadow-xl">
             <nav className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="text-[16px] font-semibold text-[#4A5565]"
+                  className="text-[16px] font-semibold text-text-secondary hover:text-primary transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -70,17 +71,17 @@ const Header = () => {
             <div className="mt-5 flex gap-3">
               <Link
                 href="/login"
-                className="flex h-11 flex-1 items-center justify-center rounded-full border border-[#3737C1] font-bold text-[#3737C1]"
+                className="flex h-11 flex-1 items-center justify-center rounded-full border border-primary font-bold text-primary hover:bg-primary/5 transition-all"
               >
                 Login
               </Link>
 
-              <a
+              <Link
                 href="/get-app"
-                className="flex h-11 flex-1 items-center justify-center rounded-full bg-[#0F172A] font-bold text-white"
+                className="flex h-11 flex-1 items-center justify-center rounded-full bg-dark-navy font-bold text-dark-navy-foreground hover:bg-dark-navy/90 transition-all"
               >
                 Get App
-              </a>
+              </Link>
             </div>
           </div>
         </details>
