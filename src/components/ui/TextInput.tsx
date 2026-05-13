@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, useState } from "react";
+import React, { InputHTMLAttributes, useId, useState } from "react";
 
 type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
@@ -19,6 +19,8 @@ const TextInput = ({
   version = "v2",
   ...props
 }: TextInputProps) => {
+  const id = props.id || useId();
+
   if (version === "v2") {
     const [isFocused, setIsFocused] = useState(false);
     const hasValue = props.value !== undefined && props.value !== "";
@@ -29,6 +31,7 @@ const TextInput = ({
         <div className="relative">
           {label && (
             <label
+              htmlFor={id}
               className={`absolute transition-all duration-200 pointer-events-none z-10 text-xs font-bold  ${isFloating ? "top-[-8px] left-[7px] px-[3px] bg-input-bg w-fit" : `${leftIcon ? "left-[36px]" : "left-[10px]"} top-1/2 -translate-y-1/2`}`}
             >
               {label}
@@ -39,6 +42,7 @@ const TextInput = ({
             <div className="absolute left-3 top-1/2 -translate-y-1/2">{leftIcon}</div>
           )}
           <input
+            id={id}
             {...props}
             placeholder={isFloating ? props.placeholder || "Write here..." : " "}
             onFocus={(e) => { setIsFocused(true); props.onFocus?.(e); }}
@@ -67,6 +71,7 @@ const TextInput = ({
 
         <div className="relative flex-1">
           <input
+            id={id}
             {...props}
             placeholder=" "
             className={`peer w-full bg-transparent outline-none text-[14px] pt-[12px] ${className}`}
@@ -74,6 +79,7 @@ const TextInput = ({
 
           {label && (
             <label
+              htmlFor={id}
               className={`absolute left-0 font-medium top-[10px] -translate-y-1/2 text-[16px]
               transition-all duration-200 pointer-events-none text-text-muted peer-focus:top-0
               peer-focus:text-text-label peer-[&:not(:placeholder-shown)]:top-0

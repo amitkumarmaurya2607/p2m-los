@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -14,6 +14,7 @@ type Props = {
 };
 
 const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon, version = "v2" }: Props) => {
+  const id = useId();
   const [isFocused, setIsFocused] = useState(false);
 
   const isActive = isFocused || value;
@@ -24,6 +25,7 @@ const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon, 
         <div className="relative z-20">
           {label && (
             <label
+              htmlFor={id}
               className={`absolute transition-all duration-200 pointer-events-none z-10 text-xs font-bold  ${isActive ? "top-[-8px] left-[7px] px-[3px] bg-input-bg w-fit" : `${leftIcon ? "left-[36px]" : "left-[10px]"} top-1/2 -translate-y-1/2`}`}
             >
               {label}
@@ -33,9 +35,10 @@ const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon, 
             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-primary">{leftIcon}</div>
           )}
           <DatePicker
+            id={id}
             selected={value}
             onChange={onChange}
-            dateFormat="dd/MM/yyyy"
+            dateFormat="dd MMM yyyy"
             className={`px-[10px] py-[11px] text-xs border-2 rounded-[5px] bg-input-bg focus:outline-none w-full ${leftIcon ? "pl-[36px]" : ""} ${rightIcon ? "pr-[36px]" : ""} ${error ? "!border-destructive" : "border-primary"}`}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
@@ -66,9 +69,10 @@ const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon, 
 
         <div className="relative flex-1">
           <DatePicker
+            id={id}
             selected={value}
             onChange={onChange}
-            dateFormat="dd/MM/yyyy"
+            dateFormat="dd MMM yyyy"
             className="w-full bg-transparent outline-none text-[14px] pt-[12px]"
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
@@ -82,6 +86,7 @@ const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon, 
 
           {label && (
             <label
+              htmlFor={id}
               className={`absolute left-0 text-[16px] font-medium transition-all duration-200
               ${error ? "text-destructive" : "text-text-muted"}
               ${isActive ? "top-[-10px] text-text-label" : "top-[0px] "} `}
