@@ -13,7 +13,7 @@
 
 - **Tailwind CSS** v4 - Utility-first CSS framework
 - **PostCSS** - CSS processing
-- **CSS Custom Properties** - Theme variables with dark mode
+- **CSS Custom Properties** - Theme variables
 
 ### State Management
 
@@ -77,7 +77,7 @@ p2m-los/
       OTPInput/            # OTP input
       ToastProvider/       # Toast wrapper
       ResendTimer/         # Resend countdown
-      theme/               # Theme context
+
     pages/
       Auth/                # Auth page components
       Dashbaord/           # Dashboard page components (typo in dir name)

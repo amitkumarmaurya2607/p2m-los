@@ -1,7 +1,6 @@
 "use client";
 import React, { useRef, useEffect, useMemo } from "react";
-import { ArrowLeft, Moon, Sun, User } from "lucide-react";
-import { useThemeContext } from "@/components/theme/ThemeProvider";
+import { ArrowLeft, User } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
 import { useApplicationContext } from "@/context/ApplicationContext";
@@ -22,7 +21,6 @@ const Header: React.FC<HeaderProps> = ({
   onSave,
 }) => {
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
-  const { theme, toggleTheme, mounted } = useThemeContext();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { logout } = useAuthContext();
   const { resetApplication } = useApplicationContext();
@@ -91,17 +89,6 @@ const Icon = progressItem?.icon;
       </div>
 
       <div className="flex items-center gap-3">
-        {mounted && (
-          <button
-            onClick={toggleTheme}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-muted
-              text-text-muted hover:text-text-heading transition-colors"
-            title="Toggle Theme"
-          >
-            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-        )}
-
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}

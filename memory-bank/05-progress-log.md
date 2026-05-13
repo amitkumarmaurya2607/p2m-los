@@ -21,7 +21,7 @@
      - Status colors (success, warning, info, destructive)
      - Shadow values (sm, md, lg, button)
      - Component-specific (card, stepper, sidebar)
-   - Added full dark mode support with `.dark` overrides
+
    - Mapped all variables via Tailwind CSS v4 `@theme inline`
    - Replaced hardcoded colors in 20+ component files:
      - `TextInput.tsx`, `OTPInput.tsx`, `SelectBox.tsx`, `CustomDatePicker.tsx`

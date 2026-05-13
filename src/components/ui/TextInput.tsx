@@ -6,6 +6,7 @@ type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
   rightIcon?: React.ReactNode;
   error?: string;
   require?: boolean;
+  version?: "v1" | "v2";
 };
 
 const TextInput = ({
@@ -15,6 +16,7 @@ const TextInput = ({
   error,
   require,
   className = "",
+  version = "v1",
   ...props
 }: TextInputProps) => {
   return (

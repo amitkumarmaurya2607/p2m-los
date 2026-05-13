@@ -23,7 +23,7 @@ src/
     ToastProvider/ - Toast notification wrapper
     ResendTimer/  - Countdown timer for resend
     Loading/      - Loading spinner
-    theme/        - Theme provider and toggle
+
   pages/
     Auth/         - Login, OTPVerify, SideBar
     Dashbaord/    - Verification step pages
@@ -98,10 +98,7 @@ logInfo("User started application", { step: "mobile" });
 
 ### Theme Pattern
 
-- CSS variables defined in `:root` with `.dark` overrides
-- Tailwind CSS v4 `@theme inline` maps variables to Tailwind utilities
-- Theme toggle via `ThemeProvider` context
-- Variables stored in `localStorage` for persistence
+- All CSS variables defined in `:root` with Tailwind CSS v4 `@theme inline` mapping
 
 ## Data Flow
 
