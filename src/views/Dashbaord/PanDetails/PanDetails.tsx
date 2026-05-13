@@ -7,6 +7,7 @@ import { ChevronRight, ShieldCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidPAN, sanitizePAN } from "@/lib/utils";
+import { verifyPANAction } from "@/lib/actions/verification.action";
 function PanDetails() {
   const { application, setPanData } = useApplicationContext();
   const [pan, setPan] = useState(application.pan?.number || "");
@@ -38,18 +39,19 @@ function PanDetails() {
 
     try {
       setLoading(true);
+      setError("");
 
-      // 👉 simulate API call
-      await new Promise((res) => setTimeout(res, 1200));
+      const result = await verifyPANAction(pan);
 
-      console.log("PAN Submitted:", pan);
+      if (!result.success) {
+        setError(result.error || "PAN verification failed");
+        return;
+      }
 
       setPanData({ number: pan });
-
-      // ✅ redirect to next step
       router.push("/personal-info");
     } catch (err) {
-      console.error(err);
+      setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setLoading(false);
     }
