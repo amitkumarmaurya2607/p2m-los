@@ -32,8 +32,8 @@ const SelectBox = ({
 
   if (version === "v2") {
     return (
-      <div className={cn("w-full relative z-10", containerClassName)}>
-        <div className="relative z-10">
+      <div className={cn("w-full", containerClassName)}>
+        <div className="relative">
           {label && (
             <label
               htmlFor={id}
@@ -55,6 +55,8 @@ const SelectBox = ({
             inputId={id}
             unstyled
             placeholder=" "
+            menuPortalTarget={typeof document !== "undefined" ? document.body : undefined}
+            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
             onFocus={(e) => {
               setIsFocused(true);
               props.onFocus?.(e);
@@ -112,7 +114,9 @@ const SelectBox = ({
             {...props}
             inputId={id}
             unstyled
-            placeholder=""
+            placeholder=" "
+            menuPortalTarget={typeof document !== "undefined" ? document.body : undefined}
+            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
             onFocus={(e) => {
               setIsFocused(true);
               props.onFocus?.(e);

@@ -21,7 +21,7 @@ const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon, 
   if (version === "v2") {
     return (
       <div className="w-full">
-        <div className="relative z-[10]">
+        <div className="relative z-20">
           {label && (
             <label
               className={`absolute transition-all duration-200 pointer-events-none z-10 text-xs font-bold  ${isActive ? "top-[-8px] left-[7px] px-[3px] bg-input-bg w-fit" : `${leftIcon ? "left-[36px]" : "left-[10px]"} top-1/2 -translate-y-1/2`}`}
