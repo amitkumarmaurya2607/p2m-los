@@ -1,4 +1,5 @@
 import { apiPost } from "@/lib/axios";
+import { API } from "@/lib/api/urls";
 import type { ApiResponse } from "@/types";
 
 interface SendOTPResponse {
@@ -10,9 +11,9 @@ interface VerifyOTPResponse {
 }
 
 export async function sendOTP(phone: string): Promise<ApiResponse<SendOTPResponse>> {
-  return apiPost<ApiResponse<SendOTPResponse>>("/auth/send-otp", { phone });
+  return apiPost<ApiResponse<SendOTPResponse>>(API.auth.sendOTP, { phone });
 }
 
 export async function verifyOTP(phone: string, code: string): Promise<ApiResponse<VerifyOTPResponse>> {
-  return apiPost<ApiResponse<VerifyOTPResponse>>("/auth/verify-otp", { phone, code });
+  return apiPost<ApiResponse<VerifyOTPResponse>>(API.auth.verifyOTP, { phone, code });
 }

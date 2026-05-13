@@ -1,4 +1,5 @@
 import { apiPost } from "@/lib/axios";
+import { API } from "@/lib/api/urls";
 import type { ApiResponse } from "@/types";
 
 interface VerifyBankResponse {
@@ -13,5 +14,5 @@ export async function verifyBank(
   ifsc: string,
   accountType: string,
 ): Promise<ApiResponse<VerifyBankResponse>> {
-  return apiPost<ApiResponse<VerifyBankResponse>>("/bank/verify", { accountNumber, ifsc, accountType });
+  return apiPost<ApiResponse<VerifyBankResponse>>(API.bank.verify, { accountNumber, ifsc, accountType });
 }

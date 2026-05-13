@@ -9,6 +9,7 @@ import { maskEmail, maskMobile } from "@/lib/utils";
 import { useAuthContext } from "@/context/AuthContext";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import StepCard from "../Dashbaord/componants/StepCard";
+import { verifyOTPAction } from "@/lib/actions/auth.action";
 
 type OTPVerifyProps = {
   resend?: () => void;
@@ -40,7 +41,13 @@ function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps
     try {
       setLoading(true);
 
-      await new Promise((res) => setTimeout(res, 1200));
+      const result = await verifyOTPAction(userName, otp);
+
+      if (!result.success) {
+        setError(result.error || "Invalid OTP");
+        showToast({ message: result.error || "Invalid OTP. Please try again.", type: "error" });
+        return;
+      }
 
       showToast({ message: "OTP verified successfully!", type: "success" });
 

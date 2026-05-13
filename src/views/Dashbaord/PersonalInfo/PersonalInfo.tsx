@@ -12,6 +12,7 @@ import { CheckCircle, Fingerprint, Lightbulb } from "lucide-react";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidEmail, sanitizeNumeric } from "@/lib/utils";
 import RadioButtonGroup from "@/components/ui/RadioButtonGroup";
+import { sendEmailOTPAction, submitPersonalInfoAction } from "@/lib/actions/personal-info.action";
 
 const genders = ["Male", "Female", "Other"];
 const employmentTypes = ["Salaried", "Self-Employed"];
@@ -42,6 +43,7 @@ function PersonalInfo() {
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
   const [serverOtp, setServerOtp] = useState("");
+  const [sendingOtp, setSendingOtp] = useState(false);
   const router = useRouter();
 
   const handleChange = (key: string, value: string) => {
@@ -59,7 +61,7 @@ function PersonalInfo() {
     }
   };
 
-  const handleSendOtp = () => {
+  const handleSendOtp = async () => {
     if (!form.email) {
       setErrors((prev: any) => ({ ...prev, email: "Email is required" }));
       return;
@@ -70,12 +72,22 @@ function PersonalInfo() {
       return;
     }
 
-    const generatedOtp = "123456";
-    setServerOtp(generatedOtp);
-    setOtpSent(true);
-    setOtp("");
+    setSendingOtp(true);
 
-    alert(`OTP Sent: ${generatedOtp}`);
+    try {
+      const result = await sendEmailOTPAction(form.email);
+
+      if (!result.success) {
+        setErrors((prev: any) => ({ ...prev, email: result.error || "Failed to send OTP" }));
+        return;
+      }
+
+      setServerOtp(result.data?.otp || "");
+      setOtpSent(true);
+      setOtp("");
+    } finally {
+      setSendingOtp(false);
+    }
   };
 
   const handleVerifyOtp = () => {
@@ -137,15 +149,17 @@ function PersonalInfo() {
     try {
       setLoading(true);
 
-      await new Promise((res) => setTimeout(res, 1500));
+      const result = await submitPersonalInfoAction(form);
 
-      console.log("Submitted:", form);
+      if (!result.success) {
+        setErrors((prev: any) => ({ ...prev, submit: result.error || "Submission failed" }));
+        return;
+      }
 
       setPersonalInfo(form);
-
       router.push("/aadhar-details");
     } catch (err) {
-      console.error(err);
+      setErrors((prev: any) => ({ ...prev, submit: "Something went wrong" }));
     } finally {
       setLoading(false);
     }
@@ -260,8 +274,9 @@ function PersonalInfo() {
                       <button
                         type="button"
                         onClick={handleSendOtp}
+                        disabled={sendingOtp}
                         className="h-[36px] px-4 rounded-xl border border-primary text-primary
-                          text-sm font-medium hover:bg-primary-muted whitespace-nowrap"
+                          text-sm font-medium hover:bg-primary-muted whitespace-nowrap disabled:opacity-50"
                       >
                         Verify Email
                       </button>

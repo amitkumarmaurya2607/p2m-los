@@ -10,6 +10,7 @@ import { Briefcase, Calendar, ChevronRight, Lightbulb } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidEmail, isValidPinCode, sanitizeNumeric } from "@/lib/utils";
+import { submitEmploymentAction } from "@/lib/actions/verification.action";
 
 function EmploymentDetails() {
   const router = useRouter();
@@ -77,16 +78,17 @@ function EmploymentDetails() {
     try {
       setLoading(true);
 
-      // 👉 API call simulation
-      await new Promise((res) => setTimeout(res, 1200));
+      const result = await submitEmploymentAction(form);
 
-      console.log("Employment Data:", form);
+      if (!result.success) {
+        setError((prev: any) => ({ ...prev, submit: result.error || "Submission failed" }));
+        return;
+      }
 
       setEmploymentDetails(form);
-
-      router.push("/loan-calculator"); // next step
+      router.push("/loan-calculator");
     } catch (err) {
-      console.error(err);
+      setError((prev: any) => ({ ...prev, submit: "Something went wrong" }));
     } finally {
       setLoading(false);
     }

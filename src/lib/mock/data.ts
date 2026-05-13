@@ -1,3 +1,4 @@
+import { API } from "@/lib/api/urls";
 import type { ApiResponse } from "@/types";
 
 export type MockKey = `${"GET" | "POST" | "PUT" | "DELETE"} ${string}`;
@@ -14,38 +15,38 @@ export function getMock(method: string, url: string): unknown | null {
   return handler ? handler() : null;
 }
 
-registerMock("POST /auth/send-otp", (): ApiResponse<{ verified: boolean }> => ({
+registerMock(`POST ${API.auth.sendOTP}`, (): ApiResponse<{ verified: boolean }> => ({
   success: true,
   data: { verified: false },
   message: "OTP sent successfully",
 }));
 
-registerMock("POST /auth/verify-otp", (): ApiResponse<{ verified: boolean }> => ({
+registerMock(`POST ${API.auth.verifyOTP}`, (): ApiResponse<{ verified: boolean }> => ({
   success: true,
   data: { verified: true },
   message: "OTP verified successfully",
 }));
 
-registerMock("POST /pan/verify", (): ApiResponse<{ number: string; fullName: string; verified: boolean }> => ({
+registerMock(`POST ${API.pan.verify}`, (): ApiResponse<{ number: string; fullName: string; verified: boolean }> => ({
   success: true,
   data: { number: "ABCDE1234F", fullName: "John Doe", verified: true },
   message: "PAN verified successfully",
 }));
 
-registerMock("POST /aadhaar/send-otp", (): ApiResponse<{ verified: boolean }> => ({
+registerMock(`POST ${API.aadhaar.sendOTP}`, (): ApiResponse<{ verified: boolean }> => ({
   success: true,
   data: { verified: false },
   message: "Aadhaar OTP sent",
 }));
 
-registerMock("POST /aadhaar/verify-otp", (): ApiResponse<{ verified: boolean; number: string }> => ({
+registerMock(`POST ${API.aadhaar.verifyOTP}`, (): ApiResponse<{ verified: boolean; number: string }> => ({
   success: true,
   data: { verified: true, number: "123412341234" },
   message: "Aadhaar verified successfully",
 }));
 
 registerMock(
-  "POST /bank/verify",
+  `POST ${API.bank.verify}`,
   (): ApiResponse<{ accountNumber: string; ifsc: string; accountType: string; verified: boolean }> => ({
     success: true,
     data: { accountNumber: "1234567890", ifsc: "SBIN0001234", accountType: "savings", verified: true },
@@ -54,7 +55,7 @@ registerMock(
 );
 
 registerMock(
-  "POST /employment/submit",
+  `POST ${API.employment.submit}`,
   (): ApiResponse<{ verified: boolean }> => ({
     success: true,
     data: { verified: true },
@@ -63,7 +64,7 @@ registerMock(
 );
 
 registerMock(
-  "POST /application/submit",
+  `POST ${API.application.submit}`,
   (): ApiResponse<{ applicationId: string; submitted: boolean }> => ({
     success: true,
     data: { applicationId: "LOS-2026-0001", submitted: true },
@@ -72,7 +73,7 @@ registerMock(
 );
 
 registerMock(
-  "GET /application/status",
+  `GET /application/status`,
   (): ApiResponse<{ id: string; status: string; stage: string; updatedAt: string }> => ({
     success: true,
     data: { id: "LOS-2026-0001", status: "in-review", stage: "Document Verification", updatedAt: new Date().toISOString() },
@@ -80,7 +81,7 @@ registerMock(
 );
 
 registerMock(
-  "GET /lookup/schemes",
+  `GET ${API.lookup.schemes}`,
   (): ApiResponse<Array<{ id: string; name: string; minAmount: number; maxAmount: number; interestRate: number; maxTenure: number }>> => ({
     success: true,
     data: [
@@ -91,8 +92,23 @@ registerMock(
   }),
 );
 
+registerMock(`POST ${API.email.sendOTP}`, (): ApiResponse<{ otp: string }> => ({
+  success: true,
+  data: { otp: "123456" },
+  message: "OTP sent to email",
+}));
+
 registerMock(
-  "POST /contact/submit",
+  `POST ${API.personalInfo.submit}`,
+  (): ApiResponse<{ submitted: boolean }> => ({
+    success: true,
+    data: { submitted: true },
+    message: "Personal info saved",
+  }),
+);
+
+registerMock(
+  `POST ${API.contact.submit}`,
   (): ApiResponse<{ submitted: boolean }> => ({
     success: true,
     data: { submitted: true },

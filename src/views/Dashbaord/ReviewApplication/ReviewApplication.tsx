@@ -5,6 +5,7 @@ import { CheckCircle, ClipboardList, Edit3, Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
 import { useApplicationContext } from "@/context/ApplicationContext";
+import { submitApplicationAction } from "@/lib/actions/application.action";
 
 const ReviewField = ({ label, value }: { label: string; value: string }) => (
   <div>
@@ -88,7 +89,12 @@ function ReviewApplication() {
 
     try {
       setLoading(true);
-      await new Promise((res) => setTimeout(res, 1200));
+
+      const result = await submitApplicationAction(data);
+
+      if (!result.success) {
+        return;
+      }
 
       setReviewData({ submitted: true });
       resetApplication();

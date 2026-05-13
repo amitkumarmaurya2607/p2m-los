@@ -1,4 +1,5 @@
 import { apiPost } from "@/lib/axios";
+import { API } from "@/lib/api/urls";
 import type { ApiResponse } from "@/types";
 
 interface EmploymentData {
@@ -18,5 +19,5 @@ interface EmploymentResponse {
 }
 
 export async function submitEmployment(data: EmploymentData): Promise<ApiResponse<EmploymentResponse>> {
-  return apiPost<ApiResponse<EmploymentResponse>>("/employment/submit", data);
+  return apiPost<ApiResponse<EmploymentResponse>>(API.employment.submit, data);
 }

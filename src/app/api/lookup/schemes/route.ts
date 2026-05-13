@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { apiGet } from "@/lib/axios";
+import { API } from "@/lib/api/urls";
 import type { ApiResponse } from "@/types";
 
 interface LoanScheme {
@@ -13,7 +14,7 @@ interface LoanScheme {
 
 export async function GET() {
   try {
-    const result = await apiGet<ApiResponse<LoanScheme[]>>("/lookup/schemes");
+    const result = await apiGet<ApiResponse<LoanScheme[]>>(API.lookup.schemes);
     return NextResponse.json(result);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Failed to fetch loan schemes";

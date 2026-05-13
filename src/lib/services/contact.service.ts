@@ -1,4 +1,5 @@
 import { apiPost } from "@/lib/axios";
+import { API } from "@/lib/api/urls";
 import type { ApiResponse } from "@/types";
 
 interface ContactData {
@@ -12,5 +13,5 @@ interface ContactResponse {
 }
 
 export async function submitContact(data: ContactData): Promise<ApiResponse<ContactResponse>> {
-  return apiPost<ApiResponse<ContactResponse>>("/contact/submit", data);
+  return apiPost<ApiResponse<ContactResponse>>(API.contact.submit, data);
 }

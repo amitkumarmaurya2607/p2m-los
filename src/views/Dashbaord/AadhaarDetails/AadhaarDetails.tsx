@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidAadhaar, sanitizeNumeric } from "@/lib/utils";
 import { Fingerprint } from "lucide-react";
+import { sendAadhaarOTPAction, verifyAadhaarOTPAction } from "@/lib/actions/verification.action";
 
 type AadhaarDetailsProps = {
   resend?: () => void;
@@ -47,8 +48,12 @@ function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
     try {
       setLoading(true);
 
-      // 👉 API call (send OTP)
-      await new Promise((res) => setTimeout(res, 1200));
+      const result = await sendAadhaarOTPAction(aadhaar);
+
+      if (!result.success) {
+        setError(result.error || "Failed to send OTP");
+        return;
+      }
 
       setStep("otp");
     } finally {
@@ -68,12 +73,15 @@ function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
     try {
       setLoading(true);
 
-      // 👉 API call (verify OTP)
-      await new Promise((res) => setTimeout(res, 1200));
+      const result = await verifyAadhaarOTPAction(aadhaar, otp);
+
+      if (!result.success) {
+        setError(result.error || "Invalid OTP");
+        return;
+      }
 
       setAadhaarData({ number: aadhaar, verified: true });
 
-      // ✅ next step
       router.push("/bank-details");
     } finally {
       setLoading(false);

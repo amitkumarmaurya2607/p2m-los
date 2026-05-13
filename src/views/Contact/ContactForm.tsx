@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Send, CheckCircle2, Loader2 } from "lucide-react";
 import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
+import { submitContactAction } from "@/lib/actions/contact.action";
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -12,10 +13,20 @@ export default function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    const form = e.currentTarget as HTMLFormElement;
+    const formData = new FormData(form);
+
+    const result = await submitContactAction({
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      message: formData.get("message") as string,
+    });
+
     setIsSubmitting(false);
-    setIsSubmitted(true);
+    if (result.success) {
+      setIsSubmitted(true);
+    }
   };
 
   if (isSubmitted) {
@@ -48,28 +59,29 @@ export default function ContactForm() {
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label className="text-sm font-bold text-text-secondary ml-1">Full Name</label>
-            <TextInput placeholder="John Doe" required />
+            <TextInput name="name" placeholder="John Doe" required />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-bold text-text-secondary ml-1">Email Address</label>
-            <TextInput type="email" placeholder="john@example.com" required />
+            <TextInput name="email" type="email" placeholder="john@example.com" required />
           </div>
         </div>
         
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label className="text-sm font-bold text-text-secondary ml-1">Phone Number</label>
-            <TextInput type="tel" placeholder="+91 XXXXX XXXXX" required />
+            <TextInput name="phone" type="tel" placeholder="+91 XXXXX XXXXX" required />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-bold text-text-secondary ml-1">Subject</label>
-            <TextInput placeholder="Loan Inquiry" required />
+            <TextInput name="subject" placeholder="Loan Inquiry" required />
           </div>
         </div>
         
         <div className="space-y-2">
           <label className="text-sm font-bold text-text-secondary ml-1">Your Message</label>
-          <textarea 
+          <textarea
+            name="message"
             className="w-full min-h-[150px] bg-surface-muted border border-border rounded-2xl p-4 text-text-heading placeholder:text-text-muted outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/5 transition-all resize-none"
             placeholder="How can we help you?"
             required

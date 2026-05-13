@@ -10,6 +10,7 @@ import { showToast } from "@/lib/toast";
 import Logo from "@/assets/icon/Logo";
 import { Popup } from "@/components/ui/Popup";
 import StepCard from "../Dashbaord/componants/StepCard";
+import { sendOTPAction } from "@/lib/actions/auth.action";
 
 const Login = () => {
   const [method, setMethod] = useState<"mobile" | "email">("mobile");
@@ -47,15 +48,19 @@ const Login = () => {
     setError("");
     setLoading(true);
 
-    setTimeout(() => {
+    sendOTPAction(userName).then((result) => {
       setLoading(false);
-      setSendOtp(true);
-
-      showToast({
-        message: type === "resend" ? "OTP resent successfully!" : "OTP sent successfully!",
-        type: "success",
-      });
-    }, 1500);
+      if (result.success) {
+        setSendOtp(true);
+        showToast({
+          message: type === "resend" ? "OTP resent successfully!" : "OTP sent successfully!",
+          type: "success",
+        });
+      } else {
+        setError(result.error || "Failed to send OTP");
+        showToast({ message: result.error || "Failed to send OTP", type: "error" });
+      }
+    });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
