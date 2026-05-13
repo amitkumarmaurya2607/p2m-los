@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes } from "react";
+import React, { InputHTMLAttributes, useState } from "react";
 
 type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
@@ -20,22 +20,30 @@ const TextInput = ({
   ...props
 }: TextInputProps) => {
   if (version === "v2") {
+    const [isFocused, setIsFocused] = useState(false);
+    const hasValue = props.value !== undefined && props.value !== "";
+    const isFloating = isFocused || hasValue;
+
     return (
       <div className="w-full">
-        {label && (
-          <label className="relative text-xs font-bold text-primary top-2 ml-[7px] px-[3px] bg-input-bg w-fit z-10">
-            {label}
-            {require && <span className="text-destructive ml-0.5">*</span>}
-          </label>
-        )}
         <div className="relative">
+          {label && (
+            <label
+              className={`absolute transition-all duration-200 pointer-events-none z-10 text-xs font-bold text-primary ${isFloating ? "top-[-8px] left-[7px] px-[3px] bg-input-bg w-fit" : `${leftIcon ? "left-[36px]" : "left-[10px]"} top-1/2 -translate-y-1/2`}`}
+            >
+              {label}
+              {require && <span className="text-destructive ml-0.5">*</span>}
+            </label>
+          )}
           {leftIcon && (
             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-primary">{leftIcon}</div>
           )}
           <input
             {...props}
-            placeholder={props.placeholder || "Write here..."}
-            className={`px-[10px] py-[11px] text-xs border-2 border-primary rounded-[5px] bg-input-bg focus:outline-none w-full ${leftIcon ? "pl-[36px]" : ""} ${rightIcon ? "pr-[36px]" : ""} ${error ? "!border-destructive" : ""} ${className}`}
+            placeholder={isFloating ? props.placeholder || "Write here..." : " "}
+            onFocus={(e) => { setIsFocused(true); props.onFocus?.(e); }}
+            onBlur={(e) => { setIsFocused(false); props.onBlur?.(e); }}
+            className={`px-[10px] py-[11px] text-xs border-2 rounded-[5px] bg-input-bg focus:outline-none w-full ${leftIcon ? "pl-[36px]" : ""} ${rightIcon ? "pr-[36px]" : ""} ${error ? "!border-destructive" : "border-primary"} ${className}`}
           />
           {rightIcon && (
             <div className="absolute right-3 top-1/2 -translate-y-1/2 text-primary">{rightIcon}</div>

@@ -21,12 +21,14 @@ const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon, 
   if (version === "v2") {
     return (
       <div className="w-full">
-        {label && (
-          <label className="relative text-xs font-bold text-primary top-2 ml-[7px] px-[3px] bg-input-bg w-fit z-10">
-            {label}
-          </label>
-        )}
         <div className="relative">
+          {label && (
+            <label
+              className={`absolute transition-all duration-200 pointer-events-none z-10 text-xs font-bold text-primary ${isActive ? "top-[-8px] left-[7px] px-[3px] bg-input-bg w-fit" : `${leftIcon ? "left-[36px]" : "left-[10px]"} top-1/2 -translate-y-1/2`}`}
+            >
+              {label}
+            </label>
+          )}
           {leftIcon && (
             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-primary">{leftIcon}</div>
           )}

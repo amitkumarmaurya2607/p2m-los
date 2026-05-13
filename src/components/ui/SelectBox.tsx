@@ -33,13 +33,20 @@ const SelectBox = ({
   if (version === "v2") {
     return (
       <div className={cn("w-full", containerClassName)}>
-        {label && (
-          <label className="relative text-xs font-bold text-primary top-2 ml-[7px] px-[3px] bg-input-bg w-fit z-10">
-            {label}
-            {required && <span className="text-destructive ml-0.5">*</span>}
-          </label>
-        )}
         <div className="relative">
+          {label && (
+            <label
+              htmlFor={id}
+              className={cn(
+                "absolute transition-all duration-200 pointer-events-none z-10 text-xs font-bold text-primary",
+                isActive
+                  ? "top-[-8px] left-[7px] px-[3px] bg-input-bg w-fit"
+                  : `${leftIcon ? "left-[36px]" : "left-[10px]"} top-1/2 -translate-y-1/2`,
+              )}
+            >
+              {label} {required && "*"}
+            </label>
+          )}
           {leftIcon && (
             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-primary">{leftIcon}</div>
           )}
