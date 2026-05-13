@@ -11,6 +11,7 @@ import OTPInput from "@/components/OTPInput/OTPInput";
 import { CheckCircle, Fingerprint, Lightbulb } from "lucide-react";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidEmail, sanitizeNumeric } from "@/lib/utils";
+import RadioButtonGroup from "@/components/ui/RadioButtonGroup";
 
 const genders = ["Male", "Female", "Other"];
 const employmentTypes = ["Salaried", "Self-Employed"];
@@ -220,46 +221,20 @@ function PersonalInfo() {
 
         {/* Gender + Employment */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <p className="text-sm mb-2 text-text-secondary">Gender</p>
-            <div className="flex gap-2 flex-wrap">
-              {genders.map((g) => (
-                <button
-                  type="button"
-                  key={g}
-                  onClick={() => handleChange("gender", g)}
-                  className={`px-4 py-2 rounded-xl border ${
-                    form.gender === g
-                      ? "border-primary text-primary bg-primary-muted"
-                      : "border-border text-text-secondary"
-                  }`}
-                >
-                  {g}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="text-sm mb-2 text-text-secondary">Employment Type</p>
-            <div className="flex gap-2 flex-wrap">
-              {employmentTypes.map((type) => (
-                <button
-                  type="button"
-                  key={type}
-                  disabled
-                  onClick={() => handleChange("employmentType", type)}
-                  className={`px-4 py-2 rounded-xl border ${
-                    form.employmentType === type
-                      ? "border-primary text-primary bg-primary-muted"
-                      : "border-border text-text-secondary"
-                  }`}
-                >
-                  {type}
-                </button>
-              ))}
-            </div>
-          </div>
+          <RadioButtonGroup
+            heading="Gender"
+            name="gender"
+            options={genders.map(g => ({ value: g, label: g }))}
+            value={form.gender}
+            onChange={(v) => handleChange("gender", v)}
+          />
+          <RadioButtonGroup
+            heading="Employment Type"
+            name="employmentType"
+            options={employmentTypes.map(t => ({ value: t, label: t }))}
+            value={form.employmentType}
+            onChange={(v) => handleChange("employmentType", v)}
+          />
         </div>
 
         {/* Email Details */}

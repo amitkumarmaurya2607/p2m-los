@@ -16,7 +16,7 @@ type StepCardProps = {
     description: string;
     Icon: React.ReactNode;
     noteTitle: string;
-    noteDescription: string;
+    noteDescription: React.ReactNode;
     NoteIcon?: React.FC<{ className?: string }>;
   };
 };

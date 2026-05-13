@@ -24,13 +24,13 @@ const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon, 
         <div className="relative">
           {label && (
             <label
-              className={`absolute transition-all duration-200 pointer-events-none z-10 text-xs font-bold text-primary ${isActive ? "top-[-8px] left-[7px] px-[3px] bg-input-bg w-fit" : `${leftIcon ? "left-[36px]" : "left-[10px]"} top-1/2 -translate-y-1/2`}`}
+              className={`absolute transition-all duration-200 pointer-events-none z-10 text-xs font-bold  ${isActive ? "top-[-8px] left-[7px] px-[3px] bg-input-bg w-fit" : `${leftIcon ? "left-[36px]" : "left-[10px]"} top-1/2 -translate-y-1/2`}`}
             >
               {label}
             </label>
           )}
           {leftIcon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-primary">{leftIcon}</div>
+            <div className="absolute left-3 top-1/2 -translate-y-1/2">{leftIcon}</div>
           )}
           <DatePicker
             selected={value}
@@ -47,7 +47,7 @@ const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon, 
             maxDate={new Date()}
           />
           {rightIcon && (
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-primary">{rightIcon}</div>
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 ">{rightIcon}</div>
           )}
         </div>
         {error && <p className="mt-1 text-sm text-destructive px-1">{error}</p>}
