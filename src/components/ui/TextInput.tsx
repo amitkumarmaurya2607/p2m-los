@@ -16,9 +16,36 @@ const TextInput = ({
   error,
   require,
   className = "",
-  version = "v1",
+  version = "v2",
   ...props
 }: TextInputProps) => {
+  if (version === "v2") {
+    return (
+      <div className="w-full">
+        {label && (
+          <label className="relative text-xs font-bold text-primary top-2 ml-[7px] px-[3px] bg-input-bg w-fit z-10">
+            {label}
+            {require && <span className="text-destructive ml-0.5">*</span>}
+          </label>
+        )}
+        <div className="relative">
+          {leftIcon && (
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-primary">{leftIcon}</div>
+          )}
+          <input
+            {...props}
+            placeholder={props.placeholder || "Write here..."}
+            className={`px-[10px] py-[11px] text-xs border-2 border-primary rounded-[5px] bg-input-bg focus:outline-none w-full ${leftIcon ? "pl-[36px]" : ""} ${rightIcon ? "pr-[36px]" : ""} ${error ? "!border-destructive" : ""} ${className}`}
+          />
+          {rightIcon && (
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-primary">{rightIcon}</div>
+          )}
+        </div>
+        {error && <p className="mt-1 text-sm text-destructive px-1">{error}</p>}
+      </div>
+    );
+  }
+
   return (
     <div className="w-full">
       <div
