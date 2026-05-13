@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { GlobalErrorHandler } from "@/components/GlobalErrorHandler";
 import "./globals.css";
 import ToastProvider from "@/components/ToastProvider/ToastProvider";
 
@@ -31,10 +32,11 @@ export default function RootLayout({
         cz-shortcut-listen="true"
       
       >
-        <ErrorBoundary>
+        
           <Providers>{children}</Providers>
           <ToastProvider />
-        </ErrorBoundary>
+          <GlobalErrorHandler />
+      
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { AlertCircle, RefreshCcw, Home } from "lucide-react";
 import Link from "next/link";
+import { logError } from "@/lib/logger";
 
 export default function Error({
   error,
@@ -13,8 +14,10 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error);
+    logError(error.message, {
+      context: { digest: error.digest },
+      stack: error.stack,
+    });
   }, [error]);
 
   return (

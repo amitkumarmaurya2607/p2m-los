@@ -2,22 +2,29 @@
 
 ## Current Date
 
-May 4, 2026
+May 11, 2026
 
 ## Current Focus
 
-State management refactor completed - Redux replaced with React Context API. Now focusing on fixing pre-existing type errors and API integration.
+Unified logging system implemented — frontend and backend errors log to the same file. Now focusing on fixing pre-existing type errors and API integration.
 
 ## Recent Changes
 
 1. **Redux Removed → Replaced with React Context API**
-   - Created `src/context/AuthContext.tsx` - Auth state (`isLoggedIn`, `user`) with `login()`/`logout()` actions, persisted to sessionStorage
-   - Created `src/context/ApplicationContext.tsx` - All application form data with setter methods and computed selectors (`completedSteps`, `stepStatuses`, `progressPercentage`, `currentStep`), persisted to sessionStorage
-   - Updated `src/app/providers.tsx` - `ReduxProvider` → `AuthProvider` + `ApplicationProvider`
-   - Updated 15 consumer files across guards, hooks, and views to use `useAuthContext()` / `useApplicationContext()` instead of `useAppDispatch()` / `useAppSelector()`
-   - Deleted `src/store/`, `src/features/`, `src/components/ReduxProvider.tsx` (6 files, ~300 lines)
+   - Created `src/context/AuthContext.tsx` - Auth state with sessionStorage persistence
+   - Created `src/context/ApplicationContext.tsx` - Application form data with computed selectors and sessionStorage persistence
+   - Updated `src/app/providers.tsx`, deleted Redux files
    - Uninstalled `@reduxjs/toolkit` and `react-redux`
-   - Build passes successfully (only pre-existing Contact.tsx error remains)
+
+2. **Unified Logging System**
+   - Created `src/lib/logger.ts` — universal logger (client + server) with auto-PII sanitization
+   - Created `src/app/api/log/route.ts` — POST endpoint for client log collection
+   - Created `src/components/GlobalErrorHandler.tsx` — catches `window.onerror` + `unhandledrejection`
+   - Updated `src/components/ErrorBoundary.tsx` — logs via logger in `componentDidCatch`
+   - Updated `src/app/error.tsx` — logger replaces `console.error`
+   - Updated `src/app/layout.tsx` — includes `GlobalErrorHandler`
+   - Logs stored in `logs/YYYY-MM-DD.log` as JSON lines in project root
+   - Auto-masks PAN, Aadhaar, mobile, email in all log entries
 
 ## Active Decisions
 
@@ -25,6 +32,8 @@ State management refactor completed - Redux replaced with React Context API. Now
 - `react-hot-toast` chosen over custom toast for reliability and bundle size
 - Tailwind CSS v4 native approach (no tailwind.config.js)
 - Context API over Redux to reduce bundle size and complexity for simple CRUD state
+- File-based logging over external service for simplicity (no Sentry/etc.)
+- PII auto-sanitized at logger level to prevent accidental data leaks
 
 ## Next Steps
 
@@ -42,4 +51,5 @@ State management refactor completed - Redux replaced with React Context API. Now
 ## Notes
 
 - Build compiles successfully in Turbopack, fails only on TypeScript type-checking for pre-existing files
-- All new code follows CSS variable patterns
+- Logger client-side uses `sendBeacon` for error-level logs (reliable on page unload), `fetch` for others
+- Logger server-side writes to both file and console

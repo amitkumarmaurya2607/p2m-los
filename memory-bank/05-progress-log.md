@@ -58,13 +58,33 @@
    - Uninstalled `@reduxjs/toolkit` and `react-redux` (saved ~2KB bundle size)
    - Build passes (pre-existing Contact.tsx error unchanged)
 
+## Session 3 - May 11, 2026
+
+### Completed
+
+1. **Unified Logging System**
+   - Added `LogLevel` and `LogEntry` types to `src/types/index.ts`
+   - Created `src/lib/logger.ts` — universal logger with:
+     - Auto-PII sanitization (masks PAN, Aadhaar, mobile, email)
+     - Server path: writes JSON lines to `logs/YYYY-MM-DD.log`
+     - Client path: `POST /api/log` via `fetch` or `sendBeacon` (for errors)
+     - Console output on server for dev visibility
+   - Created `src/app/api/log/route.ts` — receives client logs, writes to same file
+   - Created `src/components/GlobalErrorHandler.tsx` — catches `window.onerror` + `unhandledrejection`
+   - Updated `src/components/ErrorBoundary.tsx` — uses logger in `componentDidCatch`
+   - Updated `src/app/error.tsx` — uses logger instead of `console.error`
+   - Updated `src/app/layout.tsx` — includes `GlobalErrorHandler`
+   - Created `logs/` directory with `.gitkeep`
+   - Updated `.gitignore` to exclude `logs/*.log`
+   - Build: passes (only pre-existing Contact.tsx error)
+
 ### Remaining Work
 
 1. Fix pre-existing TypeScript errors in Home, VerifyOtpPage, and Contact
 2. Connect actual API endpoints for OTP flows
 3. Wire up form submissions to backend
 4. Implement step-to-step navigation logic
-5. Add proper error handling for API failures
+5. Add proper error handling for API failures (use logger when making API calls)
 6. Consider renaming `Dashbaord` directory to `Dashboard`
 7. Clean up commented-out code
 

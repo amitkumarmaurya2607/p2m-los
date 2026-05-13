@@ -1,5 +1,6 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, } from "lucide-react";
 import React from "react";
+import StepNotes from "./StepNotes";
 
 type StepCardProps = {
   title?: string;
@@ -8,6 +9,13 @@ type StepCardProps = {
   children?: React.ReactNode;
   className?: string;
   back?: () => void;
+  tips?: {
+    title: string;
+    description: string;
+    Icon: React.ReactNode;
+    noteTitle: string;
+    noteDescription: string;
+  }
 };
 
 const StepCard: React.FC<StepCardProps> = ({
@@ -17,8 +25,18 @@ const StepCard: React.FC<StepCardProps> = ({
   children,
   className = "",
   back,
+  tips
 }) => {
+  const TipsIcon = tips?.Icon;
   return (
+    <div className="flex gap-12">
+{ tips &&     <StepNotes
+  icon={TipsIcon}
+  title={tips?.title}
+  description={tips?.description}
+  noteTitle={tips?.noteTitle}
+  noteDescription={tips?.noteDescription}
+/>}
     <div
       className={` w-full max-w-[512px] lg:max-w-none  lg:w-[512px] min-h-[430px] p-8 lg:p-12 flex
         flex-col gap-6 flex flex-col lg:gap-8 bg-surface-overlay-90 border border-border-light
@@ -53,6 +71,7 @@ const StepCard: React.FC<StepCardProps> = ({
       </div>
 
       <div className="w-full flex-1">{children}</div>
+    </div>
     </div>
   );
 };

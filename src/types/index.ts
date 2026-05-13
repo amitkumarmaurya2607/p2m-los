@@ -6,6 +6,18 @@ export interface User {
   email: string;
 }
 
+export type LogLevel = "error" | "warn" | "info";
+
+export interface LogEntry {
+  timestamp: string;
+  level: LogLevel;
+  message: string;
+  source: "client" | "server";
+  stack?: string;
+  context?: Record<string, unknown>;
+  url?: string;
+}
+
 export interface ApiResponse<T> {
   data: T;
   message?: string;

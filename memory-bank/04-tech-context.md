@@ -51,6 +51,14 @@ npm run lint     # Run ESLint
 - Node.js with npm
 - Working directory: `D:\loan\p2m-los`
 
+### Logging
+
+- File-based logging to `logs/YYYY-MM-DD.log`
+- Each line is a JSON `LogEntry` object
+- Log directory excluded from git via `.gitignore` (`logs/*.log`)
+- Auto-sanitizes PAN, Aadhaar, mobile, and email in all log entries
+- `navigator.sendBeacon` used for error-level logs from client for reliability
+
 ## Project Structure
 
 ```
@@ -76,11 +84,13 @@ p2m-los/
     lib/                   # Utilities
       utils.ts             # Helper functions (cn, validations)
       toast.ts             # Toast helper
+      logger.ts            # Universal logger (client + server) with PII sanitization
     hooks/                 # Custom hooks
     context/               # React Context providers (Auth, Application)
     types/                 # TypeScript types
   memory-bank/             # Project documentation
   .claude-code/            # AI assistant config
+  logs/                    # Log output directory (gitignored *.log files)
 ```
 
 ## Technical Constraints

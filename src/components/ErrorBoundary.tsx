@@ -2,6 +2,7 @@
 
 import { Component, type ReactNode } from "react";
 import { Button } from "./ui/Button";
+import { logError } from "@/lib/logger";
 
 interface Props {
   children: ReactNode;
@@ -25,7 +26,28 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error("ErrorBoundary caught an error:", error, errorInfo);
+    logError(error.message, {
+      context: { component: this.props.label },
+      stack: error.stack,
+      url: typeof window !== "undefined" ? window.location.href : undefined,
+    });
+
+    try {
+      fetch("/api/log", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          timestamp: new Date().toISOString(),
+          level: "error",
+          message: error.message,
+          source: "client",
+          stack: error.stack,
+          url: typeof window !== "undefined" ? window.location.href : undefined,
+        }),
+      });
+    } catch {
+      // silent fallback
+    }
   }
 
   handleReset = () => {

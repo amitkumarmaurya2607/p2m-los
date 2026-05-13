@@ -58,7 +58,7 @@ function BankDetails() {
       err.ifsc = "Invalid IFSC";
     }
 
-    if (!form.accountType) err.accountType = "Required";
+    // if (!form.accountType) err.accountType = "Required";
 
     return err;
   };

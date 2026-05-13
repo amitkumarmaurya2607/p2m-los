@@ -76,6 +76,26 @@ showToast({ message, type, position, duration, icon, style, className, onClose }
 - Default position: top-right
 - Default duration: 3000ms
 
+### Logging Pattern
+
+Centralized logger in `src/lib/logger.ts` — works on both client and server:
+
+```ts
+logError("Failed to submit form", { step: "pan", errorCode: 500 });
+logWarn("Rate limit approaching", { attempts: 4 });
+logInfo("User started application", { step: "mobile" });
+```
+
+**Unified storage**: All logs (client + server) end up in `logs/YYYY-MM-DD.log` as JSON lines.
+
+**Client flow**: `logger.ts` → `POST /api/log` → `route.ts` → writes to file
+**Server flow**: `logger.ts` → writes to file directly
+
+**Global error handlers**:
+- `GlobalErrorHandler` — catches `window.onerror` + `unhandledrejection` on client
+- `ErrorBoundary` — catches React render errors via `componentDidCatch`
+- `app/error.tsx` — catches Next.js App Router errors
+
 ### Theme Pattern
 
 - CSS variables defined in `:root` with `.dark` overrides
