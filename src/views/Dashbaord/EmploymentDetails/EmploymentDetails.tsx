@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import StepCard from "../componants/StepCard";
 import TextInput from "@/components/ui/TextInput";
+import SelectBox from "@/components/ui/SelectBox";
+import CustomDatePicker from "@/components/ui/CustomDatePicker";
 import GradientButton from "@/components/ui/GradientButton";
 import { Briefcase, Calendar, ChevronRight, Lightbulb } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -128,10 +130,22 @@ function EmploymentDetails() {
             error={error.companyName}
           />
 
-          <TextInput
+          <SelectBox
             label="Designation"
-            value={form.designation}
-            onChange={(e) => handleChange("designation", e.target.value)}
+            options={[
+              { value: "Software Engineer", label: "Software Engineer" },
+              { value: "Senior Software Engineer", label: "Senior Software Engineer" },
+              { value: "Team Lead", label: "Team Lead" },
+              { value: "Manager", label: "Manager" },
+              { value: "Senior Manager", label: "Senior Manager" },
+              { value: "Director", label: "Director" },
+              { value: "Analyst", label: "Analyst" },
+              { value: "Executive", label: "Executive" },
+              { value: "Consultant", label: "Consultant" },
+              { value: "Other", label: "Other" },
+            ]}
+            value={form.designation ? { value: form.designation, label: form.designation } : null}
+            onChange={(option: any) => handleChange("designation", option?.value || "")}
             error={error.designation}
           />
 
@@ -149,18 +163,23 @@ function EmploymentDetails() {
             error={error.salary}
           />
 
-          <TextInput
+          <SelectBox
             label="Salary Mode"
-            value={form.salaryMode}
-            onChange={(e) => handleChange("salaryMode", e.target.value)}
+            options={[
+              { value: "Bank Transfer", label: "Bank Transfer" },
+              { value: "Cash", label: "Cash" },
+              { value: "Cheque", label: "Cheque" },
+            ]}
+            value={form.salaryMode ? { value: form.salaryMode, label: form.salaryMode } : null}
+            onChange={(option: any) => handleChange("salaryMode", option?.value || "")}
           />
 
-          <TextInput
+          <CustomDatePicker
             label="Joining Date"
-            value={form.joiningDate}
-            onChange={(e) => handleChange("joiningDate", e.target.value)}
+            value={form.joiningDate ? new Date(form.joiningDate) : null}
+            onChange={(date: Date | null) => handleChange("joiningDate", date ? date.toISOString() : "")}
             error={error.joiningDate}
-            rightIcon={<Calendar className="w-5 h-5 text-[#00C89C]" />}
+         
           />
 
           <TextInput

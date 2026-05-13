@@ -32,8 +32,8 @@ const SelectBox = ({
 
   if (version === "v2") {
     return (
-      <div className={cn("w-full", containerClassName)}>
-        <div className="relative">
+      <div className={cn("w-full relative z-10", containerClassName)}>
+        <div className="relative z-10">
           {label && (
             <label
               htmlFor={id}
