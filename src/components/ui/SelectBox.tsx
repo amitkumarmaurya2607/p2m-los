@@ -10,6 +10,7 @@ interface CustomSelectProps extends SelectProps<any, boolean, GroupBase<any>> {
   error?: string;
   required?: boolean;
   containerClassName?: string;
+  version?: "v1" | "v2";
 }
 
 const SelectBox = ({
@@ -19,6 +20,7 @@ const SelectBox = ({
   error,
   required,
   containerClassName,
+  version = "v2",
   ...props
 }: CustomSelectProps) => {
   const id = props.id || useId();
@@ -27,6 +29,63 @@ const SelectBox = ({
   const hasValue = props.value && (Array.isArray(props.value) ? props.value.length > 0 : true);
 
   const isActive = isFocused || hasValue;
+
+  if (version === "v2") {
+    return (
+      <div className={cn("w-full", containerClassName)}>
+        {label && (
+          <label className="relative text-xs font-bold text-primary top-2 ml-[7px] px-[3px] bg-input-bg w-fit z-10">
+            {label}
+            {required && <span className="text-destructive ml-0.5">*</span>}
+          </label>
+        )}
+        <div className="relative">
+          {leftIcon && (
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-primary">{leftIcon}</div>
+          )}
+          <Select
+            {...props}
+            inputId={id}
+            unstyled
+            placeholder=" "
+            onFocus={(e) => {
+              setIsFocused(true);
+              props.onFocus?.(e);
+            }}
+            onBlur={(e) => {
+              setIsFocused(false);
+              props.onBlur?.(e);
+            }}
+            classNames={{
+              control: () =>
+                cn(
+                  "px-[10px] py-[11px] text-xs border-2 rounded-[5px] bg-input-bg cursor-pointer",
+                  error ? "!border-destructive" : "border-primary",
+                ),
+              valueContainer: () => "p-0 m-0",
+              input: () => "m-0 p-0 text-xs",
+              singleValue: () => "text-xs",
+              placeholder: () => "text-xs text-text-muted",
+              indicatorsContainer: () => "p-0 ml-1",
+              dropdownIndicator: () => "p-0 text-primary",
+              clearIndicator: () => "p-0",
+              menu: () => "mt-1 bg-surface border border-border rounded-md shadow-lg z-50",
+              option: ({ isFocused, isSelected }) =>
+                cn(
+                  "px-3 py-2 text-xs cursor-pointer",
+                  isFocused && "bg-muted",
+                  isSelected && "bg-info/10 text-info",
+                ),
+            }}
+          />
+          {rightIcon && (
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-primary">{rightIcon}</div>
+          )}
+        </div>
+        {error && <p className="mt-1 text-sm text-destructive px-1">{error}</p>}
+      </div>
+    );
+  }
 
   return (
     <div className={cn("w-full", containerClassName)}>

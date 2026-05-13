@@ -10,12 +10,48 @@ type Props = {
   error?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  version?: "v1" | "v2";
 };
 
-const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon }: Props) => {
+const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon, version = "v2" }: Props) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const isActive = isFocused || value;
+
+  if (version === "v2") {
+    return (
+      <div className="w-full">
+        {label && (
+          <label className="relative text-xs font-bold text-primary top-2 ml-[7px] px-[3px] bg-input-bg w-fit z-10">
+            {label}
+          </label>
+        )}
+        <div className="relative">
+          {leftIcon && (
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-primary">{leftIcon}</div>
+          )}
+          <DatePicker
+            selected={value}
+            onChange={onChange}
+            dateFormat="dd/MM/yyyy"
+            className={`px-[10px] py-[11px] text-xs border-2 rounded-[5px] bg-input-bg focus:outline-none w-full ${leftIcon ? "pl-[36px]" : ""} ${rightIcon ? "pr-[36px]" : ""} ${error ? "!border-destructive" : "border-primary"}`}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
+            yearDropdownItemNumber={100}
+            scrollableYearDropdown
+            maxDate={new Date()}
+          />
+          {rightIcon && (
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-primary">{rightIcon}</div>
+          )}
+        </div>
+        {error && <p className="mt-1 text-sm text-destructive px-1">{error}</p>}
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">
