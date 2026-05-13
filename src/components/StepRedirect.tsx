@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { steps as allSteps } from "@/lib/sessionStorage";
 
-const bypassRoutes = ["/track-application", "/profile"];
+const bypassRoutes = ["/track-application", "/profile", "/review"];
 
 const stepRouteMap: Record<string, string> = {
-    mobile: "/apply",
+  mobile: "/apply",
   pan: "/pan-details",
   personalInfo: "/personal-info",
   aadhaar: "/aadhar-details",
@@ -23,35 +23,23 @@ export default function StepRedirect({ children }: { children: React.ReactNode }
   const router = useRouter();
   const pathname = usePathname();
   const { completedSteps } = useApplicationContext();
-  const hasRedirected = useRef(false);
 
   useEffect(() => {
-    for (const bypass of bypassRoutes) {
-      if (pathname === bypass || pathname?.startsWith(bypass)) {
-        return;
-      }
-    }
-
-    if (pathname === "/review" || pathname === "/track-application") {
-      return;
-    }
+    if (bypassRoutes.includes(pathname)) return;
 
     const allComplete = allSteps.every((step) => completedSteps.has(step.key));
 
     if (allComplete) {
-      if (pathname !== "/track-application" && !hasRedirected.current) {
-        hasRedirected.current = true;
+      if (pathname !== "/track-application") {
         router.replace("/track-application");
       }
       return;
     }
 
     const nextPending = allSteps.find((step) => !completedSteps.has(step.key));
-
     if (nextPending) {
       const targetRoute = stepRouteMap[nextPending.key];
-      if (targetRoute && pathname !== targetRoute && !hasRedirected.current) {
-        hasRedirected.current = true;
+      if (targetRoute && pathname !== targetRoute) {
         router.replace(targetRoute);
       }
     }

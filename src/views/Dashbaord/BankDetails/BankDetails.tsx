@@ -79,7 +79,8 @@ function BankDetails() {
         ifsc: form.ifsc,
         accountType: form.accountType,
       });
-      setVerified(true);
+       router.push("/selfie-capture")
+      // setVerified(true);
     } finally {
       setLoading(false);
     }
