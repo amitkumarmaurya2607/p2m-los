@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { Calculator, ChevronRight, Lightbulb } from "lucide-react";
+import { Calculator, Lightbulb } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
-import StepNotes from "../componants/StepNotes";
 import StepCard from "../componants/StepCard";
 import GradientButton from "@/components/ui/GradientButton";
 
@@ -46,40 +45,33 @@ function LoanCalculator() {
   };
 
   return (
-  <div className="flex gap-12">
-
-    <StepNotes
-  title="Configure Your Loan"
-  description="Customize your loan amount and repayment tenure to find a plan that best suits your financial needs and monthly budget."
-
-  noteTitle="Smart Borrowing Tips"
-  noteDescription={
-    <ul className="space-y-2 text-sm leading-6">
-      <li className="flex items-start gap-2">
-        <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
-        Choose a loan amount based on your repayment capacity.
-      </li>
-
-      <li className="flex items-start gap-2">
-        <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
-        Longer repayment tenures may reduce your monthly EMI amount.
-      </li>
-
-      <li className="flex items-start gap-2">
-        <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
-        Review interest rates and EMI estimates carefully before proceeding.
-      </li>
-    </ul>
-  }
-
-  icon={<Calculator className="w-6 h-6 text-primary" />}
-  noteIcon={<Lightbulb className="w-5 h-5 text-secondary" />}
-/>
-
-<StepCard
+    <StepCard
       title="Configure Loan"
       subtitle={`You are eligible for up to ₹${formatINR(maxEligible)}`}
       className=""
+      tips={{
+        title: "Configure Your Loan",
+        description: "Customize your loan amount and repayment tenure to find a plan that best suits your financial needs and monthly budget.",
+        Icon: <Calculator className="w-5 h-5 text-primary" />,
+        noteTitle: "Smart Borrowing Tips",
+        noteDescription: (
+          <ul className="space-y-2 text-sm leading-6">
+            <li className="flex items-start gap-2">
+              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              Choose a loan amount based on your repayment capacity.
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              Longer repayment tenures may reduce your monthly EMI amount.
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              Review interest rates and EMI estimates carefully before proceeding.
+            </li>
+          </ul>
+        ),
+        NoteIcon: Lightbulb,
+      }}
     >
 
        <div
@@ -169,11 +161,6 @@ function LoanCalculator() {
         </GradientButton>
 
     </StepCard>
-
-
-
-  </div>
-   
   );
 }
 

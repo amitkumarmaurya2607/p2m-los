@@ -8,11 +8,9 @@ import StepCard from "../componants/StepCard";
 import CustomDatePicker from "@/components/ui/CustomDatePicker";
 import { useRouter } from "next/navigation";
 import OTPInput from "@/components/OTPInput/OTPInput";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Fingerprint, Lightbulb } from "lucide-react";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidEmail, sanitizeNumeric } from "@/lib/utils";
-import StepNotes from "../componants/StepNotes";
-import { Lightbulb } from "lucide-react";
 
 const genders = ["Male", "Female", "Other"];
 const employmentTypes = ["Salaried", "Self-Employed"];
@@ -153,40 +151,33 @@ function PersonalInfo() {
   };
 
   return (
-   <div className="flex gap-12">
-    <StepNotes
-    title = "Personal Details"
-description =
-  "Please provide your personal information accurately to help us verify your identity, communicate important updates, and complete your application process smoothly."
-
-noteTitle = "Important Tips"
-noteDescription = {
-  ( <ul className="space-y-2 text-sm leading-6">
-    <li className="flex items-start gap-2">
-      <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
-      Enter your active email address and verify it before continuing.
-    </li>
-
-    <li className="flex items-start gap-2">
-      <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
-      Ensure your name matches your PAN and Aadhaar records.
-    </li>
-
-    <li className="flex items-start gap-2">
-      <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
-      Double-check your mobile number for important application updates.
-    </li>
-  </ul>)
-}
- noteIcon={<Lightbulb className="w-6 h-6 text-secondary" />}
-
-
-    />
-
-        <StepCard
+    <StepCard
       title="Basic Info"
       subtitle="To continue, please share some basic personal information. It helps us confirm your identity and ensure everything is ready for a seamless experience."
       className="lg:w-[800px] mx-auto"
+      tips={{
+        title: "Personal Details",
+        description: "Please provide your personal information accurately to help us verify your identity, communicate important updates, and complete your application process smoothly.",
+        Icon: <Fingerprint className="w-5 h-5 text-primary" />,
+        noteTitle: "Important Tips",
+        noteDescription: (
+          <ul className="space-y-2 text-sm leading-6">
+            <li className="flex items-start gap-2">
+              <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
+              Enter your active email address and verify it before continuing.
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
+              Ensure your name matches your PAN and Aadhaar records.
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
+              Double-check your mobile number for important application updates.
+            </li>
+          </ul>
+        ),
+        NoteIcon: Lightbulb,
+      }}
     >
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Personal Details */}
@@ -381,7 +372,6 @@ noteDescription = {
         </GradientButton>
       </form>
     </StepCard>
-   </div>
   );
 }
 

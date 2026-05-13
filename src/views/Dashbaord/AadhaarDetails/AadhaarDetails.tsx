@@ -8,7 +8,7 @@ import ResendTimer from "@/components/ResendTimer/ResendTimer";
 import { useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidAadhaar, sanitizeNumeric } from "@/lib/utils";
-import StepNotes from "../componants/StepNotes";
+import { Fingerprint } from "lucide-react";
 
 type AadhaarDetailsProps = {
   resend?: () => void;
@@ -81,16 +81,6 @@ function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
   };
 
   return (
-  <div className="flex gap-12">
-      <StepNotes
-  title="Aadhaar Verification"
-  description="To continue your application, please verify your Aadhaar details securely. This helps us confirm your identity, prevent fraud, and ensure compliance with financial regulations."
-
-  noteTitle="Secure & Confidential"
-  noteDescription="Your Aadhaar information is encrypted with bank-grade security standards and is used only for identity verification and compliance purposes."
-
-
-/>
     <StepCard
       title="Aadhaar Verification"
       subtitle={
@@ -99,6 +89,13 @@ function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
           : " OTP sent to Aadhaar linked mobile"
       }
       back={step === "aadhaar" ? undefined : () => setStep("aadhaar")}
+      tips={{
+        title: "Aadhaar Verification",
+        description: "To continue your application, please verify your Aadhaar details securely. This helps us confirm your identity, prevent fraud, and ensure compliance with financial regulations.",
+        Icon: <Fingerprint className="w-5 h-5 text-primary" />,
+        noteTitle: "Secure & Confidential",
+        noteDescription: "Your Aadhaar information is encrypted with bank-grade security standards and is used only for identity verification and compliance purposes."
+      }}
     >
       {step === "aadhaar" ? (
         <form onSubmit={handleSendOtp} className="space-y-4">
@@ -142,7 +139,6 @@ function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
         </form>
       )}
     </StepCard>
-  </div>
   );
 }
 

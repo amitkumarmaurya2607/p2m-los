@@ -7,7 +7,6 @@ import { ChevronRight, ShieldCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidPAN, sanitizePAN } from "@/lib/utils";
-import StepNotes from "../componants/StepNotes";
 function PanDetails() {
   const { application, setPanData } = useApplicationContext();
   const [pan, setPan] = useState(application.pan?.number || "");

@@ -3,12 +3,11 @@ import React, { useState } from "react";
 import StepCard from "../componants/StepCard";
 import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
-import { CreditCard, Check, ChevronRight, Landmark, ShieldCheck } from "lucide-react";
+import { CreditCard, Check, Landmark } from "lucide-react";
 import SelectBox from "@/components/ui/SelectBox";
 import { useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidIFSCCode, sanitizeNumeric, sanitizeIFSC } from "@/lib/utils";
-import StepNotes from "../componants/StepNotes";
 
 function BankDetails() {
   const router = useRouter();
@@ -163,32 +162,17 @@ function BankDetails() {
   }
 
   return (
-    <div className="flex gap-12">
-      {/* Header */}
-      {/* <div className="text-center mb-6 sm:mb-8">
-        <h2 className="text-xl sm:text-2xl font-semibold">
-          Bank Verification
-        </h2>
-        <p className="text-gray-500 text-sm mt-1">
-          Your loan amount will be disbursed to this verified account.
-        </p>
-      </div> */}
-
-      {/* Card */}
-      <StepNotes
-  title="Bank Account Verification"
-  description="Please provide your bank account details accurately to enable secure loan disbursement, EMI processing, and seamless transaction verification."
-
-  noteTitle="Safe Banking Information"
-  noteDescription="Your banking details are securely encrypted and used only for verification, disbursement, and repayment-related processes."
-
-  icon={<Landmark className="w-6 h-6 text-primary" />}
-  noteIcon={<ShieldCheck className="w-5 h-5 text-secondary" />}
-/>
       <StepCard
         title=" Bank Verification"
         subtitle="  Your loan amount will be disbursed to this verified account."
         className=""
+        tips={{
+          title: "Bank Account Verification",
+          description: "Please provide your bank account details accurately to enable secure loan disbursement, EMI processing, and seamless transaction verification.",
+          Icon:<Landmark className="w-5 h-5 text-primary" />,
+          noteTitle: "Safe Banking Information",
+          noteDescription: "Your banking details are securely encrypted and used only for verification, disbursement, and repayment-related processes."
+        }}
       >
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
@@ -241,7 +225,6 @@ function BankDetails() {
           </GradientButton>
         </form>
       </StepCard>
-    </div>
   );
 }
 

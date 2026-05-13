@@ -8,7 +8,6 @@ import { Briefcase, Calendar, ChevronRight, Lightbulb } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidEmail, isValidPinCode, sanitizeNumeric } from "@/lib/utils";
-import StepNotes from "../componants/StepNotes";
 
 function EmploymentDetails() {
   const router = useRouter();
@@ -92,39 +91,33 @@ function EmploymentDetails() {
   };
 
   return (
-
-  <div className="flex gap-12">
-      <StepNotes
-  title="Employment Details"
-  description="Please provide your current employment and income details accurately to help us assess your eligibility and offer suitable loan options."
-
-  noteTitle="Important Information"
-  noteDescription={
-    <ul className="space-y-2 text-sm leading-6">
-      <li className="flex items-start gap-2">
-        <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
-        Enter your current company name and employment type correctly.
-      </li>
-
-      <li className="flex items-start gap-2">
-        <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
-        Provide accurate monthly income details for faster approval.
-      </li>
-
-      <li className="flex items-start gap-2">
-        <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
-        Ensure all employment information matches your official records.
-      </li>
-    </ul>
-  }
-
-  icon={<Briefcase className="w-6 h-6 text-primary" />}
-  noteIcon={<Lightbulb className="w-5 h-5 text-secondary" />}
-/>
     <StepCard
       title="Employment Details"
       subtitle="We use this to verify your income and determine the best loan offer."
       className="lg:w-[812px]"
+      tips={{
+        title: "Employment Details",
+        description: "Please provide your current employment and income details accurately to help us assess your eligibility and offer suitable loan options.",
+        Icon: <Briefcase className="w-5 h-5 text-primary" />,
+        noteTitle: "Important Information",
+        noteDescription: (
+          <ul className="space-y-2 text-sm leading-6">
+            <li className="flex items-start gap-2">
+              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              Enter your current company name and employment type correctly.
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              Provide accurate monthly income details for faster approval.
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              Ensure all employment information matches your official records.
+            </li>
+          </ul>
+        ),
+        NoteIcon: Lightbulb,
+      }}
     >
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -208,7 +201,6 @@ function EmploymentDetails() {
         </GradientButton>
       </form>
     </StepCard>
-  </div>
   );
 }
 
