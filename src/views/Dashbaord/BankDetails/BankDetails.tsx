@@ -181,6 +181,7 @@ function BankDetails() {
               value={form.accountNumber}
               onChange={(e) => handleChange("accountNumber", e.target.value)}
               error={errors.accountNumber}
+              require
             />
 
             <TextInput
@@ -188,6 +189,7 @@ function BankDetails() {
               value={form.confirmAccountNumber}
               onChange={(e) => handleChange("confirmAccountNumber", e.target.value)}
               error={errors.confirmAccountNumber}
+              require
             />
 
             <TextInput
@@ -196,6 +198,7 @@ function BankDetails() {
               onChange={(e) => handleChange("ifsc", e.target.value)}
               error={errors.ifsc}
               maxLength={11}
+              require
             />
 
             {/* <SelectBox

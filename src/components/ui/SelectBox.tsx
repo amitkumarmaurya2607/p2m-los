@@ -44,7 +44,7 @@ const SelectBox = ({
                   : `${leftIcon ? "left-[36px]" : "left-[10px]"} top-1/2 -translate-y-1/2`,
               )}
             >
-              {label} {required && "*"}
+              {label} {required && <span className="text-destructive ml-0.5">*</span>}
             </label>
           )}
           {leftIcon && (
@@ -158,7 +158,7 @@ const SelectBox = ({
                 isActive && "top-[16px] text-text-label",
               )}
             >
-              {label} {required && "*"}
+              {label} {required && <span className="text-destructive ml-0.5">*</span>}
             </label>
           )}
         </div>

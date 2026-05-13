@@ -128,6 +128,7 @@ function EmploymentDetails() {
             value={form.companyName}
             onChange={(e) => handleChange("companyName", e.target.value)}
             error={error.companyName}
+            require
           />
 
           <SelectBox
@@ -147,6 +148,7 @@ function EmploymentDetails() {
             value={form.designation ? { value: form.designation, label: form.designation } : null}
             onChange={(option: any) => handleChange("designation", option?.value || "")}
             error={error.designation}
+            required
           />
 
           <TextInput
@@ -154,6 +156,7 @@ function EmploymentDetails() {
             value={form.email}
             onChange={(e) => handleChange("email", e.target.value)}
             error={error.email}
+            require
           />
 
           <TextInput
@@ -161,6 +164,7 @@ function EmploymentDetails() {
             value={form.salary}
             onChange={(e) => handleChange("salary", sanitizeNumeric(e.target.value))}
             error={error.salary}
+            require
           />
 
           <SelectBox
@@ -179,7 +183,7 @@ function EmploymentDetails() {
             value={form.joiningDate ? new Date(form.joiningDate) : null}
             onChange={(date: Date | null) => handleChange("joiningDate", date ? date.toISOString() : "")}
             error={error.joiningDate}
-         
+            required
           />
 
           <TextInput
@@ -199,6 +203,7 @@ function EmploymentDetails() {
               value={form.city}
               onChange={(e) => handleChange("city", e.target.value)}
               error={error.city}
+              require
             />
 
             <TextInput
@@ -207,6 +212,7 @@ function EmploymentDetails() {
               onChange={(e) => handleChange("pincode", sanitizeNumeric(e.target.value))}
               maxLength={6}
               error={error.pincode}
+              require
             />
           </div>
         </div>

@@ -105,6 +105,7 @@ function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
             onChange={handleAadhaarChange}
             error={error}
             maxLength={12}
+            require
           />
 
           <GradientButton type="submit" className="w-full mt-6" disabled={loading}>

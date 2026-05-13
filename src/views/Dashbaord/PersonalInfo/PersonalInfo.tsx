@@ -191,6 +191,7 @@ function PersonalInfo() {
               value={form.fullName}
               onChange={(e) => handleChange("fullName", e.target.value)}
               error={errors.fullName}
+              require
             />
 
             <TextInput
@@ -198,6 +199,7 @@ function PersonalInfo() {
               value={form.fatherName}
               onChange={(e) => handleChange("fatherName", e.target.value)}
               error={errors.fatherName}
+              require
             />
           </div>
         </div>
@@ -209,6 +211,7 @@ function PersonalInfo() {
             value={form.dob ? new Date(form.dob) : (null as any)}
             onChange={(date: Date | null) => handleChange("dob", date ? date.toISOString() : "")}
             error={errors.dob}
+            required
           />
 
           <TextInput
@@ -216,6 +219,7 @@ function PersonalInfo() {
             value={form.salary}
             onChange={(e) => handleChange("salary", sanitizeNumeric(e.target.value))}
             error={errors.salary}
+            require
           />
         </div>
 
@@ -250,6 +254,7 @@ function PersonalInfo() {
                   value={form.email}
                   onChange={(e) => handleChange("email", e.target.value)}
                   error={errors.email}
+                  require
                   rightIcon={
                     !emailVerified ? (
                       <button
@@ -308,6 +313,7 @@ function PersonalInfo() {
               value={form.address1}
               onChange={(e) => handleChange("address1", e.target.value)}
               error={errors.address1}
+              require
             />
 
             <TextInput
@@ -323,6 +329,7 @@ function PersonalInfo() {
                 onChange={(e) => handleChange("pincode", sanitizeNumeric(e.target.value))}
                 maxLength={6}
                 error={errors.pincode}
+                require
               />
 
               <TextInput
@@ -330,6 +337,7 @@ function PersonalInfo() {
                 value={form.city}
                 onChange={(e) => handleChange("city", e.target.value)}
                 error={errors.city}
+                require
               />
             </div>
 
@@ -338,6 +346,7 @@ function PersonalInfo() {
               value={form.state}
               onChange={(e) => handleChange("state", e.target.value)}
               error={errors.state}
+              require
             />
           </div>
         </div>

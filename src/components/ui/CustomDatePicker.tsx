@@ -8,12 +8,13 @@ type Props = {
   value?: Date | null;
   onChange: (date: Date | null) => void;
   error?: string;
+  required?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   version?: "v1" | "v2";
 };
 
-const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon, version = "v2" }: Props) => {
+const CustomDatePicker = ({ label, value, onChange, error, required, leftIcon, rightIcon, version = "v2" }: Props) => {
   const id = useId();
   const [isFocused, setIsFocused] = useState(false);
 
@@ -29,6 +30,7 @@ const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon, 
               className={`absolute transition-all duration-200 pointer-events-none z-10 text-xs font-bold  ${isActive ? "top-[-8px] left-[7px] px-[3px] bg-input-bg w-fit" : `${leftIcon ? "left-[36px]" : "left-[10px]"} top-1/2 -translate-y-1/2`}`}
             >
               {label}
+              {required && <span className="text-destructive ml-0.5">*</span>}
             </label>
           )}
           {leftIcon && (
@@ -92,6 +94,7 @@ const CustomDatePicker = ({ label, value, onChange, error, leftIcon, rightIcon, 
               ${isActive ? "top-[-10px] text-text-label" : "top-[0px] "} `}
             >
               {label}
+              {required && <span className="text-destructive ml-0.5">*</span>}
             </label>
           )}
         </div>
