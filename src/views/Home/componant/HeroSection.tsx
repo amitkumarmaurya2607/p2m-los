@@ -1,6 +1,7 @@
 
 
 import { ArrowRight, Lock, ShieldCheck, Zap } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 
 
@@ -46,7 +47,13 @@ function HeroSection() {
           <div className="relative  w-50% max-w-[700px]  lg:h-full flex items-end justify-center bg-[url('/images/moeny.png')] bg-no-repeat bg-top bg-[length:100%] bg-[center_top_0px] bg-no-repeat">
              {/* App preview or image goes here */}
              <div className="w-full  flex items-center justify-center  relative overflow-hidden ">
-          <img src="/images/homeBanner.png" alt="App Preview" className="w-full" />
+          <Image
+            src="/images/homeBanner.png"
+            alt="App Preview"
+            width={616}
+            height={431}
+            className="w-full h-auto"
+          />
              </div>
           </div>
         </div>

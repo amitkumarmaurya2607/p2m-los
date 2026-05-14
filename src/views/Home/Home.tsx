@@ -8,25 +8,27 @@ import StepProcess from "./componant/StepProcess";
 import RatingReviews from "./componant/RatingReviews";
 import TrustStats from "./componant/TrustStats";
 import WhyChoose from "./componant/WhyChoose";
-import SocialProof from "./componant/SocialProof";
-import FAQ from "./componant/FAQ";
 import FinalCTA from "./componant/FinalCTA";
+import MoreThanLoans from "./componant/MoreThanLoans";
+import Community from "./componant/Community";
+import FaqSection from "./componant/FaqSection";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans transition-colors duration-300 overflow-x-hidden">
-      
+
       <HeroSection />
+      <CategoryMarquee />
       <LoanProducts />
       <EmiDashboard />
-      <CategoryMarquee />
       <QuickEasySection />
-      <StepProcess />
       <RatingReviews />
+      <StepProcess />
       <TrustStats />
+      <MoreThanLoans />
+      <Community />
       <WhyChoose />
-      <SocialProof />
-      <FAQ />
+      <FaqSection />
       <FinalCTA />
 
     </div>

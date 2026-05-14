@@ -1,5 +1,6 @@
 import React from "react";
 import { Check } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const points = [
@@ -11,61 +12,52 @@ const points = [
 
 const QuickEasySection = () => {
   return (
-    <section className="w-full bg-surface px-5 py-16 font-[Inter] md:px-10 lg:px-0 lg:py-24">
-      <div className="mx-auto grid max-w-[var(--max-width-section)] items-center gap-12 lg:grid-cols-2">
+    <section className="w-full overflow-hidden bg-white px-4 py-14 sm:px-6 lg:px-0 lg:py-24">
+      <div className="mx-auto flex max-w-[1257px] flex-col items-center gap-12 lg:flex-row lg:justify-between">
         {/* Left Image */}
-        <div className="relative flex justify-center lg:block">
-          <img
+        <div className="relative w-full max-w-[690px]">
+        
+
+          <Image
             src="/images/family.png"
-            alt="Happy family"
-            className="w-full max-w-[772px] object-contain "
+            alt="Happy family with loan approval"
+            width={633}
+            height={417}
+            className="relative z-10 w-full h-auto max-w-[800px] object-contain drop-shadow-[-2px_3px_14px_rgba(0,0,0,0.25)]"
           />
 
-         <div className="absolute bottom-0 right-[8%] lg:right-6">
-  {/* Ripple Rings */}
-  <span className="absolute inset-0 rounded-full bg-secondary/30 animate-ping" />
-
-  <span
-    className="absolute inset-0 rounded-full bg-secondary/20 animate-ping"
-    style={{
-      animationDelay: "1s",
-    }}
-  />
-
-  {/* Main Circle */}
-  <div className="relative flex h-24 w-24 items-center justify-center rounded-full border-8 border-surface bg-secondary text-center text-[20px] font-bold leading-[25px] text-surface shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)]">
-    100%
-    <br />
-    Safe
-  </div>
-</div>
+          <div className="absolute bottom-[70px] right-[10px] z-20 flex h-24 w-24 items-center justify-center rounded-full border-[8px] border-white bg-[#00C89C] text-center text-[20px] font-bold leading-[25px] text-white shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)] sm:right-[30px]">
+            100%
+            <br />
+            Safe
+          </div>
         </div>
 
         {/* Right Content */}
-        <div className="lg:max-w-[576px]">
-          <h2 className="text-[38px] font-extrabold leading-[48px] text-text-heading md:text-[48px] md:leading-[60px]">
+        <div className="w-full max-w-[576px]">
+          <h2 className="text-[38px] font-extrabold leading-[48px] text-[#0F172A] sm:text-[48px] sm:leading-[60px]">
             Quick, Easy & <br />
-            <span className="text-secondary">Built for Real Life</span>
+            <span className="text-[#00C89C]">Built for Real Life</span>
           </h2>
 
-          <div className="mt-8 space-y-6">
+          <div className="mt-9 flex flex-col gap-6">
             {points.map((item, index) => (
               <div
                 key={index}
-                className="flex items-center gap-4 border-b border-muted pb-6 last:border-b-0"
+                className="flex items-center gap-4 border-b border-[#F3F4F6] pb-6 last:border-b-0"
               >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary/10 text-secondary">
-                  <Check size={20} strokeWidth={2} />
-                </span>
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#05DF72_0%,#00A63E_100%)] shadow-[0px_5.33391px_8.00087px_-1.33348px_rgba(0,0,0,0.1),0px_2.66696px_5.33391px_-2.66696px_rgba(0,0,0,0.1)]">
+                  <Check className="h-[21px] w-[21px] text-white" />
+                </div>
 
-                <p className="text-[16px] font-medium leading-7 text-text-body md:text-[18px]">
+                <p className="text-[16px] font-medium leading-7 text-[#364153] sm:text-[18px]">
                   {item}
                 </p>
               </div>
             ))}
           </div>
 
-          <Link href="/apply" className="inline-flex items-center justify-center mt-3 h-[60px] rounded-full bg-primary px-[27px] text-[18px] font-bold text-primary-foreground shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)] transition hover:scale-[1.02]">
+          <Link href='/apply' className="mt-8 h-[60px] inline-flex items-center justify-center rounded-full bg-[#3737C1] px-7 text-[18px] font-bold text-white shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#2B2B9A] hover:shadow-[0px_16px_30px_rgba(55,55,193,0.35)]">
             Start Your Journey
           </Link>
         </div>

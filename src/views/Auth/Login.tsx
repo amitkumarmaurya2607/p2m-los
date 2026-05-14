@@ -11,6 +11,7 @@ import Logo from "@/assets/icon/Logo";
 import { Popup } from "@/components/ui/Popup";
 import StepCard from "../Dashbaord/componants/StepCard";
 import { sendOTPAction } from "@/lib/actions/auth.action";
+import Link from "next/link";
 
 const Login = () => {
   const [method, setMethod] = useState<"mobile" | "email">("mobile");
@@ -127,13 +128,14 @@ const Login = () => {
 
                 <p className="text-sm text-text-secondary">
                   I agree to the{" "}
-                  <button
-                    type="button"
+                  <Link
+                  href="/terms-and-conditions"
+                 
                     onClick={() => setOpenTnc(true)}
                     className="text-primary font-medium underline"
                   >
                     Terms & Conditions
-                  </button>
+                  </Link>
                 </p>
               </div>
 
@@ -159,21 +161,7 @@ const Login = () => {
         />
       )}
 
-      {/* ✅ Terms Modal */}
-      <Popup open={openTnc} onClose={() => setOpenTnc(false)} title="Terms & Conditions" size="md">
-        <p className="text-sm text-text-secondary mb-6">
-          By using this platform, you agree to our terms and policies.
-        </p>
-        <button
-          onClick={() => {
-            setAccepted(true);
-            setOpenTnc(false);
-          }}
-          className="mt-6 w-full py-2 bg-primary text-white rounded-lg"
-        >
-          Accept
-        </button>
-      </Popup>
+   
     </>
   );
 };

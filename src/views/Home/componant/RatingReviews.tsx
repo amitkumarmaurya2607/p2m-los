@@ -1,123 +1,178 @@
-"use client";
-
 import React from "react";
-import { Star, Quote, UserIcon } from "lucide-react";
+import { Quote, Star } from "lucide-react";
 
-const reviews = [
-  {
-    name: "Rahul Sharma",
-    role: "Business Owner",
-    text: `"The process was incredibly smooth. I got my business loan approved in just 4 hours without any paperwork hassle."`,
-    image: "",
-    border: "border-t-primary",
-  },
-  {
-    name: "Priya Desai",
-    role: "Software Engineer",
-    text: `"RinSetu's EMI calculator is a lifesaver. Transparent fees, instant transfer, and a clean dashboard."`,
-    image: "",
-    border: "border-t-primary",
-  },
-  {
-    name: "Amit Patel",
-    role: "Freelance Designer",
-    text: `"I needed emergency funds for medical reasons. RinSetu delivered when my own bank asked for a week's time."`,
-    image: "",
-    border: "border-t-secondary",
-  },
-  {
-    name: "Anjali Gupta",
-    role: "Marketing Manager",
-    text: `"Highly recommend for anyone looking for quick personal loans. Customer service is top-notch and always available."`,
-    image: "",
-    border: "border-t-accent-orange",
-  },
+const stars = Array.from({ length: 5 });
+
+const users = [
+  "/user-1.jpg",
+  "/user-2.jpg",
+  "/user-3.jpg",
+  "/user-4.jpg",
 ];
 
 const RatingReviews = () => {
   return (
-    <section className="relative overflow-hidden bg-surface py-14 font-[Inter]">
-      <div className="flex flex-col items-center px-5 text-center">
-        <div className="flex items-center gap-2">
-          <span className="text-[36px] font-black leading-10 text-text-heading">
-            4.9
-          </span>
+    <section className="relative w-full overflow-hidden bg-[#0F172A] px-4 py-20 sm:px-6 lg:px-[95px] lg:py-32">
+      <div className="absolute -left-[135px] -top-[171px] h-[514px] w-[811px] rounded-full bg-[#3737C1]/30 blur-[120px]" />
+      <div className="absolute bottom-[-170px] right-[-140px] h-[428px] w-[676px] rounded-full bg-[#00C89C]/20 blur-[140px]" />
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(15,23,42,0.8)_0%,rgba(15,23,42,0.95)_100%)]" />
 
-          <div>
-            <div className="flex gap-1 text-accent-orange">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} size={20} fill="currentColor" />
-              ))}
+      <div className="relative mx-auto flex max-w-[1232px] flex-col items-center gap-16 lg:flex-row lg:gap-24">
+        <div className="w-full max-w-[568px]">
+          <h2 className="text-[44px] font-extrabold leading-[52px] tracking-[-1.2px] text-white sm:text-[60px] sm:leading-[66px]">
+            What Our <br />
+            <span className="bg-[linear-gradient(90deg,#00C89C_0%,#07BFA1_7.14%,#0EB6A5_14.29%,#14ADA9_21.43%,#18A3AC_28.57%,#1C9AB0_35.71%,#2091B2_42.86%,#2487B5_50%,#277DB7_57.14%,#2A73B9_64.29%,#2D69BB_71.43%,#305EBD_78.57%,#3252BF_85.71%,#3546C0_92.86%,#3737C1_100%)] bg-clip-text text-transparent">
+              Borrowers Say
+            </span>
+          </h2>
+
+          <p className="mt-8 max-w-[448px] text-[18px] leading-8 text-[#D1D5DC] sm:text-[20px]">
+            Real stories from people who trusted RinSetu to power their
+            financial journey.
+          </p>
+
+          <div className="mt-12 flex w-fit items-center gap-6 rounded-3xl border border-white/10 bg-white/5 p-6">
+            <div>
+              <h3 className="text-[36px] font-black leading-10 text-white">
+                4.9/5
+              </h3>
+              <div className="mt-1 flex gap-1">
+                {stars.map((_, i) => (
+                  <Star
+                    key={i}
+                    className="h-5 w-5 fill-[#FF8A00] text-[#FF8A00]"
+                  />
+                ))}
+              </div>
             </div>
-            <p className="text-[14px] font-semibold leading-5 text-text-muted-dark">
-              Google Rating
+
+            <div className="h-12 w-px bg-white/10" />
+
+            <div>
+              <p className="text-sm font-medium uppercase tracking-[0.7px] text-[#99A1AF]">
+                Trusted By
+              </p>
+              <h4 className="mt-1 text-xl font-bold text-white">250,000+</h4>
+            </div>
+          </div>
+
+          <div className="mt-8 flex items-center gap-4">
+            <div className="relative h-12 w-[176px]">
+              {users.map((src, index) => (
+                <img
+                  key={src}
+                  src={src}
+                  alt=""
+                  className="absolute top-0 h-12 w-12 rounded-full border-2 border-[#0F172A] object-cover"
+                  style={{ left: `${index * 32}px` }}
+                />
+              ))}
+
+              <div className="absolute left-32 top-0 flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#0F172A] bg-[#3737C1] text-xs font-bold text-white">
+                +9k
+              </div>
+            </div>
+
+            <p className="text-sm font-medium text-[#99A1AF]">
+              Verified Reviews
             </p>
           </div>
         </div>
 
-        <p className="mt-4 text-[16px] font-medium leading-6 text-text-body">
-          Trusted by 100,000+ happy customers across India
-        </p>
-      </div>
+        <div className="relative w-full max-w-[568px] pt-12">
+          <div className="absolute bottom-[-90px] left-[-48px] hidden h-[110px] w-[220px] rotate-[-0.99deg] rounded-2xl border border-white/5 bg-white/10 p-4 opacity-60 shadow-2xl lg:block">
+            <p className="text-sm font-bold text-white">Priya Patel</p>
+            <div className="flex">
+              {stars.map((_, i) => (
+                <Star
+                  key={i}
+                  className="h-3 w-3 fill-[#FF8A00] text-[#FF8A00]"
+                />
+              ))}
+            </div>
+            <p className="mt-3 text-xs leading-4 text-[#D1D5DC]">
+              "No physical documents, everything was 100% digital."
+            </p>
+          </div>
 
-      <span className="mx-auto mt-6 block h-4 w-4 rounded-full bg-accent-orange/40 blur-[1px]" />
+          <div className="absolute bottom-[-130px] right-[45px] hidden h-[110px] w-[220px] rotate-[1.97deg] rounded-2xl border border-white/5 bg-white/10 p-4 opacity-80 shadow-2xl lg:block">
+            <p className="text-sm font-bold text-white">Amit Kumar</p>
+            <div className="flex">
+              {stars.map((_, i) => (
+                <Star
+                  key={i}
+                  className="h-3 w-3 fill-[#FF8A00] text-[#FF8A00]"
+                />
+              ))}
+            </div>
+            <p className="mt-3 text-xs leading-4 text-[#D1D5DC]">
+              "I've tried other loan apps, but this one is by far the most
+              reliable."
+            </p>
+          </div>
 
-      <div className="mt-5 overflow-hidden">
-        <div className="review-marquee flex w-max gap-6 px-6">
-          {[...reviews, ...reviews, ...reviews].map((review, index) => (
-            <ReviewCard key={index} {...review} />
-          ))}
+          <div className="absolute right-[-90px] top-[40px] hidden h-[110px] w-[220px] rotate-[-1.46deg] rounded-2xl border border-white/5 bg-white/10 p-4 opacity-50 shadow-2xl lg:block">
+            <p className="text-sm font-bold text-white">Neha Gupta</p>
+            <div className="flex">
+              {stars.map((_, i) => (
+                <Star
+                  key={i}
+                  className="h-3 w-3 fill-[#FF8A00] text-[#FF8A00]"
+                />
+              ))}
+            </div>
+            <p className="mt-3 text-xs leading-4 text-[#D1D5DC]">
+              "Instant approval changed the game for me."
+            </p>
+          </div>
+
+          <div className="relative rounded-[40px] border border-white/20 bg-white/[0.95] p-8 shadow-[0px_32px_64px_rgba(0,0,0,0.3)] sm:p-12">
+            <div className="absolute -right-4 -top-14 flex h-24 w-24 rotate-12 items-center justify-center rounded-3xl bg-[linear-gradient(135deg,#00C89C_0%,#07BFA1_7.14%,#0EB6A5_14.29%,#14ADA9_21.43%,#18A3AC_28.57%,#1C9AB0_35.71%,#2091B2_42.86%,#2487B5_50%,#277DB7_57.14%,#2A73B9_64.29%,#2D69BB_71.43%,#305EBD_78.57%,#3252BF_85.71%,#3546C0_92.86%,#3737C1_100%)] shadow-xl">
+              <Quote className="h-10 w-10 fill-white text-white opacity-80" />
+            </div>
+
+            <div className="flex gap-1">
+              {stars.map((_, i) => (
+                <Star
+                  key={i}
+                  className="h-6 w-6 fill-[#FF8A00] text-[#FF8A00]"
+                />
+              ))}
+            </div>
+
+            <p className="mt-9 text-[24px] font-medium leading-[40px] text-[#0F172A] sm:text-[30px] sm:leading-[49px]">
+              "The process was incredibly smooth. I got my business loan
+              approved within 2 hours. RinSetu really understands the urgency
+              for startups."
+            </p>
+
+            <div className="mt-12 flex items-center gap-5">
+              <img
+                src="/rahul.jpg"
+                alt="Rahul Sharma"
+                className="h-16 w-16 rounded-full border-2 border-[#F3F4F6] object-cover shadow"
+              />
+
+              <div>
+                <h4 className="text-xl font-bold text-[#0F172A]">
+                  Rahul Sharma
+                </h4>
+                <p className="text-base font-medium text-[#3737C1]">
+                  Small Business Owner
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mx-auto mt-14 flex w-[100px] items-center gap-3">
+            <button className="h-2 w-10 rounded-full bg-[#00C89C]" />
+            <button className="h-2 w-2 rounded-full bg-white/20" />
+            <button className="h-2 w-2 rounded-full bg-white/20" />
+            <button className="h-2 w-2 rounded-full bg-white/20" />
+          </div>
         </div>
       </div>
-
-      <span className="mx-auto mt-5 block h-2 w-2 rounded-full bg-primary/40 blur-[1px]" />
-      <span className="absolute left-10 top-[260px] h-3 w-3 rounded-full bg-secondary/40 blur-[1px]" />
-
-
     </section>
-  );
-};
-
-const ReviewCard = ({ name, role, text, image, border }: any) => {
-  return (
-    <div
-      className={`relative h-[225px] w-[350px] shrink-0 rounded-2xl border border-border-light border-t-4 bg-surface px-[25px] pt-6 shadow-[0px_8px_30px_rgba(0,0,0,0.04)] ${border}`}
-    >
-      <div className="flex gap-1 text-accent-orange">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} size={16} fill="currentColor" />
-        ))}
-      </div>
-
-      <Quote
-        size={32}
-        fill="var(--border-medium)"
-        className="absolute right-4 top-5 text-[var(--border-medium)]"
-      />
-
-      <p className="mt-4 text-[14px] font-normal leading-[23px] text-text-body">
-        {text}
-      </p>
-
-      <div className="absolute bottom-6 left-[25px] flex items-center gap-4">
-       {image? <img
-          src={image}
-          alt={name}
-          className="h-12 w-12 rounded-full object-cover"
-        />:
-        <UserIcon   className="h-12 w-12 rounded-full object-cover" />
-       }
-
-        <div>
-          <h4 className="text-[14px] font-bold leading-5 text-text-heading">
-            {name}
-          </h4>
-          <p className="text-[12px] font-medium leading-4 text-text-muted-dark">
-            {role}
-          </p>
-        </div>
-      </div>
-    </div>
   );
 };
 

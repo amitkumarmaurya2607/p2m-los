@@ -30,7 +30,7 @@ const SideBar = () => {
   return (
     <div
       className="hidden lg:flex w-1/2 bg-gradient-to-br from-sidebar-from to-sidebar-to p-16
-        flex-col justify-between text-primary-foreground bg-[url('/images/boginBanner.webp')]"
+        flex-col justify-between text-primary-foreground bg-[url('/images/loginBg.jpg')]"
     >
       <div>
         <div className="mb-16">

@@ -38,59 +38,59 @@ const StepCard: React.FC<StepCardProps> = ({
     return (
       <div className="w-full min-h-screen flex items-center justify-center">
         <div className="w-full max-w-[1150px] lg:w-auto min-h-[520px] overflow-hidden rounded-[12px] bg-white shadow-[0px_30px_80px_rgba(15,23,42,0.18)] flex">
-         {/* Left blue section */}
-{tips && (
-  <div className="relative hidden lg:flex w-[352px]  overflow-hidden bg-[#00C89C] shadow-[4px_0px_32px_rgba(0,0,0,0.08)] text-white px-6 pt-8 pb-14 flex-col gap-10">
+          {/* Left blue section */}
+          {tips && (
+            <div className="relative hidden lg:flex w-[352px]  overflow-hidden bg-[#00C89C] shadow-[4px_0px_32px_rgba(0,0,0,0.08)] text-white px-6 pt-8 pb-14 flex-col gap-10">
 
-    {/* exact bg layers */}
-    <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.2)_0%,rgba(0,0,0,0)_50%,rgba(55,55,193,0.2)_100%)]" />
+              {/* exact bg layers */}
+              <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.2)_0%,rgba(0,0,0,0)_50%,rgba(55,55,193,0.2)_100%)]" />
 
-    <div
-      className="absolute w-[422px] h-[539.38px] left-[-139.88px] top-[-74.36px]
+              <div
+                className="absolute w-[422px] h-[539.38px] left-[-69.88px] top-[-74.36px]
       bg-[linear-gradient(225deg,rgba(255,255,255,0.25)_0%,rgba(0,0,0,0)_100%)]
       shadow-[inset_0px_-10.1749px_40.6994px_rgba(255,255,255,0.15)]
       rounded-bl-[101.749px]
       [transform:matrix(1,0,-0.26,0.97,0,0)]"
-    />
+              />
 
-    <div
-      className="absolute w-[299.03px] h-[596px] left-[-52.69px] top-[232.59px]
+              <div
+                className="absolute w-[299.03px] h-[596px] left-[-52.69px] top-[232.59px]
       bg-[linear-gradient(45deg,rgba(55,55,193,0.15)_0%,rgba(0,0,0,0)_100%)]
       rounded-tr-[103.159px]
       [transform:matrix(0.94,-0.34,0,1,0,0)]"
-    />
+              />
 
-    <div className="absolute inset-0 opacity-[0.06] bg-[url('/image.png')] bg-cover bg-center" />
+              <div className="absolute inset-0 opacity-[0.06] bg-[url('/image.png')] bg-cover bg-center" />
 
-    <div
-      className="absolute w-[206px] h-[206px] right-[-103px] top-[-103px]
+              <div
+                className="absolute w-[206px] h-[206px] right-[-103px] top-[-103px]
       bg-[linear-gradient(90deg,#3737C1_0%,#3535BC_12.5%,#3434B7_25%,#3232B2_37.5%,#3131AD_50%,#2F2FA8_62.5%,#2E2EA4_75%,#2C2C9F_87.5%,#2B2B9A_100%)]
       rotate-[-45deg]"
-    />
+              />
 
-    <div
-      className="absolute w-[180px] h-[180px] right-[-103px] bottom-[-103px]
+              <div
+                className="absolute w-[180px] h-[180px] right-[-103px] bottom-[-103px]
       bg-[linear-gradient(90deg,#3737C1_0%,#3535BC_12.5%,#3434B7_25%,#3232B2_37.5%,#3131AD_50%,#2F2FA8_62.5%,#2E2EA4_75%,#2C2C9F_87.5%,#2B2B9A_100%)]
       rotate-[-49.01deg]"
-    />
+              />
 
-    {/* content */}
-    <div className="relative z-10">
-      <div className="text-[14px] font-bold tracking-[1.8px] uppercase mb-10">
-        {tips.title}
-      </div>
+              {/* content */}
+              <div className="relative z-10">
+                <div className="text-[14px] font-bold tracking-[1.8px] uppercase mb-10">
+                  {tips.title}
+                </div>
 
-      <h1 className="text-[42px] xl:text-[46px] leading-[1.18] font-bold tracking-[-1px] max-w-[360px]">
-        {tips.noteTitle}
-      </h1>
+                <h1 className="text-[42px] xl:text-[46px] leading-[1.18] font-bold tracking-[-1px] max-w-[360px]">
+                  {tips.noteTitle}
+                </h1>
 
-      <p className="mt-8 text-[15px] leading-[24px] text-white/75 max-w-[350px]">
-        {tips.noteDescription}
-      </p>
-    </div>
+                <p className="mt-8 text-[15px] leading-[24px] text-white/75 max-w-[350px]">
+                  {tips.noteDescription}
+                </p>
+              </div>
 
-   <div
-  className="
+              <div
+                className="
     relative z-10 overflow-hidden
     rounded-[10px]
     p-6
@@ -98,30 +98,30 @@ const StepCard: React.FC<StepCardProps> = ({
     shadow-[0px_15px_18.75px_-3.75px_rgba(0,0,0,0.1),0px_6px_7.5px_-4.5px_rgba(0,0,0,0.1)]
     mb-[30px]
   "
->
-  {/* optional glow */}
-  <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
+              >
+                {/* optional glow */}
+                <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
 
-  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/15">
-    {TipsIcon}
-  </div>
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/15">
+                  {TipsIcon}
+                </div>
 
-  <h3 className="mb-4 text-[18px] font-bold">
-    {tips.title}
-  </h3>
+                <h3 className="mb-4 text-[18px] font-bold">
+                  {tips.title}
+                </h3>
 
-  <p className="text-[13px] leading-[22px] text-white/75">
-    {tips.description}
-  </p>
-</div>
-  </div>
-)}
+                <p className="text-[13px] leading-[22px] text-white/75">
+                  {tips.description}
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* Right content section */}
           <div className={`w-full max-w-full  lg:w-[500px] flex items-center justify-center px-5 sm:px-8 lg:px-14 py-10 ${className}`}>
             <div className={`w-full`}>
               {/* Step dots */}
-             <HorizontalStepper version="v2" />
+              <HorizontalStepper version="v2" />
 
               {back && (
                 <button
