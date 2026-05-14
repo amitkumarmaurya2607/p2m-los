@@ -13,6 +13,7 @@ type RadioButtonGroupProps = {
   onChange: (value: string) => void;
   heading?: string;
   error?: string;
+  disabled?: boolean;
   className?: string;
 };
 
@@ -23,6 +24,7 @@ const RadioButtonGroup = ({
   onChange,
   heading,
   error,
+  disabled = false,
   className,
 }: RadioButtonGroupProps) => {
   return (
@@ -34,14 +36,20 @@ const RadioButtonGroup = ({
         {options.map((option) => (
           <label
             key={option.value}
-            className="flex-1 text-center cursor-pointer"
+            className={cn(
+              "flex-1 text-center",
+              disabled ? "cursor-not-allowed" : "cursor-pointer"
+            )}
           >
             <input
               type="radio"
               name={name}
               value={option.value}
               checked={value === option.value}
-              onChange={() => onChange(option.value)}
+              onChange={() => {
+                if (!disabled) onChange(option.value);
+              }}
+              disabled={disabled}
               className="peer hidden"
             />
             <span
@@ -59,6 +67,7 @@ const RadioButtonGroup = ({
                 "after:opacity-0 after:bottom-[-8px] after:left-1/2 after:-translate-x-1/2",
                 "peer-checked:before:animate-[radioParticleUp_0.5s_ease_forwards]",
                 "peer-checked:after:animate-[radioParticleDown_0.5s_ease_forwards]",
+                disabled && "opacity-50",
               )}
             >
               {option.label}

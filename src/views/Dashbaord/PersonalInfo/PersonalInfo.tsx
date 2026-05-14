@@ -247,6 +247,7 @@ function PersonalInfo() {
           />
           <RadioButtonGroup
             heading="Employment Type"
+            disabled={true}
             name="employmentType"
             options={employmentTypes.map(t => ({ value: t, label: t }))}
             value={form.employmentType}
@@ -274,8 +275,7 @@ function PersonalInfo() {
                         type="button"
                         onClick={handleSendOtp}
                         disabled={sendingOtp}
-                        className="h-[36px] px-4 rounded-xl border border-primary text-primary
-                          text-sm font-medium hover:bg-primary-muted whitespace-nowrap disabled:opacity-50"
+                        className="cursor-pointer h-[41px] px-4 rounded-[5px] rounded-l-none text-primary-foreground font-medium flex items-center justify-center gap-2 bg-gradient-to-r mr-[-13px] from-secondary to-secondary/90 disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100"
                       >
                         Verify Email
                       </button>
@@ -289,7 +289,7 @@ function PersonalInfo() {
 
             {otpSent && !emailVerified && (
               <div className="space-y-2">
-                <div className="flex gap-3">
+                <div className="flex gap-3 max-w-[400px]">
                   <OTPInput
                     length={6}
                     onComplete={(code) => {

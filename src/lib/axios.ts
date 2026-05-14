@@ -1,5 +1,7 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosError } from "axios";
+import { redirect } from "next/navigation";
 import { getMock } from "@/lib/mock/data";
+import { getSession } from "@/lib/session";
 
 const BASE_URL = process.env.API_BASE_URL || "http://localhost:8080/api";
 const USE_MOCK = process.env.MOCK_API === "true" || !process.env.API_BASE_URL;
@@ -12,10 +14,16 @@ function createClient(): AxiosInstance {
   });
 
   client.interceptors.request.use(
-    (config) => {
+    async (config) => {
       if (!USE_MOCK && typeof process !== "undefined" && process.env?.NODE_ENV !== "production") {
         console.log(`[API] ${config.method?.toUpperCase()} ${config.url}`);
       }
+
+      const token = await getSession();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+
       return config;
     },
     (error) => Promise.reject(error),
@@ -24,6 +32,10 @@ function createClient(): AxiosInstance {
   client.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {
+      if (error.response?.status === 401) {
+        redirect("/apply?type=exper");
+      }
+
       const message =
         error.response?.data && typeof error.response.data === "object" && "message" in error.response.data
           ? String((error.response.data as Record<string, unknown>).message)
