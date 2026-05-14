@@ -1,20 +1,19 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import StepCard from "../componants/StepCard";
 import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import { ChevronRight, ShieldCheck } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidPAN, sanitizePAN } from "@/lib/utils";
 import { verifyPANAction } from "@/lib/actions/verification.action";
 function PanDetails() {
+  const router = useRouter();
   const { application, setPanData } = useApplicationContext();
   const [pan, setPan] = useState(application.pan?.number || "");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = sanitizePAN(e.target.value);
@@ -43,8 +42,8 @@ function PanDetails() {
 
       const result = await verifyPANAction(pan);
 
-      if (!result.success) {
-        setError(result.error || "PAN verification failed");
+      if (result?.error) {
+        setError(result.error);
         return;
       }
 

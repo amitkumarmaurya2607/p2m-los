@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import StepCard from "../componants/StepCard";
 import TextInput from "@/components/ui/TextInput";
 import SelectBox from "@/components/ui/SelectBox";
 import CustomDatePicker from "@/components/ui/CustomDatePicker";
 import GradientButton from "@/components/ui/GradientButton";
 import { Briefcase, Calendar, ChevronRight, Lightbulb } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidEmail, isValidPinCode, sanitizeNumeric } from "@/lib/utils";
 import { submitEmploymentAction } from "@/lib/actions/verification.action";
@@ -80,8 +80,8 @@ function EmploymentDetails() {
 
       const result = await submitEmploymentAction(form);
 
-      if (!result.success) {
-        setError((prev: any) => ({ ...prev, submit: result.error || "Submission failed" }));
+      if (result?.error) {
+        setError((prev: any) => ({ ...prev, submit: result.error }));
         return;
       }
 

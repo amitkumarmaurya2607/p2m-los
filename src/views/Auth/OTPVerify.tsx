@@ -43,16 +43,16 @@ function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps
 
       const result = await verifyOTPAction(userName, otp);
 
-      if (!result.success) {
-        setError(result.error || "Invalid OTP");
-        showToast({ message: result.error || "Invalid OTP. Please try again.", type: "error" });
+      if (result?.error) {
+        setError(result.error);
+        showToast({ message: result.error, type: "error" });
         return;
       }
 
-      showToast({ message: "OTP verified successfully!", type: "success" });
-
       setMobileData({ number: userName, verified: true });
       login({ method: method === "email" ? "email" : "mobile", identifier: userName });
+
+      showToast({ message: "OTP verified successfully!", type: "success" });
 
       router.push("/pan-details");
     } catch (err) {

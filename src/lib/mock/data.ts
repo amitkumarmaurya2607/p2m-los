@@ -21,15 +21,15 @@ registerMock(`POST ${API.auth.sendOTP}`, (): ApiResponse<{ verified: boolean }> 
   message: "OTP sent successfully",
 }));
 
-registerMock(`POST ${API.auth.verifyOTP}`, (): ApiResponse<{ verified: boolean }> => ({
+registerMock(`POST ${API.auth.verifyOTP}`, (): ApiResponse<{ verified: boolean; token: string }> => ({
   success: true,
-  data: { verified: true },
+  data: { verified: true, token: "mock-session-token-" + Date.now() },
   message: "OTP verified successfully",
 }));
 
 registerMock(`POST ${API.pan.verify}`, (): ApiResponse<{ number: string; fullName: string; verified: boolean }> => ({
   success: true,
-  data: { number: "ABCDE1234F", fullName: "John Doe", verified: true },
+  data: { number: "ABCDE1234F", fullName: "Rahul Sharma", verified: true },
   message: "PAN verified successfully",
 }));
 
@@ -41,7 +41,7 @@ registerMock(`POST ${API.aadhaar.sendOTP}`, (): ApiResponse<{ verified: boolean 
 
 registerMock(`POST ${API.aadhaar.verifyOTP}`, (): ApiResponse<{ verified: boolean; number: string }> => ({
   success: true,
-  data: { verified: true, number: "123412341234" },
+  data: { verified: true, number: "987698769876" },
   message: "Aadhaar verified successfully",
 }));
 
@@ -49,7 +49,7 @@ registerMock(
   `POST ${API.bank.verify}`,
   (): ApiResponse<{ accountNumber: string; ifsc: string; accountType: string; verified: boolean }> => ({
     success: true,
-    data: { accountNumber: "1234567890", ifsc: "SBIN0001234", accountType: "savings", verified: true },
+    data: { accountNumber: "12345678901", ifsc: "SBIN0001234", accountType: "savings", verified: true },
     message: "Bank verified successfully",
   }),
 );
@@ -65,18 +65,25 @@ registerMock(
 
 registerMock(
   `POST ${API.application.submit}`,
-  (): ApiResponse<{ applicationId: string; submitted: boolean }> => ({
+  (): ApiResponse<{ applicationId: string; submitted: boolean; submittedAt: string }> => ({
     success: true,
-    data: { applicationId: "LOS-2026-0001", submitted: true },
+    data: { applicationId: "LOS-2026-0042", submitted: true, submittedAt: new Date().toISOString() },
     message: "Application submitted successfully",
   }),
 );
 
 registerMock(
   `GET /application/status`,
-  (): ApiResponse<{ id: string; status: string; stage: string; updatedAt: string }> => ({
+  (): ApiResponse<{ id: string; status: string; stage: string; updatedAt: string; applicantName: string; loanAmount: number }> => ({
     success: true,
-    data: { id: "LOS-2026-0001", status: "in-review", stage: "Document Verification", updatedAt: new Date().toISOString() },
+    data: {
+      id: "LOS-2026-0042",
+      status: "in-review",
+      stage: "Document Verification",
+      updatedAt: new Date().toISOString(),
+      applicantName: "Rahul Sharma",
+      loanAmount: 500000,
+    },
   }),
 );
 
@@ -100,10 +107,27 @@ registerMock(`POST ${API.email.sendOTP}`, (): ApiResponse<{ otp: string }> => ({
 
 registerMock(
   `POST ${API.personalInfo.submit}`,
-  (): ApiResponse<{ submitted: boolean }> => ({
+  (): ApiResponse<{ submitted: boolean; fullName: string }> => ({
     success: true,
-    data: { submitted: true },
+    data: { submitted: true, fullName: "Rahul Sharma" },
     message: "Personal info saved",
+  }),
+);
+
+registerMock(
+  `POST ${API.progress.save}`,
+  (): ApiResponse<{ currentStep: string; completedSteps: string[]; mobile: string }> => ({
+    success: true,
+    data: { currentStep: "pan", completedSteps: ["mobile"], mobile: "9876543210" },
+    message: "Progress saved",
+  }),
+);
+
+registerMock(
+  `GET ${API.progress.get}`,
+  (): ApiResponse<{ currentStep: string; completedSteps: string[]; mobile: string }> => ({
+    success: true,
+    data: { currentStep: "pan", completedSteps: ["mobile"], mobile: "9876543210" },
   }),
 );
 

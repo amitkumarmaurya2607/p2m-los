@@ -2,6 +2,7 @@
 
 import { apiPost } from "@/lib/axios";
 import { API } from "@/lib/api/urls";
+import { saveProgress } from "@/lib/services/progress.service";
 import type { ApiResponse } from "@/types";
 
 export async function sendEmailOTPAction(email: string) {
@@ -20,12 +21,10 @@ export async function sendEmailOTPAction(email: string) {
 export async function submitPersonalInfoAction(data: Record<string, unknown>) {
   try {
     const result = await apiPost<ApiResponse<{ submitted: boolean }>>(API.personalInfo.submit, data);
-    return { success: result.success, data: result.data, error: null };
+    if (!result.success) return { error: result.message || "Submission failed" };
+    await saveProgress("personal-info");
+    return { success: true as const };
   } catch (err) {
-    return {
-      success: false,
-      data: null,
-      error: err instanceof Error ? err.message : "Failed to submit personal info",
-    };
+    return { error: err instanceof Error ? err.message : "Failed to submit personal info" };
   }
 }

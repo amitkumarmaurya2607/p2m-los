@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-
+import { useRouter } from "next/navigation";
 import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import StepCard from "../componants/StepCard";
 import CustomDatePicker from "@/components/ui/CustomDatePicker";
-import { useRouter } from "next/navigation";
 import OTPInput from "@/components/OTPInput/OTPInput";
 import { CheckCircle, Fingerprint, Lightbulb } from "lucide-react";
 import { useApplicationContext } from "@/context/ApplicationContext";
@@ -18,6 +17,7 @@ const genders = ["Male", "Female", "Other"];
 const employmentTypes = ["Salaried", "Self-Employed"];
 
 function PersonalInfo() {
+  const router = useRouter();
   const { application, setPersonalInfo } = useApplicationContext();
   const saved = application.personalInfo;
 
@@ -44,7 +44,6 @@ function PersonalInfo() {
   const [otp, setOtp] = useState("");
   const [serverOtp, setServerOtp] = useState("");
   const [sendingOtp, setSendingOtp] = useState(false);
-  const router = useRouter();
 
   const handleChange = (key: string, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -151,8 +150,8 @@ function PersonalInfo() {
 
       const result = await submitPersonalInfoAction(form);
 
-      if (!result.success) {
-        setErrors((prev: any) => ({ ...prev, submit: result.error || "Submission failed" }));
+      if (result?.error) {
+        setErrors((prev: any) => ({ ...prev, submit: result.error }));
         return;
       }
 

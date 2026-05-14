@@ -32,4 +32,8 @@ export const API = {
   lookup: {
     schemes: "/lookup/schemes",
   },
+  progress: {
+    save: "/application/progress",
+    get: "/application/progress",
+  },
 } as const;

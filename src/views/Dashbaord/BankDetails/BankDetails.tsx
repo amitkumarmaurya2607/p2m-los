@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import StepCard from "../componants/StepCard";
 import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import { CreditCard, Check, Landmark } from "lucide-react";
 import SelectBox from "@/components/ui/SelectBox";
-import { useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidIFSCCode, sanitizeNumeric, sanitizeIFSC } from "@/lib/utils";
 import { verifyBankAction } from "@/lib/actions/verification.action";
@@ -77,8 +77,8 @@ function BankDetails() {
 
       const result = await verifyBankAction(form.accountNumber, form.ifsc, form.accountType);
 
-      if (!result.success) {
-        setErrors((prev: any) => ({ ...prev, bank: result.error || "Bank verification failed" }));
+      if (result?.error) {
+        setErrors((prev: any) => ({ ...prev, bank: result.error }));
         return;
       }
 
@@ -86,8 +86,8 @@ function BankDetails() {
         accountNumber: form.accountNumber,
         ifsc: form.ifsc,
         accountType: form.accountType,
-      });
-      router.push("/selfie-capture")
+      })
+      router.push("/selfie-capture");
     } finally {
       setLoading(false);
     }
@@ -158,7 +158,7 @@ function BankDetails() {
 
         <div className="mt-10">
           <GradientButton
-            onClick={() => router.push("/selfie-capture")}
+            onClick={() => window.location.href = "/selfie-capture"}
             type="button"
             className="w-full mt-4 sm:mt-6 bg-gradient-to-r from-[#3737C1] to-[#2B2B9A]"
           >

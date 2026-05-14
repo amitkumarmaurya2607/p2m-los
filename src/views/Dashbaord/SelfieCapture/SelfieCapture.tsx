@@ -2,6 +2,7 @@ import GradientButton from "@/components/ui/GradientButton";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
+import { submitSelfieAction } from "@/lib/actions/selfie.action";
 
 type CaptureProps = {
   mode?: "photo" | "video";
@@ -118,14 +119,16 @@ const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => 
     await startCamera();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!capturedBlob) return;
 
     onSubmit?.(capturedBlob);
-    console.log("Submitted Blob:", capturedBlob);
 
     setSelfieData({ captured: true });
-    router.push("/employment-details");
+    const result = await submitSelfieAction();
+    if (!result?.error) {
+      router.push("/employment-details");
+    }
   };
 
   return (

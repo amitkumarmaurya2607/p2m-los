@@ -4,13 +4,16 @@ import { verifyPAN } from "@/lib/services/pan.service";
 import { sendAadhaarOTP, verifyAadhaarOTP } from "@/lib/services/aadhaar.service";
 import { verifyBank } from "@/lib/services/bank.service";
 import { submitEmployment } from "@/lib/services/employment.service";
+import { saveProgress } from "@/lib/services/progress.service";
 
 export async function verifyPANAction(panNumber: string) {
   try {
     const result = await verifyPAN(panNumber);
-    return { success: result.success, data: result.data, error: null };
+    if (!result.success) return { error: result.message || "PAN verification failed" };
+    await saveProgress("pan");
+    return { success: true as const };
   } catch (err) {
-    return { success: false, data: null, error: err instanceof Error ? err.message : "PAN verification failed" };
+    return { error: err instanceof Error ? err.message : "PAN verification failed" };
   }
 }
 
@@ -30,22 +33,22 @@ export async function sendAadhaarOTPAction(aadhaarNumber: string) {
 export async function verifyAadhaarOTPAction(aadhaarNumber: string, code: string) {
   try {
     const result = await verifyAadhaarOTP(aadhaarNumber, code);
-    return { success: result.success, data: result.data, error: null };
+    if (!result.success) return { error: result.message || "Aadhaar verification failed" };
+    await saveProgress("aadhaar");
+    return { success: true as const };
   } catch (err) {
-    return {
-      success: false,
-      data: null,
-      error: err instanceof Error ? err.message : "Failed to verify Aadhaar OTP",
-    };
+    return { error: err instanceof Error ? err.message : "Failed to verify Aadhaar OTP" };
   }
 }
 
 export async function verifyBankAction(accountNumber: string, ifsc: string, accountType: string) {
   try {
     const result = await verifyBank(accountNumber, ifsc, accountType);
-    return { success: result.success, data: result.data, error: null };
+    if (!result.success) return { error: result.message || "Bank verification failed" };
+    await saveProgress("bank");
+    return { success: true as const };
   } catch (err) {
-    return { success: false, data: null, error: err instanceof Error ? err.message : "Bank verification failed" };
+    return { error: err instanceof Error ? err.message : "Bank verification failed" };
   }
 }
 
@@ -62,12 +65,10 @@ export async function submitEmploymentAction(data: {
 }) {
   try {
     const result = await submitEmployment(data);
-    return { success: result.success, data: result.data, error: null };
+    if (!result.success) return { error: result.message || "Employment submission failed" };
+    await saveProgress("employment");
+    return { success: true as const };
   } catch (err) {
-    return {
-      success: false,
-      data: null,
-      error: err instanceof Error ? err.message : "Failed to submit employment details",
-    };
+    return { error: err instanceof Error ? err.message : "Failed to submit employment details" };
   }
 }

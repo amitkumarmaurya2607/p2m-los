@@ -1,17 +1,16 @@
 "use server";
 
 import { submitApplication, getApplicationStatus } from "@/lib/services/application.service";
+import { saveProgress } from "@/lib/services/progress.service";
 
 export async function submitApplicationAction(data: unknown) {
   try {
     const result = await submitApplication(data);
-    return { success: result.success, data: result.data, error: null };
+    if (!result.success) return { error: result.message || "Submission failed" };
+    await saveProgress("review");
+    return { success: true as const, data: result.data };
   } catch (err) {
-    return {
-      success: false,
-      data: null,
-      error: err instanceof Error ? err.message : "Failed to submit application",
-    };
+    return { error: err instanceof Error ? err.message : "Failed to submit application" };
   }
 }
 

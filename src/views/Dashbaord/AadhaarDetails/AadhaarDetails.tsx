@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import StepCard from "../componants/StepCard";
 import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import OTPInput from "@/components/OTPInput/OTPInput";
 import ResendTimer from "@/components/ResendTimer/ResendTimer";
-import { useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidAadhaar, sanitizeNumeric } from "@/lib/utils";
 import { Fingerprint } from "lucide-react";
@@ -75,13 +75,12 @@ function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
 
       const result = await verifyAadhaarOTPAction(aadhaar, otp);
 
-      if (!result.success) {
-        setError(result.error || "Invalid OTP");
+      if (result?.error) {
+        setError(result.error);
         return;
       }
 
       setAadhaarData({ number: aadhaar, verified: true });
-
       router.push("/bank-details");
     } finally {
       setLoading(false);

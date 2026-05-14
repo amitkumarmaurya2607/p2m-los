@@ -8,6 +8,7 @@ interface SendOTPResponse {
 
 interface VerifyOTPResponse {
   verified: boolean;
+  token?: string;
 }
 
 export async function sendOTP(phone: string): Promise<ApiResponse<SendOTPResponse>> {

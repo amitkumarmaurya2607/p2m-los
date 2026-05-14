@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { CheckCircle, ClipboardList, Edit3, Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { CheckCircle, ClipboardList, Edit3, Shield } from "lucide-react";
 import { useAuthContext } from "@/context/AuthContext";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { submitApplicationAction } from "@/lib/actions/application.action";
+import { logoutAction } from "@/lib/actions/logout.action";
 
 const ReviewField = ({ label, value }: { label: string; value: string }) => (
   <div>
@@ -87,23 +88,22 @@ function ReviewApplication() {
   const handleSubmit = async () => {
     if (!agree) return;
 
-    try {
-      setLoading(true);
+    setLoading(true);
 
-      const result = await submitApplicationAction(data);
+    const result = await submitApplicationAction(data);
 
-      if (!result.success) {
-        return;
-      }
-
-      setReviewData({ submitted: true });
-      resetApplication();
-      logout();
-
-      router.push("/track-application");
-    } finally {
+    if (result?.error) {
       setLoading(false);
+      return;
     }
+
+    setReviewData({ submitted: true });
+    resetApplication();
+    logout();
+
+    await logoutAction();
+
+    router.push("/track-application");
   };
 
   return (
