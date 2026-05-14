@@ -5,7 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { steps as allSteps } from "@/lib/sessionStorage";
 
-const bypassRoutes = ["/track-application", "/profile", "/review"];
+const bypassRoutes = [""];
 
 const stepRouteMap: Record<string, string> = {
   mobile: "/apply",
@@ -25,14 +25,21 @@ export default function StepRedirect({ children }: { children: React.ReactNode }
   const { completedSteps } = useApplicationContext();
 
   useEffect(() => {
-    if (bypassRoutes.includes(pathname)) return;
-
     const allComplete = allSteps.every((step) => completedSteps.has(step.key));
 
-    if (allComplete) {
-      if (pathname !== "/track-application") {
-        router.replace("/track-application");
+    if (pathname === "/track-application") {
+      if (!allComplete) {
+        const nextPending = allSteps.find((step) => !completedSteps.has(step.key));
+        const target = nextPending ? stepRouteMap[nextPending.key] : "/apply";
+        if (target) router.replace(target);
       }
+      return;
+    }
+
+    if (bypassRoutes.includes(pathname)) return;
+
+    if (allComplete) {
+      router.replace("/track-application");
       return;
     }
 

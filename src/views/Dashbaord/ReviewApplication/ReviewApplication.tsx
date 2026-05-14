@@ -1,12 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import { CheckCircle, ClipboardList, Edit3, Shield } from "lucide-react";
-import { useAuthContext } from "@/context/AuthContext";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { submitApplicationAction } from "@/lib/actions/application.action";
-import { logoutAction } from "@/lib/actions/logout.action";
 
 const ReviewField = ({ label, value }: { label: string; value: string }) => (
   <div>
@@ -46,9 +43,7 @@ const ReviewSection = ({
 );
 
 function ReviewApplication() {
-  const router = useRouter();
-  const { logout } = useAuthContext();
-  const { application: data, setReviewData, resetApplication } = useApplicationContext();
+  const { application: data, setReviewData } = useApplicationContext();
   const [agree, setAgree] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -98,12 +93,6 @@ function ReviewApplication() {
     }
 
     setReviewData({ submitted: true });
-    resetApplication();
-    logout();
-
-    await logoutAction();
-
-    router.push("/track-application");
   };
 
   return (
