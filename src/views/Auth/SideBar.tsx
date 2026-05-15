@@ -1,6 +1,7 @@
 import Logo from "@/assets/icon/Logo";
 import InfoCard from "@/components/Cards/InfoCard";
 import { ShieldCheck, TrendingUp, Users } from "lucide-react";
+import Link from "next/link";
 
 const SideBar = () => {
   const features = [
@@ -34,7 +35,7 @@ const SideBar = () => {
     >
       <div>
         <div className="mb-16">
-          <Logo />
+          <Link href="/"> <Logo /></Link>
         </div>
         <h1 className="text-5xl font-extrabold leading-[1.1] mb-6">
           Access your <br /> financial dashboard

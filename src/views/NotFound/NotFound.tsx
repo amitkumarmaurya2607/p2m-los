@@ -2,9 +2,9 @@ import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import Link from "next/link";
 
-export default function NotFound({ type = "dashboard" }: { type?: "dashboard" | "public" }) {
+export default function NotFound({ type = "public" }: { type?: "dashboard" | "public" }) {
     return (
-        <main className="relative flex min-h-screen flex-col overflow-hidden bg-[linear-gradient(180deg,#F7FAFF_0%,#EEF7FF_100%)]">
+        <main className="relative flex min-h-screen flex-col overflow-hidden bg-surface-accent">
             <Header />
 
             <section className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-20">
@@ -27,21 +27,21 @@ export default function NotFound({ type = "dashboard" }: { type?: "dashboard" | 
 
                 {/* Content */}
                 <div className="relative z-10 flex flex-col items-center text-center">
-                    <h1 className="text-[90px] font-light leading-none tracking-[2px] text-[#2D4F68] sm:text-[120px]">
+                    <h1 className="text-[90px] font-light leading-none tracking-[2px] text-text-dark-blue sm:text-[120px]">
                         404
                     </h1>
 
-                    <h2 className="mt-6 text-[24px] font-bold text-[#2D4F68] sm:text-[30px]">
+                    <h2 className="mt-6 text-[24px] font-bold text-text-dark-blue sm:text-[30px]">
                         Page Not Found.
                     </h2>
 
-                    <p className="mt-5 max-w-[500px] text-[16px] leading-[28px] text-[#3F617B] sm:text-[18px]">
+                    <p className="mt-5 max-w-[500px] text-[16px] leading-[28px] text-text-muted-dark sm:text-[18px]">
                         Sorry, we can’t find the page you’re looking for.
                     </p>
 
                     <Link
-                        href="/"
-                        className="mt-10 inline-flex h-[56px] min-w-[220px] items-center justify-center rounded-full bg-[#294E67] px-8 text-[18px] font-bold text-white shadow-[0px_10px_20px_rgba(41,78,103,0.25)] transition-all duration-200 hover:brightness-110 active:scale-95"
+                        href={type === "dashboard" ? "/apply" : "/"}
+                        className="mt-10 inline-flex h-[56px] min-w-[220px] items-center justify-center rounded-full bg-primary px-8 text-[18px] font-bold text-white shadow-[var(--shadow-btn-soft)] transition-all duration-200 hover:brightness-110 active:scale-95"
                     >
                         Back to Home
                     </Link>
