@@ -39,7 +39,7 @@ const EmiDashboard = () => {
   };
 
   return (
-    <section className="relative w-full overflow-hidden bg-surface-accent px-4 py-14 sm:px-6 lg:px-[91px] lg:py-24">
+    <section id="emi-calculator" className="relative w-full overflow-hidden bg-surface-accent px-4 py-14 sm:px-6 lg:px-[91px] lg:py-24">
       <div className="absolute -right-[160px] -top-[250px] h-[500px] w-[500px] rounded-full bg-white/40 blur-[64px]" />
 
       <div className="relative mx-auto flex max-w-[1257px] flex-col items-center justify-between gap-12 lg:flex-row lg:gap-16">
@@ -91,7 +91,7 @@ const EmiDashboard = () => {
           </div>
         </div>
 
-          <div className="relative w-full max-w-[584px] rounded-[32px] border border-white bg-white p-6 shadow-[0px_24px_48px_rgba(0,0,0,0.06)] sm:p-[33px]">
+        <div className="relative w-full max-w-[584px] rounded-[32px] border border-white bg-white p-6 shadow-[0px_24px_48px_rgba(0,0,0,0.06)] sm:p-[33px]">
           <div className="flex items-center justify-between border-b border-muted pb-6">
             <h3 className="text-xl font-bold text-dark-navy">
               Repayment Plan

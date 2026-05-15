@@ -4,6 +4,7 @@ import { ArrowUpRight, MessageCircle } from "lucide-react";
 import InnkedIcon from "@/assets/icon/InnkedIcon";
 import FacebookIcon from "@/assets/icon/FacebookIcon";
 import InstagramIcon from "@/assets/icon/InstagramIcon";
+import Image from "next/image";
 
 const socials = [
   {
@@ -97,9 +98,11 @@ const Community = () => {
 
               <div className="mt-9 flex flex-col gap-5 border-t border-home-border-dark pt-8 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-4">
-                  <img
-                    src="/rahul-verma.jpg"
+                  <Image
+                    src="/images/userIcon.png"
                     alt="Rahul Verma"
+                    width={64}
+                    height={64}
                     className="h-14 w-14 rounded-full border-2 border-home-green object-cover"
                   />
 

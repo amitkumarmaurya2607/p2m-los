@@ -1,16 +1,56 @@
-import React from "react";
+'use client';
+import React, { useState, useEffect } from "react";
 import { Quote, Star } from "lucide-react";
+import Image from "next/image";
 
 const stars = Array.from({ length: 5 });
 
 const users = [
-  "/user-1.jpg",
-  "/user-2.jpg",
-  "/user-3.jpg",
-  "/user-4.jpg",
+  "/images/userIcon.png",
+  "/images/userIcon.png",
+  "/images/userIcon.png",
+  "/images/userIcon.png",
+];
+
+const reviews = [
+  {
+    name: "Rahul Sharma",
+    role: "Small Business Owner",
+    avatar: "/images/userIcon.png",
+    text: "The process was incredibly smooth. I got my business loan approved within 2 hours. RinSetu really understands the urgency for startups.",
+  },
+  {
+    name: "Priya Patel",
+    role: "Freelancer",
+    avatar: "/images/userIcon.png",
+    text: "No physical documents, everything was 100% digital. The entire process was seamless from application to disbursement.",
+  },
+  {
+    name: "Amit Kumar",
+    role: "Software Engineer",
+    avatar: "/images/userIcon.png",
+    text: "I've tried other loan apps, but this one is by far the most reliable. The interest rates are competitive and the approval is instant.",
+  },
+  {
+    name: "Neha Gupta",
+    role: "Fashion Designer",
+    avatar: "/images/userIcon.png",
+    text: "Instant approval changed the game for me. I needed funds urgently for my business and RinSetu delivered within hours.",
+  },
 ];
 
 const RatingReviews = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % reviews.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const review = reviews[activeIndex];
+
   return (
     <section className="relative w-full overflow-hidden bg-dark-navy px-4 py-20 sm:px-6 lg:px-[95px] lg:py-32">
       <div className="absolute -left-[135px] -top-[171px] h-[514px] w-[811px] rounded-full bg-home-purple/30 blur-[120px]" />
@@ -59,9 +99,11 @@ const RatingReviews = () => {
           <div className="mt-8 flex items-center gap-4">
             <div className="relative h-12 w-[176px]">
               {users.map((src, index) => (
-                <img
+                <Image
                   key={src}
                   src={src}
+                  width={48}
+                  height={48}
                   alt=""
                   className="absolute top-0 h-12 w-12 rounded-full border-2 border-dark-navy object-cover"
                   style={{ left: `${index * 32}px` }}
@@ -69,7 +111,7 @@ const RatingReviews = () => {
               ))}
 
               <div className="absolute left-32 top-0 flex h-12 w-12 items-center justify-center rounded-full border-2 border-dark-navy bg-home-purple text-xs font-bold text-white">
-                +9k
+                +2k
               </div>
             </div>
 
@@ -141,34 +183,40 @@ const RatingReviews = () => {
             </div>
 
             <p className="mt-9 text-[24px] font-medium leading-[40px] text-dark-navy sm:text-[30px] sm:leading-[49px]">
-              "The process was incredibly smooth. I got my business loan
-              approved within 2 hours. RinSetu really understands the urgency
-              for startups."
+              &ldquo;{review.text}&rdquo;
             </p>
 
             <div className="mt-12 flex items-center gap-5">
-              <img
-                src="/rahul.jpg"
-                alt="Rahul Sharma"
+              <Image
+                width={64}
+                height={64}
+                src={review.avatar}
+                alt={review.name}
                 className="h-16 w-16 rounded-full border-2 border-muted object-cover shadow"
               />
 
               <div>
                 <h4 className="text-xl font-bold text-dark-navy">
-                  Rahul Sharma
+                  {review.name}
                 </h4>
                 <p className="text-base font-medium text-home-purple">
-                  Small Business Owner
+                  {review.role}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="mx-auto mt-14 flex w-[100px] items-center gap-3">
-            <button className="h-2 w-10 rounded-full bg-home-green" />
-            <button className="h-2 w-2 rounded-full bg-white/20" />
-            <button className="h-2 w-2 rounded-full bg-white/20" />
-            <button className="h-2 w-2 rounded-full bg-white/20" />
+          <div className="mx-auto mt-14 flex items-center justify-center gap-3">
+            {reviews.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveIndex(i)}
+                className={`rounded-full transition-all duration-300 ${i === activeIndex
+                  ? "h-2 w-10 bg-home-green"
+                  : "h-2 w-2 bg-white/20 hover:bg-white/40"
+                  }`}
+              />
+            ))}
           </div>
         </div>
       </div>
