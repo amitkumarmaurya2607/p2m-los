@@ -136,7 +136,7 @@ const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => 
       <div className="relative w-[280px] h-[280px]">
         <div className="absolute inset-0 rounded-full border-2 border-dashed border-border" />
 
-        <div className="absolute inset-3 rounded-[24px] overflow-hidden border-2 border-success">
+        <div className="absolute inset-3 rounded-full overflow-hidden border-2 border-success">
           {previewUrl ? (
             mode === "photo" ? (
               <img src={previewUrl} alt="Selfie Preview" className="w-full h-full object-cover" />

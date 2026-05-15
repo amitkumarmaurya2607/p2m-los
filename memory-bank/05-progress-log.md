@@ -38,8 +38,35 @@
    - Created all core files (00-05)
    - Documented project architecture, patterns, and technical context
 
+## Session 4 - May 15, 2026
+
+### Completed
+
+1. **Replaced Hardcoded Colors with CSS Variables (~120 occurrences across 9 files)**
+   - `TrackApplication.tsx` — replaced `#0F172B` → `text-text-heading`, `#3737C1` → `home-purple`, `#00C89C` → `home-green`, `#90A1B9` → `text-muted-light`, `#62748E` → `text-muted-dark`, `#45556C` → `text-body`, `#CAD5E2` → `text-on-dark-muted`, `#314158` → `text-dark-blue`, `#E2E8F0` → `border-medium`, `#F1F5F9` → `border-light`, `#F8FAFC` → `surface-muted`
+   - `ReviewApplication.tsx` — same pattern (20+ occurrences)
+   - `LoanCalculator.tsx` — same pattern (15 occurrences)
+   - `BankDetails.tsx` — same pattern (11 occurrences)
+   - `ApplicationSubmitted.tsx` — same pattern (11 occurrences)
+   - `UploadDocuments.tsx` — same pattern (6 occurrences)
+   - `StepCard.tsx` — replaced `bg-[#00C89C]` → `bg-home-green`
+   - `StepNotes.tsx` — replaced `rgba(55,55,193,0.1)` → `bg-home-purple/10`, `#3737C1` → `home-purple`, `#62748E` → `text-muted-dark`, `#45556C` → `text-body`
+
+2. **Replaced Hardcoded Width Values with CSS Variables**
+   - `Community.tsx`: `max-w-[1280px]` → `var(--max-width-section)`
+   - `LoanProducts.tsx`: `max-w-[1280px]` → `var(--max-width-section)`, `max-w-[672px]` → `var(--max-width-text)`
+   - `FaqSection.tsx`: `max-w-[1280px]` → `var(--max-width-section)`
+   - `MoreThanLoans.tsx`: `max-w-[672px]` → `var(--max-width-text)`
+
+3. **Left as-is** (no exact variable match):
+   - SideBar.tsx gradient stops (`#6FFFD2`, `#7A7AF5`)
+   - Complex SVG gradient colors in StepCard.tsx
+   - Logo.tsx branding assets
+   - `#1D293D`, `#00A882`, `#2B2B9A`, `#FEF3C6`, `#E17100`, `#FB2C36` — no matching CSS variable
+
 ### Build Status
 
+- Lint: PASS (all 98 issues are pre-existing)
 - Turbopack compilation: PASS
 - TypeScript type-check: FAIL (pre-existing errors, not caused by changes)
   - `src/pages/Home/Home.tsx` - not a module
@@ -57,6 +84,47 @@
    - Deleted `src/store/`, `src/features/`, `src/components/ReduxProvider.tsx`
    - Uninstalled `@reduxjs/toolkit` and `react-redux` (saved ~2KB bundle size)
    - Build passes (pre-existing Contact.tsx error unchanged)
+
+## Session 4 - May 15, 2026 (Part 2)
+
+### Completed
+
+1. **Added new CSS variables to `globals.css`**
+   - Colors: `--home-green-dark: #00A882`, `--home-purple-dark: #2B2B9A`
+   - Shadows: `--shadow-card`, `--shadow-dark-card`, `--shadow-btn-soft`, `--shadow-green-glow`, `--shadow-purple-button`
+   - Mapped new colors in `@theme inline` block
+
+2. **Replaced hardcoded `--shadow-sm`** (4 occurrences)
+   - `FaqSection.tsx`, `Community.tsx`, `EmiDashboard.tsx` (×2)
+
+3. **Replaced hardcoded `--shadow-card`** (6 occurrences)
+   - `MoreThanLoans.tsx`, `LoanProducts.tsx`, `StepProcess.tsx`, `QuickEasySection.tsx`, `FinalCTA.tsx`, `LoanCalculator.tsx`
+
+4. **Replaced hardcoded `--shadow-dark-card`** (5 occurrences)
+   - `Community.tsx`, `FinalCTA.tsx` (×2), `ReviewApplication.tsx`, `TrackApplication.tsx`
+
+5. **Replaced hardcoded `--shadow-btn-soft`** (4 occurrences)
+   - `EmiDashboard.tsx`, `QuickEasySection.tsx`, `WhyChoose.tsx`, `FaqSection.tsx`
+
+6. **Replaced hardcoded `--shadow-green-glow`** (2 occurrences)
+   - `ApplicationSubmitted.tsx`, `BankDetails.tsx`
+
+7. **Replaced hardcoded `--shadow-purple-button`** (1 occurrence)
+   - `ApplicationSubmitted.tsx`
+
+8. **Replaced hardcoded gradient stops**
+   - `to-[#00A882]` → `to-home-green-dark` (3 files: ApplicationSubmitted, BankDetails, ReviewApplication)
+   - `to-[#2B2B9A]` → `to-home-purple-dark` (2 files: ApplicationSubmitted, BankDetails)
+   - `to-[#1D293D]` → `to-home-border-dark` (3 files: LoanCalculator, ReviewApplication, TrackApplication)
+
+9. **Replaced `card-icon-shadow`** in `LoanProducts.tsx`
+
+10. **Left as-is** (no variable match):
+    - Unique hover shadows (e.g., `hover:shadow-[0px_30px_60px_rgba(...)]`)
+    - Complex `bg-[linear-gradient(...)]` in StepCard.tsx
+    - `sessionStorage.ts` step gradient colors
+    - SideBar.tsx gradient starts (`#6FFFD2`, `#7A7AF5`)
+    - Instagram brand gradient in Community.tsx
 
 ## Session 3 - May 11, 2026
 

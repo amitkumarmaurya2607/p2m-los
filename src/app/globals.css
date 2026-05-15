@@ -78,6 +78,13 @@
   --shadow-md: 0px 32px 64px -16px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0px 32px 80px -24px rgba(0, 0, 0, 0.15);
   --shadow-button: 0px 12px 24px -8px rgba(13, 148, 136, 0.4);
+  --shadow-card: 0px 20px 25px -5px rgba(0, 0, 0, 0.1),
+                 0px 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-dark-card: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-btn-soft: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
+                     0px 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-green-glow: 0px 0px 60px rgba(0, 200, 156, 0.6);
+  --shadow-purple-button: 0px 12px 24px -8px rgba(55, 55, 193, 0.4);
 
   /* Card */
   --card-border: #f1f5f9;
@@ -110,7 +117,9 @@
 
   /* Home page colors */
   --home-green: #00C89C;
+  --home-green-dark: #00A882;
   --home-purple: #3737C1;
+  --home-purple-dark: #2B2B9A;
   --home-orange-badge: #FF8A00;
   --home-text-dark: #364153;
   --home-text-medium: #4A5565;
@@ -204,7 +213,9 @@
   --color-stepper-pending-text: var(--stepper-pending-text);
 
   --color-home-green: var(--home-green);
+  --color-home-green-dark: var(--home-green-dark);
   --color-home-purple: var(--home-purple);
+  --color-home-purple-dark: var(--home-purple-dark);
   --color-home-orange-badge: var(--home-orange-badge);
   --color-home-text-dark: var(--home-text-dark);
   --color-home-text-medium: var(--home-text-medium);

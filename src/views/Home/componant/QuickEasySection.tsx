@@ -26,7 +26,7 @@ const QuickEasySection = () => {
             className="relative z-10 w-full h-auto max-w-[800px] object-contain drop-shadow-[-2px_3px_14px_rgba(0,0,0,0.25)]"
           />
 
-          <div className="absolute bottom-[70px] right-[10px] z-20 flex h-24 w-24 items-center justify-center rounded-full border-[8px] border-white bg-home-green text-center text-[20px] font-bold leading-[25px] text-white shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)] sm:right-[30px]">
+          <div className="absolute bottom-[70px] right-[10px] z-20 flex h-24 w-24 items-center justify-center rounded-full border-[8px] border-white bg-home-green text-center text-[20px] font-bold leading-[25px] text-white shadow-[var(--shadow-card)] sm:right-[30px]">
 
             {/* Small Ripple */}
             <span className="absolute inset-[-6px] rounded-full border-2 border-home-green/35 animate-ping" />
@@ -63,7 +63,7 @@ const QuickEasySection = () => {
             ))}
           </div>
 
-          <Link href='/apply' className="mt-8 h-[60px] inline-flex items-center justify-center rounded-full bg-home-purple px-7 text-[18px] font-bold text-white shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-1 hover:bg-home-purple/90 hover:shadow-[0px_16px_30px_rgba(55,55,193,0.35)]">
+          <Link href='/apply' className="mt-8 h-[60px] inline-flex items-center justify-center rounded-full bg-home-purple px-7 text-[18px] font-bold text-white shadow-[var(--shadow-btn-soft)] transition-all duration-300 hover:-translate-y-1 hover:bg-home-purple/90 hover:shadow-[0px_16px_30px_rgba(55,55,193,0.35)]">
             Start Your Journey
           </Link>
         </div>

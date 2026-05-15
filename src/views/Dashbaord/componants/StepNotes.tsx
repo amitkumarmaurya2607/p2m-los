@@ -50,12 +50,12 @@ const StepNotes = ({
   const content = (
     <>
       {/* Top Icon */}
-      <div className="flex h-[56px] w-[56px] items-center justify-center rounded-[16px] bg-[rgba(55,55,193,0.1)]">
+      <div className="flex h-[56px] w-[56px] items-center justify-center rounded-[16px] bg-home-purple/10">
         {icon || (
           <Fingerprint
             size={28}
             strokeWidth={1.75}
-            className="text-[#3737C1]"
+            className="text-home-purple"
           />
         )}
       </div>
@@ -66,7 +66,7 @@ const StepNotes = ({
           {title}
         </h2>
 
-        <p className="max-w-[460px] text-[13px] font-normal leading-[20px] text-[#62748E]">
+        <p className="max-w-[460px] text-[13px] font-normal leading-[20px] text-text-muted-dark">
           {description}
         </p>
       </div>
@@ -80,7 +80,7 @@ const StepNotes = ({
             <ShieldCheck
               size={24}
               strokeWidth={2}
-              className="text-[#3737C1]"
+              className="text-home-purple"
             />
           )}
         </div>
@@ -91,7 +91,7 @@ const StepNotes = ({
             {noteTitle}
           </h4>
 
-          <p className="text-[12px] font-normal leading-[20px] text-[#45556C]">
+          <p className="text-[12px] font-normal leading-[20px] text-text-body">
             {noteDescription}
           </p>
         </div>

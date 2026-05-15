@@ -28,7 +28,7 @@ const faqs = [
 const FaqSection = () => {
   return (
     <section className="bg-white px-5 py-16  md:px-10 lg:px-[90px] lg:py-24">
-      <div className="mx-auto max-w-[1280px] px-0 md:px-8">
+      <div className="mx-auto max-w-[var(--max-width-section)] px-0 md:px-8">
         <div className="grid gap-12 lg:grid-cols-[789px_363px] lg:gap-16">
           <div>
             <h2 className="text-[32px] font-bold leading-10 tracking-[-0.9px] text-dark-navy md:text-[36px]">
@@ -44,7 +44,7 @@ const FaqSection = () => {
                 <details
                   key={faq.question}
                   open={index === 0}
-                  className="group overflow-hidden rounded-3xl border border-muted bg-white shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] open:border-home-purple"
+                  className="group overflow-hidden rounded-3xl border border-muted bg-white shadow-[var(--shadow-sm)] open:border-home-purple"
                 >
                   <summary className="flex min-h-[80px] cursor-pointer list-none items-center justify-between gap-4 px-6 text-left marker:hidden [&::-webkit-details-marker]:hidden">
                     <span className="text-[18px] font-bold leading-7 text-dark-navy">

@@ -57,7 +57,7 @@ const StepProcess = () => {
                   key={step.title}
                   className="relative z-10 flex items-start gap-8"
                 >
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-home-bg-orange-light bg-white text-[24px] font-black text-accent-orange shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)]">
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-home-bg-orange-light bg-white text-[24px] font-black text-accent-orange shadow-[var(--shadow-card)]">
                     {index + 1}
                   </div>
 

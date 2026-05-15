@@ -153,14 +153,14 @@ function UploadDocuments() {
           </div>
 
           <h3 className="mt-5 text-[18px] font-bold text-text-heading">Click or drag files here</h3>
-          <p className="mt-1 text-[14px] text-[#62748E]">PDF, JPG or PNG (Max 5MB)</p>
+          <p className="mt-1 text-[14px] text-text-muted-dark">PDF, JPG or PNG (Max 5MB)</p>
         </div>
 
         <div
-          className="mt-8 rounded-[24px] border border-[#F1F5F9] bg-white p-8
+          className="mt-8 rounded-[24px] border border-border-light bg-white p-8
             shadow-[0px_20px_25px_-5px_rgba(226,232,240,0.4)]"
         >
-          <h3 className="text-[18px] font-bold text-[#0F172B]">Required Documents</h3>
+          <h3 className="text-[18px] font-bold text-text-heading">Required Documents</h3>
 
           <div className="mt-7 space-y-4">
             {docs.map((doc) => (
@@ -179,7 +179,7 @@ function UploadDocuments() {
 
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="text-[16px] font-semibold text-[#0F172B]">{doc.title}</p>
+                      <p className="text-[16px] font-semibold text-text-heading">{doc.title}</p>
                       <span
                         className="rounded-full bg-[#FFE2E2] px-2 py-0.5 text-[10px] font-bold
                           uppercase text-[#FB2C36]"
@@ -213,8 +213,8 @@ function UploadDocuments() {
                   <button
                     type="button"
                     onClick={() => handleUploadClick(doc.key)}
-                    className="h-10 rounded-[14px] border-2 border-[#E2E8F0] px-5 text-[14px]
-                      font-semibold text-[#314158]"
+                    className="h-10 rounded-[14px] border-2 border-border-medium px-5 text-[14px]
+                      font-semibold text-text-dark-blue"
                   >
                     Upload
                   </button>

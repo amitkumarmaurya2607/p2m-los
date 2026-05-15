@@ -37,11 +37,10 @@ const CustomDatePicker = ({
             <label
               htmlFor={id}
               className={`absolute transition-all duration-200 pointer-events-none z-10 text-xs font-bold
-              ${
-                isActive
+              ${isActive
                   ? "top-[-8px] left-[7px] px-[3px] bg-input-bg w-fit"
                   : `${leftIcon ? "left-[36px]" : "left-[10px]"} top-1/2 -translate-y-1/2`
-              }`}
+                }`}
             >
               {label}
               {required && <span className="text-destructive ml-0.5">*</span>}
@@ -94,7 +93,7 @@ const CustomDatePicker = ({
             background: var(--background);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 12px;
+            padding: 8px;
             width: 320px;
             font-family: inherit;
             box-shadow: var(--shadow-lg);
@@ -112,15 +111,16 @@ const CustomDatePicker = ({
           .custom-datepicker .react-datepicker__header {
             background: transparent!important;
             border-bottom: none!important;
-            padding-top: 6px!important;
+            padding-top: 2px!important;
           }
 
           .custom-datepicker .react-datepicker__current-month {
             color: var(--foreground);
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 700;
             text-align: center;
             margin-left: 8px;
+            margin-top: 10px;
           }
 
           .custom-datepicker .react-datepicker__navigation {
@@ -136,7 +136,7 @@ const CustomDatePicker = ({
           }
 
           .custom-datepicker .react-datepicker__day-names {
-            margin-top: 14px;
+            margin-top: 6px;
             display: flex;
             justify-content: space-between;
             padding: 0 6px;
@@ -147,22 +147,22 @@ const CustomDatePicker = ({
             font-size: 12px;
             font-weight: 600;
             width: 2.2rem;
-            line-height: 2.2rem;
+            line-height: 1.6rem;
           }
 
           .custom-datepicker .react-datepicker__month {
-            margin: 10px 0 0;
+            margin: 4px 0 0;
           }
 
           .custom-datepicker .react-datepicker__week {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 6px;
+            margin-bottom: 2px;
           }
 
           .custom-day {
             width: 2rem;
-            line-height: 2rem;
+            line-height: 1.6rem;
             border-radius: 999px;
             color: var(--text-body);
             font-size: 14px;

@@ -118,7 +118,7 @@ const FeatureCard = ({
 
       {/* Icon */}
       <div
-        className={`flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)] transition-transform duration-500 group-hover:rotate-6 group-hover:scale-110 ${color}`}
+        className={`flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-[var(--shadow-btn-soft)] transition-transform duration-500 group-hover:rotate-6 group-hover:scale-110 ${color}`}
       >
         <Icon size={24} strokeWidth={2} />
       </div>

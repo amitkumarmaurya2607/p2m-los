@@ -34,7 +34,7 @@ const socials = [
 const Community = () => {
   return (
     <section className="border-y border-home-purple/10 bg-surface-accent px-5 py-16 font-[Inter] md:px-10 lg:px-20 lg:py-[97px]">
-      <div className="mx-auto max-w-[1280px] px-0 md:px-6">
+      <div className="mx-auto max-w-[var(--max-width-section)] px-0 md:px-6">
         <div className="flex flex-col items-center gap-12 lg:flex-row lg:justify-between lg:gap-16">
           {/* Left */}
           <div className="w-full max-w-[584px]">
@@ -52,7 +52,7 @@ const Community = () => {
                 return (
                   <div
                     key={item.name}
-                    className="group flex min-h-[106px] items-center justify-between rounded-2xl border border-border-light bg-white p-6 shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0px_14px_30px_rgba(15,23,42,0.12)]"
+                    className="group flex min-h-[106px] items-center justify-between rounded-2xl border border-border-light bg-white p-6 shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0px_14px_30px_rgba(15,23,42,0.12)]"
                   >
                     <div className="flex items-center gap-4">
                       <div
@@ -86,7 +86,7 @@ const Community = () => {
           <div className="relative w-full max-w-[584px]">
             <div className="absolute -left-[10px] -top-[15px] h-full w-full rotate-3 rounded-[40px] bg-home-purple opacity-10" />
 
-            <div className="relative rounded-[40px] bg-dark-navy p-8 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] sm:p-10">
+            <div className="relative rounded-[40px] bg-dark-navy p-8 shadow-[var(--shadow-dark-card)] sm:p-10">
               <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-home-purple">
                 <MessageCircle className="h-8 w-8 text-white" />
               </div>

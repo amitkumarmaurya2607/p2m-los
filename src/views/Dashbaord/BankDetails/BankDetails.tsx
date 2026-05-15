@@ -110,29 +110,29 @@ function BankDetails() {
       >
         <div
           className="mx-auto flex h-16 w-16 lg:h-28 lg:w-28 items-center justify-center rounded-full
-            bg-gradient-to-r from-[#00C89C] to-[#00A882] shadow-[0px_0px_60px_rgba(0,200,156,0.6)]"
+            bg-gradient-to-r from-home-green to-home-green-dark shadow-[var(--shadow-green-glow)]"
         >
           <Check className="h-8 w-8 lg:h-14 lg:w-14 text-white" strokeWidth={4} />
         </div>
 
         <h2
           className="mt-6 lg:mt-8 text-center text-[28px] lg:text-[36px] font-extrabold leading-10
-            tracking-[-0.9px] text-[#0F172B]"
+            tracking-[-0.9px] text-text-heading"
         >
           Bank Account Verified!
         </h2>
 
         <p
           className="mt-4 text-center text-[14px] lg:text-[18px] font-medium leading-[29px]
-            text-[#62748E]"
+            text-text-muted-dark"
         >
           Your bank account has been successfully verified. Proceed to the next step.
         </p>
 
-        <div className="mt-10 rounded-[24px] border border-[#E2E8F0] bg-[#F8FAFC] px-6 py-6">
+        <div className="mt-10 rounded-[24px] border border-border-medium bg-surface-muted px-6 py-6">
           <div className="space-y-4">
             <div>
-              <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-[#90A1B9]">
+              <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-muted-light">
                 Account Number
               </p>
               <p className="mt-1 font-mono text-[20px] font-bold text-[#1D293D]">{maskedAccount}</p>
@@ -140,14 +140,14 @@ function BankDetails() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-[#90A1B9]">
+                <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-muted-light">
                   IFSC Code
                 </p>
                 <p className="mt-1 font-mono text-[16px] font-bold text-[#1D293D]">{form.ifsc}</p>
               </div>
 
               <div>
-                <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-[#90A1B9]">
+                <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-muted-light">
                   Account Type
                 </p>
                 <p className="mt-1 text-[16px] font-bold capitalize text-[#1D293D]">{form.accountType}</p>
@@ -160,7 +160,7 @@ function BankDetails() {
           <GradientButton
             onClick={() => window.location.href = "/selfie-capture"}
             type="button"
-            className="w-full mt-4 sm:mt-6 bg-gradient-to-r from-[#3737C1] to-[#2B2B9A]"
+            className="w-full mt-4 sm:mt-6 bg-gradient-to-r from-home-purple to-home-purple-dark"
           >
             Next Step
           </GradientButton>

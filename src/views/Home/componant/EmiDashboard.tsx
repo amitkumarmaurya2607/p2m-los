@@ -61,7 +61,7 @@ const EmiDashboard = () => {
           </p>
 
           <div className="mt-8 flex max-w-[448px] flex-col gap-4">
-            <div className="flex h-[76px] items-center gap-4 rounded-[14px] bg-white p-4 shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)]">
+            <div className="flex h-[76px] items-center gap-4 rounded-[14px] bg-white p-4 shadow-[var(--shadow-sm)]">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-home-green/10">
                 <ShieldCheck className="h-5 w-5 text-home-green" />
               </div>
@@ -75,7 +75,7 @@ const EmiDashboard = () => {
               </div>
             </div>
 
-            <div className="flex h-[76px] items-center gap-4 rounded-[14px] bg-white p-4 shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)]">
+            <div className="flex h-[76px] items-center gap-4 rounded-[14px] bg-white p-4 shadow-[var(--shadow-sm)]">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-orange/10">
                 <SlidersHorizontal className="h-5 w-5 text-accent-orange" />
               </div>
@@ -195,7 +195,7 @@ const EmiDashboard = () => {
             </div>
           </div>
 
-          <div className="absolute -bottom-7 -right-6 rotate-[26.91deg] rounded-[14px] bg-accent-orange px-6 py-4 text-sm font-bold text-white shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
+          <div className="absolute -bottom-7 -right-6 rotate-[26.91deg] rounded-[14px] bg-accent-orange px-6 py-4 text-sm font-bold text-white shadow-[var(--shadow-btn-soft)]">
             Save 2% Now!
           </div>
         </div>

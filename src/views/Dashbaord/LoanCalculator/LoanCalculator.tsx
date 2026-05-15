@@ -76,24 +76,24 @@ function LoanCalculator() {
     >
 
       <div
-        className="relative mt-8 overflow-hidden rounded-[24px] bg-gradient-to-br from-[#0F172B]
-          to-[#1D293D] p-6
-          shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)]"
+        className="relative mt-8 overflow-hidden rounded-[24px] bg-gradient-to-br from-text-heading
+          to-home-border-dark p-6
+          shadow-[var(--shadow-card)]"
       >
         <div className="absolute -right-2 -top-10 h-32 w-32 rounded-full bg-white/5 blur-[40px]" />
 
-        <p className="text-[14px] font-semibold uppercase tracking-[0.7px] text-[#CAD5E2]">
+        <p className="text-[14px] font-semibold uppercase tracking-[0.7px] text-text-on-dark-muted">
           Estimated EMI
         </p>
 
         <div className="mt-1 flex items-end gap-1">
           <h3 className="text-[36px] font-extrabold leading-10 text-white">₹{formatINR(emi)}</h3>
-          <span className="pb-1 text-[18px] font-medium leading-7 text-[#90A1B9]">/mo</span>
+          <span className="pb-1 text-[18px] font-medium leading-7 text-text-muted-light">/mo</span>
         </div>
 
         <div
           className="mt-4 flex items-center justify-between border-t border-white/10 pt-4
-            text-[14px] font-medium leading-5 text-[#CAD5E2]"
+            text-[14px] font-medium leading-5 text-text-on-dark-muted"
         >
           <span>Interest Rate: {interestRate}% p.a.</span>
           <span>Total Payable: ₹{formatINR(totalPayable)}</span>
@@ -103,8 +103,8 @@ function LoanCalculator() {
       <div className="mt-10 space-y-8">
         <div>
           <div className="flex items-center justify-between">
-            <p className="text-[16px] font-bold leading-6 text-[#314158]">Loan Amount</p>
-            <p className="text-[20px] font-bold leading-7 text-[#3737C1]">
+            <p className="text-[16px] font-bold leading-6 text-text-dark-blue">Loan Amount</p>
+            <p className="text-[20px] font-bold leading-7 text-home-purple">
               ₹{formatINR(loanAmount)}
             </p>
           </div>
@@ -116,12 +116,12 @@ function LoanCalculator() {
             step={10000}
             value={loanAmount}
             onChange={(e) => setLoanAmount(Number(e.target.value))}
-            className="mt-7 h-2 w-full cursor-pointer appearance-none rounded-full bg-[#E2E8F0]
-              accent-[#3737C1]"
+            className="mt-7 h-2 w-full cursor-pointer appearance-none rounded-full bg-border-medium
+              accent-home-purple"
           />
 
           <div
-            className="mt-3 flex justify-between text-[12px] font-semibold leading-4 text-[#90A1B9]"
+            className="mt-3 flex justify-between text-[12px] font-semibold leading-4 text-text-muted-light"
           >
             <span>₹1L</span>
             <span>₹15L</span>
@@ -130,8 +130,8 @@ function LoanCalculator() {
 
         <div>
           <div className="flex items-center justify-between">
-            <p className="text-[16px] font-bold leading-6 text-[#314158]">Tenure (Months)</p>
-            <p className="text-[20px] font-bold leading-7 text-[#3737C1]">{tenure} months</p>
+            <p className="text-[16px] font-bold leading-6 text-text-dark-blue">Tenure (Months)</p>
+            <p className="text-[20px] font-bold leading-7 text-home-purple">{tenure} months</p>
           </div>
 
           <input
@@ -141,12 +141,12 @@ function LoanCalculator() {
             step={1}
             value={tenure}
             onChange={(e) => setTenure(Number(e.target.value))}
-            className="mt-7 h-2 w-full cursor-pointer appearance-none rounded-full bg-[#E2E8F0]
-              accent-[#00C89C]"
+            className="mt-7 h-2 w-full cursor-pointer appearance-none rounded-full bg-border-medium
+              accent-home-green"
           />
 
           <div
-            className="mt-3 flex justify-between text-[12px] font-semibold leading-4 text-[#90A1B9]"
+            className="mt-3 flex justify-between text-[12px] font-semibold leading-4 text-text-muted-light"
           >
             <span>12m</span>
             <span>60m</span>

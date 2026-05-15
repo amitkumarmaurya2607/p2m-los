@@ -46,7 +46,7 @@ const MoreThanLoans = () => {
         <section className="overflow-hidden bg-white px-5 py-20 md:px-8 lg:px-[35px] lg:pt-24 ">
             <div className="mx-auto flex max-w-[1371px] flex-col items-center gap-16 px-0 md:px-8">
                 {/* Heading */}
-                <div className="max-w-[672px] text-center">
+                <div className="max-w-[var(--max-width-text)] text-center">
                     <h2 className="text-[38px] font-extrabold leading-[46px] tracking-[-1.2px] sm:text-[48px] sm:leading-[48px]">
                         <span className="bg-gradient-to-r from-home-purple to-home-green bg-clip-text text-transparent">
                             More than just loans.
@@ -66,7 +66,7 @@ const MoreThanLoans = () => {
                         return (
                             <div
                                 key={index}
-                                className={`group relative min-h-[213px] overflow-hidden rounded-[32px] ${tool.bg} p-8 shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0px_25px_50px_rgba(0,0,0,0.16)]`}
+                                className={`group relative min-h-[213px] overflow-hidden rounded-[32px] ${tool.bg} p-8 shadow-[var(--shadow-card)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0px_25px_50px_rgba(0,0,0,0.16)]`}
                             >
                                 {/* Large Background Shape */}
                                 <div className="absolute bottom-[-30px] right-[-10px] text-[160px] font-black leading-none text-white/10 transition-all duration-500 group-hover:scale-110">

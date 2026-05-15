@@ -36,7 +36,7 @@ const loanCards = [
 const LoanProducts = () => {
   return (
     <section className="w-full overflow-hidden bg-surface-muted px-4 py-14 sm:px-6 lg:px-20 lg:py-24">
-      <div className="mx-auto flex max-w-[1280px] flex-col gap-12 lg:gap-16">
+      <div className="mx-auto flex max-w-[var(--max-width-section)] flex-col gap-12 lg:gap-16">
         {/* Heading */}
         <div className="max-w-[760px]">
           <h2 className="text-[34px] font-extrabold leading-[40px] tracking-[-1px] text-dark-navy sm:text-[42px] sm:leading-[48px] lg:text-[48px]">
@@ -46,7 +46,7 @@ const LoanProducts = () => {
             </span>
           </h2>
 
-          <p className="mt-6 max-w-[672px] text-[16px] leading-7 text-text-body sm:text-[18px]">
+          <p className="mt-6 max-w-[var(--max-width-text)] text-[16px] leading-7 text-text-body sm:text-[18px]">
             Premium financial products tailored for your needs. Fast approvals,
             transparent terms, and complete digital convenience.
           </p>
@@ -92,7 +92,7 @@ const LoanProducts = () => {
             />
 
             {/* Bottom CTA */}
-            <div className="absolute bottom-10 left-10 right-10 z-20 pt-8 pb-5  flex h-[110px] items-center justify-between rounded-[10px] border border-white/30 bg-home-purple px-[30px] shadow-[0px_10px_30px_rgba(0,0,0,0.3),inset_0px_-2px_0px_rgba(0,0,0,0.2)] transition-all duration-300 group-hover:border-home-green/35">
+            <div className="absolute bottom-10 left-10 right-10 z-20 pt-8 pb-5  flex h-[110px] items-center justify-between rounded-[10px] border border-white/30 bg-home-purple px-[30px] shadow-[var(--card-icon-shadow)] transition-all duration-300 group-hover:border-home-green/35">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.7px] text-white">
                   Loan Amount
@@ -117,7 +117,7 @@ const LoanProducts = () => {
               return (
                 <div
                   key={item.title}
-                  className="group flex min-h-[266px] flex-col justify-between rounded-3xl border border-home-border-card bg-home-bg-card-dark p-8 shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:border-home-green/40 hover:shadow-[0px_25px_50px_rgba(0,200,156,0.18)]"
+                  className="group flex min-h-[266px] flex-col justify-between rounded-3xl border border-home-border-card bg-home-bg-card-dark p-8 shadow-[var(--shadow-card)] transition-all duration-500 hover:-translate-y-2 hover:border-home-green/40 hover:shadow-[0px_25px_50px_rgba(0,200,156,0.18)]"
                 >
                   {/* Top */}
                   <div className="flex items-start justify-between">
