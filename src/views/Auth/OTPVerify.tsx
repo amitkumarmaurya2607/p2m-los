@@ -18,7 +18,7 @@ type OTPVerifyProps = {
   back: () => void;
 };
 
-function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps) {
+function OTPVerify({ resend = () => { }, method, userName, back }: OTPVerifyProps) {
   const router = useRouter();
   const { login } = useAuthContext();
   const { setMobileData } = useApplicationContext();
@@ -67,17 +67,16 @@ function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps
     <div
       className="w-full lg:w-1/2 bg-surface-muted flex items-center justify-center p-6
         bg-[url('/images/boginBanner.webp')] lg:bg-none"
-    > 
-         <StepCard
-            title="Verify OTP"
-            subtitle= {`We've sent a 6-digit code to your ${
-                method === "email" ? "email" : "mobile number"
-              } (${maskedValue})`}
-            className="w-full max-w-[448px]" 
-             back={back}
-          >
+    >
+      <StepCard
+        title="Verify OTP"
+        subtitle={`We've sent a 6-digit code to your ${method === "email" ? "email" : "mobile number"
+          } (${maskedValue})`}
+        className="w-full max-w-[448px]"
+        back={back}
+      >
 
-  <form className="space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <OTPInput
             length={6}
             onComplete={(code) => {
@@ -97,7 +96,7 @@ function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps
             <ResendTimer onResend={resend} />
           </p>
         </form>
-          </StepCard>
+      </StepCard>
     </div>
   );
 }

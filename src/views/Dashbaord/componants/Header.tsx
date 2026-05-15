@@ -6,6 +6,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { useApplicationSteps } from "@/hooks/useApplicationSteps";
 import { steps as allSteps, StepItem } from "@/lib/sessionStorage";
+import { logoutAction } from "@/lib/actions/logout.action";
 
 type HeaderProps = {
   title?: string;
@@ -26,11 +27,12 @@ const Header: React.FC<HeaderProps> = ({
   const { resetApplication } = useApplicationContext();
   const router = useRouter();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await logoutAction();
     logout();
     resetApplication();
     setDropdownOpen(false);
-    router.push("/apply");
+    router.push("/");
   };
 
   useEffect(() => {

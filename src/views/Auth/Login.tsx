@@ -100,57 +100,57 @@ const Login = () => {
           <StepCard
             title="Welcome back"
             subtitle="Please enter your details to sign in."
-            className="w-full max-w-[448px]" 
+            className="w-full max-w-[448px]"
           >
- <form
-            onSubmit={submitHandler}
-           
-          >
-           
+            <form
+              onSubmit={submitHandler}
 
-            <div className="space-y-4">
-              <TextInput
-                type={method === "mobile" ? "tel" : "email"}
-                label={method === "mobile" ? "Mobile Number" : "Email Address"}
-                onChange={handleChange}
-                value={userName}
-                error={error}
-              />
+            >
 
-              {/* ✅ Checkbox */}
-              <div className="flex items-start gap-2">
-                <input
-                  type="checkbox"
-                  checked={accepted}
-                  onChange={(e) => setAccepted(e.target.checked)}
-                  className="mt-1 w-4 h-4 accent-secondary cursor-pointer"
+
+              <div className="space-y-4">
+                <TextInput
+                  type={method === "mobile" ? "tel" : "email"}
+                  label={method === "mobile" ? "Mobile Number" : "Email Address"}
+                  onChange={handleChange}
+                  value={userName}
+                  error={error}
                 />
 
-                <p className="text-sm text-text-secondary">
-                  I agree to the{" "}
-                  <Link
-                  href="/terms-and-conditions"
-                 
-                    onClick={() => setOpenTnc(true)}
-                    className="text-primary font-medium underline"
-                  >
-                    Terms & Conditions
-                  </Link>
-                </p>
-              </div>
+                {/* ✅ Checkbox */}
+                <div className="flex items-start gap-2">
+                  <input
+                    type="checkbox"
+                    checked={accepted}
+                    onChange={(e) => setAccepted(e.target.checked)}
+                    className="mt-1 w-4 h-4 accent-secondary cursor-pointer"
+                  />
 
-              {/* Button */}
-              <GradientButton type="submit" loading={loading} disabled={!accepted} className="mt-6">
-                <span className="flex items-center gap-2">
-                  Get OTP
-                  <ArrowRight className="w-5 h-5" />
-                </span>
-              </GradientButton>
-            </div>
-          </form>
+                  <p className="text-sm text-text-secondary">
+                    I agree to the{" "}
+                    <Link
+                      href="/terms-and-conditions"
+
+                      onClick={() => setOpenTnc(true)}
+                      className="text-primary font-medium underline"
+                    >
+                      Terms & Conditions
+                    </Link>
+                  </p>
+                </div>
+
+                {/* Button */}
+                <GradientButton type="submit" loading={loading} disabled={!accepted} className="mt-6">
+                  <span className="flex items-center gap-2">
+                    Get OTP
+                    <ArrowRight className="w-5 h-5" />
+                  </span>
+                </GradientButton>
+              </div>
+            </form>
 
           </StepCard>
-         
+
         </div>
       ) : (
         <OTPVerify
@@ -161,7 +161,7 @@ const Login = () => {
         />
       )}
 
-   
+
     </>
   );
 };

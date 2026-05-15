@@ -9,6 +9,7 @@ import MockDataInitializer from "@/components/MockDataInitializer";
 
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AuthProvider } from "@/context/AuthContext";
 
 export const metadata: Metadata = {
   title: "P2M LOS - Dashboard",
@@ -17,26 +18,28 @@ export const metadata: Metadata = {
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
+    <AuthProvider>
+      <div className="min-h-screen bg-background">
+        <Header />
 
-      <div className="flex">
-         {/* <StepperAlt />  */}
-        <div className="grow-1">
-          <ProgressBar />
-          {/* <div className="flex justify-center p-8">
+        <div className="flex">
+          {/* <StepperAlt />  */}
+          <div className="grow-1">
+            <ProgressBar />
+            {/* <div className="flex justify-center p-8">
             <HorizontalStepper />
           </div> */}
-          <div className="flex justify-center px-4 pt-12 pb-6">
-            <ErrorBoundary label="Dashboard">
-              <AuthGuard>
-                <MockDataInitializer />
-                <StepRedirect>{children}</StepRedirect>
-              </AuthGuard>
-            </ErrorBoundary>
+            <div className="flex justify-center px-4 pt-12 pb-6">
+              <ErrorBoundary label="Dashboard">
+                <AuthGuard>
+                  <MockDataInitializer />
+                  <StepRedirect>{children}</StepRedirect>
+                </AuthGuard>
+              </ErrorBoundary>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </AuthProvider>
   );
 }

@@ -6,11 +6,11 @@ import ToastProvider from "@/components/ToastProvider/ToastProvider";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <AuthProvider>
-      <ApplicationProvider>
-        <ToastProvider />
-        {children}
-      </ApplicationProvider>
-    </AuthProvider>
+
+    <ApplicationProvider>
+      <ToastProvider />
+      {children}
+    </ApplicationProvider>
+
   );
 }
