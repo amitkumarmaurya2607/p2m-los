@@ -16,7 +16,7 @@ const QuickEasySection = () => {
       <div className="mx-auto flex max-w-[1257px] flex-col items-center gap-12 lg:flex-row lg:justify-between">
         {/* Left Image */}
         <div className="relative w-full max-w-[690px]">
-        
+
 
           <Image
             src="/images/family.png"
@@ -27,9 +27,15 @@ const QuickEasySection = () => {
           />
 
           <div className="absolute bottom-[70px] right-[10px] z-20 flex h-24 w-24 items-center justify-center rounded-full border-[8px] border-white bg-[#00C89C] text-center text-[20px] font-bold leading-[25px] text-white shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)] sm:right-[30px]">
-            100%
-            <br />
-            Safe
+
+            {/* Small Ripple */}
+            <span className="absolute inset-[-6px] rounded-full border-2 border-[rgba(0,200,156,0.35)] animate-ping" />
+
+            <span className="relative z-10">
+              100%
+              <br />
+              Safe
+            </span>
           </div>
         </div>
 

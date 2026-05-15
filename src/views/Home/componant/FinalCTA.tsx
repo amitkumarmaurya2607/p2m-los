@@ -39,10 +39,10 @@ const FinalCTA = () => {
               <Image
                 src="/images/img1.png"
                 alt="Happy user"
-                 width={240}
+                width={240}
                 height={240}
-                className="h-full w-full rounded-full object-cover"
-                 
+                className="h-full w-full rounded-full object-contain drop-shadow-[-2px_3px_14px_rgba(0,0,0,0.25)]"
+
               />
             </div>
 

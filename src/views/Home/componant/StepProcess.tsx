@@ -76,10 +76,10 @@ const StepProcess = () => {
           </div>
 
           {/* Center Image */}
-          <div className="relative flex items-end justify-center self-end">
+          <div className="relative hidden lg:flex items-end justify-center self-end">
             <Image
-            width={571}
-            height={400} 
+              width={571}
+              height={400}
               src="/images/img2.png"
               alt="Loan process"
               className="relative z-10 w-full h-auto max-w-[571px] self-end object-contain"

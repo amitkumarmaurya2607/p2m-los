@@ -133,7 +133,7 @@ const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => 
 
   return (
     <div className="flex flex-col items-center gap-6">
-      <div className="relative w-[220px] h-[220px]">
+      <div className="relative w-[280px] h-[280px]">
         <div className="absolute inset-0 rounded-full border-2 border-dashed border-border" />
 
         <div className="absolute inset-3 rounded-[24px] overflow-hidden border-2 border-success">

@@ -32,24 +32,16 @@ const Header = () => {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-4 lg:flex">
+        <div className="flex items-center gap-[30px]">
           <Link
             href="/apply"
-            className="px-[15px] text-[16px] font-bold text-primary hover:text-primary-light transition-colors"
+            className="text-[16px] font-bold text-primary hover:text-primary-light transition-colors"
           >
             Apply
           </Link>
 
-          <Link
-            href="/get-app"
-            className="flex h-11 items-center rounded-full bg-dark-navy text-dark-navy-foreground px-[23px] text-[16px] font-bold hover:bg-dark-navy/90 transition-all shadow-md active:scale-95"
-          >
-            Get App
-          </Link>
-        </div>
-
-        {/* CSS-only responsive menu, no state/client JS */}
-        <details className="group relative lg:hidden">
+          {/* CSS-only responsive menu, no state/client JS */}
+          <details className="group relative lg:hidden">
           <summary className="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-full bg-dark-navy text-dark-navy-foreground [&::-webkit-details-marker]:hidden">
             <Menu size={22} />
           </summary>
@@ -66,24 +58,9 @@ const Header = () => {
                 </Link>
               ))}
             </nav>
-
-            <div className="mt-5 flex gap-3">
-              <Link
-                href="/apply"
-                className="flex h-11 flex-1 items-center justify-center rounded-full border border-primary font-bold text-primary hover:bg-primary/5 transition-all"
-              >
-                Apply
-              </Link>
-
-              <Link
-                href="/get-app"
-                className="flex h-11 flex-1 items-center justify-center rounded-full bg-dark-navy font-bold text-dark-navy-foreground hover:bg-dark-navy/90 transition-all"
-              >
-                Get App
-              </Link>
-            </div>
           </div>
         </details>
+        </div>
       </div>
     </header>
   );
