@@ -3,6 +3,7 @@
 import { sendOTP, verifyOTP } from "@/lib/services/auth.service";
 import { createSession } from "@/lib/session";
 import { saveProgress } from "@/lib/services/progress.service";
+import { saveStepCookie } from "@/lib/step-cookie";
 
 export async function sendOTPAction(phone: string) {
   try {
@@ -21,6 +22,7 @@ export async function verifyOTPAction(phone: string, code: string) {
     const token = result.data?.token || crypto.randomUUID();
     await createSession(token);
     await saveProgress("mobile");
+    await saveStepCookie("mobile");
 
     return { success: true as const, data: result.data };
   } catch (err) {

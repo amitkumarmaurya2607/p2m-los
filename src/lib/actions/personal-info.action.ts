@@ -3,6 +3,7 @@
 import { apiPost } from "@/lib/axios";
 import { API } from "@/lib/api/urls";
 import { saveProgress } from "@/lib/services/progress.service";
+import { saveStepCookie } from "@/lib/step-cookie";
 import type { ApiResponse } from "@/types";
 
 export async function sendEmailOTPAction(email: string) {
@@ -23,6 +24,7 @@ export async function submitPersonalInfoAction(data: Record<string, unknown>) {
     const result = await apiPost<ApiResponse<{ submitted: boolean }>>(API.personalInfo.submit, data);
     if (!result.success) return { error: result.message || "Submission failed" };
     await saveProgress("personal-info");
+    await saveStepCookie("personal-info");
     return { success: true as const };
   } catch (err) {
     return { error: err instanceof Error ? err.message : "Failed to submit personal info" };

@@ -2,12 +2,14 @@
 
 import { submitApplication, getApplicationStatus } from "@/lib/services/application.service";
 import { saveProgress } from "@/lib/services/progress.service";
+import { saveStepCookie } from "@/lib/step-cookie";
 
 export async function submitApplicationAction(data: unknown) {
   try {
     const result = await submitApplication(data);
     if (!result.success) return { error: result.message || "Submission failed" };
     await saveProgress("review");
+    await saveStepCookie("review");
     return { success: true as const, data: result.data };
   } catch (err) {
     return { error: err instanceof Error ? err.message : "Failed to submit application" };

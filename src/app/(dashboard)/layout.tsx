@@ -1,45 +1,40 @@
 import Header from "@/views/Dashbaord/componants/Header";
-import HorizontalStepper from "@/views/Dashbaord/componants/HorizontalStepper";
 import ProgressBar from "@/views/Dashbaord/componants/ProgressBar";
-import StepperAlt from "@/views/Dashbaord/componants/Stepper";
 import StepRedirect from "@/components/StepRedirect";
-import AuthGuard from "@/components/AuthGuard";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import MockDataInitializer from "@/components/MockDataInitializer";
 
 import type { Metadata } from "next";
-import Link from "next/link";
-import { AuthProvider } from "@/context/AuthContext";
+import { getSession } from "@/lib/session";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "P2M LOS - Dashboard",
   description: "Dashboard pages",
 };
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <AuthProvider>
-      <div className="min-h-screen bg-background">
-        <Header />
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const token = await getSession();
+  console.log("Session token:", token); // Debugging line
+  if (!token) {
+    redirect("/apply");
+  }
 
-        <div className="flex">
-          {/* <StepperAlt />  */}
-          <div className="grow-1">
-            <ProgressBar />
-            {/* <div className="flex justify-center p-8">
-            <HorizontalStepper />
-          </div> */}
-            <div className="flex justify-center px-4 pt-12 pb-6">
-              <ErrorBoundary label="Dashboard">
-                <AuthGuard>
-                  <MockDataInitializer />
-                  <StepRedirect>{children}</StepRedirect>
-                </AuthGuard>
-              </ErrorBoundary>
-            </div>
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+
+      <div className="flex">
+        <div className="grow-1">
+          <ProgressBar />
+          <div className="flex justify-center px-4 pt-12 pb-6">
+            <ErrorBoundary label="Dashboard">
+              <MockDataInitializer />
+              <StepRedirect>{children}</StepRedirect>
+            </ErrorBoundary>
           </div>
         </div>
       </div>
-    </AuthProvider>
+    </div>
   );
 }

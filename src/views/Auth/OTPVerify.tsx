@@ -6,7 +6,6 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/lib/toast";
 import { maskEmail, maskMobile } from "@/lib/utils";
-import { useAuthContext } from "@/context/AuthContext";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import StepCard from "../Dashbaord/componants/StepCard";
 import { verifyOTPAction } from "@/lib/actions/auth.action";
@@ -20,7 +19,6 @@ type OTPVerifyProps = {
 
 function OTPVerify({ resend = () => { }, method, userName, back }: OTPVerifyProps) {
   const router = useRouter();
-  const { login } = useAuthContext();
   const { setMobileData } = useApplicationContext();
 
   const [otp, setOtp] = useState("");
@@ -50,7 +48,6 @@ function OTPVerify({ resend = () => { }, method, userName, back }: OTPVerifyProp
       }
 
       setMobileData({ number: userName, verified: true });
-      login({ method: method === "email" ? "email" : "mobile", identifier: userName });
 
       showToast({ message: "OTP verified successfully!", type: "success" });
 

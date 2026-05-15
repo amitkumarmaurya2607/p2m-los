@@ -1,7 +1,8 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useMemo, useEffect, type ReactNode } from "react";
 import { steps, type StepItem, type StepStatus } from "@/lib/sessionStorage";
+import { getProgressAction } from "@/lib/actions/progress.action";
 
 type MobileData = { number: string; verified: boolean };
 type PanData = { number: string };
@@ -89,42 +90,26 @@ function getDefaultState(): ApplicationState {
   };
 }
 
-function loadApplication(): ApplicationState {
-  if (typeof window === "undefined") return getDefaultState();
-  try {
-    const raw = sessionStorage.getItem("p2m-loan-application");
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      return {
-        mobile: parsed.mobile ?? null,
-        pan: parsed.pan ?? null,
-        personalInfo: parsed.personalInfo ?? null,
-        aadhaar: parsed.aadhaar ?? null,
-        bankDetails: parsed.bankDetails ?? null,
-        selfie: parsed.selfie ?? null,
-        employmentDetails: parsed.employmentDetails ?? null,
-        loanCalculator: parsed.loanCalculator ?? null,
-        review: parsed.review ?? null,
-      };
+const apiStepKeyToContextKey: Record<string, string> = {
+  mobile: "mobile",
+  pan: "pan",
+  "personal-info": "personalInfo",
+  aadhaar: "aadhaar",
+  bank: "bankDetails",
+  selfie: "selfie",
+  employment: "employmentDetails",
+  review: "review",
+};
+
+const contextStepOrder = steps.map((s) => s.key);
+
+function computeSelectors(completedFromApi: Set<string>, inMemoryState: ApplicationState) {
+  const completed = new Set(completedFromApi);
+
+  for (const key of contextStepOrder) {
+    if (inMemoryState[key as keyof ApplicationState]) {
+      completed.add(key);
     }
-  } catch {
-    /* ignore */
-  }
-  return getDefaultState();
-}
-
-function saveApplication(state: ApplicationState) {
-  try {
-    sessionStorage.setItem("p2m-loan-application", JSON.stringify(state));
-  } catch {
-    /* ignore */
-  }
-}
-
-function computeSelectors(state: ApplicationState) {
-  const completed = new Set<string>();
-  for (const step of steps) {
-    if (state[step.key as keyof ApplicationState]) completed.add(step.key);
   }
 
   const stepStatuses = new Map<string, StepStatus>();
@@ -158,14 +143,24 @@ export function useApplicationContext() {
 }
 
 export function ApplicationProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<ApplicationState>(loadApplication);
+  const [state, setState] = useState<ApplicationState>(getDefaultState);
+  const [completedFromApi, setCompletedFromApi] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    getProgressAction().then((result) => {
+      if (result.success && result.data?.completedSteps) {
+        const mapped = new Set<string>();
+        for (const step of result.data.completedSteps) {
+          const contextKey = apiStepKeyToContextKey[step];
+          if (contextKey) mapped.add(contextKey);
+        }
+        setCompletedFromApi(mapped);
+      }
+    });
+  }, []);
 
   const updateState = useCallback((updater: (prev: ApplicationState) => ApplicationState) => {
-    setState((prev) => {
-      const next = updater(prev);
-      saveApplication(next);
-      return next;
-    });
+    setState((prev) => updater(prev));
   }, []);
 
   const setMobileData = useCallback(
@@ -205,12 +200,13 @@ export function ApplicationProvider({ children }: { children: ReactNode }) {
     [updateState],
   );
   const resetApplication = useCallback(() => {
-    const defaultState = getDefaultState();
-    setState(defaultState);
-    saveApplication(defaultState);
+    setState(getDefaultState());
   }, []);
 
-  const { completed: completedSteps, ...restSelectors } = useMemo(() => computeSelectors(state), [state]);
+  const { completed: completedSteps, ...restSelectors } = useMemo(
+    () => computeSelectors(completedFromApi, state),
+    [state, completedFromApi],
+  );
 
   const value = useMemo<ApplicationContextValue>(
     () => ({
