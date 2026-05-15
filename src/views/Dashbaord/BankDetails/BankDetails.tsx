@@ -170,72 +170,73 @@ function BankDetails() {
   }
 
   return (
-      <StepCard
-        title=" Bank Verification"
-        subtitle="  Your loan amount will be disbursed to this verified account."
-        className=""
-        tips={{
-          title: "Bank Account Verification",
-          description: "Please provide your bank account details accurately to enable secure loan disbursement, EMI processing, and seamless transaction verification.",
-          Icon:<Landmark className="w-5 h-5 text-primary" />,
-          noteTitle: "Safe Banking Information",
-          noteDescription: "Your banking details are securely encrypted and used only for verification, disbursement, and repayment-related processes."
-        }}
-      >
-        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-          <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
-            <TextInput
-              label="Bank Account Number"
-              value={form.accountNumber}
-              onChange={(e) => handleChange("accountNumber", e.target.value)}
-              error={errors.accountNumber}
-              require
-            />
+    <StepCard
+      title=" Bank Verification"
+      subtitle="  Your loan amount will be disbursed to this verified account."
+      className=""
+      steper={true}
+      tips={{
+        title: "Bank Account Verification",
+        description: "Please provide your bank account details accurately to enable secure loan disbursement, EMI processing, and seamless transaction verification.",
+        Icon: <Landmark className="w-5 h-5 text-primary" />,
+        noteTitle: "Safe Banking Information",
+        noteDescription: "Your banking details are securely encrypted and used only for verification, disbursement, and repayment-related processes."
+      }}
+    >
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+          <TextInput
+            label="Bank Account Number"
+            value={form.accountNumber}
+            onChange={(e) => handleChange("accountNumber", e.target.value)}
+            error={errors.accountNumber}
+            require
+          />
 
-            <TextInput
-              label="Re-enter Account Number"
-              value={form.confirmAccountNumber}
-              onChange={(e) => handleChange("confirmAccountNumber", e.target.value)}
-              error={errors.confirmAccountNumber}
-              require
-            />
+          <TextInput
+            label="Re-enter Account Number"
+            value={form.confirmAccountNumber}
+            onChange={(e) => handleChange("confirmAccountNumber", e.target.value)}
+            error={errors.confirmAccountNumber}
+            require
+          />
 
-            <TextInput
-              label="IFSC CODE"
-              value={form.ifsc}
-              onChange={(e) => handleChange("ifsc", e.target.value)}
-              error={errors.ifsc}
-              maxLength={11}
-              require
-            />
+          <TextInput
+            label="IFSC CODE"
+            value={form.ifsc}
+            onChange={(e) => handleChange("ifsc", e.target.value)}
+            error={errors.ifsc}
+            maxLength={11}
+            require
+          />
 
-            {/* <SelectBox
+          {/* <SelectBox
               label="Account Type"
               options={accountTypeOptions}
               value={accountTypeOptions.find((opt) => opt.value === form.accountType)}
               onChange={(selected: any) => handleChange("accountType", selected?.value || "")}
               error={errors.accountType}
             /> */}
-          </div>
+        </div>
 
-          {/* Info Box */}
-          <div
-            className="flex items-start gap-3 p-4 sm:p-5 rounded-xl border border-info/30 bg-info/10
+        {/* Info Box */}
+        <div
+          className="flex items-start gap-3 p-4 sm:p-5 rounded-xl border border-info/30 bg-info/10
               text-info"
-          >
-            <CreditCard className="w-5 h-5 mt-1 shrink-0" />
-            <p className="text-xs sm:text-sm leading-relaxed">
-              We will deposit <b>₹1.00</b> to verify this account securely. Your data is encrypted
-              and completely safe.
-            </p>
-          </div>
+        >
+          <CreditCard className="w-5 h-5 mt-1 shrink-0" />
+          <p className="text-xs sm:text-sm leading-relaxed">
+            We will deposit <b>₹1.00</b> to verify this account securely. Your data is encrypted
+            and completely safe.
+          </p>
+        </div>
 
-          {/* Button */}
-          <GradientButton type="submit" className="w-full mt-4 sm:mt-6" disabled={loading}>
-            {loading ? "Verifying..." : "Verify Bank Account"}
-          </GradientButton>
-        </form>
-      </StepCard>
+        {/* Button */}
+        <GradientButton type="submit" className="w-full mt-4 sm:mt-6" disabled={loading}>
+          {loading ? "Verifying..." : "Verify Bank Account"}
+        </GradientButton>
+      </form>
+    </StepCard>
   );
 }
 

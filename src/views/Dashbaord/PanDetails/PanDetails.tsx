@@ -58,8 +58,9 @@ function PanDetails() {
 
   return (
 
-      <StepCard title="PAN Verification" subtitle="Please enter your 10-digit PAN number."
-
+    <StepCard
+      title="PAN Verification" subtitle="Please enter your 10-digit PAN number."
+      steper={true}
       tips={{
         title: "Why PAN?",
         description: "PAN is essential for identity verification, credit checks, and regulatory compliance in the loan application process.",
@@ -86,7 +87,7 @@ function PanDetails() {
         </GradientButton>
       </form>
     </StepCard>
-  
+
   );
 }
 

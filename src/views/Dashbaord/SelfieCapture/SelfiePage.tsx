@@ -9,6 +9,7 @@ function SelfiePage() {
     <StepCard
       title="Capture Your Selfie"
       subtitle="Position your face clearly within the frame and ensure good lighting for quick verification"
+      steper={true}
       tips={{
         title: "Capture Your Selfie",
         description: "Please take a clear selfie to verify your identity and enhance the security of your application process. Make sure your face is clearly visible and well-lit.",

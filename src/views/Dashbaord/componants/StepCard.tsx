@@ -10,6 +10,7 @@ type StepCardProps = {
   children?: React.ReactNode;
   className?: string;
   back?: () => void;
+  steper?: boolean;
   version?: "v1" | "v2";
   tips?: {
     title: string;
@@ -18,6 +19,7 @@ type StepCardProps = {
     noteTitle: string;
     noteDescription: React.ReactNode;
     NoteIcon?: React.FC<{ className?: string }>;
+
   };
 };
 
@@ -30,6 +32,7 @@ const StepCard: React.FC<StepCardProps> = ({
   back,
   tips,
   version = "v2",
+  steper = false,
 }) => {
   const TipsIcon = tips?.Icon;
   const NoteIcon = tips?.NoteIcon;
@@ -37,7 +40,7 @@ const StepCard: React.FC<StepCardProps> = ({
   if (version === "v2") {
     return (
       <div className="w-full min-h-screen flex items-center justify-center">
-        <div className="w-full max-w-[1150px] lg:w-auto min-h-[520px] overflow-hidden rounded-[12px] bg-white shadow-[0px_30px_80px_rgba(15,23,42,0.18)] flex">
+        <div className="w-full max-w-[1150px] lg:w-auto min-h-[420px]  rounded-[12px] bg-white shadow-[0px_30px_80px_rgba(15,23,42,0.18)] flex">
           {/* Left blue section */}
           {tips && (
             <div className="relative hidden lg:flex w-[352px]  overflow-hidden bg-[#00C89C] shadow-[4px_0px_32px_rgba(0,0,0,0.08)] text-white px-6 pt-8 pb-14 flex-col gap-10">
@@ -102,7 +105,7 @@ const StepCard: React.FC<StepCardProps> = ({
                 {/* optional glow */}
                 <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
 
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/15">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white">
                   {TipsIcon}
                 </div>
 
@@ -121,7 +124,7 @@ const StepCard: React.FC<StepCardProps> = ({
           <div className={`w-full max-w-full  lg:w-[500px] flex items-center justify-center px-5 sm:px-8 lg:px-14 py-10 ${className}`}>
             <div className={`w-full`}>
               {/* Step dots */}
-              <HorizontalStepper version="v2" />
+              {steper && <HorizontalStepper version="v2" />}
 
               {back && (
                 <button

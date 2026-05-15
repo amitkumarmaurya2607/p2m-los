@@ -78,7 +78,7 @@ const OTPInput = ({ length = 6, onComplete, version = "v2" }: OTPInputProps) => 
           ref={(el) => {
             inputRefs.current[idx] = el;
           }}
-          type="text"
+          type="password"
           inputMode="numeric"
           autoComplete="one-time-code"
           maxLength={1}

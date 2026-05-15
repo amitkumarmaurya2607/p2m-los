@@ -15,7 +15,7 @@ type AadhaarDetailsProps = {
   resend?: () => void;
 };
 
-function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
+function AadhaarDetails({ resend = () => { } }: AadhaarDetailsProps) {
   const router = useRouter();
   const { application, setAadhaarData } = useApplicationContext();
 
@@ -96,6 +96,7 @@ function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
           : " OTP sent to Aadhaar linked mobile"
       }
       back={step === "aadhaar" ? undefined : () => setStep("aadhaar")}
+      steper={true}
       tips={{
         title: "Aadhaar Verification",
         description: "To continue your application, please verify your Aadhaar details securely. This helps us confirm your identity, prevent fraud, and ensure compliance with financial regulations.",

@@ -7,7 +7,7 @@ import GradientButton from "@/components/ui/GradientButton";
 import StepCard from "../componants/StepCard";
 import CustomDatePicker from "@/components/ui/CustomDatePicker";
 import OTPInput from "@/components/OTPInput/OTPInput";
-import { CheckCircle, Fingerprint, Lightbulb } from "lucide-react";
+import { CheckCircle, User, Lightbulb } from "lucide-react";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidEmail, sanitizeNumeric } from "@/lib/utils";
 import RadioButtonGroup from "@/components/ui/RadioButtonGroup";
@@ -169,10 +169,11 @@ function PersonalInfo() {
       title="Basic Info"
       subtitle="To continue, please share some basic personal information. It helps us confirm your identity and ensure everything is ready for a seamless experience."
       className="lg:w-[800px] mx-auto"
+      steper={true}
       tips={{
         title: "Personal Details",
         description: "Please provide your personal information accurately to help us verify your identity, communicate important updates, and complete your application process smoothly.",
-        Icon: <Fingerprint className="w-5 h-5 text-primary" />,
+        Icon: <User className="w-5 h-5 text-primary" />,
         noteTitle: "Important Tips",
         noteDescription: (
           <ul className="space-y-2 text-sm leading-6">

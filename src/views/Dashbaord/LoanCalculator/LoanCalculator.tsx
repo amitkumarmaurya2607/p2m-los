@@ -49,6 +49,7 @@ function LoanCalculator() {
       title="Configure Loan"
       subtitle={`You are eligible for up to ₹${formatINR(maxEligible)}`}
       className=""
+      steper={true}
       tips={{
         title: "Configure Your Loan",
         description: "Customize your loan amount and repayment tenure to find a plan that best suits your financial needs and monthly budget.",
@@ -74,7 +75,7 @@ function LoanCalculator() {
       }}
     >
 
-       <div
+      <div
         className="relative mt-8 overflow-hidden rounded-[24px] bg-gradient-to-br from-[#0F172B]
           to-[#1D293D] p-6
           shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)]"
@@ -153,12 +154,12 @@ function LoanCalculator() {
         </div>
       </div>
 
-      <GradientButton type="button" className="mt-6 w-full"    onClick={handleLockPlan}>
-          <span className="flex items-center justify-center gap-2">
-            {"  Lock This Plan"}
-         
-          </span>
-        </GradientButton>
+      <GradientButton type="button" className="mt-6 w-full" onClick={handleLockPlan}>
+        <span className="flex items-center justify-center gap-2">
+          {"  Lock This Plan"}
+
+        </span>
+      </GradientButton>
 
     </StepCard>
   );

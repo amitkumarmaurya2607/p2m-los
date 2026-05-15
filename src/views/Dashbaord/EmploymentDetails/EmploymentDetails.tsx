@@ -99,6 +99,7 @@ function EmploymentDetails() {
       title="Employment Details"
       subtitle="We use this to verify your income and determine the best loan offer."
       className="lg:w-[812px]"
+      steper={true}
       tips={{
         title: "Employment Details",
         description: "Please provide your current employment and income details accurately to help us assess your eligibility and offer suitable loan options.",
