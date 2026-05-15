@@ -107,6 +107,28 @@
   --padding-section-x: 1.25rem;
   --padding-section-x-md: 2.5rem;
   --padding-section-x-lg: 5rem;
+
+  /* Home page colors */
+  --home-green: #00C89C;
+  --home-purple: #3737C1;
+  --home-orange-badge: #FF8A00;
+  --home-text-dark: #364153;
+  --home-text-medium: #4A5565;
+  --home-muted: #6A7282;
+  --home-text-muted-light: #99A1AF;
+  --home-text-on-dark: #D1D5DC;
+  --home-bg-orange-light: #FFF7ED;
+  --home-bg-green-light: #F0FDF4;
+  --home-bg-gray-light: #F9FAFB;
+  --home-border-light-gray: #F1F5F9;
+  --home-border-dark: #1D293D;
+  --home-bg-card-dark: #1E293B;
+  --home-border-card: #314158;
+  --home-card-violet: #8B5CF6;
+  --home-card-sky: #0EA5E9;
+  --home-social-twitter: #1DA1F2;
+  --home-social-linkedin: #0A66C2;
+  --home-gradient-teal: #1998B6;
 }
 
 @theme inline {
@@ -180,6 +202,27 @@
   --color-stepper-progress: var(--stepper-progress);
   --color-stepper-pending: var(--stepper-pending);
   --color-stepper-pending-text: var(--stepper-pending-text);
+
+  --color-home-green: var(--home-green);
+  --color-home-purple: var(--home-purple);
+  --color-home-orange-badge: var(--home-orange-badge);
+  --color-home-text-dark: var(--home-text-dark);
+  --color-home-text-medium: var(--home-text-medium);
+  --color-home-muted: var(--home-muted);
+  --color-home-text-muted-light: var(--home-text-muted-light);
+  --color-home-text-on-dark: var(--home-text-on-dark);
+  --color-home-bg-orange-light: var(--home-bg-orange-light);
+  --color-home-bg-green-light: var(--home-bg-green-light);
+  --color-home-bg-gray-light: var(--home-bg-gray-light);
+  --color-home-border-light-gray: var(--home-border-light-gray);
+  --color-home-border-dark: var(--home-border-dark);
+  --color-home-bg-card-dark: var(--home-bg-card-dark);
+  --color-home-border-card: var(--home-border-card);
+  --color-home-card-violet: var(--home-card-violet);
+  --color-home-card-sky: var(--home-card-sky);
+  --color-home-social-twitter: var(--home-social-twitter);
+  --color-home-social-linkedin: var(--home-social-linkedin);
+  --color-home-gradient-teal: var(--home-gradient-teal);
 
   --radius-sm: calc(var(--radius) - 0.125rem);
   --radius-md: calc(var(--radius));

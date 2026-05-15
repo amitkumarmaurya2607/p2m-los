@@ -35,55 +35,55 @@ const EmiDashboard = () => {
     }, [loanAmount, tenure]);
 
   const circleStyle = {
-    background: `conic-gradient(#00C89C 0% ${principalPercent}%, #3737C1 ${principalPercent}% 100%)`,
+    background: `conic-gradient(var(--home-green) 0% ${principalPercent}%, var(--home-purple) ${principalPercent}% 100%)`,
   };
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#EEF2FF] px-4 py-14 sm:px-6 lg:px-[91px] lg:py-24">
+    <section className="relative w-full overflow-hidden bg-surface-accent px-4 py-14 sm:px-6 lg:px-[91px] lg:py-24">
       <div className="absolute -right-[160px] -top-[250px] h-[500px] w-[500px] rounded-full bg-white/40 blur-[64px]" />
 
       <div className="relative mx-auto flex max-w-[1257px] flex-col items-center justify-between gap-12 lg:flex-row lg:gap-16">
         <div className="w-full max-w-[584px]">
           <div className="flex h-16 w-16 rotate-[3deg] items-center justify-center rounded-2xl bg-white shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.1),0px_2px_4px_-2px_rgba(0,0,0,0.1)]">
-            <Calculator className="h-8 w-8 text-[#3737C1]" />
+            <Calculator className="h-8 w-8 text-home-purple" />
           </div>
 
-          <h2 className="mt-7 text-[42px] font-extrabold leading-[52px] text-[#0F172A] sm:text-[48px] sm:leading-[60px]">
+          <h2 className="mt-7 text-[42px] font-extrabold leading-[52px] text-dark-navy sm:text-[48px] sm:leading-[60px]">
             Smart EMI <br />
-            <span className="bg-[linear-gradient(90deg,#3737C1_0%,#3546C0_7.14%,#3252BF_14.29%,#305EBD_21.43%,#2D69BB_28.57%,#2A73B9_35.71%,#277DB7_42.86%,#2487B5_50%,#2091B2_57.14%,#1C9AB0_64.29%,#18A3AC_71.43%,#14ADA9_78.57%,#0EB6A5_85.71%,#07BFA1_92.86%,#00C89C_100%)] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-home-purple to-home-green bg-clip-text text-transparent">
               Planning
             </span>
           </h2>
 
-          <p className="mt-6 max-w-[448px] text-[18px] leading-7 text-[#4A5565]">
+          <p className="mt-6 max-w-[448px] text-[18px] leading-7 text-home-text-medium">
             Plan your finances with our interactive EMI calculator. Transparent
             pricing with absolutely no hidden charges.
           </p>
 
           <div className="mt-8 flex max-w-[448px] flex-col gap-4">
             <div className="flex h-[76px] items-center gap-4 rounded-[14px] bg-white p-4 shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)]">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#00C89C1A]">
-                <ShieldCheck className="h-5 w-5 text-[#00C89C]" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-home-green/10">
+                <ShieldCheck className="h-5 w-5 text-home-green" />
               </div>
               <div>
-                <h4 className="text-base font-bold text-[#0F172A]">
+                <h4 className="text-base font-bold text-dark-navy">
                   Zero Pre-closure Charges
                 </h4>
-                <p className="text-sm text-[#6A7282]">
+                <p className="text-sm text-home-muted">
                   Pay off early without penalties
                 </p>
               </div>
             </div>
 
             <div className="flex h-[76px] items-center gap-4 rounded-[14px] bg-white p-4 shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)]">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FF9F1C1A]">
-                <SlidersHorizontal className="h-5 w-5 text-[#FF9F1C]" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-orange/10">
+                <SlidersHorizontal className="h-5 w-5 text-accent-orange" />
               </div>
               <div>
-                <h4 className="text-base font-bold text-[#0F172A]">
+                <h4 className="text-base font-bold text-dark-navy">
                   Flexible Tenure
                 </h4>
-                <p className="text-sm text-[#6A7282]">
+                <p className="text-sm text-home-muted">
                   Choose from 6 to 60 months
                 </p>
               </div>
@@ -91,12 +91,12 @@ const EmiDashboard = () => {
           </div>
         </div>
 
-        <div className="relative w-full max-w-[584px] rounded-[32px] border border-white bg-white p-6 shadow-[0px_24px_48px_rgba(0,0,0,0.06)] sm:p-[33px]">
-          <div className="flex items-center justify-between border-b border-[#F3F4F6] pb-6">
-            <h3 className="text-xl font-bold text-[#0F172A]">
+          <div className="relative w-full max-w-[584px] rounded-[32px] border border-white bg-white p-6 shadow-[0px_24px_48px_rgba(0,0,0,0.06)] sm:p-[33px]">
+          <div className="flex items-center justify-between border-b border-muted pb-6">
+            <h3 className="text-xl font-bold text-dark-navy">
               Repayment Plan
             </h3>
-            <span className="rounded-full bg-[#F0FDF4] px-3 py-1 text-sm font-bold text-[#00C89C]">
+            <span className="rounded-full bg-home-bg-green-light px-3 py-1 text-sm font-bold text-home-green">
               {annualRate}% p.a.
             </span>
           </div>
@@ -105,10 +105,10 @@ const EmiDashboard = () => {
             <div className="flex flex-col gap-8">
               <div>
                 <div className="flex justify-between">
-                  <label className="text-sm font-semibold text-[#6A7282]">
+                  <label className="text-sm font-semibold text-home-muted">
                     Loan Amount
                   </label>
-                  <span className="text-base font-bold text-[#3737C1]">
+                  <span className="text-base font-bold text-home-purple">
                     {formatINR(loanAmount)}
                   </span>
                 </div>
@@ -120,10 +120,10 @@ const EmiDashboard = () => {
                   step={50000}
                   value={loanAmount}
                   onChange={(e) => setLoanAmount(Number(e.target.value))}
-                  className="mt-5 h-2 w-full cursor-pointer accent-[#3737C1]"
+                  className="mt-5 h-2 w-full cursor-pointer accent-home-purple"
                 />
 
-                <div className="mt-2 flex justify-between text-xs text-[#99A1AF]">
+                <div className="mt-2 flex justify-between text-xs text-home-text-muted-light">
                   <span>₹50K</span>
                   <span>₹10L</span>
                 </div>
@@ -131,10 +131,10 @@ const EmiDashboard = () => {
 
               <div>
                 <div className="flex justify-between">
-                  <label className="text-sm font-semibold text-[#6A7282]">
+                  <label className="text-sm font-semibold text-home-muted">
                     Tenure (Months)
                   </label>
-                  <span className="text-base font-bold text-[#00C89C]">
+                  <span className="text-base font-bold text-home-green">
                     {tenure} Months
                   </span>
                 </div>
@@ -146,18 +146,18 @@ const EmiDashboard = () => {
                   step={1}
                   value={tenure}
                   onChange={(e) => setTenure(Number(e.target.value))}
-                  className="mt-5 h-2 w-full cursor-pointer accent-[#00C89C]"
+                  className="mt-5 h-2 w-full cursor-pointer accent-home-green"
                 />
 
-                <div className="mt-2 flex justify-between text-xs text-[#99A1AF]">
+                <div className="mt-2 flex justify-between text-xs text-home-text-muted-light">
                   <span>6m</span>
                   <span>60m</span>
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-[#F3F4F6] bg-[#F9FAFB] px-6 py-6">
-                <p className="text-sm text-[#6A7282]">Monthly EMI</p>
-                <h4 className="mt-1 text-[30px] font-black leading-9 text-[#0F172A]">
+              <div className="rounded-2xl border border-muted bg-home-bg-gray-light px-6 py-6">
+                <p className="text-sm text-home-muted">Monthly EMI</p>
+                <h4 className="mt-1 text-[30px] font-black leading-9 text-dark-navy">
                   {formatINR(emi)}
                 </h4>
               </div>
@@ -169,33 +169,33 @@ const EmiDashboard = () => {
                 style={circleStyle}
               >
                 <div className="flex h-[120px] w-[120px] flex-col items-center justify-center rounded-full bg-white">
-                  <p className="text-xs font-medium text-[#6A7282]">
+                  <p className="text-xs font-medium text-home-muted">
                     Total Amount
                   </p>
-                  <h4 className="text-lg font-bold text-[#0F172A]">
+                  <h4 className="text-lg font-bold text-dark-navy">
                     ₹{(totalAmount / 100000).toFixed(1)}L
                   </h4>
                 </div>
               </div>
 
-              <div className="mt-10 flex gap-4 text-xs font-semibold text-[#4A5565]">
+              <div className="mt-10 flex gap-4 text-xs font-semibold text-home-text-medium">
                 <div className="flex items-center gap-2">
-                  <span className="h-3 w-3 rounded-full bg-[#00C89C]" />
+                  <span className="h-3 w-3 rounded-full bg-home-green" />
                   Principal
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="h-3 w-3 rounded-full bg-[#3737C1]" />
+                  <span className="h-3 w-3 rounded-full bg-home-purple" />
                   Interest
                 </div>
               </div>
 
-              <div className="mt-4 text-center text-xs text-[#6A7282]">
+              <div className="mt-4 text-center text-xs text-home-muted">
                 Interest: {formatINR(interestAmount)}
               </div>
             </div>
           </div>
 
-          <div className="absolute -bottom-7 -right-6 rotate-[26.91deg] rounded-[14px] bg-[#FF9F1C] px-6 py-4 text-sm font-bold text-white shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
+          <div className="absolute -bottom-7 -right-6 rotate-[26.91deg] rounded-[14px] bg-accent-orange px-6 py-4 text-sm font-bold text-white shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
             Save 2% Now!
           </div>
         </div>

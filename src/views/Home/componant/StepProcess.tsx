@@ -32,15 +32,15 @@ const steps = [
 
 const StepProcess = () => {
   return (
-    <section className="overflow-hidden bg-[#EEF2FF] px-5 py-16 font-[Inter] md:px-10 lg:px-[88px] lg:pt-20 lg:pb-0">
+    <section className="overflow-hidden bg-surface-accent px-5 py-16 font-[Inter] md:px-10 lg:px-[88px] lg:pt-20 lg:pb-0">
       <div className="mx-auto max-w-[1264px]">
         {/* Heading */}
         <div className="text-center">
-          <h2 className="text-[36px] font-extrabold leading-tight text-[#0F172A] md:text-[48px] md:leading-[48px]">
+          <h2 className="text-[36px] font-extrabold leading-tight text-dark-navy md:text-[48px] md:leading-[48px]">
             Simple 4-Step Process
           </h2>
 
-          <p className="mt-4 text-[18px] leading-7 text-[#6A7282]">
+          <p className="mt-4 text-[18px] leading-7 text-home-muted">
             From download to disbursement in minutes.
           </p>
         </div>
@@ -49,7 +49,7 @@ const StepProcess = () => {
         <div className="relative mt-16 grid items-end gap-10 lg:grid-cols-[363px_1fr_363px]">
           {/* Left Timeline */}
           <div className="relative pb-20">
-            <div className="absolute left-8 top-[76px] h-[352px] w-[2px] bg-[linear-gradient(180deg,#FF9F1C_0%,rgba(0,0,0,0)_100%)]" />
+            <div className="absolute left-8 top-[76px] h-[352px] w-[2px] bg-gradient-to-b from-accent-orange to-transparent" />
 
             <div className="space-y-12">
               {steps.map((step, index) => (
@@ -57,16 +57,16 @@ const StepProcess = () => {
                   key={step.title}
                   className="relative z-10 flex items-start gap-8"
                 >
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-[#FFF7ED] bg-white text-[24px] font-black text-[#FF9F1C] shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)]">
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-home-bg-orange-light bg-white text-[24px] font-black text-accent-orange shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)]">
                     {index + 1}
                   </div>
 
                   <div className="pt-2">
-                    <h3 className="text-[24px] font-bold leading-8 text-[#0F172A]">
+                    <h3 className="text-[24px] font-bold leading-8 text-dark-navy">
                       {step.title}
                     </h3>
 
-                    <p className="mt-2 text-[18px] leading-7 text-[#6A7282]">
+                    <p className="mt-2 text-[18px] leading-7 text-home-muted">
                       {step.desc}
                     </p>
                   </div>
@@ -94,18 +94,18 @@ const StepProcess = () => {
               return (
                 <div
                   key={step.title}
-                  className="flex min-h-[97px] items-center gap-4 rounded-2xl border border-[#F9FAFB] bg-white p-6 shadow-[0px_12px_24px_rgba(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0px_18px_40px_rgba(0,0,0,0.08)] lg:w-[280px]"
+                  className="flex min-h-[97px] items-center gap-4 rounded-2xl border border-home-bg-gray-light bg-white p-6 shadow-[0px_12px_24px_rgba(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0px_18px_40px_rgba(0,0,0,0.08)] lg:w-[280px]"
                 >
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#EEF2FF] text-[#3737C1]">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-surface-accent text-home-purple">
                     <Icon size={24} strokeWidth={2} />
                   </div>
 
                   <div>
-                    <p className="text-[12px] font-semibold uppercase tracking-[0.6px] text-[#99A1AF]">
+                    <p className="text-[12px] font-semibold uppercase tracking-[0.6px] text-home-text-muted-light">
                       Step {index + 1} Complete
                     </p>
 
-                    <h4 className="mt-1 text-[16px] font-bold leading-6 text-[#0F172A]">
+                    <h4 className="mt-1 text-[16px] font-bold leading-6 text-dark-navy">
                       {step.title} Verified
                     </h4>
                   </div>

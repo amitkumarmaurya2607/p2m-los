@@ -12,7 +12,7 @@ const tools = [
         description:
             "Monitor your CIBIL score and get actionable insights to improve it.",
         icon: Activity,
-        bg: "bg-[#00C89C]",
+        bg: "bg-home-green",
         shadowIcon: "◜",
     },
     {
@@ -20,7 +20,7 @@ const tools = [
         description:
             "Never miss an EMI with WhatsApp and SMS intelligent reminders.",
         icon: BellRing,
-        bg: "bg-[#3737C1]",
+        bg: "bg-home-purple",
         shadowIcon: "〰",
     },
     {
@@ -28,7 +28,7 @@ const tools = [
         description:
             "Setup auto-pay easily via NetBanking or Debit Card.",
         icon: Link2,
-        bg: "bg-[#8B5CF6]",
+        bg: "bg-home-card-violet",
         shadowIcon: "⊂⊃",
     },
     {
@@ -36,7 +36,7 @@ const tools = [
         description:
             "End-to-end encryption for all your personal and financial data.",
         icon: Shield,
-        bg: "bg-[#0EA5E9]",
+        bg: "bg-home-card-sky",
         shadowIcon: "🛡",
     },
 ];
@@ -48,12 +48,12 @@ const MoreThanLoans = () => {
                 {/* Heading */}
                 <div className="max-w-[672px] text-center">
                     <h2 className="text-[38px] font-extrabold leading-[46px] tracking-[-1.2px] sm:text-[48px] sm:leading-[48px]">
-                        <span className="bg-[linear-gradient(90deg,#3737C1_0%,#3546C0_7.14%,#3252BF_14.29%,#305EBD_21.43%,#2D69BB_28.57%,#2A73B9_35.71%,#277DB7_42.86%,#2487B5_50%,#2091B2_57.14%,#1C9AB0_64.29%,#18A3AC_71.43%,#14ADA9_78.57%,#0EB6A5_85.71%,#07BFA1_92.86%,#00C89C_100%)] bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-home-purple to-home-green bg-clip-text text-transparent">
                             More than just loans.
                         </span>
                     </h2>
 
-                    <p className="mt-4 text-[18px] leading-7 text-[#45556C]">
+                    <p className="mt-4 text-[18px] leading-7 text-text-body">
                         Smart tools to help you manage your financial life better.
                     </p>
                 </div>
