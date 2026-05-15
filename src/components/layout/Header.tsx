@@ -35,31 +35,31 @@ const Header = () => {
         <div className="flex items-center gap-[30px]">
           <Link
             href="/apply"
-            className="text-[16px] font-bold text-primary hover:text-primary-light transition-colors lg:inline-flex lg:h-10 lg:items-center lg:rounded-full lg:bg-primary lg:px-6 lg:text-white lg:shadow-[var(--shadow-btn-soft)] lg:hover:bg-primary/90"
+            className="text-[16px] font-bold text-primary hover:text-primary-light transition-colors lg:inline-flex lg:h-10 lg:items-center lg:rounded-full lg:bg-secondary lg:hover:brightness-110 lg:shadow-[var(--shadow-button)] lg:px-6 lg:text-white lg:shadow-[var(--shadow-btn-soft)] lg:hover:bg-primary/90"
           >
             Apply
           </Link>
 
           {/* CSS-only responsive menu, no state/client JS */}
           <details className="group relative lg:hidden">
-          <summary className="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-full bg-dark-navy text-dark-navy-foreground [&::-webkit-details-marker]:hidden">
-            <Menu size={22} />
-          </summary>
+            <summary className="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-full bg-dark-navy text-dark-navy-foreground [&::-webkit-details-marker]:hidden">
+              <Menu size={22} />
+            </summary>
 
-          <div className="absolute right-0 top-12 w-[calc(100vw-40px)] max-w-[320px] rounded-2xl border border-border bg-surface p-5 shadow-xl">
-            <nav className="flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="text-[16px] font-semibold text-text-secondary hover:text-primary transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-        </details>
+            <div className="absolute right-0 top-12 w-[calc(100vw-40px)] max-w-[320px] rounded-2xl border border-border bg-surface p-5 shadow-xl">
+              <nav className="flex flex-col gap-4">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="text-[16px] font-semibold text-text-secondary hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+          </details>
         </div>
       </div>
     </header>

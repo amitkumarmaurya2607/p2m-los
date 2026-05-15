@@ -9,7 +9,7 @@ type CaptureProps = {
   onSubmit?: (file: Blob) => void;
 };
 
-const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => {
+const SelfieCapture: React.FC<CaptureProps> = ({ mode = "video", onSubmit }) => {
   const router = useRouter();
   const { setSelfieData } = useApplicationContext();
   const videoRef = useRef<HTMLVideoElement | null>(null);
