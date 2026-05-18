@@ -122,7 +122,7 @@ function ReviewApplication() {
 
         <div
           className="rounded-[32px] border border-white/10 bg-gradient-to-br from-text-heading
-            to-home-border-dark px-7 py-8 shadow-[var(--shadow-dark-card)]"
+            to-[#1D293D] px-7 py-8 shadow-[var(--shadow-dark-card)]"
         >
           <div className="inline-flex items-center gap-3 rounded-[16px] bg-white/10 px-3 py-3">
             <ClipboardList className="h-5 w-5 text-home-green" />
@@ -177,7 +177,7 @@ function ReviewApplication() {
             disabled={!agree || loading}
             onClick={handleSubmit}
             className="mt-8 flex h-[86px] w-full items-center justify-center gap-4 rounded-[16px]
-              bg-gradient-to-r from-home-green to-home-green-dark px-6 text-[18px] font-bold leading-7
+              bg-gradient-to-r from-home-green to-[#00A882] px-6 text-[18px] font-bold leading-7
               text-white shadow-[0px_12px_24px_-8px_rgba(0,200,156,0.4)] disabled:cursor-not-allowed
               disabled:opacity-60"
           >
