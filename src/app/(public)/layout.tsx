@@ -25,11 +25,8 @@ export default async function PublicLayout({ children }: { children: React.React
     <div className="min-h-screen bg-background font-sans text-foreground">
       <Header />
       <main>
-
         {children}
-
       </main>
-
       <Footer />
     </div>
   );

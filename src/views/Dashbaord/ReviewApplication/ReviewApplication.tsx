@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { CheckCircle, ClipboardList, Edit3, Shield } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { submitApplicationAction } from "@/lib/actions/application.action";
 
@@ -43,6 +44,7 @@ const ReviewSection = ({
 );
 
 function ReviewApplication() {
+  const router = useRouter();
   const { application: data, setReviewData } = useApplicationContext();
   const [agree, setAgree] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -93,6 +95,7 @@ function ReviewApplication() {
     }
 
     setReviewData({ submitted: true });
+    router.push("/track-application");
   };
 
   return (

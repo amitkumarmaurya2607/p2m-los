@@ -41,8 +41,3 @@ export const MOCK_APPLICATION_DATA = {
   },
   review: { submitted: false },
 } satisfies ApplicationState;
-
-export function fillMockApplication(): void {
-  if (typeof window === "undefined") return;
-  sessionStorage.setItem("p2m-loan-application", JSON.stringify(MOCK_APPLICATION_DATA));
-}

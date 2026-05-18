@@ -1,5 +1,4 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosError } from "axios";
-import { redirect } from "next/navigation";
 import { getMock } from "@/lib/mock/data";
 import { getSession } from "@/lib/session";
 
@@ -33,7 +32,7 @@ function createClient(): AxiosInstance {
     (response) => response,
     (error: AxiosError) => {
       if (error.response?.status === 401) {
-        redirect("/apply?type=exper");
+        window.location.href = "/apply?type=exper";
       }
 
       const message =

@@ -6,7 +6,12 @@ const STEP_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 
 export async function saveStepCookie(step: string) {
   const cookieStore = await cookies();
-  cookieStore.set(STEP_COOKIE_NAME, step, {
+  const existing = cookieStore.get(STEP_COOKIE_NAME)?.value;
+  const steps = existing ? existing.split(",") : [];
+  if (!steps.includes(step)) {
+    steps.push(step);
+  }
+  cookieStore.set(STEP_COOKIE_NAME, steps.join(","), {
     httpOnly: true,
     secure: true,
     sameSite: "lax",
@@ -15,9 +20,11 @@ export async function saveStepCookie(step: string) {
   });
 }
 
-export async function getStepCookie(): Promise<string | undefined> {
+export async function getCompletedSteps(): Promise<string[]> {
   const cookieStore = await cookies();
-  return cookieStore.get(STEP_COOKIE_NAME)?.value;
+  const value = cookieStore.get(STEP_COOKIE_NAME)?.value;
+  if (!value) return [];
+  return value.split(",").filter(Boolean);
 }
 
 export async function deleteStepCookie() {

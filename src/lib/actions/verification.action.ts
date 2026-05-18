@@ -49,7 +49,7 @@ export async function verifyBankAction(accountNumber: string, ifsc: string, acco
     const result = await verifyBank(accountNumber, ifsc, accountType);
     if (!result.success) return { error: result.message || "Bank verification failed" };
     await saveProgress("bank");
-    await saveStepCookie("bank");
+    await saveStepCookie("bankDetails");
     return { success: true as const };
   } catch (err) {
     return { error: err instanceof Error ? err.message : "Bank verification failed" };
@@ -71,7 +71,7 @@ export async function submitEmploymentAction(data: {
     const result = await submitEmployment(data);
     if (!result.success) return { error: result.message || "Employment submission failed" };
     await saveProgress("employment");
-    await saveStepCookie("employment");
+    await saveStepCookie("employmentDetails");
     return { success: true as const };
   } catch (err) {
     return { error: err instanceof Error ? err.message : "Failed to submit employment details" };

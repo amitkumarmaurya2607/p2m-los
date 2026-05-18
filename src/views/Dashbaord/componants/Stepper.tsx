@@ -2,17 +2,24 @@
 
 import React from "react";
 import { Check } from "lucide-react";
-import { useApplicationSteps } from "@/hooks/useApplicationSteps";
-import { steps as allSteps } from "@/lib/sessionStorage";
+import { useApplicationContext } from "@/context/ApplicationContext";
+import { steps as allSteps, type StepStatus } from "@/lib/sessionStorage";
 
 const StepperAlt = () => {
-  const { stepStatuses } = useApplicationSteps();
+  const { completedSteps } = useApplicationContext();
+
+  const getStepStatus = (stepKey: string): StepStatus => {
+    if (completedSteps.has(stepKey)) return "complete";
+    const stepIndex = allSteps.findIndex((s) => s.key === stepKey);
+    const allPreviousComplete = allSteps.slice(0, stepIndex).every((s) => completedSteps.has(s.key));
+    return allPreviousComplete ? "progress" : "pending";
+  };
 
   return (
     <div className="w-[300px] bg-surface border-r border-border p-4">
       <div className="flex flex-col gap-3">
         {allSteps.map((step) => {
-          const status = stepStatuses.get(step.key) || "pending";
+          const status = getStepStatus(step.key);
 
           return (
             <div

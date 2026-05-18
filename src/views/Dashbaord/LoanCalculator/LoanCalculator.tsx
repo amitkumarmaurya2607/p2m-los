@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import StepCard from "../componants/StepCard";
 import GradientButton from "@/components/ui/GradientButton";
+import { submitLoanCalculatorAction } from "@/lib/actions/loan-calculator.action";
 
 function LoanCalculator() {
   const router = useRouter();
@@ -32,9 +33,16 @@ function LoanCalculator() {
       maximumFractionDigits: 0,
     }).format(value);
 
-  const handleLockPlan = () => {
+  const handleLockPlan = async () => {
     setLoanCalculatorData({
       viewed: true,
+      loanAmount,
+      tenure,
+      interestRate,
+      emi,
+      totalPayable,
+    });
+    await submitLoanCalculatorAction({
       loanAmount,
       tenure,
       interestRate,

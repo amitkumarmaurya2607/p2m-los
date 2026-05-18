@@ -3,15 +3,27 @@ import React, { useRef, useEffect, useMemo } from "react";
 import { ArrowLeft, User } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useApplicationContext } from "@/context/ApplicationContext";
-import { useApplicationSteps } from "@/hooks/useApplicationSteps";
 import { steps as allSteps, StepItem } from "@/lib/sessionStorage";
 import { logoutAction } from "@/lib/actions/logout.action";
+import Logo from "@/assets/icon/Logo";
 
 type HeaderProps = {
   title?: string;
   subtitle?: string;
   onBack?: () => void;
   onSave?: () => void;
+};
+
+const routeStepMap: Record<string, string> = {
+  "/apply": "mobile",
+  "/pan-details": "pan",
+  "/personal-info": "personalInfo",
+  "/aadhar-details": "aadhaar",
+  "/bank-details": "bankDetails",
+  "/selfie-capture": "selfie",
+  "/employment-details": "employmentDetails",
+  "/loan-calculator": "loanCalculator",
+  "/review": "review",
 };
 
 const Header: React.FC<HeaderProps> = ({
@@ -24,6 +36,7 @@ const Header: React.FC<HeaderProps> = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { resetApplication } = useApplicationContext();
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleLogout = async () => {
     await logoutAction();
@@ -42,27 +55,13 @@ const Header: React.FC<HeaderProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const progressItem: StepItem | null = useMemo(() => {
+    const stepKey = routeStepMap[pathname];
+    if (!stepKey) return null;
+    return allSteps.find((step: StepItem) => step.key === stepKey) ?? null;
+  }, [pathname]);
 
- const { stepStatuses } = useApplicationSteps();
-
-const pathname = usePathname();
-
-const progressItem: StepItem | null = useMemo(() => {
-  const progressStepKey =
-    [...stepStatuses.entries()].find(
-      ([_, status]) => status === "progress"
-    )?.[0] ?? null;
-
-  return (
-    allSteps.find(
-      (step: StepItem) => step.key === progressStepKey
-    ) ?? null
-  );
-}, [pathname, stepStatuses, allSteps]);
-
-console.log("Progress Item:", progressItem);
-
-const Icon = progressItem?.icon;
+  const Icon = progressItem?.icon;
 
   return (
     <div
@@ -70,21 +69,33 @@ const Icon = progressItem?.icon;
         bg-background border-b border-border shadow-[var(--shadow-sm)]"
     >
       <div className="flex items-center gap-4">
-        <button
-          onClick={onBack}
-            className={`
-            w-10 h-10 rounded-xl flex items-center justify-center
-            shadow-[0px_10px_30px_rgba(0,0,0,0.2)]
-            ${progressItem?.iconContainerClassName}
-          `}
-        >
-        {Icon && <Icon className={progressItem?.iconClassName} />}
-        </button>
+        {progressItem ? (
+          <>
+            <button
+              onClick={onBack}
+              className={`
+                w-10 h-10 rounded-xl flex items-center justify-center
+                shadow-[0px_10px_30px_rgba(0,0,0,0.2)]
+                ${progressItem.iconContainerClassName}
+              `}
+            >
+              {Icon && <Icon className={progressItem.iconClassName} />}
+            </button>
 
-        <div>
-          <p className="text-xs tracking-widest text-text-muted font-semibold">{(progressItem?.fullTitle || "").toLocaleUpperCase()}</p>
-          <h1 className="text-lg font-semibold text-text-heading">{`STEP ${progressItem?.id || ""}`}</h1>
-        </div>
+            <div>
+              <p className="text-xs tracking-widest text-text-muted font-semibold">{progressItem.fullTitle.toLocaleUpperCase()}</p>
+              <h1 className="text-lg font-semibold text-text-heading">STEP {progressItem.id}</h1>
+            </div>
+          </>
+        ) : (
+          <>
+            <Logo />
+            <div>
+              <p className="text-xs tracking-widest text-text-muted font-semibold">{subtitle}</p>
+              <h1 className="text-lg font-semibold text-text-heading">{title}</h1>
+            </div>
+          </>
+        )}
       </div>
 
       <div className="flex items-center gap-3">
