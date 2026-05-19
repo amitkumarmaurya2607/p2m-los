@@ -63,7 +63,7 @@ function OTPVerify({ resend = () => { }, method, userName, back }: OTPVerifyProp
   return (
     <div
       className="w-full lg:w-1/2 bg-surface-muted flex items-center justify-center p-6
-        bg-[url('/images/boginBanner.webp')] lg:bg-none"
+        bg-[url('/images/loginBg.jpg')] lg:bg-none"
     >
       <StepCard
         title="Verify OTP"

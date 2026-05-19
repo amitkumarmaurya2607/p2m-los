@@ -12,6 +12,7 @@ import FinalCTA from "./componant/FinalCTA";
 import MoreThanLoans from "./componant/MoreThanLoans";
 import Community from "./componant/Community";
 import FaqSection from "./componant/FaqSection";
+import RatingReviews_v2 from "./componant/RatingReviews_v2";
 
 export default function Home() {
   return (
@@ -22,8 +23,9 @@ export default function Home() {
       <LoanProducts />
       <EmiDashboard />
       <QuickEasySection />
-      <RatingReviews />
+      {/* <RatingReviews /> */}
       <StepProcess />
+      <RatingReviews_v2 />
       <TrustStats />
       <MoreThanLoans />
       <Community />

@@ -21,7 +21,7 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const [accepted, setAccepted] = useState(false);
-  const [openTnc, setOpenTnc] = useState(false);
+
 
   const validate = () => {
     if (method === "mobile") return isValidMobile(userName);
@@ -84,7 +84,7 @@ const Login = () => {
       {!sendOtp ? (
         <div
           className="w-full lg:w-1/2 bg-surface-muted flex items-center justify-center flex-col
-            lg:flex-row p-6 bg-[url('/images/boginBanner.webp')] lg:bg-none"
+            lg:flex-row p-6 bg-[url('/images/loginBg.jpg')] lg:bg-none"
         >
           {/* Mobile Header */}
           <div className="lg:hidden text-primary-foreground max-w-[400px] mx-auto mb-8">
@@ -100,7 +100,7 @@ const Login = () => {
           <StepCard
             title="Welcome back"
             subtitle="Please enter your details to sign in."
-            className="w-full max-w-[448px]"
+            className="w-full max-w-[448px] items-start lg:items-center"
           >
             <form
               onSubmit={submitHandler}
@@ -130,8 +130,6 @@ const Login = () => {
                     I agree to the{" "}
                     <Link
                       href="/terms-and-conditions"
-
-                      onClick={() => setOpenTnc(true)}
                       className="text-primary font-medium underline"
                     >
                       Terms & Conditions

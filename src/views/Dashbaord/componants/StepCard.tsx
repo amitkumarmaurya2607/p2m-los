@@ -40,7 +40,7 @@ const StepCard: React.FC<StepCardProps> = ({
   if (version === "v2") {
     return (
       <div className="w-full min-h-screen flex items-center justify-center">
-        <div className="w-full max-w-[1150px] lg:w-auto min-h-[420px]  rounded-[12px] bg-white shadow-[0px_30px_80px_rgba(15,23,42,0.18)] flex">
+        <div className="w-full max-w-[1150px] lg:w-auto min-h-[220px]  rounded-[12px] bg-white shadow-[0px_30px_80px_rgba(15,23,42,0.18)] flex">
           {/* Left blue section */}
           {tips && (
             <div className="relative hidden lg:flex w-[352px] rounded-tl-[12px] rounded-bl-[12px]  overflow-hidden bg-home-green shadow-[4px_0px_32px_rgba(0,0,0,0.08)] text-white px-6 pt-8 pb-14 flex-col gap-10">

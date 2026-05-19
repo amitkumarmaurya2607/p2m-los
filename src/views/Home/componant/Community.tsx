@@ -83,43 +83,55 @@ const Community = () => {
           </div>
 
           {/* Right */}
-          <div className="relative w-full max-w-[584px]">
-            <div className="absolute -left-[10px] -top-[15px] h-full w-full rotate-3 rounded-[40px] bg-home-purple opacity-10" />
+          <div className="relative overflow-visible">
+            <div className="group relative w-full max-w-[584px]">
 
-            <div className="relative rounded-[40px] bg-dark-navy p-8 shadow-[var(--shadow-dark-card)] sm:p-10">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-home-purple">
-                <MessageCircle className="h-8 w-8 text-white" />
-              </div>
+              {/* Background Hover Layer */}
+              <div className="absolute inset-0 z-0 rounded-[40px] bg-home-purple opacity-0 transition-all duration-500 ease-out group-hover:-translate-x-[10px] group-hover:-translate-y-[15px] group-hover:rotate-3 group-hover:opacity-10" />
 
-              <h3 className="mt-8 max-w-[504px] text-[24px] font-bold leading-[34px] text-white sm:text-[30px] sm:leading-[38px]">
-                "RinSetu's community events taught me how to properly manage
-                debt and build credit."
-              </h3>
+              {/* Main Card */}
+              <div className="relative z-10 rounded-[40px] bg-dark-navy p-8 shadow-[var(--shadow-dark-card)] transition-all duration-500 sm:p-10">
 
-              <div className="mt-9 flex flex-col gap-5 border-t border-home-border-dark pt-8 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-center gap-4">
-                  <Image
-                    src="/images/userIcon.png"
-                    alt="Rahul Verma"
-                    width={64}
-                    height={64}
-                    className="h-14 w-14 rounded-full border-2 border-home-green object-cover"
-                  />
-
-                  <div>
-                    <p className="text-base font-bold text-white">
-                      Rahul Verma
-                    </p>
-
-                    <p className="text-sm text-text-muted-light">
-                      Member since 2023
-                    </p>
-                  </div>
+                {/* Icon */}
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-home-purple">
+                  <MessageCircle className="h-8 w-8 text-white" />
                 </div>
 
-                <span className="w-fit rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white">
-                  Super User
-                </span>
+                {/* Quote */}
+                <h3 className="mt-8 max-w-[504px] text-[24px] font-bold leading-[34px] text-white sm:text-[30px] sm:leading-[38px]">
+                  "RinSetu's community events taught me how to properly manage
+                  debt and build credit."
+                </h3>
+
+                {/* Footer */}
+                <div className="mt-9 flex flex-col gap-5 border-t border-home-border-dark pt-8 sm:flex-row sm:items-center sm:justify-between">
+
+                  {/* User */}
+                  <div className="flex items-center gap-4">
+                    <Image
+                      src="/images/userIcon.png"
+                      alt="Rahul Verma"
+                      width={64}
+                      height={64}
+                      className="h-14 w-14 rounded-full border-2 border-home-green object-cover"
+                    />
+
+                    <div>
+                      <p className="text-base font-bold text-white">
+                        Rahul Verma
+                      </p>
+
+                      <p className="text-sm text-text-muted-light">
+                        Member since 2023
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Badge */}
+                  <span className="w-fit rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+                    Super User
+                  </span>
+                </div>
               </div>
             </div>
           </div>

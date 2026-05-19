@@ -7,66 +7,85 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 
-const steps = [
+const leftSteps = [
   {
-    title: "Download App",
-    desc: "Get it on iOS or Android",
-    icon: Smartphone,
+    title: "Visit our website",
+    desc: "Available on Mobile & Laptop",
   },
   {
     title: "Verify KYC",
     desc: "Paperless digital process",
-    icon: FileText,
   },
   {
     title: "Check Limit",
     desc: "Instant eligibility check",
-    icon: CheckCircle2,
   },
   {
     title: "Get Funds",
     desc: "Direct to bank account",
+  },
+];
+
+const rightSteps = [
+  {
+    title: "KYC Approved",
+    desc: "Identity verified securely",
+    icon: FileText,
+  },
+  {
+    title: "Limit Ready",
+    desc: "Eligible amount generated",
+    icon: CheckCircle2,
+  },
+  {
+    title: "Loan Approved",
+    desc: "Fast approval process",
+    icon: Smartphone,
+  },
+  {
+    title: "Money Credited",
+    desc: "Funds sent to bank",
     icon: IndianRupee,
   },
 ];
 
 const StepProcess = () => {
   return (
-    <section className="overflow-hidden bg-surface-accent px-5 py-16 font-[Inter] md:px-10 lg:px-[88px] lg:pt-20 lg:pb-0">
+    <section className="overflow-hidden bg-surface-accent px-5 py-10 font-[Inter] md:px-10 lg:px-[88px] lg:pt-14 lg:pb-0">
       <div className="mx-auto max-w-[1264px]">
         {/* Heading */}
         <div className="text-center">
-          <h2 className="text-[36px] font-extrabold leading-tight text-dark-navy md:text-[48px] md:leading-[48px]">
+          <h2 className="text-[32px] font-extrabold leading-tight text-dark-navy md:text-[44px] md:leading-[48px]">
             Simple 4-Step Process
           </h2>
 
-          <p className="mt-4 text-[18px] leading-7 text-home-muted">
+          <p className="mt-3 text-[16px] leading-7 text-home-muted md:text-[18px]">
             From download to disbursement in minutes.
           </p>
         </div>
 
         {/* Main Layout */}
-        <div className="relative mt-16 grid items-end gap-10 lg:grid-cols-[363px_1fr_363px]">
+        <div className="relative mt-10 grid items-center gap-8 lg:grid-cols-[340px_1fr_300px]">
           {/* Left Timeline */}
-          <div className="relative pb-20">
-            <div className="absolute left-8 top-[76px] h-[352px] w-[2px] bg-gradient-to-b from-accent-orange to-transparent" />
+          <div className="relative pb-6">
+            <div className="absolute left-7 top-[58px] h-[260px] w-[2px] bg-gradient-to-b from-accent-orange to-accent-orange" />
 
-            <div className="space-y-12">
-              {steps.map((step, index) => (
+            <div className="space-y-8">
+              {leftSteps.map((step, index) => (
                 <div
                   key={step.title}
-                  className="relative z-10 flex items-start gap-8"
+                  className="relative z-10 flex items-start gap-6"
                 >
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-home-bg-orange-light bg-white text-[24px] font-black text-accent-orange shadow-[var(--shadow-card)]">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-home-bg-orange-light bg-white text-[22px] font-black text-accent-orange shadow-[var(--shadow-card)]">
                     {index + 1}
                   </div>
 
-                  <div className="pt-2">
-                    <h3 className="text-[24px] font-bold leading-8 text-dark-navy">
+                  <div className="pt-1">
+                    <h3 className="text-[18px] font-bold leading-7 text-dark-navy">
                       {step.title}
                     </h3>
 
-                    <p className="mt-2 text-[18px] leading-7 text-home-muted">
+                    <p className="mt-1 text-[14px] leading-6 text-home-muted">
                       {step.desc}
                     </p>
                   </div>
@@ -76,38 +95,42 @@ const StepProcess = () => {
           </div>
 
           {/* Center Image */}
-          <div className="relative hidden lg:flex items-end justify-center self-end">
+          <div className="relative hidden items-center justify-center lg:flex">
             <Image
-              width={571}
-              height={400}
+              width={320}
+              height={320}
               src="/images/img2.png"
               alt="Loan process"
-              className="relative z-10 w-full h-auto max-w-[571px] self-end object-contain"
+              className="relative z-10 h-auto w-full max-w-[320px] object-contain"
             />
           </div>
 
           {/* Right Cards */}
-          <div className="space-y-8 pb-20 lg:pl-[82px]">
-            {steps.map((step, index) => {
+          <div className="flex max-h-[340px] flex-col justify-between gap-3 h-full pb-6 lg:pl-[20px]">
+            {rightSteps.map((step, index) => {
               const Icon = step.icon;
 
               return (
                 <div
                   key={step.title}
-                  className="flex min-h-[97px] items-center gap-4 rounded-2xl border border-home-bg-gray-light bg-white p-6 shadow-[0px_12px_24px_rgba(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0px_18px_40px_rgba(0,0,0,0.08)] lg:w-[280px]"
+                  className="flex min-h-[74px] items-center gap-3 rounded-2xl border border-home-bg-gray-light bg-white px-4 py-3 shadow-[0px_10px_20px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0px_16px_30px_rgba(0,0,0,0.08)]"
                 >
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-surface-accent text-home-purple">
-                    <Icon size={24} strokeWidth={2} />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface-accent text-home-purple">
+                    <Icon size={20} strokeWidth={2} />
                   </div>
 
                   <div>
-                    <p className="text-[12px] font-semibold uppercase tracking-[0.6px] text-home-text-muted-light">
-                      Step {index + 1} Complete
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.5px] text-home-text-muted-light">
+                      Step {index + 1}
                     </p>
 
-                    <h4 className="mt-1 text-[16px] font-bold leading-6 text-dark-navy">
-                      {step.title} Verified
+                    <h4 className="mt-[2px] text-[14px] font-bold leading-5 text-dark-navy">
+                      {step.title}
                     </h4>
+
+                    <p className="mt-[2px] text-[12px] leading-4 text-home-muted">
+                      {step.desc}
+                    </p>
                   </div>
                 </div>
               );
