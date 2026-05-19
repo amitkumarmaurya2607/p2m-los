@@ -2,7 +2,6 @@
 import React, { useRef, useEffect, useMemo } from "react";
 import { ArrowLeft, User } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import { steps as allSteps, StepItem } from "@/lib/sessionStorage";
 import { logoutAction } from "@/lib/actions/logout.action";
 import Logo from "@/assets/icon/Logo";
@@ -37,13 +36,11 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { resetApplication } = useApplicationContext();
   const router = useRouter();
   const pathname = usePathname();
 
   const handleLogout = async () => {
     await logoutAction();
-    resetApplication();
     setDropdownOpen(false);
     router.push("/");
   };

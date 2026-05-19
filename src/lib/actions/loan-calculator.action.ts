@@ -1,6 +1,5 @@
 "use server";
 
-import { saveProgress } from "@/lib/services/progress.service";
 import { saveStepCookie } from "@/lib/step-cookie";
 
 export async function submitLoanCalculatorAction(data: {
@@ -11,7 +10,6 @@ export async function submitLoanCalculatorAction(data: {
   totalPayable: number;
 }) {
   try {
-    await saveProgress("loanCalculator", data);
     await saveStepCookie("loanCalculator");
     return { success: true as const };
   } catch (err) {

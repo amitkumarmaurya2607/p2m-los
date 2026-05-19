@@ -5,12 +5,11 @@ import { useRouter } from "next/navigation";
 import StepCard from "../componants/StepCard";
 import GradientButton from "@/components/ui/GradientButton";
 import { MapPin, Navigation, Lightbulb, ShieldAlert, Globe } from "lucide-react";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import { showToast } from "@/lib/toast";
+import { saveGeoLocationAction } from "@/lib/actions/verification.action";
 
 function GeoLocation() {
   const router = useRouter();
-  const { setGeoLocationData } = useApplicationContext();
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState<{
     latitude: number;
@@ -91,12 +90,16 @@ function GeoLocation() {
       return;
     }
 
-    setGeoLocationData({
+    const result = await saveGeoLocationAction({
       latitude: location.latitude,
       longitude: location.longitude,
       accuracy: Math.round(location.accuracy),
-      capturedAt: new Date().toISOString(),
     });
+
+    if (result.error) {
+      showToast({ message: result.error, type: "error" });
+      return;
+    }
 
     showToast({ message: "Location verified successfully", type: "success" });
     router.push("/pan-details");

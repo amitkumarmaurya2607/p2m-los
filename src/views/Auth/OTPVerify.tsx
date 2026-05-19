@@ -6,7 +6,6 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/lib/toast";
 import { maskEmail, maskMobile } from "@/lib/utils";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import StepCard from "../Dashbaord/componants/StepCard";
 import { verifyOTPAction } from "@/lib/actions/auth.action";
 
@@ -17,10 +16,8 @@ type OTPVerifyProps = {
   back: () => void;
 };
 
-function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps) {
+function OTPVerify({ resend = () => { }, method, userName, back }: OTPVerifyProps) {
   const router = useRouter();
-  const { setMobileData } = useApplicationContext();
-
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -47,8 +44,6 @@ function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps
         return;
       }
 
-      setMobileData({ number: userName, verified: true });
-
       showToast({ message: "OTP verified successfully!", type: "success" });
 
       router.push("/geo-location");
@@ -67,9 +62,8 @@ function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps
     >
       <StepCard
         title="Verify OTP"
-        subtitle={`We've sent a 6-digit code to your ${
-          method === "email" ? "email" : "mobile number"
-        } (${maskedValue})`}
+        subtitle={`We've sent a 6-digit code to your ${method === "email" ? "email" : "mobile number"
+          } (${maskedValue})`}
         className="w-full max-w-[448px]"
         back={back}
       >

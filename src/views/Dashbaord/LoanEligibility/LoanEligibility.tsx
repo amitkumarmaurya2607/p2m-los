@@ -3,7 +3,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { BadgeCheck, Lightbulb, CheckCircle, Edit3, Shield } from "lucide-react";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import GradientButton from "@/components/ui/GradientButton";
 import { showToast } from "@/lib/toast";
 import { submitApplicationAction } from "@/lib/actions/application.action";
@@ -37,10 +36,6 @@ const SectionCard = ({
 
 function LoanEligibility() {
   const router = useRouter();
-  const {
-    application: data,
-    setLoanEligibilityData,
-  } = useApplicationContext();
   const [loanAmount, setLoanAmount] = useState(500000);
   const [tenure, setTenure] = useState(36);
   const [agreed, setAgreed] = useState(false);
@@ -69,16 +64,6 @@ function LoanEligibility() {
     }
 
     setSubmitting(true);
-    setLoanEligibilityData({
-      eligibleAmount: maxEligible,
-      selectedAmount: loanAmount,
-      tenure,
-      interestRate,
-      emi,
-      agreed: true,
-      submitted: true,
-    });
-
     const result = await submitApplicationAction({ loanAmount, tenure, interestRate, emi, totalPayable });
     if (result.success) {
       showToast({ message: "Application submitted successfully!", type: "success" });
@@ -178,25 +163,14 @@ function LoanEligibility() {
       </SectionCard>
 
       <SectionCard title="Review Your Information" icon={<Edit3 className="w-4 h-4" />}>
-        <ReviewField label="Mobile Number" value={data.mobile?.number || "-"} />
-        <ReviewField label="PAN Number" value={data.pan?.number || "-"} />
-        <ReviewField label="Full Name" value={[data.personalInfo?.firstName, data.personalInfo?.secondName, data.personalInfo?.lastName].filter(Boolean).join(" ") || "-"} />
-        <ReviewField label="Email" value={data.personalInfo?.email || "-"} />
-        <ReviewField label="DOB" value={data.personalInfo?.dob?.split("T")[0] || "-"} />
-        <ReviewField
-          label="Aadhaar"
-          value={data.aadhaar?.verified ? `****${data.aadhaar.number.slice(-4)}` : "-"}
-        />
-        <ReviewField
-          label="Bank Account"
-          value={data.bankDetails?.accountNumber
-            ? `xxxx${data.bankDetails.accountNumber.slice(-4)}`
-            : "-"}
-        />
-        <ReviewField
-          label="Employment"
-          value={data.employmentDetails?.companyName || "-"}
-        />
+        <ReviewField label="Mobile Number" value="-" />
+        <ReviewField label="PAN Number" value="-" />
+        <ReviewField label="Full Name" value="-" />
+        <ReviewField label="Email" value="-" />
+        <ReviewField label="DOB" value="-" />
+        <ReviewField label="Aadhaar" value="-" />
+        <ReviewField label="Bank Account" value="-" />
+        <ReviewField label="Employment" value="-" />
       </SectionCard>
 
       <div className="flex items-start gap-3 rounded-2xl border border-border-light bg-surface p-5">

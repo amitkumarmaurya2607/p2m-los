@@ -1,7 +1,6 @@
 import Header from "@/views/Dashbaord/componants/Header";
 import ProgressBar from "@/views/Dashbaord/componants/ProgressBar";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import MockDataInitializer from "@/components/MockDataInitializer";
 
 import type { Metadata } from "next";
 
@@ -20,7 +19,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <ProgressBar />
           <div className="flex justify-center px-4 pt-12 pb-6">
             <ErrorBoundary label="Dashboard">
-              <MockDataInitializer />
               {children}
             </ErrorBoundary>
           </div>

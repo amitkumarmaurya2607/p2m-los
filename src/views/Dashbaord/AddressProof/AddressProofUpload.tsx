@@ -6,7 +6,6 @@ import StepCard from "../componants/StepCard";
 import GradientButton from "@/components/ui/GradientButton";
 import SelectBox from "@/components/ui/SelectBox";
 import { Upload, CheckCircle, FileText, X, Lightbulb, Home } from "lucide-react";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import { showToast } from "@/lib/toast";
 
 const DOCUMENT_TYPES = [
@@ -20,7 +19,6 @@ const DOCUMENT_TYPES = [
 
 function AddressProofUpload() {
   const router = useRouter();
-  const { setAddressProofData, setMobileData, application } = useApplicationContext();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [docType, setDocType] = useState<string>("");
@@ -64,11 +62,6 @@ function AddressProofUpload() {
       return;
     }
 
-    setLoading(true);
-    setAddressProofData({
-      uploaded: true,
-      fileName: file.name,
-    });
     setLoading(false);
     showToast({ message: "Address proof uploaded successfully", type: "success" });
     router.push("/alternate-mobile");

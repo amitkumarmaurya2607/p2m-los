@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { CheckCircle, ClipboardList, Edit3, Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import { submitApplicationAction } from "@/lib/actions/application.action";
 
 const ReviewField = ({ label, value }: { label: string; value: string }) => (
@@ -47,32 +46,23 @@ const ReviewSection = ({
 
 function ReviewApplication() {
   const router = useRouter();
-  const { application: data, setReviewData } = useApplicationContext();
   const [agree, setAgree] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const loanData = { loanAmount: 500000, tenure: 36, emi: 16500 };
 
   const personalFields = [
-    { label: "Name", value: [data.personalInfo?.firstName, data.personalInfo?.secondName, data.personalInfo?.lastName].filter(Boolean).join(" ") || "N/A" },
-    { label: "PAN", value: data.pan?.number || "N/A" },
-    {
-      label: "DOB",
-      value: data.personalInfo?.dob ? new Date(data.personalInfo.dob).toLocaleDateString() : "N/A",
-    },
+    { label: "Name", value: "N/A" },
+    { label: "PAN", value: "N/A" },
+    { label: "DOB", value: "N/A" },
   ];
   const employmentFields = [
-    { label: "Company", value: data.employmentDetails?.companyName || "N/A" },
+    { label: "Company", value: "N/A" },
   ];
 
   const bankFields = [
-    {
-      label: "Account",
-      value: data.bankDetails?.accountNumber
-        ? `XXXX XXXX ${data.bankDetails.accountNumber.slice(-4)}`
-        : "N/A",
-    },
-    { label: "IFSC", value: data.bankDetails?.ifsc || "N/A" },
+    { label: "Account", value: "N/A" },
+    { label: "IFSC", value: "N/A" },
   ];
 
   const handleSubmit = async () => {
@@ -80,14 +70,13 @@ function ReviewApplication() {
 
     setLoading(true);
 
-    const result = await submitApplicationAction(data);
+    const result = await submitApplicationAction({});
 
     if (result?.error) {
       setLoading(false);
       return;
     }
 
-    setReviewData({ submitted: true });
     router.push("/track-application");
   };
 

@@ -6,20 +6,16 @@ import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import { CreditCard, Check, Landmark } from "lucide-react";
 import SelectBox from "@/components/ui/SelectBox";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidIFSCCode, sanitizeNumeric, sanitizeIFSC } from "@/lib/utils";
 import { verifyBankAction } from "@/lib/actions/verification.action";
 
 function BankDetails() {
   const router = useRouter();
-  const { application, setBankDetails } = useApplicationContext();
-  const saved = application.bankDetails;
-
   const [form, setForm] = useState({
-    accountNumber: saved?.accountNumber || "",
-    confirmAccountNumber: saved?.accountNumber || "",
-    ifsc: saved?.ifsc || "",
-    accountType: saved?.accountType || "savings",
+    accountNumber: "",
+    confirmAccountNumber: "",
+    ifsc: "",
+    accountType: "savings",
   });
 
   const [errors, setErrors] = useState<any>({});
@@ -82,11 +78,6 @@ function BankDetails() {
         return;
       }
 
-      setBankDetails({
-        accountNumber: form.accountNumber,
-        ifsc: form.ifsc,
-        accountType: form.accountType,
-      });
       router.push("/account-statement");
     } finally {
       setLoading(false);

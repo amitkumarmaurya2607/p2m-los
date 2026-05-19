@@ -1,7 +1,6 @@
 import GradientButton from "@/components/ui/GradientButton";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import { submitSelfieAction } from "@/lib/actions/selfie.action";
 
 type CaptureProps = {
@@ -11,7 +10,6 @@ type CaptureProps = {
 
 const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => {
   const router = useRouter();
-  const { setSelfieData } = useApplicationContext();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -124,7 +122,6 @@ const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => 
 
     onSubmit?.(capturedBlob);
 
-    setSelfieData({ captured: true });
     const result = await submitSelfieAction();
     if (!result?.error) {
       router.push("/address-proof");

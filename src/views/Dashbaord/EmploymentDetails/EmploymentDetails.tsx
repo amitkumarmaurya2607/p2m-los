@@ -8,25 +8,21 @@ import SelectBox from "@/components/ui/SelectBox";
 import CustomDatePicker from "@/components/ui/CustomDatePicker";
 import GradientButton from "@/components/ui/GradientButton";
 import { Briefcase, Calendar, ChevronRight, Lightbulb } from "lucide-react";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidEmail, isValidPinCode, sanitizeNumeric } from "@/lib/utils";
 import { submitEmploymentAction } from "@/lib/actions/verification.action";
 
 function EmploymentDetails() {
   const router = useRouter();
-  const { application, setEmploymentDetails } = useApplicationContext();
-  const saved = application.employmentDetails;
-
   const [form, setForm] = useState({
-    companyName: saved?.companyName || "",
-    designation: saved?.designation || "",
-    email: saved?.email || "",
-    salaryMode: saved?.salaryMode || "",
-    joiningDate: saved?.joiningDate || "",
-    uan: saved?.uan || "",
-    state: saved?.state || "",
-    city: saved?.city || "",
-    pincode: saved?.pincode || "",
+    companyName: "",
+    designation: "",
+    email: "",
+    salaryMode: "",
+    joiningDate: "",
+    uan: "",
+    state: "",
+    city: "",
+    pincode: "",
   });
 
   const [error, setError] = useState<any>({});
@@ -84,7 +80,6 @@ function EmploymentDetails() {
         return;
       }
 
-      setEmploymentDetails(form);
       router.push("/selfie-capture");
     } catch (err) {
       setError((prev: any) => ({ ...prev, submit: "Something went wrong" }));
@@ -171,6 +166,7 @@ function EmploymentDetails() {
             ]}
             value={form.salaryMode ? { value: form.salaryMode, label: form.salaryMode } : null}
             onChange={(option: any) => handleChange("salaryMode", option?.value || "")}
+            error={error.salaryMode}
           />
 
           <CustomDatePicker
@@ -184,7 +180,7 @@ function EmploymentDetails() {
           />
 
           <TextInput
-            label="UAN Number (Optional)"
+            label="UAN Number"
             value={form.uan}
             onChange={(e) => handleChange("uan", sanitizeNumeric(e.target.value))}
           />

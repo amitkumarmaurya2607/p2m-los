@@ -6,7 +6,6 @@ import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import OTPInput from "@/components/OTPInput/OTPInput";
 import ResendTimer from "@/components/ResendTimer/ResendTimer";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidAadhaar, sanitizeNumeric } from "@/lib/utils";
 import { Fingerprint } from "lucide-react";
 import { sendAadhaarOTPAction, verifyAadhaarOTPAction } from "@/lib/actions/verification.action";
@@ -17,9 +16,7 @@ type AadhaarDetailsProps = {
 
 function AadhaarDetails({ resend = () => { } }: AadhaarDetailsProps) {
   const router = useRouter();
-  const { application, setAadhaarData } = useApplicationContext();
-
-  const [aadhaar, setAadhaar] = useState(application.aadhaar?.number || "");
+  const [aadhaar, setAadhaar] = useState("");
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState<"aadhaar" | "otp">("aadhaar");
 
@@ -80,7 +77,6 @@ function AadhaarDetails({ resend = () => { } }: AadhaarDetailsProps) {
         return;
       }
 
-      setAadhaarData({ number: aadhaar, verified: true });
       router.push("/bank-details");
     } finally {
       setLoading(false);

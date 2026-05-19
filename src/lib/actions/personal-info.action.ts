@@ -2,7 +2,6 @@
 
 import { apiPost } from "@/lib/axios";
 import { API } from "@/lib/api/urls";
-import { saveProgress } from "@/lib/services/progress.service";
 import { saveStepCookie } from "@/lib/step-cookie";
 import type { ApiResponse } from "@/types";
 
@@ -26,7 +25,6 @@ export async function submitPersonalInfoAction(data: Record<string, unknown>) {
       data,
     );
     if (!result.success) return { error: result.message || "Submission failed" };
-    await saveProgress("personal-info");
     await saveStepCookie("personalInfo");
     return { success: true as const };
   } catch (err) {

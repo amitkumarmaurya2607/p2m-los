@@ -5,12 +5,10 @@ import { useRouter } from "next/navigation";
 import StepCard from "../componants/StepCard";
 import GradientButton from "@/components/ui/GradientButton";
 import { Upload, CheckCircle, FileText, X, Lightbulb } from "lucide-react";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import { showToast } from "@/lib/toast";
 
 function AccountStatementUpload() {
   const router = useRouter();
-  const { setAccountStatementData, setMobileData, application } = useApplicationContext();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState("");
@@ -70,11 +68,6 @@ function AccountStatementUpload() {
       return;
     }
 
-    setLoading(true);
-    setAccountStatementData({
-      uploaded: true,
-      fileName: file.name,
-    });
     setLoading(false);
     showToast({ message: "Bank statement uploaded successfully", type: "success" });
     router.push("/employment-details");

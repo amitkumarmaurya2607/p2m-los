@@ -2,14 +2,11 @@
 
 import React from "react";
 import { Check } from "lucide-react";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import { steps as allSteps, type StepStatus } from "@/lib/sessionStorage";
 
 const StepperAlt = () => {
-  const { completedSteps } = useApplicationContext();
-
   const getStepStatus = (stepKey: string): StepStatus => {
-    if (completedSteps.has(stepKey)) return "complete";
+    return "progress";
     const stepIndex = allSteps.findIndex((s) => s.key === stepKey);
     const allPreviousComplete = allSteps
       .slice(0, stepIndex)

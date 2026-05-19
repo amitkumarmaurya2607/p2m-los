@@ -3,14 +3,12 @@
 import React, { useMemo, useState } from "react";
 import { Calculator, Lightbulb } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import StepCard from "../componants/StepCard";
 import GradientButton from "@/components/ui/GradientButton";
 import { submitLoanCalculatorAction } from "@/lib/actions/loan-calculator.action";
 
 function LoanCalculator() {
   const router = useRouter();
-  const { setLoanCalculatorData } = useApplicationContext();
   const [loanAmount, setLoanAmount] = useState(500000);
   const [tenure, setTenure] = useState(36);
 
@@ -34,14 +32,6 @@ function LoanCalculator() {
     }).format(value);
 
   const handleLockPlan = async () => {
-    setLoanCalculatorData({
-      viewed: true,
-      loanAmount,
-      tenure,
-      interestRate,
-      emi,
-      totalPayable,
-    });
     await submitLoanCalculatorAction({
       loanAmount,
       tenure,

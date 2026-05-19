@@ -3,7 +3,6 @@
 import React from "react";
 import { Check } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import { steps as allSteps, type StepStatus } from "@/lib/sessionStorage";
 
 const routeMap: Record<string, string> = {
@@ -22,10 +21,8 @@ const routeMap: Record<string, string> = {
 
 const HorizontalStepper = ({ version = "v1" }: { version?: "v1" | "v2" }) => {
   const router = useRouter();
-  const { completedSteps } = useApplicationContext();
-
   const getStepStatus = (stepKey: string): StepStatus => {
-    if (completedSteps.has(stepKey)) return "complete";
+    return "progress";
     const stepIndex = allSteps.findIndex((s) => s.key === stepKey);
     const allPreviousComplete = allSteps
       .slice(0, stepIndex)

@@ -7,26 +7,22 @@ import GradientButton from "@/components/ui/GradientButton";
 import StepCard from "../componants/StepCard";
 import CustomDatePicker from "@/components/ui/CustomDatePicker";
 import { User, Lightbulb } from "lucide-react";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidEmail, sanitizeNumeric } from "@/lib/utils";
 import { submitPersonalInfoAction } from "@/lib/actions/personal-info.action";
 
 function PersonalInfo() {
   const router = useRouter();
-  const { application, setPersonalInfo } = useApplicationContext();
-  const saved = application.personalInfo;
-
   const [form, setForm] = useState({
-    firstName: saved?.firstName || "",
-    secondName: saved?.secondName || "",
-    lastName: saved?.lastName || "",
-    fatherName: saved?.fatherName || "",
-    email: saved?.email || "",
-    dob: saved?.dob || "",
-    salary: saved?.salary || "",
-    state: saved?.state || "",
-    city: saved?.city || "",
-    pincode: saved?.pincode || "",
+    firstName: "",
+    secondName: "",
+    lastName: "",
+    fatherName: "",
+    email: "",
+    dob: "",
+    salary: "",
+    state: "",
+    city: "",
+    pincode: "",
   });
 
   const [errors, setErrors] = useState<any>({});
@@ -86,7 +82,6 @@ function PersonalInfo() {
         return;
       }
 
-      setPersonalInfo(form);
       router.push("/aadhar-details");
     } catch (err) {
       setErrors((prev: any) => ({ ...prev, submit: "Something went wrong" }));
@@ -140,7 +135,7 @@ function PersonalInfo() {
             />
 
             <TextInput
-              label="Second Name (Optional)"
+              label="Middle Name"
               value={form.secondName}
               onChange={(e) => handleChange("secondName", e.target.value)}
             />
@@ -148,7 +143,7 @@ function PersonalInfo() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
             <TextInput
-              label="Last Name (Optional)"
+              label="Last Name"
               value={form.lastName}
               onChange={(e) => handleChange("lastName", e.target.value)}
             />

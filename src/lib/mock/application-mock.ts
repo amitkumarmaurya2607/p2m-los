@@ -1,5 +1,3 @@
-import type { ApplicationState } from "@/context/ApplicationContext";
-
 export const MOCK_APPLICATION_DATA = {
   mobile: { number: "9876543210", verified: true },
   geoLocation: { latitude: 12.9716, longitude: 77.5946, accuracy: 10, capturedAt: new Date().toISOString() },
@@ -42,4 +40,4 @@ export const MOCK_APPLICATION_DATA = {
     agreed: true,
     submitted: false,
   },
-} satisfies ApplicationState;
+};

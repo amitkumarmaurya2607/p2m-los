@@ -7,7 +7,6 @@ import TextInput from "@/components/ui/TextInput";
 import SelectBox from "@/components/ui/SelectBox";
 import GradientButton from "@/components/ui/GradientButton";
 import { Phone, Lightbulb } from "lucide-react";
-import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidMobile, sanitizeNumeric } from "@/lib/utils";
 import { showToast } from "@/lib/toast";
 
@@ -23,7 +22,6 @@ const RELATION_OPTIONS = [
 
 function AlternateMobile() {
   const router = useRouter();
-  const { setAlternateMobileData } = useApplicationContext();
   const [number1, setNumber1] = useState("");
   const [relation1, setRelation1] = useState("");
   const [number2, setNumber2] = useState("");
@@ -44,12 +42,6 @@ function AlternateMobile() {
 
   const handleSubmit = () => {
     if (!validate()) return;
-    setAlternateMobileData({
-      number1: sanitizeNumeric(number1),
-      relation1,
-      number2: sanitizeNumeric(number2),
-      relation2,
-    });
     showToast({ message: "Alternate contact details saved", type: "success" });
     router.push("/loan-eligibility");
   };
