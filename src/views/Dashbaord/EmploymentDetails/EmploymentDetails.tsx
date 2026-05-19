@@ -94,6 +94,7 @@ function EmploymentDetails() {
       subtitle="We use this to verify your income and determine the best loan offer."
       className="lg:w-[812px]"
       steper={true}
+      icon={<Briefcase className="w-6 h-6 text-primary" />}
       tips={{
         title: "Employment Details",
         description:

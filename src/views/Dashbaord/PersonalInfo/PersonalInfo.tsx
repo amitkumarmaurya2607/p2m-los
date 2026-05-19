@@ -95,6 +95,7 @@ function PersonalInfo() {
       title="Personal Details"
       subtitle="Provide your personal information to help us verify your identity."
       className="lg:w-[800px] mx-auto"
+      icon={<User className="w-6 h-6 text-primary" />}
       steper={true}
       tips={{
         title: "Personal Details",

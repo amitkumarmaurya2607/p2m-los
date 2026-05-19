@@ -5,7 +5,7 @@ export default async function AuthGuard({ children }: { children: React.ReactNod
   const token = await getSession();
 
   if (!token) {
-    redirect("/apply");
+    redirect("/apply-now");
   }
 
   return <>{children}</>;

@@ -93,6 +93,7 @@ function AadhaarDetails({ resend = () => { } }: AadhaarDetailsProps) {
       }
       back={step === "aadhaar" ? undefined : () => setStep("aadhaar")}
       steper={true}
+      icon={<Fingerprint className="w-6 h-6 text-primary" />}
       className="lg:w-[600px] mx-auto"
       tips={{
         title: "Aadhaar Verification",

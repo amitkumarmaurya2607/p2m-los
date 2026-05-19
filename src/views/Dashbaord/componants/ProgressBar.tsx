@@ -4,7 +4,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 
 const stepRoutes = [
-  "/apply",
+  "/apply-now",
   "/geo-location",
   "/pan-details",
   "/personal-info",

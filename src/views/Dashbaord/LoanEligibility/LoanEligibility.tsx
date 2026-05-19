@@ -2,10 +2,11 @@
 
 import React, { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { BadgeCheck, Lightbulb, CheckCircle, Edit3, Shield } from "lucide-react";
+import { BadgeCheck, Lightbulb, CheckCircle, Edit3, Shield, BadgeCheckIcon, IndianRupee } from "lucide-react";
 import GradientButton from "@/components/ui/GradientButton";
 import { showToast } from "@/lib/toast";
 import { submitApplicationAction } from "@/lib/actions/application.action";
+import StepCard from "../componants/StepCard";
 
 const ReviewField = ({ label, value }: { label: string; value: string }) => (
   <div className="flex items-center justify-between border-b border-border-light pb-3">
@@ -75,136 +76,166 @@ function LoanEligibility() {
   };
 
   return (
-    <div className="w-full max-w-[800px] mx-auto space-y-8 pb-12">
-      <div>
-        <div className="flex items-center gap-3 mb-2">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#A78BFA] to-[#7C3AED]">
-            <BadgeCheck className="w-6 h-6 text-white" />
-          </div>
-          <div>
-            <p className="text-xs tracking-widest text-text-muted font-semibold uppercase">
-              Step 12
-            </p>
-            <h1 className="text-2xl font-extrabold text-text-heading">
-              Loan Eligibility & Application
-            </h1>
-          </div>
-        </div>
-        <p className="mt-2 text-sm text-text-muted ml-[60px]">
-          Review your loan eligibility, customize your plan, and submit your application
-        </p>
-      </div>
+    <>
 
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-text-heading to-home-border-dark p-6 shadow-card">
-        <div className="absolute -right-2 -top-10 h-32 w-32 rounded-full bg-white/5 blur-[40px]" />
-        <p className="text-xs font-semibold uppercase tracking-wider text-text-on-dark-muted">
-          You are eligible for up to
-        </p>
-        <h2 className="mt-1 text-3xl font-extrabold text-white">
-          ₹{formatINR(maxEligible)}
-        </h2>
-        <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4 text-xs text-text-on-dark-muted">
-          <span>Interest Rate: {interestRate}% p.a.</span>
-          <span>Estimated EMI: ₹{formatINR(emi)}/mo</span>
-        </div>
-      </div>
 
-      <SectionCard title="Choose Loan Amount" icon={<BadgeCheck className="w-4 h-4" />}>
-        <div>
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-semibold text-text-dark-blue">Loan Amount</span>
-            <span className="text-lg font-bold text-primary">₹{formatINR(loanAmount)}</span>
-          </div>
-          <input
-            type="range"
-            min={100000}
-            max={maxEligible}
-            step={10000}
-            value={loanAmount}
-            onChange={(e) => setLoanAmount(Number(e.target.value))}
-            className="h-2 w-full cursor-pointer appearance-none rounded-full bg-border-medium accent-primary"
-          />
-          <div className="mt-2 flex justify-between text-xs font-semibold text-text-muted-light">
-            <span>₹1L</span>
-            <span>₹{formatINR(maxEligible)}</span>
-          </div>
-        </div>
+      <StepCard
+        title="Loan Eligibility & Application"
+        subtitle={`   Review your loan eligibility, customize your plan, and submit your application`}
+        className="lg:w-[800px] mx-auto"
+        steper={true}
+        icon={<BadgeCheckIcon className="w-6 h-6 text-primary" />}
+        tips={{
+          title: "Review Your Loan Offer",
+          description:
+            "Review your eligible loan amount, select a suitable repayment plan, and submit your application with confidence. Ensure all details are accurate before proceeding.",
 
-        <div className="mt-6">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-semibold text-text-dark-blue">Tenure (Months)</span>
-            <span className="text-lg font-bold text-secondary">{tenure} months</span>
-          </div>
-          <input
-            type="range"
-            min={12}
-            max={60}
-            step={1}
-            value={tenure}
-            onChange={(e) => setTenure(Number(e.target.value))}
-            className="h-2 w-full cursor-pointer appearance-none rounded-full bg-border-medium accent-secondary"
-          />
-          <div className="mt-2 flex justify-between text-xs font-semibold text-text-muted-light">
-            <span>12m</span>
-            <span>60m</span>
-          </div>
-        </div>
+          Icon: <BadgeCheckIcon className="w-5 h-5 text-primary" />,
 
-        <div className="mt-4 grid grid-cols-2 gap-4 rounded-xl bg-white p-4 border border-border-medium">
-          <div>
-            <p className="text-xs text-text-muted">Monthly EMI</p>
-            <p className="text-xl font-extrabold text-text-heading">₹{formatINR(emi)}</p>
-          </div>
-          <div>
-            <p className="text-xs text-text-muted">Total Payable</p>
-            <p className="text-xl font-extrabold text-text-heading">₹{formatINR(totalPayable)}</p>
-          </div>
-        </div>
-      </SectionCard>
+          noteTitle: "Application Tips",
 
-      <SectionCard title="Review Your Information" icon={<Edit3 className="w-4 h-4" />}>
-        <ReviewField label="Mobile Number" value="-" />
-        <ReviewField label="PAN Number" value="-" />
-        <ReviewField label="Full Name" value="-" />
-        <ReviewField label="Email" value="-" />
-        <ReviewField label="DOB" value="-" />
-        <ReviewField label="Aadhaar" value="-" />
-        <ReviewField label="Bank Account" value="-" />
-        <ReviewField label="Employment" value="-" />
-      </SectionCard>
+          noteDescription: (
+            <ul className="space-y-2 text-sm leading-6">
+              <li className="flex items-start gap-2">
+                <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+                Borrow only the amount you genuinely need to keep repayments manageable.
+              </li>
 
-      <div className="flex items-start gap-3 rounded-2xl border border-border-light bg-surface p-5">
-        <Shield className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
-        <div>
-          <p className="text-sm font-semibold text-text-heading">
-            I confirm that all the information provided is true and correct
-          </p>
-          <p className="mt-1 text-xs text-text-muted">
-            By submitting, you agree to our terms and conditions and authorize us to verify your information.
-          </p>
-          <label className="mt-3 flex items-center gap-2 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={agreed}
-              onChange={(e) => setAgreed(e.target.checked)}
-              className="h-5 w-5 rounded border-border-medium accent-primary"
-            />
-            <span className="text-sm font-medium text-text-heading">
-              I agree to the Terms & Conditions
-            </span>
-          </label>
-        </div>
-      </div>
+              <li className="flex items-start gap-2">
+                <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+                Compare different loan amounts and repayment tenures to find the most suitable EMI.
+              </li>
 
-      <GradientButton
-        type="button"
-        onClick={handleSubmit}
-        disabled={!agreed || submitting}
-        className="w-full h-14 text-lg"
+              <li className="flex items-start gap-2">
+                <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+                Carefully review all application details before final submission.
+              </li>
+
+              <li className="flex items-start gap-2">
+                <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+                Ensure your bank account and personal information are accurate to avoid processing delays.
+              </li>
+
+              <li className="flex items-start gap-2">
+                <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+                Approval and eligible loan amount may vary based on verification and lending criteria.
+              </li>
+            </ul>
+          ),
+        }}
       >
-        {submitting ? "Submitting Application..." : "Submit Application"}
-      </GradientButton>
-    </div>
+        <div className="flex flex-col gap-6">
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-text-heading to-home-border-dark p-6 shadow-card">
+            <div className="absolute -right-2 -top-10 h-32 w-32 rounded-full bg-white/5 blur-[40px]" />
+            <p className="text-xs font-semibold uppercase tracking-wider text-text-on-dark-muted">
+              You are eligible for up to
+            </p>
+            <h2 className="mt-1 text-3xl font-extrabold text-white">
+              ₹{formatINR(maxEligible)}
+            </h2>
+            <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4 text-xs text-text-on-dark-muted">
+              <span>Interest Rate: {interestRate}% p.a.</span>
+              <span>Estimated EMI: ₹{formatINR(emi)}/mo</span>
+            </div>
+          </div>
+          <SectionCard title="Choose Loan Amount" icon={<IndianRupee className="w-4 h-4" />}>
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm font-semibold text-text-dark-blue">Loan Amount</span>
+                <span className="text-lg font-bold text-primary">₹{formatINR(loanAmount)}</span>
+              </div>
+              <input
+                type="range"
+                min={100000}
+                max={maxEligible}
+                step={10000}
+                value={loanAmount}
+                onChange={(e) => setLoanAmount(Number(e.target.value))}
+                className="h-2 w-full cursor-pointer appearance-none rounded-full bg-border-medium accent-primary"
+              />
+              <div className="mt-2 flex justify-between text-xs font-semibold text-text-muted-light">
+                <span>₹1L</span>
+                <span>₹{formatINR(maxEligible)}</span>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm font-semibold text-text-dark-blue">Tenure (Months)</span>
+                <span className="text-lg font-bold text-secondary">{tenure} months</span>
+              </div>
+              <input
+                type="range"
+                min={12}
+                max={60}
+                step={1}
+                value={tenure}
+                onChange={(e) => setTenure(Number(e.target.value))}
+                className="h-2 w-full cursor-pointer appearance-none rounded-full bg-border-medium accent-secondary"
+              />
+              <div className="mt-2 flex justify-between text-xs font-semibold text-text-muted-light">
+                <span>12m</span>
+                <span>60m</span>
+              </div>
+            </div>
+
+            <div className="mt-4 grid grid-cols-2 gap-4 rounded-xl bg-white p-4 border border-border-medium">
+              <div>
+                <p className="text-xs text-text-muted">Monthly EMI</p>
+                <p className="text-xl font-extrabold text-text-heading">₹{formatINR(emi)}</p>
+              </div>
+              <div>
+                <p className="text-xs text-text-muted">Total Payable</p>
+                <p className="text-xl font-extrabold text-text-heading">₹{formatINR(totalPayable)}</p>
+              </div>
+            </div>
+          </SectionCard>
+
+          <SectionCard title="Review Your Information" icon={<Edit3 className="w-4 h-4" />}>
+            <ReviewField label="Mobile Number" value="-" />
+            <ReviewField label="PAN Number" value="-" />
+            <ReviewField label="Full Name" value="-" />
+            <ReviewField label="Email" value="-" />
+            <ReviewField label="DOB" value="-" />
+            <ReviewField label="Aadhaar" value="-" />
+            <ReviewField label="Bank Account" value="-" />
+            <ReviewField label="Employment" value="-" />
+          </SectionCard>
+
+          <div className="flex items-start gap-3 rounded-2xl border border-border-light bg-surface p-5">
+            <Shield className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-semibold text-text-heading">
+                I confirm that all the information provided is true and correct
+              </p>
+              <p className="mt-1 text-xs text-text-muted">
+                By submitting, you agree to our terms and conditions and authorize us to verify your information.
+              </p>
+              <label className="mt-3 flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                  className="h-5 w-5 rounded border-border-medium accent-primary"
+                />
+                <span className="text-sm font-medium text-text-heading">
+                  I agree to the Terms & Conditions
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <GradientButton
+            type="button"
+            onClick={handleSubmit}
+            disabled={!agreed || submitting}
+            className="w-full h-14 text-lg"
+          >
+            {submitting ? "Submitting Application..." : "Submit Application"}
+          </GradientButton>
+        </div>
+      </StepCard>
+    </>
   );
 }
 

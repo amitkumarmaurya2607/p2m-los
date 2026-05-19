@@ -32,7 +32,7 @@ function createClient(): AxiosInstance {
     (response) => response,
     (error: AxiosError) => {
       if (error.response?.status === 401) {
-        window.location.href = "/apply?type=exper";
+        window.location.href = "/apply-now?type=exper";
       }
 
       const message =

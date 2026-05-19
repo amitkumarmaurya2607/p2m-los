@@ -6,7 +6,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { steps as allSteps, type StepStatus } from "@/lib/sessionStorage";
 
 const stepRoutes = [
-  "/apply",
+  "/apply-now",
   "/geo-location",
   "/pan-details",
   "/personal-info",
@@ -49,7 +49,7 @@ const HorizontalStepper = ({ version = "v1" }: { version?: "v1" | "v2" }) => {
 
   const goToStep = (stepKey: string) => {
     if (stepKey === "mobile") {
-      router.push("/apply");
+      router.push("/apply-now");
     } else {
       const route = routeMap[stepKey];
       if (route) router.push(route);

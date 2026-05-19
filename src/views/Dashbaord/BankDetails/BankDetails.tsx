@@ -171,6 +171,7 @@ function BankDetails() {
       title=" Bank Verification"
       subtitle="Your loan amount will be disbursed to this verified account."
       steper={true}
+      icon={<Landmark className="w-5 h-5 text-primary" />}
       className="lg:w-[800px] mx-auto"
       tips={{
         title: "Bank Account Verification",

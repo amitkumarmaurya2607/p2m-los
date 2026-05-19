@@ -71,7 +71,7 @@ export default function NotFound({ type = "public" }: { type?: "dashboard" | "pu
           </p>
 
           <Link
-            href={type === "dashboard" ? "/apply" : "/"}
+            href={type === "dashboard" ? "/apply-now" : "/"}
             className="mt-10 inline-flex h-[56px] min-w-[220px] items-center justify-center
               rounded-full bg-primary px-8 text-[18px] font-bold text-white
               shadow-[var(--shadow-btn-soft)] transition-all duration-200 hover:brightness-110

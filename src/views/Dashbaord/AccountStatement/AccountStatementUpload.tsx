@@ -6,6 +6,7 @@ import StepCard from "../componants/StepCard";
 import GradientButton from "@/components/ui/GradientButton";
 import { Upload, CheckCircle, FileText, X, Lightbulb } from "lucide-react";
 import { showToast } from "@/lib/toast";
+import { submitAccountStatementAction } from "@/lib/actions/document.action";
 
 function AccountStatementUpload() {
   const router = useRouter();
@@ -68,6 +69,12 @@ function AccountStatementUpload() {
       return;
     }
 
+    const result = await submitAccountStatementAction();
+    if (result?.error) {
+      showToast({ message: result.error, type: "error" });
+      setLoading(false);
+      return;
+    }
     setLoading(false);
     showToast({ message: "Bank statement uploaded successfully", type: "success" });
     router.push("/employment-details");
@@ -77,7 +84,7 @@ function AccountStatementUpload() {
     <StepCard
       title="Account Statement Upload"
       subtitle="Upload your latest bank statement for verification"
-      // icon={<Upload className="w-6 h-6 text-primary" />}
+      icon={<Upload className="w-6 h-6 text-primary" />}
       className="lg:w-[600px] mx-auto"
       steper={true}
       tips={{

@@ -109,7 +109,7 @@ function GeoLocation() {
     <StepCard
       title="Geo Location"
       subtitle="Capture your current location to verify your presence"
-      // icon={<MapPin className="w-6 h-6 text-primary" />}
+      icon={<MapPin className="w-6 h-6 text-primary" />}
       steper={true}
       className="lg:w-[600px] mx-auto"
       tips={{

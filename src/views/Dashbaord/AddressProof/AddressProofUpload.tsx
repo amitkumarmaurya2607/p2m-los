@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import StepCard from "../componants/StepCard";
 import GradientButton from "@/components/ui/GradientButton";
 import SelectBox from "@/components/ui/SelectBox";
-import { Upload, CheckCircle, FileText, X, Lightbulb, Home } from "lucide-react";
+import { Upload, CheckCircle, FileText, X, Lightbulb, Home, FileCheck } from "lucide-react";
 import { showToast } from "@/lib/toast";
+import { submitAddressProofAction } from "@/lib/actions/document.action";
 
 const DOCUMENT_TYPES = [
   { value: "aadhaar", label: "Aadhaar Card" },
@@ -62,6 +63,12 @@ function AddressProofUpload() {
       return;
     }
 
+    const result = await submitAddressProofAction();
+    if (result?.error) {
+      showToast({ message: result.error, type: "error" });
+      setLoading(false);
+      return;
+    }
     setLoading(false);
     showToast({ message: "Address proof uploaded successfully", type: "success" });
     router.push("/alternate-mobile");
@@ -71,7 +78,7 @@ function AddressProofUpload() {
     <StepCard
       title="Local Address Proof Upload"
       subtitle="Upload a document to verify your current local address"
-      // icon={<Home className="w-6 h-6 text-primary" />}
+      icon={<FileCheck className="w-6 h-6 text-primary" />}
       className="lg:w-[600px] mx-auto"
       steper={true}
       tips={{

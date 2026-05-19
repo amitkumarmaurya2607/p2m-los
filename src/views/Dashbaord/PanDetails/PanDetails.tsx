@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import StepCard from "../componants/StepCard";
 import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
-import { ChevronRight, ShieldCheck } from "lucide-react";
+import { ChevronRight, CreditCard, ShieldCheck } from "lucide-react";
 import { isValidPAN, sanitizePAN } from "@/lib/utils";
 import { verifyPANAction } from "@/lib/actions/verification.action";
 function PanDetails() {
@@ -58,6 +58,8 @@ function PanDetails() {
       subtitle="Please enter your 10-digit PAN number."
       steper={true}
       className="lg:w-[600px] mx-auto"
+      icon={<CreditCard className="w-6 h-6 text-primary" />}
+
       tips={{
         title: "Why PAN?",
         description:

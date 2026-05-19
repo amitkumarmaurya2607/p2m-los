@@ -128,7 +128,7 @@ const LoanProducts = () => {
               </div>
 
               <Link
-                href={"/apply"}
+                href={"/apply-now"}
                 className="flex h-14 w-14 items-center justify-center rounded-full bg-home-green
                   transition-all duration-300 hover:scale-110 hover:rotate-45
                   hover:bg-home-green/90"
@@ -186,7 +186,7 @@ const LoanProducts = () => {
                       <p className="text-sm font-bold text-home-green">{item.amount}</p>
 
                       <Link
-                        href={"/apply"}
+                        href={"/apply-now"}
                         className="flex h-10 w-10 items-center justify-center rounded-full
                           bg-home-green transition-all duration-300 hover:scale-110
                           hover:bg-home-green/90"

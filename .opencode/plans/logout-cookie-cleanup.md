@@ -46,7 +46,7 @@ import { logoutAction } from "@/lib/actions/logout.action";
 
 Add after line 7 (`import { steps as allSteps, StepItem } from "@/lib/sessionStorage";`)
 
-**b) Update `handleLogout` to call `logoutAction` first, navigate to `/` instead of `/apply`:**
+**b) Update `handleLogout` to call `logoutAction` first, navigate to `/` instead of `/apply-now`:**
 
 ```ts
 const handleLogout = async () => {

@@ -475,7 +475,7 @@ const FinalCTA = () => (
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <Link
-            href="/apply"
+            href="/apply-now"
             className="px-10 py-5 bg-secondary hover:brightness-110 text-white rounded-full
               font-bold text-lg shadow-[var(--shadow-button)] transition-all flex items-center gap-3
               group active:scale-95"

@@ -80,7 +80,7 @@ const QuickEasySection = () => {
           </div>
 
           <Link
-            href="/apply"
+            href="/apply-now"
             className="mt-8 h-[60px] inline-flex items-center justify-center rounded-full
               bg-home-purple px-7 text-[18px] font-bold text-white shadow-[var(--shadow-btn-soft)]
               transition-all duration-300 hover:-translate-y-1 hover:bg-home-purple/90

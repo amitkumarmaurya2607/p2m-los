@@ -1,6 +1,6 @@
 "use client";
 
-import { Camera, Lightbulb } from "lucide-react";
+import { Camera, Lightbulb, ScanFace } from "lucide-react";
 import StepCard from "../componants/StepCard";
 import SelfieCapture from "./SelfieCapture";
 
@@ -11,6 +11,7 @@ function SelfiePage() {
       subtitle="Position your face clearly within the frame and ensure good lighting for quick verification"
       steper={true}
       className="lg:w-[600px] mx-auto"
+      icon={<ScanFace className="w-6 h-6 text-primary" />}
       tips={{
         title: "Capture Your Selfie",
         description:

@@ -44,7 +44,7 @@ const Header = () => {
 
         <div className="flex items-center gap-[30px]">
           <Link
-            href="/apply"
+            href="/apply-now"
             className="text-[16px] font-bold transition-colors lg:inline-flex lg:h-10
               lg:items-center lg:rounded-full lg:bg-secondary hover:brightness-110
               lg:shadow-[var(--shadow-button)] lg:px-6 lg:text-white

@@ -13,9 +13,9 @@ export const metadata: Metadata = {
 export default async function layout({ children }: { children: React.ReactNode }) {
   const token = await getSession();
   console.log("Session token:", token); // Debugging line
-  // if (!token) {
-  //   redirect("/apply");
-  // }
+  if (token) {
+    redirect("/pan-details");
+  }
   return (
     <div className="flex w-full font-sans antialiased min-h-[100dvh]">
       <SideBar />

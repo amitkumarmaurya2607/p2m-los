@@ -14,7 +14,7 @@ type HeaderProps = {
 };
 
 const routeStepMap: Record<string, string> = {
-  "/apply": "mobile",
+  "/apply-now": "mobile",
   "/geo-location": "geoLocation",
   "/pan-details": "pan",
   "/personal-info": "personalInfo",

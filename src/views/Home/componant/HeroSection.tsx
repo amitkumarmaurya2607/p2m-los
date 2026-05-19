@@ -50,7 +50,7 @@ function HeroSection() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Link
-              href="/apply"
+              href="/apply-now"
               className="px-8 py-4 rounded-full bg-secondary hover:brightness-110 text-surface
                 font-bold text-lg shadow-[var(--shadow-button)] transition-all flex items-center
                 justify-center gap-2"
@@ -58,7 +58,7 @@ function HeroSection() {
               Apply Now <ArrowRight size={20} />
             </Link>
             <Link
-              href="/apply"
+              href="/apply-now"
               className="px-8 py-4 rounded-full bg-surface text-primary font-bold text-lg border-2
                 border-primary hover:bg-primary/5 transition-all flex items-center justify-center"
             >

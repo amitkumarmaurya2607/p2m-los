@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const routeStepMap: Record<string, string> = {
-  "/apply": "mobile",
+  "/apply-now": "mobile",
   "/pan-details": "pan",
   "/personal-info": "personalInfo",
   "/aadhar-details": "aadhaar",
@@ -115,7 +115,7 @@ const FinalCTA = ({ version = "v2" }: FinalCTAProps) => {
             {/* BUTTONS */}
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/apply"
+                href="/apply-now"
                 className="flex h-[52px] items-center justify-center gap-2 rounded-[14px] border-2
                   border-home-green bg-home-green px-7 text-[14px] font-semibold text-white
                   shadow-[0px_10px_15px_-3px_rgba(0,200,156,0.2)] transition-all duration-300
@@ -175,7 +175,7 @@ const FinalCTA = ({ version = "v2" }: FinalCTAProps) => {
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <Link
-                href="/apply"
+                href="/apply-now"
                 className="flex h-[60px] items-center justify-center gap-2 rounded-[14px] border-2
                   border-home-green bg-home-green px-8 text-[16px] font-semibold text-white
                   shadow-[0px_10px_15px_-3px_rgba(0,200,156,0.2),0px_4px_6px_-4px_rgba(0,200,156,0.2)]
@@ -186,7 +186,7 @@ const FinalCTA = ({ version = "v2" }: FinalCTAProps) => {
               </Link>
 
               <Link
-                href="/apply"
+                href="/apply-now"
                 className="flex h-[60px] items-center justify-center rounded-[14px] border-2
                   border-white/30 px-8 text-[16px] font-semibold text-white transition-all
                   duration-300 hover:-translate-y-1 hover:bg-white/10"

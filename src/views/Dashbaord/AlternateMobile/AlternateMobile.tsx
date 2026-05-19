@@ -9,6 +9,7 @@ import GradientButton from "@/components/ui/GradientButton";
 import { Phone, Lightbulb } from "lucide-react";
 import { isValidMobile, sanitizeNumeric } from "@/lib/utils";
 import { showToast } from "@/lib/toast";
+import { submitAlternateMobileAction } from "@/lib/actions/document.action";
 
 const RELATION_OPTIONS = [
   { value: "spouse", label: "Spouse" },
@@ -40,8 +41,13 @@ function AlternateMobile() {
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validate()) return;
+    const result = await submitAlternateMobileAction();
+    if (result?.error) {
+      showToast({ message: result.error, type: "error" });
+      return;
+    }
     showToast({ message: "Alternate contact details saved", type: "success" });
     router.push("/loan-eligibility");
   };

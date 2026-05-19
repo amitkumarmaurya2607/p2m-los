@@ -7,7 +7,7 @@ export async function submitApplicationAction(data: unknown) {
   try {
     const result = await submitApplication(data);
     if (!result.success) return { error: result.message || "Submission failed" };
-    await saveStepCookie("review");
+    await saveStepCookie("loanEligibility");
     return { success: true as const, data: result.data };
   } catch (err) {
     return { error: err instanceof Error ? err.message : "Failed to submit application" };

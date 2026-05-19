@@ -1,4 +1,4 @@
-import { ArrowLeft, Star } from "lucide-react";
+import { ArrowLeft, Info, Star } from "lucide-react";
 import React from "react";
 import StepNotes from "./StepNotes";
 import HorizontalStepper from "./HorizontalStepper";
@@ -12,6 +12,7 @@ type StepCardProps = {
   back?: () => void;
   steper?: boolean;
   version?: "v1" | "v2";
+  iconBgClassName?: string;
   tips?: {
     title: string;
     description: string;
@@ -32,6 +33,7 @@ const StepCard: React.FC<StepCardProps> = ({
   tips,
   version = "v2",
   steper = false,
+  iconBgClassName = "text-primary bg-primary-muted",
 }) => {
   const TipsIcon = tips?.Icon;
   const NoteIcon = tips?.NoteIcon;
@@ -118,7 +120,7 @@ const StepCard: React.FC<StepCardProps> = ({
                 <div
                   className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white"
                 >
-                  {TipsIcon}
+                  <Info className="w-6 h-6 text-home-green" />
                 </div>
 
                 <h3 className="mb-4 text-[18px] font-bold">{tips.title}</h3>
@@ -152,7 +154,7 @@ const StepCard: React.FC<StepCardProps> = ({
                 <div className="flex items-start gap-4">
                   {icon && (
                     <div
-                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-muted text-primary"
+                      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-mute ${iconBgClassName}`}
                     >
                       {icon}
                     </div>

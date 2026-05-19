@@ -3,13 +3,15 @@ import ProgressBar from "@/views/Dashbaord/componants/ProgressBar";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 import type { Metadata } from "next";
-
 export const metadata: Metadata = {
   title: "P2M LOS - Dashboard",
   description: "Dashboard pages",
 };
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+
+
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
