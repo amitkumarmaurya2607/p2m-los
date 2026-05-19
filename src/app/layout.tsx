@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Providers } from "./providers";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { GlobalErrorHandler } from "@/components/GlobalErrorHandler";
 import "./globals.css";
 import ToastProvider from "@/components/ToastProvider/ToastProvider";
@@ -32,7 +30,7 @@ export default function RootLayout({
         className="min-h-full flex flex-col bg-background text-foreground font-sans scroll-smooth"
         cz-shortcut-listen="true"
       >
-        <Providers>{children}</Providers>
+        {children}
         <ToastProvider />
         <GlobalErrorHandler />
       </body>

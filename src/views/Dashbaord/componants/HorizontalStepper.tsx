@@ -2,8 +2,23 @@
 
 import React from "react";
 import { Check } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { steps as allSteps, type StepStatus } from "@/lib/sessionStorage";
+
+const stepRoutes = [
+  "/apply",
+  "/geo-location",
+  "/pan-details",
+  "/personal-info",
+  "/aadhar-details",
+  "/bank-details",
+  "/account-statement",
+  "/employment-details",
+  "/selfie-capture",
+  "/address-proof",
+  "/alternate-mobile",
+  "/loan-eligibility",
+];
 
 const routeMap: Record<string, string> = {
   geoLocation: "/geo-location",
@@ -21,13 +36,15 @@ const routeMap: Record<string, string> = {
 
 const HorizontalStepper = ({ version = "v1" }: { version?: "v1" | "v2" }) => {
   const router = useRouter();
+  const pathname = usePathname();
+  const currentStepIndex = stepRoutes.indexOf(pathname);
+
   const getStepStatus = (stepKey: string): StepStatus => {
-    return "progress";
     const stepIndex = allSteps.findIndex((s) => s.key === stepKey);
-    const allPreviousComplete = allSteps
-      .slice(0, stepIndex)
-      .every((s) => completedSteps.has(s.key));
-    return allPreviousComplete ? "progress" : "pending";
+    if (currentStepIndex < 0) return "pending";
+    if (stepIndex < currentStepIndex) return "complete";
+    if (stepIndex === currentStepIndex) return "progress";
+    return "pending";
   };
 
   const goToStep = (stepKey: string) => {
@@ -52,13 +69,12 @@ const HorizontalStepper = ({ version = "v1" }: { version?: "v1" | "v2" }) => {
                 <span
                   onClick={() => status !== "pending" && goToStep(step.key)}
                   className={`h-2 w-2 rounded-full transition-all
-                  ${status !== "pending" ? "cursor-pointer" : ""} ${
-                    status === "progress"
+                  ${status !== "pending" ? "cursor-pointer" : ""} ${status === "progress"
                       ? "border-2 border-primary bg-white"
                       : status === "complete"
                         ? "bg-primary"
                         : "bg-slate-300"
-                  } `}
+                    } `}
                 />
 
                 <div
@@ -94,30 +110,28 @@ const HorizontalStepper = ({ version = "v1" }: { version?: "v1" | "v2" }) => {
             <div key={step.id} className="flex items-center flex-shrink-0 md:flex-1">
               <div
                 className={`flex flex-col items-center text-center min-w-[70px] md:min-w-[100px]
-                ${status !== "pending" ? "cursor-pointer" : ""}`}
-                onClick={() => status !== "pending" && goToStep(step.key)}
+               `}
+
               >
                 <div
                   className={`w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full
-                  text-xs md:text-sm font-semibold ${
-                    status === "complete"
+                  text-xs md:text-sm font-semibold ${status === "complete"
                       ? "bg-stepper-complete text-white"
                       : status === "progress"
                         ? "bg-stepper-progress text-white"
                         : "bg-stepper-pending text-stepper-pending-text"
-                  }`}
+                    }`}
                 >
                   {status === "complete" ? <Check size={14} className="md:w-4 md:h-4" /> : step.id}
                 </div>
 
                 <p
-                  className={`mt-1 md:mt-2 text-[10px] md:text-xs font-semibold whitespace-nowrap ${
-                    status === "progress"
-                      ? "text-primary"
-                      : status === "complete"
-                        ? "text-text-heading"
-                        : "text-stepper-pending-text"
-                  }`}
+                  className={`mt-1 md:mt-2 text-[10px] md:text-xs font-semibold whitespace-nowrap ${status === "progress"
+                    ? "text-primary"
+                    : status === "complete"
+                      ? "text-text-heading"
+                      : "text-stepper-pending-text"
+                    }`}
                 >
                   {step.title}
                 </p>
