@@ -15,7 +15,7 @@ type AadhaarDetailsProps = {
   resend?: () => void;
 };
 
-function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
+function AadhaarDetails({ resend = () => { } }: AadhaarDetailsProps) {
   const router = useRouter();
   const { application, setAadhaarData } = useApplicationContext();
 
@@ -97,6 +97,7 @@ function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
       }
       back={step === "aadhaar" ? undefined : () => setStep("aadhaar")}
       steper={true}
+      className="lg:w-[800px] mx-auto"
       tips={{
         title: "Aadhaar Verification",
         description:

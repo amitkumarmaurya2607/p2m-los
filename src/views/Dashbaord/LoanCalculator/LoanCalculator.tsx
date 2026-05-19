@@ -56,7 +56,7 @@ function LoanCalculator() {
     <StepCard
       title="Configure Loan"
       subtitle={`You are eligible for up to ₹${formatINR(maxEligible)}`}
-      className=""
+      className="lg:w-[800px] mx-auto"
       steper={true}
       tips={{
         title: "Configure Your Loan",

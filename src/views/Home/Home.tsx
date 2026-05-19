@@ -4,7 +4,6 @@ import EmiDashboard from "./componant/EmiDashboard";
 import CategoryMarquee from "./componant/CategoryMarquee";
 import QuickEasySection from "./componant/QuickEasySection";
 import StepProcess from "./componant/StepProcess";
-import RatingReviews from "./componant/RatingReviews";
 import TrustStats from "./componant/TrustStats";
 import WhyChoose from "./componant/WhyChoose";
 import FinalCTA from "./componant/FinalCTA";

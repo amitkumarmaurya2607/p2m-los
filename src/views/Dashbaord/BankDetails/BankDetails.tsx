@@ -19,7 +19,7 @@ function BankDetails() {
     accountNumber: saved?.accountNumber || "",
     confirmAccountNumber: saved?.accountNumber || "",
     ifsc: saved?.ifsc || "",
-    accountType: saved?.accountType || "",
+    accountType: saved?.accountType || "savings",
   });
 
   const [errors, setErrors] = useState<any>({});
@@ -178,9 +178,9 @@ function BankDetails() {
   return (
     <StepCard
       title=" Bank Verification"
-      subtitle="  Your loan amount will be disbursed to this verified account."
-      className=""
+      subtitle="Your loan amount will be disbursed to this verified account."
       steper={true}
+      className="lg:w-[800px] mx-auto"
       tips={{
         title: "Bank Account Verification",
         description:
@@ -192,7 +192,7 @@ function BankDetails() {
       }}
     >
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <TextInput
             label="Bank Account Number"
             value={form.accountNumber}
@@ -218,13 +218,14 @@ function BankDetails() {
             require
           />
 
-          {/* <SelectBox
-              label="Account Type"
-              options={accountTypeOptions}
-              value={accountTypeOptions.find((opt) => opt.value === form.accountType)}
-              onChange={(selected: any) => handleChange("accountType", selected?.value || "")}
-              error={errors.accountType}
-            /> */}
+          <SelectBox
+            isDisabled={true}
+            label="Account Type"
+            options={accountTypeOptions}
+            value={accountTypeOptions.find((opt) => opt.value === form.accountType)}
+            onChange={(selected: any) => handleChange("accountType", selected?.value || "")}
+            error={errors.accountType}
+          />
         </div>
 
         {/* Info Box */}
