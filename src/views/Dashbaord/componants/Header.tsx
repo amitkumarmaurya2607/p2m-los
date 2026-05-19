@@ -89,10 +89,10 @@ const Header: React.FC<HeaderProps> = ({
         ) : (
           <>
             <Logo />
-            <div>
+            {/* <div>
               <p className="text-xs tracking-widest text-text-muted font-semibold">{subtitle}</p>
               <h1 className="text-lg font-semibold text-text-heading">{title}</h1>
-            </div>
+            </div> */}
           </>
         )}
       </div>

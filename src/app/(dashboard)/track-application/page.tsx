@@ -1,9 +1,9 @@
-import TrackApplication from "@/views/Dashbaord/TrackApplication/TrackApplication";
+import TrackApplicationV2 from "@/views/Dashbaord/TrackApplication/TrackApplicationV2";
 
 function page() {
   return (
     <>
-      <TrackApplication />
+      <TrackApplicationV2 />
     </>
   );
 }

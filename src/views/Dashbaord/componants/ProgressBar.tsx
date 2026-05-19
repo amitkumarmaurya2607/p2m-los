@@ -21,7 +21,7 @@ const stepRoutes = [
 const ProgressBar: React.FC = () => {
   const pathname = usePathname();
   const idx = stepRoutes.indexOf(pathname);
-  const progressPercentage = idx >= 0 ? Math.round((idx / stepRoutes.length) * 100) : 0;
+  const progressPercentage = idx >= 0 ? Math.round((idx / stepRoutes.length) * 100) : 100;
 
   return (
     <div className="w-full h-[6px] bg-stepper-pending overflow-hidden">
