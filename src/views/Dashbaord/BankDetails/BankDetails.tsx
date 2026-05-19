@@ -86,7 +86,7 @@ function BankDetails() {
         accountNumber: form.accountNumber,
         ifsc: form.ifsc,
         accountType: form.accountType,
-      })
+      });
       router.push("/selfie-capture");
     } finally {
       setLoading(false);
@@ -140,17 +140,23 @@ function BankDetails() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-muted-light">
+                <p
+                  className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-muted-light"
+                >
                   IFSC Code
                 </p>
                 <p className="mt-1 font-mono text-[16px] font-bold text-[#1D293D]">{form.ifsc}</p>
               </div>
 
               <div>
-                <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-muted-light">
+                <p
+                  className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-muted-light"
+                >
                   Account Type
                 </p>
-                <p className="mt-1 text-[16px] font-bold capitalize text-[#1D293D]">{form.accountType}</p>
+                <p className="mt-1 text-[16px] font-bold capitalize text-[#1D293D]">
+                  {form.accountType}
+                </p>
               </div>
             </div>
           </div>
@@ -158,7 +164,7 @@ function BankDetails() {
 
         <div className="mt-10">
           <GradientButton
-            onClick={() => window.location.href = "/selfie-capture"}
+            onClick={() => (window.location.href = "/selfie-capture")}
             type="button"
             className="w-full mt-4 sm:mt-6 bg-gradient-to-r from-home-purple to-home-purple-dark"
           >
@@ -177,10 +183,12 @@ function BankDetails() {
       steper={true}
       tips={{
         title: "Bank Account Verification",
-        description: "Please provide your bank account details accurately to enable secure loan disbursement, EMI processing, and seamless transaction verification.",
+        description:
+          "Please provide your bank account details accurately to enable secure loan disbursement, EMI processing, and seamless transaction verification.",
         Icon: <Landmark className="w-5 h-5 text-primary" />,
         noteTitle: "Safe Banking Information",
-        noteDescription: "Your banking details are securely encrypted and used only for verification, disbursement, and repayment-related processes."
+        noteDescription:
+          "Your banking details are securely encrypted and used only for verification, disbursement, and repayment-related processes.",
       }}
     >
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
@@ -222,12 +230,12 @@ function BankDetails() {
         {/* Info Box */}
         <div
           className="flex items-start gap-3 p-4 sm:p-5 rounded-xl border border-info/30 bg-info/10
-              text-info"
+            text-info"
         >
           <CreditCard className="w-5 h-5 mt-1 shrink-0" />
           <p className="text-xs sm:text-sm leading-relaxed">
-            We will deposit <b>₹1.00</b> to verify this account securely. Your data is encrypted
-            and completely safe.
+            We will deposit <b>₹1.00</b> to verify this account securely. Your data is encrypted and
+            completely safe.
           </p>
         </div>
 

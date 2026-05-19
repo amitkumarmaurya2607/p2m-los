@@ -24,7 +24,9 @@ const HorizontalStepper = ({ version = "v1" }: { version?: "v1" | "v2" }) => {
   const getStepStatus = (stepKey: string): StepStatus => {
     if (completedSteps.has(stepKey)) return "complete";
     const stepIndex = allSteps.findIndex((s) => s.key === stepKey);
-    const allPreviousComplete = allSteps.slice(0, stepIndex).every((s) => completedSteps.has(s.key));
+    const allPreviousComplete = allSteps
+      .slice(0, stepIndex)
+      .every((s) => completedSteps.has(s.key));
     return allPreviousComplete ? "progress" : "pending";
   };
 
@@ -50,25 +52,20 @@ const HorizontalStepper = ({ version = "v1" }: { version?: "v1" | "v2" }) => {
                 <span
                   onClick={() => status !== "pending" && goToStep(step.key)}
                   className={`h-2 w-2 rounded-full transition-all
-                    ${status !== "pending" ? "cursor-pointer" : ""}
-                    ${
-                      status === "progress"
-                        ? "border-2 border-primary bg-white"
-                        : status === "complete"
-                          ? "bg-primary"
-                          : "bg-slate-300"
-                    }
-                  `}
+                  ${status !== "pending" ? "cursor-pointer" : ""} ${
+                    status === "progress"
+                      ? "border-2 border-primary bg-white"
+                      : status === "complete"
+                        ? "bg-primary"
+                        : "bg-slate-300"
+                  } `}
                 />
 
                 <div
-                  className="
-                    pointer-events-none absolute -top-10 left-1/2 z-20
-                    -translate-x-1/2 whitespace-nowrap rounded-lg
-                    bg-slate-900 px-3 py-1.5 text-[11px] font-medium
+                  className="pointer-events-none absolute -top-10 left-1/2 z-20 -translate-x-1/2
+                    whitespace-nowrap rounded-lg bg-slate-900 px-3 py-1.5 text-[11px] font-medium
                     text-white opacity-0 shadow-lg transition-all duration-200
-                    group-hover:opacity-100 group-hover:-translate-y-1
-                  "
+                    group-hover:opacity-100 group-hover:-translate-y-1"
                 >
                   {step.title}
                 </div>
@@ -76,9 +73,7 @@ const HorizontalStepper = ({ version = "v1" }: { version?: "v1" | "v2" }) => {
 
               {!isLast && (
                 <span
-                  className={`h-px flex-1 ${
-                    status === "complete" ? "bg-primary" : "bg-slate-200"
-                  }`}
+                  className={`h-px flex-1 ${status === "complete" ? "bg-primary" : "bg-slate-200"}`}
                 />
               )}
             </React.Fragment>
@@ -112,16 +107,11 @@ const HorizontalStepper = ({ version = "v1" }: { version?: "v1" | "v2" }) => {
                         : "bg-stepper-pending text-stepper-pending-text"
                   }`}
                 >
-                  {status === "complete" ? (
-                    <Check size={14} className="md:w-4 md:h-4" />
-                  ) : (
-                    step.id
-                  )}
+                  {status === "complete" ? <Check size={14} className="md:w-4 md:h-4" /> : step.id}
                 </div>
 
                 <p
-                  className={`mt-1 md:mt-2 text-[10px] md:text-xs font-semibold whitespace-nowrap
-                  ${
+                  className={`mt-1 md:mt-2 text-[10px] md:text-xs font-semibold whitespace-nowrap ${
                     status === "progress"
                       ? "text-primary"
                       : status === "complete"

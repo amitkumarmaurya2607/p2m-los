@@ -15,6 +15,9 @@ export async function sendOTP(phone: string): Promise<ApiResponse<SendOTPRespons
   return apiPost<ApiResponse<SendOTPResponse>>(API.auth.sendOTP, { phone });
 }
 
-export async function verifyOTP(phone: string, code: string): Promise<ApiResponse<VerifyOTPResponse>> {
+export async function verifyOTP(
+  phone: string,
+  code: string,
+): Promise<ApiResponse<VerifyOTPResponse>> {
   return apiPost<ApiResponse<VerifyOTPResponse>>(API.auth.verifyOTP, { phone, code });
 }

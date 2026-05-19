@@ -36,7 +36,9 @@ function createClient(): AxiosInstance {
       }
 
       const message =
-        error.response?.data && typeof error.response.data === "object" && "message" in error.response.data
+        error.response?.data &&
+        typeof error.response.data === "object" &&
+        "message" in error.response.data
           ? String((error.response.data as Record<string, unknown>).message)
           : error.message || "An unexpected error occurred";
       return Promise.reject(new Error(message));
@@ -57,9 +59,10 @@ async function requestWithMock<T>(method: string, url: string, body?: unknown): 
       return mock as T;
     }
   }
-  const { data } = body !== undefined
-    ? await apiClient.request<T>({ method, url, data: body })
-    : await apiClient.request<T>({ method, url });
+  const { data } =
+    body !== undefined
+      ? await apiClient.request<T>({ method, url, data: body })
+      : await apiClient.request<T>({ method, url });
   return data;
 }
 
@@ -69,13 +72,21 @@ export async function apiGet<T>(url: string, config?: AxiosRequestConfig): Promi
   return data;
 }
 
-export async function apiPost<T>(url: string, body?: unknown, config?: AxiosRequestConfig): Promise<T> {
+export async function apiPost<T>(
+  url: string,
+  body?: unknown,
+  config?: AxiosRequestConfig,
+): Promise<T> {
   if (USE_MOCK) return requestWithMock<T>("POST", url, body);
   const { data } = await apiClient.post<T>(url, body, config);
   return data;
 }
 
-export async function apiPut<T>(url: string, body?: unknown, config?: AxiosRequestConfig): Promise<T> {
+export async function apiPut<T>(
+  url: string,
+  body?: unknown,
+  config?: AxiosRequestConfig,
+): Promise<T> {
   if (USE_MOCK) return requestWithMock<T>("PUT", url, body);
   const { data } = await apiClient.put<T>(url, body, config);
   return data;

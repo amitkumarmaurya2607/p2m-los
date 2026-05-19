@@ -8,7 +8,9 @@ import { submitApplicationAction } from "@/lib/actions/application.action";
 
 const ReviewField = ({ label, value }: { label: string; value: string }) => (
   <div>
-    <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-muted-light">{label}</p>
+    <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-muted-light">
+      {label}
+    </p>
     <p className="mt-1 text-[16px] font-semibold leading-6 text-[#1D293D]">{value}</p>
   </div>
 );
@@ -48,7 +50,6 @@ function ReviewApplication() {
   const { application: data, setReviewData } = useApplicationContext();
   const [agree, setAgree] = useState(true);
   const [loading, setLoading] = useState(false);
-
 
   const loanData = data.loanCalculator;
 
@@ -103,7 +104,9 @@ function ReviewApplication() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_277px] gap-8 items-start">
         <div>
           <div className="mb-9">
-            <h2 className="text-[30px] font-extrabold leading-9 tracking-[-0.75px] text-text-heading">
+            <h2
+              className="text-[30px] font-extrabold leading-9 tracking-[-0.75px] text-text-heading"
+            >
               Review Application
             </h2>
             <p className="mt-2 text-[16px] font-medium leading-6 text-text-muted-dark">
@@ -137,15 +140,16 @@ function ReviewApplication() {
                 Loan <br /> Amount
               </p>
               <p className="text-[24px] font-extrabold text-white">
-                ₹{loanData?.loanAmount ? Number(loanData.loanAmount).toLocaleString("en-IN") : "5,00,000"}
+                ₹
+                {loanData?.loanAmount
+                  ? Number(loanData.loanAmount).toLocaleString("en-IN")
+                  : "5,00,000"}
               </p>
             </div>
 
             <div className="flex items-end justify-between border-b border-white/10 pb-4">
               <p className="text-[16px] font-medium text-text-muted-light">Tenure</p>
-              <p className="text-[20px] font-bold text-white">
-                {loanData?.tenure || 36} Months
-              </p>
+              <p className="text-[20px] font-bold text-white">{loanData?.tenure || 36} Months</p>
             </div>
 
             <div className="flex items-end justify-between pb-2">

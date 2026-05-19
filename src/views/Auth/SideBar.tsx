@@ -35,7 +35,10 @@ const SideBar = () => {
     >
       <div>
         <div className="mb-16">
-          <Link href="/"> <Logo /></Link>
+          <Link href="/">
+            {" "}
+            <Logo />
+          </Link>
         </div>
         <h1 className="text-5xl font-extrabold leading-[1.1] mb-6">
           Access your <br /> financial dashboard

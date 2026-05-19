@@ -10,7 +10,11 @@ export async function sendOTPAction(phone: string) {
     const result = await sendOTP(phone);
     return { success: result.success, data: result.data, error: null };
   } catch (err) {
-    return { success: false, data: null, error: err instanceof Error ? err.message : "Failed to send OTP" };
+    return {
+      success: false,
+      data: null,
+      error: err instanceof Error ? err.message : "Failed to send OTP",
+    };
   }
 }
 

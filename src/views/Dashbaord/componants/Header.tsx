@@ -65,25 +65,24 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <div
-      className="sticky top-0 z-50 flex items-center justify-between w-full h-[80px] px-[56px] bg-surface-overlay-90
-        bg-background border-b border-border shadow-[var(--shadow-sm)]"
+      className="sticky top-0 z-50 flex items-center justify-between w-full h-[80px] px-[56px]
+        bg-surface-overlay-90 bg-background border-b border-border shadow-[var(--shadow-sm)]"
     >
       <div className="flex items-center gap-4">
         {progressItem ? (
           <>
             <button
               onClick={onBack}
-              className={`
-                w-10 h-10 rounded-xl flex items-center justify-center
-                shadow-[0px_10px_30px_rgba(0,0,0,0.2)]
-                ${progressItem.iconContainerClassName}
-              `}
+              className={` w-10 h-10 rounded-xl flex items-center justify-center
+                shadow-[0px_10px_30px_rgba(0,0,0,0.2)] ${progressItem.iconContainerClassName} `}
             >
               {Icon && <Icon className={progressItem.iconClassName} />}
             </button>
 
             <div>
-              <p className="text-xs tracking-widest text-text-muted font-semibold">{progressItem.fullTitle.toLocaleUpperCase()}</p>
+              <p className="text-xs tracking-widest text-text-muted font-semibold">
+                {progressItem.fullTitle.toLocaleUpperCase()}
+              </p>
               <h1 className="text-lg font-semibold text-text-heading">STEP {progressItem.id}</h1>
             </div>
           </>

@@ -18,6 +18,8 @@ interface EmploymentResponse {
   verified: boolean;
 }
 
-export async function submitEmployment(data: EmploymentData): Promise<ApiResponse<EmploymentResponse>> {
+export async function submitEmployment(
+  data: EmploymentData,
+): Promise<ApiResponse<EmploymentResponse>> {
   return apiPost<ApiResponse<EmploymentResponse>>(API.employment.submit, data);
 }

@@ -21,7 +21,10 @@ export async function sendEmailOTPAction(email: string) {
 
 export async function submitPersonalInfoAction(data: Record<string, unknown>) {
   try {
-    const result = await apiPost<ApiResponse<{ submitted: boolean }>>(API.personalInfo.submit, data);
+    const result = await apiPost<ApiResponse<{ submitted: boolean }>>(
+      API.personalInfo.submit,
+      data,
+    );
     if (!result.success) return { error: result.message || "Submission failed" };
     await saveProgress("personal-info");
     await saveStepCookie("personalInfo");

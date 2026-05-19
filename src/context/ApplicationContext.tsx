@@ -1,6 +1,14 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, useMemo, useEffect, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+  type ReactNode,
+} from "react";
 import { steps, type StepItem, type StepStatus } from "@/lib/sessionStorage";
 import { getProgressAction } from "@/lib/actions/progress.action";
 
@@ -123,7 +131,8 @@ function computeSelectors(completedFromApi: Set<string>, inMemoryState: Applicat
     }
   }
 
-  const progressPercentage = completed.size === 0 ? 0 : Math.round((completed.size / steps.length) * 100);
+  const progressPercentage =
+    completed.size === 0 ? 0 : Math.round((completed.size / steps.length) * 100);
 
   let currentStep = steps[steps.length - 1];
   for (let i = 0; i < steps.length; i++) {
@@ -241,9 +250,5 @@ export function ApplicationProvider({ children }: { children: ReactNode }) {
     ],
   );
 
-  return (
-    <ApplicationContext.Provider value={value}>
-      {children}
-    </ApplicationContext.Provider>
-  );
+  return <ApplicationContext.Provider value={value}>{children}</ApplicationContext.Provider>;
 }

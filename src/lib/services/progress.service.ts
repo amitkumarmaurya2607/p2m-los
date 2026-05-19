@@ -7,7 +7,10 @@ interface ProgressData {
   completedSteps: string[];
 }
 
-export async function saveProgress(step: string, data?: unknown): Promise<ApiResponse<ProgressData>> {
+export async function saveProgress(
+  step: string,
+  data?: unknown,
+): Promise<ApiResponse<ProgressData>> {
   return apiPost<ApiResponse<ProgressData>>(API.progress.save, { step, data });
 }
 

@@ -1,6 +1,9 @@
 "use server";
 
-import { saveProgress as saveProgressService, getProgress as getProgressService } from "@/lib/services/progress.service";
+import {
+  saveProgress as saveProgressService,
+  getProgress as getProgressService,
+} from "@/lib/services/progress.service";
 
 export async function saveProgressAction(step: string, data?: unknown) {
   try {

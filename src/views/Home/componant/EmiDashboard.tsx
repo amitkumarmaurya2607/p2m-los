@@ -41,64 +41,96 @@ const EmiDashboard = () => {
   return (
     <section
       id="emi-calculator"
-      className="relative w-full overflow-hidden bg-surface-accent px-4 py-14 sm:px-6 lg:px-[91px] lg:py-24"
+      className="relative w-full overflow-hidden bg-surface-accent px-4 py-14 sm:px-6 lg:px-[91px]
+        lg:py-24"
     >
-      <div className="absolute -right-[160px] -top-[250px] h-[500px] w-[500px] rounded-full bg-white/40 blur-[64px]" />
+      <div
+        className="absolute -right-[160px] -top-[250px] h-[500px] w-[500px] rounded-full bg-white/40
+          blur-[64px]"
+      />
 
-      <div className="relative mx-auto flex max-w-[1257px] flex-col items-center justify-between gap-12 lg:flex-row lg:gap-16">
+      <div
+        className="relative mx-auto flex max-w-[1257px] flex-col items-center justify-between gap-12
+          lg:flex-row lg:gap-16"
+      >
         <div className="w-full max-w-[584px]">
-          <div className="flex h-16 w-16 rotate-[3deg] items-center justify-center rounded-2xl bg-white shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.1),0px_2px_4px_-2px_rgba(0,0,0,0.1)]">
+          <div
+            className="flex h-16 w-16 rotate-[3deg] items-center justify-center rounded-2xl bg-white
+              shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.1),0px_2px_4px_-2px_rgba(0,0,0,0.1)]"
+          >
             <Calculator className="h-8 w-8 text-home-purple" />
           </div>
 
-          <h2 className="mt-7 text-[42px] font-extrabold leading-[52px] text-dark-navy sm:text-[48px] sm:leading-[60px]">
+          <h2
+            className="mt-7 text-[42px] font-extrabold leading-[52px] text-dark-navy sm:text-[48px]
+              sm:leading-[60px]"
+          >
             Smart LOS <br />
-            <span className="bg-gradient-to-r from-home-purple to-home-green bg-clip-text text-transparent">
+            <span
+              className="bg-gradient-to-r from-home-purple to-home-green bg-clip-text
+                text-transparent"
+            >
               Loan Planning
             </span>
           </h2>
 
           <p className="mt-6 max-w-[448px] text-[18px] leading-7 text-home-text-medium">
-            Manage loan applications, verification steps, eligibility checks,
-            and repayment planning from one smart LOS dashboard.
+            Manage loan applications, verification steps, eligibility checks, and repayment planning
+            from one smart LOS dashboard.
           </p>
 
           <div className="mt-8 flex max-w-[448px] flex-col gap-4">
-            <div className="flex h-[76px] items-center gap-4 rounded-[14px] bg-white p-4 shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0px_14px_35px_rgba(0,0,0,0.12)]">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-home-green/10">
+            <div
+              className="flex h-[76px] items-center gap-4 rounded-[14px] bg-white p-4
+                shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1
+                hover:shadow-[0px_14px_35px_rgba(0,0,0,0.12)]"
+            >
+              <div
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-home-green/10"
+              >
                 <ShieldCheck className="h-5 w-5 text-home-green" />
               </div>
 
               <div>
-                <h4 className="text-base font-bold text-dark-navy">
-                  Secure Verification
-                </h4>
-                <p className="text-sm text-home-muted">
-                  PAN, Aadhaar, bank and document checks
-                </p>
+                <h4 className="text-base font-bold text-dark-navy">Secure Verification</h4>
+                <p className="text-sm text-home-muted">PAN, Aadhaar, bank and document checks</p>
               </div>
             </div>
 
-            <div className="flex h-[76px] items-center gap-4 rounded-[14px] bg-white p-4 shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0px_14px_35px_rgba(0,0,0,0.12)]">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-orange/10">
+            <div
+              className="flex h-[76px] items-center gap-4 rounded-[14px] bg-white p-4
+                shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1
+                hover:shadow-[0px_14px_35px_rgba(0,0,0,0.12)]"
+            >
+              <div
+                className="flex h-10 w-10 items-center justify-center rounded-full
+                  bg-accent-orange/10"
+              >
                 <SlidersHorizontal className="h-5 w-5 text-accent-orange" />
               </div>
 
               <div>
-                <h4 className="text-base font-bold text-dark-navy">
-                  Flexible Workflow
-                </h4>
-                <p className="text-sm text-home-muted">
-                  Track every stage from login to approval
-                </p>
+                <h4 className="text-base font-bold text-dark-navy">Flexible Workflow</h4>
+                <p className="text-sm text-home-muted">Track every stage from login to approval</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="relative w-full max-w-[584px] rounded-[32px] border border-white bg-white p-6 shadow-[0px_24px_48px_rgba(0,0,0,0.06)] sm:p-[33px]">
-          <div className="group z-20  absolute -bottom-[38px] -right-6 rotate-[6deg] rounded-[14px]  text-sm font-bold text-white ">
-            <div className="relative overflow-hidden rounded-[16px] bg-gradient-to-r from-home-purple to-home-green px-6 py-4 shadow-[0px_16px_35px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:rotate-[6deg] hover:scale-105 hover:shadow-[0px_22px_45px_rgba(0,0,0,0.24)]">
+        <div
+          className="relative w-full max-w-[584px] rounded-[32px] border border-white bg-white p-6
+            shadow-[0px_24px_48px_rgba(0,0,0,0.06)] sm:p-[33px]"
+        >
+          <div
+            className="group z-20 absolute -bottom-[38px] -right-6 rotate-[6deg] rounded-[14px]
+              text-sm font-bold text-white"
+          >
+            <div
+              className="relative overflow-hidden rounded-[16px] bg-gradient-to-r from-home-purple
+                to-home-green px-6 py-4 shadow-[0px_16px_35px_rgba(0,0,0,0.18)] transition-all
+                duration-300 hover:-translate-y-1 hover:rotate-[6deg] hover:scale-105
+                hover:shadow-[0px_22px_45px_rgba(0,0,0,0.24)]"
+            >
               {/* <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 <div className="absolute -left-16 top-0 h-full w-10 rotate-[20deg] bg-white/20 blur-md transition-all duration-700 group-hover:left-[140%]" />
               </div> */}
@@ -112,20 +144,18 @@ const EmiDashboard = () => {
               </div>
 
               <style jsx>{`
-  @keyframes shine {
-    0% {
-      left: -60%;
-    }
+                @keyframes shine {
+                  0% {
+                    left: -60%;
+                  }
 
-    100% {
-      left: 140%;
-    }
-  }
-`}</style>
+                  100% {
+                    left: 140%;
+                  }
+                }
+              `}</style>
 
               <div className="relative flex flex-col">
-
-
                 <h4 className="mt-1 text-[18px] font-extrabold leading-5 text-white">
                   Fast Loan Approval
                 </h4>
@@ -138,11 +168,12 @@ const EmiDashboard = () => {
           </div>
 
           <div className="flex items-center justify-between border-b border-muted pb-6">
-            <h3 className="text-xl font-bold text-dark-navy">
-              Repayment Plan
-            </h3>
+            <h3 className="text-xl font-bold text-dark-navy">Repayment Plan</h3>
 
-            <span className="rounded-full bg-home-bg-green-light px-3 py-1 text-sm font-bold text-home-green">
+            <span
+              className="rounded-full bg-home-bg-green-light px-3 py-1 text-sm font-bold
+                text-home-green"
+            >
               {annualRate}% p.a.
             </span>
           </div>
@@ -151,9 +182,7 @@ const EmiDashboard = () => {
             <div className="flex flex-col gap-8">
               <div>
                 <div className="flex justify-between">
-                  <label className="text-sm font-semibold text-home-muted">
-                    Loan Amount
-                  </label>
+                  <label className="text-sm font-semibold text-home-muted">Loan Amount</label>
 
                   <span className="text-base font-bold text-home-purple">
                     {formatINR(loanAmount)}
@@ -178,13 +207,9 @@ const EmiDashboard = () => {
 
               <div>
                 <div className="flex justify-between">
-                  <label className="text-sm font-semibold text-home-muted">
-                    Tenure (Months)
-                  </label>
+                  <label className="text-sm font-semibold text-home-muted">Tenure (Months)</label>
 
-                  <span className="text-base font-bold text-home-green">
-                    {tenure} Months
-                  </span>
+                  <span className="text-base font-bold text-home-green">{tenure} Months</span>
                 </div>
 
                 <input
@@ -203,7 +228,11 @@ const EmiDashboard = () => {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-muted bg-home-bg-gray-light px-6 py-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0px_14px_35px_rgba(0,0,0,0.1)]">
+              <div
+                className="rounded-2xl border border-muted bg-home-bg-gray-light px-6 py-6
+                  transition-all duration-300 hover:-translate-y-1
+                  hover:shadow-[0px_14px_35px_rgba(0,0,0,0.1)]"
+              >
                 <p className="text-sm text-home-muted">Monthly EMI</p>
 
                 <h4 className="mt-1 text-[30px] font-black leading-9 text-dark-navy">
@@ -214,13 +243,15 @@ const EmiDashboard = () => {
 
             <div className="flex flex-col items-center justify-center">
               <div
-                className="relative flex h-40 w-40 items-center justify-center rounded-full transition-all duration-300 hover:scale-105"
+                className="relative flex h-40 w-40 items-center justify-center rounded-full
+                  transition-all duration-300 hover:scale-105"
                 style={circleStyle}
               >
-                <div className="flex h-[120px] w-[120px] flex-col items-center justify-center rounded-full bg-white">
-                  <p className="text-xs font-medium text-home-muted">
-                    Total Amount
-                  </p>
+                <div
+                  className="flex h-[120px] w-[120px] flex-col items-center justify-center
+                    rounded-full bg-white"
+                >
+                  <p className="text-xs font-medium text-home-muted">Total Amount</p>
 
                   <h4 className="text-lg font-bold text-dark-navy">
                     ₹{(totalAmount / 100000).toFixed(1)}L

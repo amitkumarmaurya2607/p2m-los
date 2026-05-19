@@ -30,8 +30,7 @@ export const steps: StepItem[] = [
     fullTitle: "Mobile Verification",
     icon: Smartphone,
     iconClassName: "w-5 h-5 text-white",
-    iconContainerClassName:
-      "bg-gradient-to-br from-[#6FFFD2] to-[#00C89C]",
+    iconContainerClassName: "bg-gradient-to-br from-[#6FFFD2] to-[#00C89C]",
   },
   {
     id: 2,
@@ -40,8 +39,7 @@ export const steps: StepItem[] = [
     fullTitle: "PAN Verification",
     icon: CreditCard,
     iconClassName: "w-5 h-5 text-white",
-    iconContainerClassName:
-      "bg-gradient-to-br from-[#7A7AF5] to-[#3737C1]",
+    iconContainerClassName: "bg-gradient-to-br from-[#7A7AF5] to-[#3737C1]",
   },
   {
     id: 3,
@@ -50,8 +48,7 @@ export const steps: StepItem[] = [
     fullTitle: "Personal Details",
     icon: User,
     iconClassName: "w-5 h-5 text-white",
-    iconContainerClassName:
-      "bg-gradient-to-br from-[#FFB86B] to-[#F59E0B]",
+    iconContainerClassName: "bg-gradient-to-br from-[#FFB86B] to-[#F59E0B]",
   },
   {
     id: 4,
@@ -60,8 +57,7 @@ export const steps: StepItem[] = [
     fullTitle: "Aadhaar Verification",
     icon: ShieldCheck,
     iconClassName: "w-5 h-5 text-white",
-    iconContainerClassName:
-      "bg-gradient-to-br from-[#60A5FA] to-[#2563EB]",
+    iconContainerClassName: "bg-gradient-to-br from-[#60A5FA] to-[#2563EB]",
   },
   {
     id: 5,
@@ -70,8 +66,7 @@ export const steps: StepItem[] = [
     fullTitle: "Bank Details",
     icon: Landmark,
     iconClassName: "w-5 h-5 text-white",
-    iconContainerClassName:
-      "bg-gradient-to-br from-[#A78BFA] to-[#7C3AED]",
+    iconContainerClassName: "bg-gradient-to-br from-[#A78BFA] to-[#7C3AED]",
   },
   {
     id: 6,
@@ -80,8 +75,7 @@ export const steps: StepItem[] = [
     fullTitle: "Selfie Verification",
     icon: Camera,
     iconClassName: "w-5 h-5 text-white",
-    iconContainerClassName:
-      "bg-gradient-to-br from-[#FB7185] to-[#E11D48]",
+    iconContainerClassName: "bg-gradient-to-br from-[#FB7185] to-[#E11D48]",
   },
   {
     id: 7,
@@ -90,8 +84,7 @@ export const steps: StepItem[] = [
     fullTitle: "Employment Details",
     icon: Briefcase,
     iconClassName: "w-5 h-5 text-white",
-    iconContainerClassName:
-      "bg-gradient-to-br from-[#34D399] to-[#059669]",
+    iconContainerClassName: "bg-gradient-to-br from-[#34D399] to-[#059669]",
   },
   {
     id: 8,
@@ -100,8 +93,7 @@ export const steps: StepItem[] = [
     fullTitle: "Loan Calculator",
     icon: Calculator,
     iconClassName: "w-5 h-5 text-white",
-    iconContainerClassName:
-      "bg-gradient-to-br from-[#F472B6] to-[#DB2777]",
+    iconContainerClassName: "bg-gradient-to-br from-[#F472B6] to-[#DB2777]",
   },
   {
     id: 9,
@@ -110,7 +102,6 @@ export const steps: StepItem[] = [
     fullTitle: "Review Application",
     icon: FileCheck,
     iconClassName: "w-5 h-5 text-white",
-    iconContainerClassName:
-      "bg-gradient-to-br from-[#22D3EE] to-[#0891B2]",
+    iconContainerClassName: "bg-gradient-to-br from-[#22D3EE] to-[#0891B2]",
   },
 ] as const;

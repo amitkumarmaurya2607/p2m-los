@@ -172,7 +172,8 @@ function PersonalInfo() {
       steper={true}
       tips={{
         title: "Personal Details",
-        description: "Please provide your personal information accurately to help us verify your identity, communicate important updates, and complete your application process smoothly.",
+        description:
+          "Please provide your personal information accurately to help us verify your identity, communicate important updates, and complete your application process smoothly.",
         Icon: <User className="w-5 h-5 text-primary" />,
         noteTitle: "Important Tips",
         noteDescription: (
@@ -242,7 +243,7 @@ function PersonalInfo() {
           <RadioButtonGroup
             heading="Gender"
             name="gender"
-            options={genders.map(g => ({ value: g, label: g }))}
+            options={genders.map((g) => ({ value: g, label: g }))}
             value={form.gender}
             onChange={(v) => handleChange("gender", v)}
           />
@@ -250,7 +251,7 @@ function PersonalInfo() {
             heading="Employment Type"
             disabled={true}
             name="employmentType"
-            options={employmentTypes.map(t => ({ value: t, label: t }))}
+            options={employmentTypes.map((t) => ({ value: t, label: t }))}
             value={form.employmentType}
             onChange={(v) => handleChange("employmentType", v)}
           />
@@ -276,7 +277,10 @@ function PersonalInfo() {
                         type="button"
                         onClick={handleSendOtp}
                         disabled={sendingOtp}
-                        className="cursor-pointer h-[41px] px-4 rounded-[5px] rounded-l-none text-primary-foreground font-medium flex items-center justify-center gap-2 bg-gradient-to-r mr-[-13px] from-secondary to-secondary/90 disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100"
+                        className="cursor-pointer h-[41px] px-4 rounded-[5px] rounded-l-none
+                          text-primary-foreground font-medium flex items-center justify-center gap-2
+                          bg-gradient-to-r mr-[-13px] from-secondary to-secondary/90
+                          disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100"
                       >
                         Verify Email
                       </button>

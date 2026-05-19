@@ -22,7 +22,6 @@ const Login = () => {
 
   const [accepted, setAccepted] = useState(false);
 
-
   const validate = () => {
     if (method === "mobile") return isValidMobile(userName);
     return isValidEmail(userName);
@@ -102,12 +101,7 @@ const Login = () => {
             subtitle="Please enter your details to sign in."
             className="w-full max-w-[448px] items-start lg:items-center"
           >
-            <form
-              onSubmit={submitHandler}
-
-            >
-
-
+            <form onSubmit={submitHandler}>
               <div className="space-y-4">
                 <TextInput
                   type={method === "mobile" ? "tel" : "email"}
@@ -138,7 +132,12 @@ const Login = () => {
                 </div>
 
                 {/* Button */}
-                <GradientButton type="submit" loading={loading} disabled={!accepted} className="mt-6">
+                <GradientButton
+                  type="submit"
+                  loading={loading}
+                  disabled={!accepted}
+                  className="mt-6"
+                >
                   <span className="flex items-center gap-2">
                     Get OTP
                     <ArrowRight className="w-5 h-5" />
@@ -146,9 +145,7 @@ const Login = () => {
                 </GradientButton>
               </div>
             </form>
-
           </StepCard>
-
         </div>
       ) : (
         <OTPVerify
@@ -158,8 +155,6 @@ const Login = () => {
           userName={userName}
         />
       )}
-
-
     </>
   );
 };

@@ -17,8 +17,8 @@ function ApplicationSubmitted() {
 
   return (
     <div
-      className="w-full max-w-[576px] rounded-[40px] border border-border-light bg-white/90 px-[64px]
-        py-[64px] shadow-[0px_40px_100px_-24px_rgba(0,0,0,0.15)]"
+      className="w-full max-w-[576px] rounded-[40px] border border-border-light bg-white/90
+        px-[64px] py-[64px] shadow-[0px_40px_100px_-24px_rgba(0,0,0,0.15)]"
     >
       <div
         className="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-r
@@ -39,7 +39,8 @@ function ApplicationSubmitted() {
       </p>
 
       <div
-        className="mt-10 rounded-[24px] border border-border-medium bg-surface-muted px-6 py-6 text-center"
+        className="mt-10 rounded-[24px] border border-border-medium bg-surface-muted px-6 py-6
+          text-center"
       >
         <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-muted-light">
           Application ID

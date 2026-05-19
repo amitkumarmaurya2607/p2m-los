@@ -86,9 +86,15 @@ const OTPInput = ({ length = 6, onComplete, version = "v2" }: OTPInputProps) => 
           onChange={(e) => handleChange(e.target.value, idx)}
           onKeyDown={(e) => handleKeyDown(e, idx)}
           onFocus={(e) => e.target.select()}
-          className={version === "v2"
-            ? "w-9 h-10 sm:w-10 sm:h-11 text-center text-sm sm:text-base font-bold bg-input-bg border-2 border-primary rounded-[5px] focus:outline-none transition-all duration-200"
-            : "w-full max-w-[56px] aspect-[7/8] text-center text-[18px] sm:text-[20px] font-bold bg-input-bg border-2 border-input-border rounded-[12px] sm:rounded-[16px] shadow-[var(--shadow-sm)] outline-none transition-all duration-200 focus:border-secondary focus:ring-2 focus:ring-secondary/30"
+          className={
+            version === "v2"
+              ? `w-9 h-10 sm:w-10 sm:h-11 text-center text-sm sm:text-base font-bold bg-input-bg
+                border-2 border-primary rounded-[5px] focus:outline-none transition-all
+                duration-200`
+              : `w-full max-w-[56px] aspect-[7/8] text-center text-[18px] sm:text-[20px] font-bold
+                bg-input-bg border-2 border-input-border rounded-[12px] sm:rounded-[16px]
+                shadow-[var(--shadow-sm)] outline-none transition-all duration-200
+                focus:border-secondary focus:ring-2 focus:ring-secondary/30`
           }
         />
       ))}

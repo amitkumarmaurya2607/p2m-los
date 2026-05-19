@@ -101,8 +101,9 @@ function TrackApplication() {
 
                 {step.status === "active" ? (
                   <div
-                    className="mt-4 flex items-center gap-2 rounded-[14px] border border-border-light
-                      bg-surface-muted px-4 py-4 text-[16px] font-medium text-text-body"
+                    className="mt-4 flex items-center gap-2 rounded-[14px] border
+                      border-border-light bg-surface-muted px-4 py-4 text-[16px] font-medium
+                      text-text-body"
                   >
                     <Info className="h-4 w-4 text-home-purple" />
                     {step.desc}
@@ -141,9 +142,12 @@ function TrackApplication() {
             </p>
 
             <div
-              className="mt-9 rounded-[16px] border border-home-purple/50 bg-home-purple/30 px-4 py-4"
+              className="mt-9 rounded-[16px] border border-home-purple/50 bg-home-purple/30 px-4
+                py-4"
             >
-              <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-on-dark-muted">
+              <p
+                className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-on-dark-muted"
+              >
                 Est. EMI
               </p>
               <p className="mt-1 text-[24px] font-extrabold text-home-green">

@@ -39,7 +39,17 @@ const routeStepMap: Record<string, string> = {
   "/review": "review",
 };
 
-const protectedPrefixes = ["/pan-details", "/personal-info", "/aadhar-details", "/bank-details", "/selfie-capture", "/employment-details", "/loan-calculator", "/review", "/track-application"];
+const protectedPrefixes = [
+  "/pan-details",
+  "/personal-info",
+  "/aadhar-details",
+  "/bank-details",
+  "/selfie-capture",
+  "/employment-details",
+  "/loan-calculator",
+  "/review",
+  "/track-application",
+];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;

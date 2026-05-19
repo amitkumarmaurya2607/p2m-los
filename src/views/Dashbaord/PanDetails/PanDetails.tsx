@@ -57,17 +57,20 @@ function PanDetails() {
   };
 
   return (
-
     <StepCard
-      title="PAN Verification" subtitle="Please enter your 10-digit PAN number."
+      title="PAN Verification"
+      subtitle="Please enter your 10-digit PAN number."
       steper={true}
       tips={{
         title: "Why PAN?",
-        description: "PAN is essential for identity verification, credit checks, and regulatory compliance in the loan application process.",
+        description:
+          "PAN is essential for identity verification, credit checks, and regulatory compliance in the loan application process.",
         Icon: <ShieldCheck className="w-5 h-5 text-primary" />,
         noteTitle: "Protected Information",
-        noteDescription: "Your PAN information is securely encrypted and processed in compliance with financial security standards."
-      }}  >
+        noteDescription:
+          "Your PAN information is securely encrypted and processed in compliance with financial security standards.",
+      }}
+    >
       <form onSubmit={handleSubmit} className="space-y-4">
         <TextInput
           type="text"
@@ -87,7 +90,6 @@ function PanDetails() {
         </GradientButton>
       </form>
     </StepCard>
-
   );
 }
 

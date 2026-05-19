@@ -102,7 +102,8 @@ function EmploymentDetails() {
       steper={true}
       tips={{
         title: "Employment Details",
-        description: "Please provide your current employment and income details accurately to help us assess your eligibility and offer suitable loan options.",
+        description:
+          "Please provide your current employment and income details accurately to help us assess your eligibility and offer suitable loan options.",
         Icon: <Briefcase className="w-5 h-5 text-primary" />,
         noteTitle: "Important Information",
         noteDescription: (
@@ -184,7 +185,9 @@ function EmploymentDetails() {
           <CustomDatePicker
             label="Joining Date"
             value={form.joiningDate ? new Date(form.joiningDate) : null}
-            onChange={(date: Date | null) => handleChange("joiningDate", date ? date.toISOString() : "")}
+            onChange={(date: Date | null) =>
+              handleChange("joiningDate", date ? date.toISOString() : "")
+            }
             error={error.joiningDate}
             required
           />

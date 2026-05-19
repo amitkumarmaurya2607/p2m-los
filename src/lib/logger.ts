@@ -43,11 +43,7 @@ function sanitizeContext(context: Record<string, unknown>): Record<string, unkno
   return result;
 }
 
-function makeEntry(
-  level: LogLevel,
-  message: string,
-  context?: Record<string, unknown>,
-): LogEntry {
+function makeEntry(level: LogLevel, message: string, context?: Record<string, unknown>): LogEntry {
   return {
     timestamp: new Date().toISOString(),
     level,

@@ -1,12 +1,4 @@
-
-import {
-  Zap,
-  Smartphone,
-  CalendarDays,
-  Shield,
-  Send,
-  Percent,
-} from "lucide-react";
+import { Zap, Smartphone, CalendarDays, Shield, Send, Percent } from "lucide-react";
 
 const features = [
   {
@@ -63,78 +55,78 @@ const WhyChoose = () => {
         <div className="mx-auto max-w-[var(--max-width-section)]">
           {/* Heading */}
           <div className="mx-auto max-w-[var(--max-width-text)] text-center">
-            <h2 className="text-[36px] font-black leading-tight tracking-[-1.2px] text-text-heading md:text-[48px] md:leading-[48px]">
+            <h2
+              className="text-[36px] font-black leading-tight tracking-[-1.2px] text-text-heading
+                md:text-[48px] md:leading-[48px]"
+            >
               Why Choose <span className="text-secondary">RinSetu</span>
             </h2>
 
-            <p className="mt-6 text-[16px] leading-[26px] text-text-body md:text-[18px] md:leading-[29px]">
-              Built for modern India, designed to give you financial power
-              without the traditional banking friction.
+            <p
+              className="mt-6 text-[16px] leading-[26px] text-text-body md:text-[18px]
+                md:leading-[29px]"
+            >
+              Built for modern India, designed to give you financial power without the traditional
+              banking friction.
             </p>
           </div>
 
           {/* Cards */}
           <div className="mt-14 grid gap-8 lg:gap-y-16 md:grid-cols-2 lg:mt-20 lg:grid-cols-3">
             {features.map((item, index) => (
-              <FeatureCard
-                key={item.title}
-                {...item}
-                index={index}
-              />
+              <FeatureCard key={item.title} {...item} index={index} />
             ))}
           </div>
         </div>
       </section>
-
-
     </>
   );
 };
 
-const FeatureCard = ({
-  title,
-  desc,
-  icon: Icon,
-  color,
-  glow,
-  tall,
-  index,
-}: any) => {
+const FeatureCard = ({ title, desc, icon: Icon, color, glow, tall, index }: any) => {
   return (
     <div
-      className={`feature-card group relative overflow-hidden rounded-[32px] border border-border-light bg-surface p-8 shadow-[0px_8px_30px_rgba(0,0,0,0.04)] transition-all duration-500 hover:-translate-y-3 hover:shadow-[0px_25px_60px_rgba(0,0,0,0.12)] ${
-        tall ? "lg:min-h-[287px]" : "lg:min-h-[240px]"
-      } ${index === 1 ? "lg:mt-12" : ""} ${
-        index === 4 ? "lg:-mt-12" : ""
-      }`}
+      className={`feature-card group relative overflow-hidden rounded-[32px] border
+        border-border-light bg-surface p-8 shadow-[0px_8px_30px_rgba(0,0,0,0.04)] transition-all
+        duration-500 hover:-translate-y-3 hover:shadow-[0px_25px_60px_rgba(0,0,0,0.12)] ${
+          tall ? "lg:min-h-[287px]" : "lg:min-h-[240px]"
+        } ${index === 1 ? "lg:mt-12" : ""}
+        ${index === 4 ? "lg:-mt-12" : ""}`}
       style={{
         animationDelay: `${index * 140}ms`,
       }}
     >
       {/* Glow */}
       <div
-        className={`feature-glow absolute -right-10 -top-10 h-32 w-32 rounded-full blur-[40px] transition-all duration-500 group-hover:scale-125 ${glow}`}
+        className={`feature-glow absolute -right-10 -top-10 h-32 w-32 rounded-full blur-[40px]
+          transition-all duration-500 group-hover:scale-125 ${glow}`}
       />
 
       {/* Icon */}
       <div
-        className={`flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-[var(--shadow-btn-soft)] transition-transform duration-500 group-hover:rotate-6 group-hover:scale-110 ${color}`}
+        className={`flex h-14 w-14 items-center justify-center rounded-2xl text-white
+          shadow-[var(--shadow-btn-soft)] transition-transform duration-500 group-hover:rotate-6
+          group-hover:scale-110 ${color}`}
       >
         <Icon size={24} strokeWidth={2} />
       </div>
 
       {/* Title */}
-      <h3 className="mt-8 text-[20px] font-bold leading-7 text-text-heading transition-colors duration-300 group-hover:text-primary">
+      <h3
+        className="mt-8 text-[20px] font-bold leading-7 text-text-heading transition-colors
+          duration-300 group-hover:text-primary"
+      >
         {title}
       </h3>
 
       {/* Description */}
-      <p className="mt-4 text-[14px] leading-[23px] text-text-body">
-        {desc}
-      </p>
+      <p className="mt-4 text-[14px] leading-[23px] text-text-body">{desc}</p>
 
       {/* Hover Border Effect */}
-      <div className="absolute inset-0 rounded-[32px] border border-transparent transition-all duration-500 group-hover:border-primary/20" />
+      <div
+        className="absolute inset-0 rounded-[32px] border border-transparent transition-all
+          duration-500 group-hover:border-primary/20"
+      />
     </div>
   );
 };

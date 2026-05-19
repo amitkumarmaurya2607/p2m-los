@@ -1,4 +1,3 @@
-
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import { getSession } from "@/lib/session";
@@ -20,13 +19,10 @@ export default async function PublicLayout({ children }: { children: React.React
     redirect("/pan-details");
   }
 
-
   return (
     <div className="min-h-screen bg-background font-sans text-foreground">
       <Header />
-      <main>
-        {children}
-      </main>
+      <main>{children}</main>
       <Footer />
     </div>
   );

@@ -12,7 +12,8 @@ function SelfiePage() {
       steper={true}
       tips={{
         title: "Capture Your Selfie",
-        description: "Please take a clear selfie to verify your identity and enhance the security of your application process. Make sure your face is clearly visible and well-lit.",
+        description:
+          "Please take a clear selfie to verify your identity and enhance the security of your application process. Make sure your face is clearly visible and well-lit.",
         Icon: <Camera className="w-5 h-5 text-primary" />,
         noteTitle: "Quick Selfie Tips",
         noteDescription: (

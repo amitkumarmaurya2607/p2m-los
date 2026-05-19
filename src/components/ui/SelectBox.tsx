@@ -47,9 +47,7 @@ const SelectBox = ({
               {label} {required && <span className="text-destructive ml-0.5">*</span>}
             </label>
           )}
-          {leftIcon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 ">{leftIcon}</div>
-          )}
+          {leftIcon && <div className="absolute left-3 top-1/2 -translate-y-1/2">{leftIcon}</div>}
           <Select
             {...props}
             inputId={id}
@@ -88,7 +86,7 @@ const SelectBox = ({
             }}
           />
           {rightIcon && (
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 ">{rightIcon}</div>
+            <div className="absolute right-3 top-1/2 -translate-y-1/2">{rightIcon}</div>
           )}
         </div>
         {error && <p className="mt-1 text-sm text-destructive px-1">{error}</p>}

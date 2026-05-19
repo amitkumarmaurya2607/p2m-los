@@ -1,4 +1,3 @@
-
 import HeroSection from "./componant/HeroSection";
 import LoanProducts from "./componant/LoanProducts";
 import EmiDashboard from "./componant/EmiDashboard";
@@ -16,8 +15,10 @@ import RatingReviews_v2 from "./componant/RatingReviews_v2";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans transition-colors duration-300 overflow-x-hidden">
-
+    <div
+      className="min-h-screen bg-background text-foreground font-sans transition-colors duration-300
+        overflow-x-hidden"
+    >
       <HeroSection />
       <CategoryMarquee />
       <LoanProducts />
@@ -32,7 +33,6 @@ export default function Home() {
       <WhyChoose />
       <FaqSection />
       <FinalCTA />
-
     </div>
   );
 }

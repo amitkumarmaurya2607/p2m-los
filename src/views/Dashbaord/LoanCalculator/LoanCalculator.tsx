@@ -60,7 +60,8 @@ function LoanCalculator() {
       steper={true}
       tips={{
         title: "Configure Your Loan",
-        description: "Customize your loan amount and repayment tenure to find a plan that best suits your financial needs and monthly budget.",
+        description:
+          "Customize your loan amount and repayment tenure to find a plan that best suits your financial needs and monthly budget.",
         Icon: <Calculator className="w-5 h-5 text-primary" />,
         noteTitle: "Smart Borrowing Tips",
         noteDescription: (
@@ -82,11 +83,9 @@ function LoanCalculator() {
         NoteIcon: Lightbulb,
       }}
     >
-
       <div
         className="relative mt-8 overflow-hidden rounded-[24px] bg-gradient-to-br from-text-heading
-          to-home-border-dark p-6
-          shadow-[var(--shadow-card)]"
+          to-home-border-dark p-6 shadow-[var(--shadow-card)]"
       >
         <div className="absolute -right-2 -top-10 h-32 w-32 rounded-full bg-white/5 blur-[40px]" />
 
@@ -129,7 +128,8 @@ function LoanCalculator() {
           />
 
           <div
-            className="mt-3 flex justify-between text-[12px] font-semibold leading-4 text-text-muted-light"
+            className="mt-3 flex justify-between text-[12px] font-semibold leading-4
+              text-text-muted-light"
           >
             <span>₹1L</span>
             <span>₹15L</span>
@@ -154,7 +154,8 @@ function LoanCalculator() {
           />
 
           <div
-            className="mt-3 flex justify-between text-[12px] font-semibold leading-4 text-text-muted-light"
+            className="mt-3 flex justify-between text-[12px] font-semibold leading-4
+              text-text-muted-light"
           >
             <span>12m</span>
             <span>60m</span>
@@ -163,12 +164,8 @@ function LoanCalculator() {
       </div>
 
       <GradientButton type="button" className="mt-6 w-full" onClick={handleLockPlan}>
-        <span className="flex items-center justify-center gap-2">
-          {"  Lock This Plan"}
-
-        </span>
+        <span className="flex items-center justify-center gap-2">{"  Lock This Plan"}</span>
       </GradientButton>
-
     </StepCard>
   );
 }

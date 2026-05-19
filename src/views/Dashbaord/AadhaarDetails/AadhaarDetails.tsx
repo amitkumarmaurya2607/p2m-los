@@ -15,7 +15,7 @@ type AadhaarDetailsProps = {
   resend?: () => void;
 };
 
-function AadhaarDetails({ resend = () => { } }: AadhaarDetailsProps) {
+function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
   const router = useRouter();
   const { application, setAadhaarData } = useApplicationContext();
 
@@ -99,10 +99,12 @@ function AadhaarDetails({ resend = () => { } }: AadhaarDetailsProps) {
       steper={true}
       tips={{
         title: "Aadhaar Verification",
-        description: "To continue your application, please verify your Aadhaar details securely. This helps us confirm your identity, prevent fraud, and ensure compliance with financial regulations.",
+        description:
+          "To continue your application, please verify your Aadhaar details securely. This helps us confirm your identity, prevent fraud, and ensure compliance with financial regulations.",
         Icon: <Fingerprint className="w-5 h-5 text-primary" />,
         noteTitle: "Secure & Confidential",
-        noteDescription: "Your Aadhaar information is encrypted with bank-grade security standards and is used only for identity verification and compliance purposes."
+        noteDescription:
+          "Your Aadhaar information is encrypted with bank-grade security standards and is used only for identity verification and compliance purposes.",
       }}
     >
       {step === "aadhaar" ? (

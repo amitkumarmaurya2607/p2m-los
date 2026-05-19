@@ -36,11 +36,12 @@ const CustomDatePicker = ({
           {label && (
             <label
               htmlFor={id}
-              className={`absolute transition-all duration-200 pointer-events-none z-10 text-xs font-bold
-              ${isActive
+              className={`absolute transition-all duration-200 pointer-events-none z-10 text-xs
+              font-bold ${
+                isActive
                   ? "top-[-8px] left-[7px] px-[3px] bg-input-bg w-fit"
                   : `${leftIcon ? "left-[36px]" : "left-[10px]"} top-1/2 -translate-y-1/2`
-                }`}
+              }`}
             >
               {label}
               {required && <span className="text-destructive ml-0.5">*</span>}
@@ -48,9 +49,7 @@ const CustomDatePicker = ({
           )}
 
           {leftIcon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-primary">
-              {leftIcon}
-            </div>
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-primary">{leftIcon}</div>
           )}
 
           <DatePicker
@@ -62,10 +61,9 @@ const CustomDatePicker = ({
             dayClassName={() => "custom-day"}
             weekDayClassName={() => "custom-weekday"}
             monthClassName={() => "custom-month"}
-            className={`px-[10px] py-[11px] text-xs border-2 rounded-[5px] bg-input-bg focus:outline-none w-full
-            ${leftIcon ? "pl-[36px]" : ""}
-            ${rightIcon ? "pr-[36px]" : ""}
-            ${error ? "!border-destructive" : "border-primary"}`}
+            className={`px-[10px] py-[11px] text-xs border-2 rounded-[5px] bg-input-bg
+              focus:outline-none w-full ${leftIcon ? "pl-[36px]" : ""}
+              ${rightIcon ? "pr-[36px]" : ""} ${error ? "!border-destructive" : "border-primary"}`}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             showMonthDropdown
@@ -77,15 +75,11 @@ const CustomDatePicker = ({
           />
 
           {rightIcon && (
-            <div className="absolute right-3 top-1/2 -translate-y-1/2">
-              {rightIcon}
-            </div>
+            <div className="absolute right-3 top-1/2 -translate-y-1/2">{rightIcon}</div>
           )}
         </div>
 
-        {error && (
-          <p className="mt-1 text-sm text-destructive px-1">{error}</p>
-        )}
+        {error && <p className="mt-1 text-sm text-destructive px-1">{error}</p>}
 
         {/* DATEPICKER CUSTOM STYLE */}
         <style jsx global>{`
@@ -100,7 +94,7 @@ const CustomDatePicker = ({
             overflow: hidden;
           }
 
-          .react-datepicker__month-container{
+          .react-datepicker__month-container {
             float: none;
           }
 
@@ -109,9 +103,9 @@ const CustomDatePicker = ({
           }
 
           .custom-datepicker .react-datepicker__header {
-            background: transparent!important;
-            border-bottom: none!important;
-            padding-top: 2px!important;
+            background: transparent !important;
+            border-bottom: none !important;
+            padding-top: 2px !important;
           }
 
           .custom-datepicker .react-datepicker__current-month {
@@ -127,8 +121,7 @@ const CustomDatePicker = ({
             top: 18px;
           }
 
-          .custom-datepicker
-            .react-datepicker__navigation-icon::before {
+          .custom-datepicker .react-datepicker__navigation-icon::before {
             border-color: var(--foreground);
             border-width: 2px 2px 0 0;
             height: 8px;
@@ -222,12 +215,10 @@ const CustomDatePicker = ({
     <div className="w-full">
       <div
         className={`relative flex items-center w-full h-[64px] px-[20px] pt-[24px] pb-[8px]
-        bg-input-bg rounded-[16px] shadow-[var(--shadow-sm)]
-        ${error ? "border border-destructive" : "border border-transparent"}`}
+          bg-input-bg rounded-[16px] shadow-[var(--shadow-sm)]
+          ${error ? "border border-destructive" : "border border-transparent"}`}
       >
-        {leftIcon && (
-          <div className="mr-[10px] flex items-center">{leftIcon}</div>
-        )}
+        {leftIcon && <div className="mr-[10px] flex items-center">{leftIcon}</div>}
 
         <div className="relative flex-1">
           <DatePicker
@@ -254,21 +245,15 @@ const CustomDatePicker = ({
               ${isActive ? "top-[-10px] text-text-label" : "top-[0px]"}`}
             >
               {label}
-              {required && (
-                <span className="text-destructive ml-0.5">*</span>
-              )}
+              {required && <span className="text-destructive ml-0.5">*</span>}
             </label>
           )}
         </div>
 
-        {rightIcon && (
-          <div className="ml-[10px] flex items-center">{rightIcon}</div>
-        )}
+        {rightIcon && <div className="ml-[10px] flex items-center">{rightIcon}</div>}
       </div>
 
-      {error && (
-        <p className="mt-1 text-sm text-destructive px-1">{error}</p>
-      )}
+      {error && <p className="mt-1 text-sm text-destructive px-1">{error}</p>}
     </div>
   );
 };

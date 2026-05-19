@@ -32,22 +32,34 @@ const TextInput = ({
           {label && (
             <label
               htmlFor={id}
-              className={`absolute transition-all duration-200 pointer-events-none z-10 text-xs font-bold  ${isFloating ? "top-[-8px] left-[7px] px-[3px] bg-input-bg w-fit" : `${leftIcon ? "left-[36px]" : "left-[10px]"} top-1/2 -translate-y-1/2`}`}
+              className={`absolute transition-all duration-200 pointer-events-none z-10 text-xs
+              font-bold ${
+                isFloating
+                  ? "top-[-8px] left-[7px] px-[3px] bg-input-bg w-fit"
+                  : `${leftIcon ? "left-[36px]" : "left-[10px]"} top-1/2 -translate-y-1/2`
+              }`}
             >
               {label}
               {require && <span className="text-destructive ml-0.5">*</span>}
             </label>
           )}
-          {leftIcon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2">{leftIcon}</div>
-          )}
+          {leftIcon && <div className="absolute left-3 top-1/2 -translate-y-1/2">{leftIcon}</div>}
           <input
             id={id}
             {...props}
             placeholder={isFloating ? props.placeholder || "Write here..." : " "}
-            onFocus={(e) => { setIsFocused(true); props.onFocus?.(e); }}
-            onBlur={(e) => { setIsFocused(false); props.onBlur?.(e); }}
-            className={`px-[10px] py-[11px] text-xs border-2 rounded-[5px] bg-input-bg focus:outline-none w-full ${leftIcon ? "pl-[36px]" : ""} ${rightIcon ? "pr-[36px]" : ""} ${error ? "!border-destructive" : "border-primary"} ${className}`}
+            onFocus={(e) => {
+              setIsFocused(true);
+              props.onFocus?.(e);
+            }}
+            onBlur={(e) => {
+              setIsFocused(false);
+              props.onBlur?.(e);
+            }}
+            className={`px-[10px] py-[11px] text-xs border-2 rounded-[5px] bg-input-bg
+              focus:outline-none w-full ${leftIcon ? "pl-[36px]" : ""}
+              ${rightIcon ? "pr-[36px]" : ""} ${error ? "!border-destructive" : "border-primary"}
+              ${className}`}
           />
           {rightIcon && (
             <div className="absolute right-3 top-1/2 -translate-y-1/2">{rightIcon}</div>

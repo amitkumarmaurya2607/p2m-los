@@ -13,8 +13,7 @@ export function GlobalErrorHandler() {
     };
 
     const handleRejection = (event: PromiseRejectionEvent) => {
-      const message =
-        event.reason instanceof Error ? event.reason.message : String(event.reason);
+      const message = event.reason instanceof Error ? event.reason.message : String(event.reason);
       logError(message, {
         stack: event.reason instanceof Error ? event.reason.stack : undefined,
         url: window.location.href,

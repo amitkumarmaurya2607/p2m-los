@@ -11,6 +11,7 @@ When a user logs out from the dashboard header (`src/views/Dashbaord/componants/
 Remove the `redirect("/")` from `logoutAction` so it only deletes the cookie server-side. The client component will handle navigation.
 
 **Current:**
+
 ```ts
 "use server";
 import { redirect } from "next/navigation";
@@ -23,6 +24,7 @@ export async function logoutAction() {
 ```
 
 **Change to:**
+
 ```ts
 "use server";
 import { deleteSession } from "@/lib/session";
@@ -37,19 +39,22 @@ export async function logoutAction() {
 Two edits needed:
 
 **a) Add import for `logoutAction`:**
+
 ```ts
 import { logoutAction } from "@/lib/actions/logout.action";
 ```
+
 Add after line 7 (`import { steps as allSteps, StepItem } from "@/lib/sessionStorage";`)
 
 **b) Update `handleLogout` to call `logoutAction` first, navigate to `/` instead of `/apply`:**
+
 ```ts
 const handleLogout = async () => {
-  await logoutAction();         // deletes httpOnly cookie server-side
-  logout();                     // clears sessionStorage
-  resetApplication();           // clears application context
+  await logoutAction(); // deletes httpOnly cookie server-side
+  logout(); // clears sessionStorage
+  resetApplication(); // clears application context
   setDropdownOpen(false);
-  router.push("/");             // goes to public home (layout confirms no cookie)
+  router.push("/"); // goes to public home (layout confirms no cookie)
 };
 ```
 

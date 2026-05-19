@@ -19,9 +19,7 @@ export default async function layout({ children }: { children: React.ReactNode }
   return (
     <div className="flex w-full font-sans antialiased min-h-[100dvh]">
       <SideBar />
-      <ErrorBoundary label="Authentication">
-        {children}
-      </ErrorBoundary>
+      <ErrorBoundary label="Authentication">{children}</ErrorBoundary>
     </div>
   );
 }

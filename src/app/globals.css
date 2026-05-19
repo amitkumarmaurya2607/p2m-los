@@ -2,35 +2,35 @@
 
 :root {
   /* Primary */
-  --primary: #1E40AF;
+  --primary: #1e40af;
   --primary-foreground: #ffffff;
-  --primary-light: #3B82F6;
+  --primary-light: #3b82f6;
   --primary-muted: rgba(30, 64, 175, 0.1);
 
   /* Secondary */
-  --secondary: #0D9488;
+  --secondary: #0d9488;
   --secondary-foreground: #ffffff;
-  --secondary-light: #14B8A6;
-  --secondary-gradient-start: #5EEAD4;
-  --secondary-gradient-end: #0D9488;
+  --secondary-light: #14b8a6;
+  --secondary-gradient-start: #5eead4;
+  --secondary-gradient-end: #0d9488;
 
   /* Accent / Utility colors */
-  --accent-orange: #FF9F1C;
+  --accent-orange: #ff9f1c;
   --accent-orange-foreground: #ffffff;
   --accent-orange-muted: rgba(255, 159, 28, 0.1);
 
-  --color-dark-navy: #0F172A;
+  --color-dark-navy: #0f172a;
   --color-dark-navy-foreground: #ffffff;
 
-  --text-body: #45556C;
-  --text-muted-dark: #62748E;
-  --text-muted-light: #90A1B9;
+  --text-body: #45556c;
+  --text-muted-dark: #62748e;
+  --text-muted-light: #90a1b9;
   --text-dark-blue: #314158;
-  --text-on-dark-muted: #CAD5E2;
+  --text-on-dark-muted: #cad5e2;
 
-  --surface-accent: #EEF2FF;
+  --surface-accent: #eef2ff;
 
-  --border-medium: #E2E8F0;
+  --border-medium: #e2e8f0;
 
   /* Core backgrounds / surfaces */
   --background: #ffffff;
@@ -55,10 +55,10 @@
   --border-light: #f1f5f9;
   --input: #e5e7eb;
   /* --input-bg: #f8fafc; */
-   --input-bg: #fff; 
+  --input-bg: #fff;
   --input-border: #e2e8f0;
 
-  --ring: #1E40AF;
+  --ring: #1e40af;
 
   --text-primary: #0f172b;
   --text-secondary: #45556c;
@@ -66,40 +66,37 @@
   --text-label: #64748b;
   --text-heading: #0f172b;
 
-  --success: #0D9488;
+  --success: #0d9488;
   --success-foreground: #ffffff;
   --warning: #f59e0b;
   --warning-foreground: #ffffff;
-  --info: #1E40AF;
+  --info: #1e40af;
   --info-foreground: #ffffff;
 
-  --shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.1),
-               0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
   --shadow-md: 0px 32px 64px -16px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0px 32px 80px -24px rgba(0, 0, 0, 0.15);
   --shadow-button: 0px 12px 24px -8px rgba(13, 148, 136, 0.4);
-  --shadow-card: 0px 20px 25px -5px rgba(0, 0, 0, 0.1),
-                 0px 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-card: 0px 20px 25px -5px rgba(0, 0, 0, 0.1), 0px 8px 10px -6px rgba(0, 0, 0, 0.1);
   --shadow-dark-card: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
-  --shadow-btn-soft: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
-                     0px 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-btn-soft: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
   --shadow-green-glow: 0px 0px 60px rgba(0, 200, 156, 0.6);
   --shadow-purple-button: 0px 12px 24px -8px rgba(55, 55, 193, 0.4);
 
   /* Card */
   --card-border: #f1f5f9;
   --card-bg: rgba(255, 255, 255, 0.8);
-  --card-icon-bg-start: #5EEAD4;
-  --card-icon-bg-end: #0D9488;
+  --card-icon-bg-start: #5eead4;
+  --card-icon-bg-end: #0d9488;
   --card-icon-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3), inset 0px -2px 0px rgba(0, 0, 0, 0.2);
 
   /* Sidebar */
-  --sidebar-from: #0D9488;
-  --sidebar-to: #0F766E;
+  --sidebar-from: #0d9488;
+  --sidebar-to: #0f766e;
 
   /* Stepper */
-  --stepper-complete: #0D9488;
-  --stepper-progress: #1E40AF;
+  --stepper-complete: #0d9488;
+  --stepper-progress: #1e40af;
   --stepper-pending: #e5e7eb;
   --stepper-pending-text: #9ca3af;
 
@@ -116,28 +113,28 @@
   --padding-section-x-lg: 5rem;
 
   /* Home page colors */
-  --home-green: #00C89C;
-  --home-green-dark: #00A882;
-  --home-purple: #3737C1;
-  --home-purple-dark: #2B2B9A;
-  --home-orange-badge: #FF8A00;
+  --home-green: #00c89c;
+  --home-green-dark: #00a882;
+  --home-purple: #3737c1;
+  --home-purple-dark: #2b2b9a;
+  --home-orange-badge: #ff8a00;
   --home-text-dark: #364153;
-  --home-text-medium: #4A5565;
-  --home-muted: #6A7282;
-  --home-text-muted-light: #99A1AF;
-  --home-text-on-dark: #D1D5DC;
-  --home-bg-orange-light: #FFF7ED;
-  --home-bg-green-light: #F0FDF4;
-  --home-bg-gray-light: #F9FAFB;
-  --home-border-light-gray: #F1F5F9;
-  --home-border-dark: #1D293D;
-  --home-bg-card-dark: #1E293B;
+  --home-text-medium: #4a5565;
+  --home-muted: #6a7282;
+  --home-text-muted-light: #99a1af;
+  --home-text-on-dark: #d1d5dc;
+  --home-bg-orange-light: #fff7ed;
+  --home-bg-green-light: #f0fdf4;
+  --home-bg-gray-light: #f9fafb;
+  --home-border-light-gray: #f1f5f9;
+  --home-border-dark: #1d293d;
+  --home-bg-card-dark: #1e293b;
   --home-border-card: #314158;
-  --home-card-violet: #8B5CF6;
-  --home-card-sky: #0EA5E9;
-  --home-social-twitter: #1DA1F2;
-  --home-social-linkedin: #0A66C2;
-  --home-gradient-teal: #1998B6;
+  --home-card-violet: #8b5cf6;
+  --home-card-sky: #0ea5e9;
+  --home-social-twitter: #1da1f2;
+  --home-social-linkedin: #0a66c2;
+  --home-gradient-teal: #1998b6;
 }
 
 @theme inline {
@@ -244,10 +241,6 @@
   --font-mono: ui-monospace, SFMono-Regular, monospace;
 }
 
-
-
-
-
 body {
   background-color: var(--background);
   color: var(--foreground);
@@ -264,9 +257,8 @@ textarea,
 select {
   font-family: inherit;
 }
-input:-internal-autofill-selected{
+input:-internal-autofill-selected {
   background-color: transparent !important;
-
 }
 /* Fix for DatePicker to take full width of container */
 .react-datepicker-wrapper {
@@ -324,12 +316,25 @@ input:-internal-autofill-selected{
 
 /* Shared Animations */
 @keyframes fadeUp {
-  0% { opacity: 0; transform: translateY(40px) scale(0.96); }
-  100% { opacity: 1; transform: translateY(0px) scale(1); }
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
 }
 @keyframes glowPulse {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.08); }
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.08);
+  }
 }
 .feature-card {
   opacity: 0;
@@ -347,8 +352,12 @@ input:-internal-autofill-selected{
   animation-play-state: paused;
 }
 @keyframes reviewMarquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-33.333%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.333%);
+  }
 }
 
 .marquee {
@@ -358,24 +367,50 @@ input:-internal-autofill-selected{
   animation-play-state: paused;
 }
 @keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-33.333%); }
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
 }
 
 @keyframes radioSelect {
-  0% { transform: scale(0.95); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes radioParticleUp {
-  0% { opacity: 0; transform: translateX(-50%) translateY(0); }
-  50% { opacity: 1; }
-  100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
 }
 
 @keyframes radioParticleDown {
-  0% { opacity: 0; transform: translateX(-50%) translateY(0); }
-  50% { opacity: 1; }
-  100% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
 }

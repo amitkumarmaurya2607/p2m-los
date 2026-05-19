@@ -11,7 +11,9 @@ const StepperAlt = () => {
   const getStepStatus = (stepKey: string): StepStatus => {
     if (completedSteps.has(stepKey)) return "complete";
     const stepIndex = allSteps.findIndex((s) => s.key === stepKey);
-    const allPreviousComplete = allSteps.slice(0, stepIndex).every((s) => completedSteps.has(s.key));
+    const allPreviousComplete = allSteps
+      .slice(0, stepIndex)
+      .every((s) => completedSteps.has(s.key));
     return allPreviousComplete ? "progress" : "pending";
   };
 

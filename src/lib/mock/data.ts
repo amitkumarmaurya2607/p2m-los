@@ -15,41 +15,66 @@ export function getMock(method: string, url: string): unknown | null {
   return handler ? handler() : null;
 }
 
-registerMock(`POST ${API.auth.sendOTP}`, (): ApiResponse<{ verified: boolean }> => ({
-  success: true,
-  data: { verified: false },
-  message: "OTP sent successfully",
-}));
+registerMock(
+  `POST ${API.auth.sendOTP}`,
+  (): ApiResponse<{ verified: boolean }> => ({
+    success: true,
+    data: { verified: false },
+    message: "OTP sent successfully",
+  }),
+);
 
-registerMock(`POST ${API.auth.verifyOTP}`, (): ApiResponse<{ verified: boolean; token: string }> => ({
-  success: true,
-  data: { verified: true, token: "mock-session-token-" + Date.now() },
-  message: "OTP verified successfully",
-}));
+registerMock(
+  `POST ${API.auth.verifyOTP}`,
+  (): ApiResponse<{ verified: boolean; token: string }> => ({
+    success: true,
+    data: { verified: true, token: "mock-session-token-" + Date.now() },
+    message: "OTP verified successfully",
+  }),
+);
 
-registerMock(`POST ${API.pan.verify}`, (): ApiResponse<{ number: string; fullName: string; verified: boolean }> => ({
-  success: true,
-  data: { number: "ABCDE1234F", fullName: "Rahul Sharma", verified: true },
-  message: "PAN verified successfully",
-}));
+registerMock(
+  `POST ${API.pan.verify}`,
+  (): ApiResponse<{ number: string; fullName: string; verified: boolean }> => ({
+    success: true,
+    data: { number: "ABCDE1234F", fullName: "Rahul Sharma", verified: true },
+    message: "PAN verified successfully",
+  }),
+);
 
-registerMock(`POST ${API.aadhaar.sendOTP}`, (): ApiResponse<{ verified: boolean }> => ({
-  success: true,
-  data: { verified: false },
-  message: "Aadhaar OTP sent",
-}));
+registerMock(
+  `POST ${API.aadhaar.sendOTP}`,
+  (): ApiResponse<{ verified: boolean }> => ({
+    success: true,
+    data: { verified: false },
+    message: "Aadhaar OTP sent",
+  }),
+);
 
-registerMock(`POST ${API.aadhaar.verifyOTP}`, (): ApiResponse<{ verified: boolean; number: string }> => ({
-  success: true,
-  data: { verified: true, number: "987698769876" },
-  message: "Aadhaar verified successfully",
-}));
+registerMock(
+  `POST ${API.aadhaar.verifyOTP}`,
+  (): ApiResponse<{ verified: boolean; number: string }> => ({
+    success: true,
+    data: { verified: true, number: "987698769876" },
+    message: "Aadhaar verified successfully",
+  }),
+);
 
 registerMock(
   `POST ${API.bank.verify}`,
-  (): ApiResponse<{ accountNumber: string; ifsc: string; accountType: string; verified: boolean }> => ({
+  (): ApiResponse<{
+    accountNumber: string;
+    ifsc: string;
+    accountType: string;
+    verified: boolean;
+  }> => ({
     success: true,
-    data: { accountNumber: "12345678901", ifsc: "SBIN0001234", accountType: "savings", verified: true },
+    data: {
+      accountNumber: "12345678901",
+      ifsc: "SBIN0001234",
+      accountType: "savings",
+      verified: true,
+    },
     message: "Bank verified successfully",
   }),
 );
@@ -67,14 +92,25 @@ registerMock(
   `POST ${API.application.submit}`,
   (): ApiResponse<{ applicationId: string; submitted: boolean; submittedAt: string }> => ({
     success: true,
-    data: { applicationId: "LOS-2026-0042", submitted: true, submittedAt: new Date().toISOString() },
+    data: {
+      applicationId: "LOS-2026-0042",
+      submitted: true,
+      submittedAt: new Date().toISOString(),
+    },
     message: "Application submitted successfully",
   }),
 );
 
 registerMock(
   `GET /application/status`,
-  (): ApiResponse<{ id: string; status: string; stage: string; updatedAt: string; applicantName: string; loanAmount: number }> => ({
+  (): ApiResponse<{
+    id: string;
+    status: string;
+    stage: string;
+    updatedAt: string;
+    applicantName: string;
+    loanAmount: number;
+  }> => ({
     success: true,
     data: {
       id: "LOS-2026-0042",
@@ -89,21 +125,54 @@ registerMock(
 
 registerMock(
   `GET ${API.lookup.schemes}`,
-  (): ApiResponse<Array<{ id: string; name: string; minAmount: number; maxAmount: number; interestRate: number; maxTenure: number }>> => ({
+  (): ApiResponse<
+    Array<{
+      id: string;
+      name: string;
+      minAmount: number;
+      maxAmount: number;
+      interestRate: number;
+      maxTenure: number;
+    }>
+  > => ({
     success: true,
     data: [
-      { id: "personal-loan", name: "Personal Loan", minAmount: 10000, maxAmount: 2500000, interestRate: 10.5, maxTenure: 60 },
-      { id: "business-loan", name: "Business Loan", minAmount: 50000, maxAmount: 5000000, interestRate: 12.0, maxTenure: 84 },
-      { id: "home-loan", name: "Home Loan", minAmount: 200000, maxAmount: 10000000, interestRate: 8.5, maxTenure: 360 },
+      {
+        id: "personal-loan",
+        name: "Personal Loan",
+        minAmount: 10000,
+        maxAmount: 2500000,
+        interestRate: 10.5,
+        maxTenure: 60,
+      },
+      {
+        id: "business-loan",
+        name: "Business Loan",
+        minAmount: 50000,
+        maxAmount: 5000000,
+        interestRate: 12.0,
+        maxTenure: 84,
+      },
+      {
+        id: "home-loan",
+        name: "Home Loan",
+        minAmount: 200000,
+        maxAmount: 10000000,
+        interestRate: 8.5,
+        maxTenure: 360,
+      },
     ],
   }),
 );
 
-registerMock(`POST ${API.email.sendOTP}`, (): ApiResponse<{ otp: string }> => ({
-  success: true,
-  data: { otp: "123456" },
-  message: "OTP sent to email",
-}));
+registerMock(
+  `POST ${API.email.sendOTP}`,
+  (): ApiResponse<{ otp: string }> => ({
+    success: true,
+    data: { otp: "123456" },
+    message: "OTP sent to email",
+  }),
+);
 
 registerMock(
   `POST ${API.personalInfo.submit}`,

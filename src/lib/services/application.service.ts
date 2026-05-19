@@ -14,7 +14,9 @@ interface ApplicationStatus {
   updatedAt: string;
 }
 
-export async function submitApplication(data: unknown): Promise<ApiResponse<SubmitApplicationResponse>> {
+export async function submitApplication(
+  data: unknown,
+): Promise<ApiResponse<SubmitApplicationResponse>> {
   return apiPost<ApiResponse<SubmitApplicationResponse>>(API.application.submit, data);
 }
 
