@@ -133,7 +133,7 @@ const ContactView = () => {
                         Visit Us
                       </p>
                       <p className="text-lg font-bold text-text-heading leading-relaxed">
-                        {COMPANY_DETAILS.address}
+                        {COMPANY_DETAILS.officeAddress}
                       </p>
                     </div>
                   </div>

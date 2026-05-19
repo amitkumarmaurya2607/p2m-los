@@ -60,10 +60,10 @@ export async function submitEmploymentAction(data: {
   companyName: string;
   designation: string;
   email: string;
-  salary: string;
   salaryMode: string;
   joiningDate: string;
   uan: string;
+  state: string;
   city: string;
   pincode: string;
 }) {

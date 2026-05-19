@@ -10,7 +10,7 @@ function SelfiePage() {
       title="Capture Your Selfie"
       subtitle="Position your face clearly within the frame and ensure good lighting for quick verification"
       steper={true}
-      className="lg:w-[800px] mx-auto"
+      className="lg:w-[600px] mx-auto"
       tips={{
         title: "Capture Your Selfie",
         description:

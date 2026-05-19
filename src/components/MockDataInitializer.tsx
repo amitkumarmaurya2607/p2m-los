@@ -8,14 +8,17 @@ export default function MockDataInitializer() {
   const ran = useRef(false);
   const {
     setMobileData,
+    setGeoLocationData,
     setPanData,
     setPersonalInfo,
     setAadhaarData,
     setBankDetails,
-    setSelfieData,
+    setAccountStatementData,
     setEmploymentDetails,
-    setLoanCalculatorData,
-    setReviewData,
+    setSelfieData,
+    setAddressProofData,
+    setAlternateMobileData,
+    setLoanEligibilityData,
   } = useApplicationContext();
 
   useEffect(() => {
@@ -26,26 +29,32 @@ export default function MockDataInitializer() {
     ran.current = true;
 
     setMobileData(MOCK_APPLICATION_DATA.mobile!);
+    setGeoLocationData(MOCK_APPLICATION_DATA.geoLocation!);
     setPanData(MOCK_APPLICATION_DATA.pan!);
     setPersonalInfo(MOCK_APPLICATION_DATA.personalInfo!);
     setAadhaarData(MOCK_APPLICATION_DATA.aadhaar!);
     setBankDetails(MOCK_APPLICATION_DATA.bankDetails!);
-    setSelfieData(MOCK_APPLICATION_DATA.selfie!);
+    setAccountStatementData(MOCK_APPLICATION_DATA.accountStatement!);
     setEmploymentDetails(MOCK_APPLICATION_DATA.employmentDetails!);
-    setLoanCalculatorData(MOCK_APPLICATION_DATA.loanCalculator!);
-    setReviewData(MOCK_APPLICATION_DATA.review!);
+    setSelfieData(MOCK_APPLICATION_DATA.selfie!);
+    setAddressProofData(MOCK_APPLICATION_DATA.addressProof!);
+    setAlternateMobileData(MOCK_APPLICATION_DATA.alternateMobile!);
+    setLoanEligibilityData(MOCK_APPLICATION_DATA.loanEligibility!);
 
     window.history.replaceState({}, "", window.location.pathname);
   }, [
     setMobileData,
+    setGeoLocationData,
     setPanData,
     setPersonalInfo,
     setAadhaarData,
     setBankDetails,
-    setSelfieData,
+    setAccountStatementData,
     setEmploymentDetails,
-    setLoanCalculatorData,
-    setReviewData,
+    setSelfieData,
+    setAddressProofData,
+    setAlternateMobileData,
+    setLoanEligibilityData,
   ]);
 
   return null;

@@ -51,26 +51,18 @@ function ReviewApplication() {
   const [agree, setAgree] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const loanData = data.loanCalculator;
+  const loanData = { loanAmount: 500000, tenure: 36, emi: 16500 };
 
   const personalFields = [
-    { label: "Name", value: data.personalInfo?.fullName || "N/A" },
+    { label: "Name", value: [data.personalInfo?.firstName, data.personalInfo?.secondName, data.personalInfo?.lastName].filter(Boolean).join(" ") || "N/A" },
     { label: "PAN", value: data.pan?.number || "N/A" },
     {
       label: "DOB",
       value: data.personalInfo?.dob ? new Date(data.personalInfo.dob).toLocaleDateString() : "N/A",
     },
   ];
-
   const employmentFields = [
-    { label: "Type", value: data.personalInfo?.employmentType || "N/A" },
     { label: "Company", value: data.employmentDetails?.companyName || "N/A" },
-    {
-      label: "Income",
-      value: data.employmentDetails?.salary
-        ? `₹${Number(data.employmentDetails.salary).toLocaleString("en-IN")}/mo`
-        : "N/A",
-    },
   ];
 
   const bankFields = [

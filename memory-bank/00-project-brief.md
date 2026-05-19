@@ -19,12 +19,17 @@ A digital loan origination platform for FinSetu that enables users to complete a
 ### Multi-Step Onboarding Flow
 
 1. **Mobile/Email Verification** - OTP-based identity confirmation
-2. **PAN Verification** - PAN card details capture and validation
-3. **Personal Information** - Full name, DOB, gender, employment, salary, address
-4. **Email Verification** - Secondary email confirmation
+2. **Geo Location** - GPS location capture and verification
+3. **PAN Verification** - PAN card details capture and validation
+4. **Personal Information** - Full name, DOB, gender, employment, salary, address
 5. **Aadhaar Verification** - 12-digit Aadhaar with OTP verification
-6. **Bank Details** - Account number, IFSC, account type with micro-deposit verification
-7. **Selfie Capture** - Photo or video verification via webcam
+6. **Bank Details** - Account number, IFSC, account type with verification
+7. **Account Statement Upload** - Bank statement file upload (PDF/JPG/PNG)
+8. **Employment Details** - Company, designation, salary, experience
+9. **Selfie / Video Verification** - Photo or video verification via webcam
+10. **Local Address Proof Upload** - Address proof document upload
+11. **Alternate Mobile Number** - Secondary contact number with OTP verification
+12. **Loan Eligibility & Application** - Eligibility display, plan configuration, review, and submit
 
 ### Dashboard
 

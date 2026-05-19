@@ -87,7 +87,7 @@ function BankDetails() {
         ifsc: form.ifsc,
         accountType: form.accountType,
       });
-      router.push("/selfie-capture");
+      router.push("/account-statement");
     } finally {
       setLoading(false);
     }

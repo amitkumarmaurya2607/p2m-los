@@ -51,7 +51,7 @@ function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps
 
       showToast({ message: "OTP verified successfully!", type: "success" });
 
-      router.push("/pan-details");
+      router.push("/geo-location");
     } catch (err) {
       showToast({ message: "Invalid OTP. Please try again.", type: "error" });
       setError("Invalid OTP");

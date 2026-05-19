@@ -16,14 +16,17 @@ type HeaderProps = {
 
 const routeStepMap: Record<string, string> = {
   "/apply": "mobile",
+  "/geo-location": "geoLocation",
   "/pan-details": "pan",
   "/personal-info": "personalInfo",
   "/aadhar-details": "aadhaar",
   "/bank-details": "bankDetails",
-  "/selfie-capture": "selfie",
+  "/account-statement": "accountStatement",
   "/employment-details": "employmentDetails",
-  "/loan-calculator": "loanCalculator",
-  "/review": "review",
+  "/selfie-capture": "selfie",
+  "/address-proof": "addressProof",
+  "/alternate-mobile": "alternateMobile",
+  "/loan-eligibility": "loanEligibility",
 };
 
 const Header: React.FC<HeaderProps> = ({

@@ -7,14 +7,17 @@ import { useApplicationContext } from "@/context/ApplicationContext";
 import { steps as allSteps, type StepStatus } from "@/lib/sessionStorage";
 
 const routeMap: Record<string, string> = {
+  geoLocation: "/geo-location",
   pan: "/pan-details",
   personalInfo: "/personal-info",
   aadhaar: "/aadhar-details",
   bankDetails: "/bank-details",
-  selfie: "/selfie-capture",
+  accountStatement: "/account-statement",
   employmentDetails: "/employment-details",
-  loanCalculator: "/loan-calculator",
-  review: "/review",
+  selfie: "/selfie-capture",
+  addressProof: "/address-proof",
+  alternateMobile: "/alternate-mobile",
+  loanEligibility: "/loan-eligibility",
 };
 
 const HorizontalStepper = ({ version = "v1" }: { version?: "v1" | "v2" }) => {

@@ -127,7 +127,7 @@ const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => 
     setSelfieData({ captured: true });
     const result = await submitSelfieAction();
     if (!result?.error) {
-      router.push("/employment-details");
+      router.push("/address-proof");
     }
   };
 

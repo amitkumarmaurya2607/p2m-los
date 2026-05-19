@@ -38,7 +38,7 @@ const StepCard: React.FC<StepCardProps> = ({
 
   if (version === "v2") {
     return (
-      <div className="w-full min-h-screen flex items-center justify-center">
+      <div className="w-full  flex items-center justify-center">
         <div
           className="w-full max-w-[1150px] lg:w-auto min-h-[220px] rounded-[12px] bg-white
             shadow-[0px_30px_80px_rgba(15,23,42,0.18)] flex"
@@ -93,7 +93,7 @@ const StepCard: React.FC<StepCardProps> = ({
                 </div>
 
                 <h1
-                  className="text-[42px] xl:text-[46px] leading-[1.18] font-bold tracking-[-1px]
+                  className="text-[32px] xl:text-[32px] leading-[1.18] font-bold tracking-[-1px]
                     max-w-[360px]"
                 >
                   {tips.noteTitle}
@@ -149,25 +149,29 @@ const StepCard: React.FC<StepCardProps> = ({
               )}
 
               <div className="mb-8">
-                {icon && (
-                  <div
-                    className="w-12 h-12 mb-4 flex items-center justify-center rounded-full
-                      bg-primary-muted text-primary"
-                  >
-                    {icon}
+                <div className="flex items-start gap-4">
+                  {icon && (
+                    <div
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-muted text-primary"
+                    >
+                      {icon}
+                    </div>
+                  )}
+
+                  <div>
+                    <h2
+                      className="text-[28px] font-extrabold leading-[36px] tracking-[-0.75px] text-text-heading"
+                    >
+                      {title}
+                    </h2>
+
+                    {subtitle && (
+                      <p className="mt-2 text-[16px] leading-[24px] text-text-muted">
+                        {subtitle}
+                      </p>
+                    )}
                   </div>
-                )}
-
-                <h2
-                  className="text-[28px] leading-[36px] font-extrabold tracking-[-0.75px]
-                    text-text-heading"
-                >
-                  {title}
-                </h2>
-
-                {subtitle && (
-                  <p className="mt-2 text-[16px] leading-[24px] text-text-muted">{subtitle}</p>
-                )}
+                </div>
               </div>
 
               <div className="w-full">{children}</div>

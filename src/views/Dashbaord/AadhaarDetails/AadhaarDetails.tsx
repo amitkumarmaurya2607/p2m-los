@@ -97,7 +97,7 @@ function AadhaarDetails({ resend = () => { } }: AadhaarDetailsProps) {
       }
       back={step === "aadhaar" ? undefined : () => setStep("aadhaar")}
       steper={true}
-      className="lg:w-[800px] mx-auto"
+      className="lg:w-[600px] mx-auto"
       tips={{
         title: "Aadhaar Verification",
         description:

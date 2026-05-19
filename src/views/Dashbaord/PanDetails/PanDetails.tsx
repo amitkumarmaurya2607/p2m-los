@@ -61,7 +61,7 @@ function PanDetails() {
       title="PAN Verification"
       subtitle="Please enter your 10-digit PAN number."
       steper={true}
-      className="lg:w-[800px] mx-auto"
+      className="lg:w-[600px] mx-auto"
       tips={{
         title: "Why PAN?",
         description:

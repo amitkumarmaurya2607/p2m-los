@@ -21,10 +21,10 @@ function EmploymentDetails() {
     companyName: saved?.companyName || "",
     designation: saved?.designation || "",
     email: saved?.email || "",
-    salary: saved?.salary || "",
     salaryMode: saved?.salaryMode || "",
     joiningDate: saved?.joiningDate || "",
     uan: saved?.uan || "",
+    state: saved?.state || "",
     city: saved?.city || "",
     pincode: saved?.pincode || "",
   });
@@ -53,10 +53,9 @@ function EmploymentDetails() {
       newError.email = "Invalid email";
     }
 
-    if (!form.salary) newError.salary = "Salary is required";
-
     if (!form.joiningDate) newError.joiningDate = "Joining date required";
 
+    if (!form.state) newError.state = "State is required";
     if (!form.city) newError.city = "City is required";
 
     if (!form.pincode) {
@@ -86,7 +85,7 @@ function EmploymentDetails() {
       }
 
       setEmploymentDetails(form);
-      router.push("/loan-calculator");
+      router.push("/selfie-capture");
     } catch (err) {
       setError((prev: any) => ({ ...prev, submit: "Something went wrong" }));
     } finally {
@@ -163,14 +162,6 @@ function EmploymentDetails() {
             require
           />
 
-          <TextInput
-            label="Monthly Net Salary (₹)"
-            value={form.salary}
-            onChange={(e) => handleChange("salary", sanitizeNumeric(e.target.value))}
-            error={error.salary}
-            require
-          />
-
           <SelectBox
             label="Salary Mode"
             options={[
@@ -205,13 +196,23 @@ function EmploymentDetails() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <TextInput
-              label="Company Location / City"
+              label="Company State"
+              value={form.state}
+              onChange={(e) => handleChange("state", e.target.value)}
+              error={error.state}
+              require
+            />
+
+            <TextInput
+              label="Company City"
               value={form.city}
               onChange={(e) => handleChange("city", e.target.value)}
               error={error.city}
               require
             />
+          </div>
 
+          <div className="mt-4">
             <TextInput
               label="Company Pincode"
               value={form.pincode}

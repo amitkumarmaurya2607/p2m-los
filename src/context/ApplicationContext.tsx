@@ -15,18 +15,16 @@ import { getProgressAction } from "@/lib/actions/progress.action";
 type MobileData = { number: string; verified: boolean };
 type PanData = { number: string };
 type PersonalInfoData = {
-  fullName: string;
+  firstName: string;
+  secondName: string;
+  lastName: string;
   fatherName: string;
   email: string;
   dob: string;
-  gender: string;
   salary: string;
-  employmentType: string;
-  address1: string;
-  address2: string;
-  pincode: string;
-  city: string;
   state: string;
+  city: string;
+  pincode: string;
 };
 type AadhaarData = { number: string; verified: boolean };
 type BankDetailsData = { accountNumber: string; ifsc: string; accountType: string };
@@ -35,46 +33,63 @@ type EmploymentData = {
   companyName: string;
   designation: string;
   email: string;
-  salary: string;
   salaryMode: string;
   joiningDate: string;
   uan: string;
+  state: string;
   city: string;
   pincode: string;
 };
-type LoanCalculatorData = {
-  viewed: boolean;
-  loanAmount: number;
+type GeoLocationData = {
+  latitude: number;
+  longitude: number;
+  accuracy: number;
+  capturedAt: string;
+};
+type AccountStatementData = { uploaded: boolean; fileName?: string };
+type AddressProofData = { uploaded: boolean; fileName?: string };
+type AlternateMobileData = { number1: string; relation1: string; number2: string; relation2: string };
+type EligibilityData = {
+  eligibleAmount: number;
+  selectedAmount: number;
   tenure: number;
   interestRate: number;
   emi: number;
-  totalPayable: number;
+  agreed: boolean;
+  submitted: boolean;
 };
-type ReviewData = { submitted: boolean };
 
 export interface ApplicationState {
   mobile: MobileData | null;
+  geoLocation: GeoLocationData | null;
   pan: PanData | null;
   personalInfo: PersonalInfoData | null;
   aadhaar: AadhaarData | null;
   bankDetails: BankDetailsData | null;
-  selfie: SelfieData | null;
+  accountStatement: AccountStatementData | null;
   employmentDetails: EmploymentData | null;
-  loanCalculator: LoanCalculatorData | null;
-  review: ReviewData | null;
+  selfie: SelfieData | null;
+  addressProof: AddressProofData | null;
+  alternateMobile: AlternateMobileData | null;
+  loanEligibility: EligibilityData | null;
 }
 
 interface ApplicationContextValue {
   application: ApplicationState;
   setMobileData: (data: MobileData) => void;
+  setGeoLocationData: (data: GeoLocationData) => void;
   setPanData: (data: PanData) => void;
   setPersonalInfo: (data: PersonalInfoData) => void;
   setAadhaarData: (data: AadhaarData) => void;
   setBankDetails: (data: BankDetailsData) => void;
-  setSelfieData: (data: SelfieData) => void;
+  setAccountStatementData: (data: AccountStatementData) => void;
   setEmploymentDetails: (data: EmploymentData) => void;
-  setLoanCalculatorData: (data: LoanCalculatorData) => void;
-  setReviewData: (data: ReviewData) => void;
+  setSelfieData: (data: SelfieData) => void;
+  setAddressProofData: (data: AddressProofData) => void;
+  setAlternateMobileData: (data: AlternateMobileData) => void;
+  setLoanEligibilityData: (data: EligibilityData) => void;
+  setLoanCalculatorData: (data: { viewed: boolean; loanAmount: number; tenure: number; interestRate: number; emi: number; totalPayable: number }) => void;
+  setReviewData: (data: { submitted: boolean }) => void;
   resetApplication: () => void;
   completedSteps: Set<string>;
   stepStatuses: Map<string, StepStatus>;
@@ -87,26 +102,33 @@ const ApplicationContext = createContext<ApplicationContextValue | null>(null);
 function getDefaultState(): ApplicationState {
   return {
     mobile: null,
+    geoLocation: null,
     pan: null,
     personalInfo: null,
     aadhaar: null,
     bankDetails: null,
-    selfie: null,
+    accountStatement: null,
     employmentDetails: null,
-    loanCalculator: null,
-    review: null,
+    selfie: null,
+    addressProof: null,
+    alternateMobile: null,
+    loanEligibility: null,
   };
 }
 
 const apiStepKeyToContextKey: Record<string, string> = {
   mobile: "mobile",
+  "geo-location": "geoLocation",
   pan: "pan",
   "personal-info": "personalInfo",
   aadhaar: "aadhaar",
   bank: "bankDetails",
-  selfie: "selfie",
+  "account-statement": "accountStatement",
   employment: "employmentDetails",
-  review: "review",
+  selfie: "selfie",
+  "address-proof": "addressProof",
+  "alternate-mobile": "alternateMobile",
+  "loan-eligibility": "loanEligibility",
 };
 
 const contextStepOrder = steps.map((s) => s.key);
@@ -176,6 +198,10 @@ export function ApplicationProvider({ children }: { children: ReactNode }) {
     (data: MobileData) => updateState((prev) => ({ ...prev, mobile: data })),
     [updateState],
   );
+  const setGeoLocationData = useCallback(
+    (data: GeoLocationData) => updateState((prev) => ({ ...prev, geoLocation: data })),
+    [updateState],
+  );
   const setPanData = useCallback(
     (data: PanData) => updateState((prev) => ({ ...prev, pan: data })),
     [updateState],
@@ -192,20 +218,36 @@ export function ApplicationProvider({ children }: { children: ReactNode }) {
     (data: BankDetailsData) => updateState((prev) => ({ ...prev, bankDetails: data })),
     [updateState],
   );
-  const setSelfieData = useCallback(
-    (data: SelfieData) => updateState((prev) => ({ ...prev, selfie: data })),
+  const setAccountStatementData = useCallback(
+    (data: AccountStatementData) => updateState((prev) => ({ ...prev, accountStatement: data })),
     [updateState],
   );
   const setEmploymentDetails = useCallback(
     (data: EmploymentData) => updateState((prev) => ({ ...prev, employmentDetails: data })),
     [updateState],
   );
+  const setSelfieData = useCallback(
+    (data: SelfieData) => updateState((prev) => ({ ...prev, selfie: data })),
+    [updateState],
+  );
+  const setAddressProofData = useCallback(
+    (data: AddressProofData) => updateState((prev) => ({ ...prev, addressProof: data })),
+    [updateState],
+  );
+  const setAlternateMobileData = useCallback(
+    (data: AlternateMobileData) => updateState((prev) => ({ ...prev, alternateMobile: data })),
+    [updateState],
+  );
+  const setLoanEligibilityData = useCallback(
+    (data: EligibilityData) => updateState((prev) => ({ ...prev, loanEligibility: data })),
+    [updateState],
+  );
   const setLoanCalculatorData = useCallback(
-    (data: LoanCalculatorData) => updateState((prev) => ({ ...prev, loanCalculator: data })),
+    (data: { viewed: boolean; loanAmount: number; tenure: number; interestRate: number; emi: number; totalPayable: number }) => updateState((prev) => ({ ...prev, loanCalculator: data })),
     [updateState],
   );
   const setReviewData = useCallback(
-    (data: ReviewData) => updateState((prev) => ({ ...prev, review: data })),
+    (data: { submitted: boolean }) => updateState((prev) => ({ ...prev, review: data })),
     [updateState],
   );
   const resetApplication = useCallback(() => {
@@ -221,12 +263,17 @@ export function ApplicationProvider({ children }: { children: ReactNode }) {
     () => ({
       application: state,
       setMobileData,
+      setGeoLocationData,
       setPanData,
       setPersonalInfo,
       setAadhaarData,
       setBankDetails,
-      setSelfieData,
+      setAccountStatementData,
       setEmploymentDetails,
+      setSelfieData,
+      setAddressProofData,
+      setAlternateMobileData,
+      setLoanEligibilityData,
       setLoanCalculatorData,
       setReviewData,
       resetApplication,
@@ -238,12 +285,17 @@ export function ApplicationProvider({ children }: { children: ReactNode }) {
       completedSteps,
       restSelectors,
       setMobileData,
+      setGeoLocationData,
       setPanData,
       setPersonalInfo,
       setAadhaarData,
       setBankDetails,
-      setSelfieData,
+      setAccountStatementData,
       setEmploymentDetails,
+      setSelfieData,
+      setAddressProofData,
+      setAlternateMobileData,
+      setLoanEligibilityData,
       setLoanCalculatorData,
       setReviewData,
       resetApplication,

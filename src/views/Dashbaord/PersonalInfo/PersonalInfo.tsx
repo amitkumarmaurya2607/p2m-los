@@ -6,15 +6,10 @@ import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import StepCard from "../componants/StepCard";
 import CustomDatePicker from "@/components/ui/CustomDatePicker";
-import OTPInput from "@/components/OTPInput/OTPInput";
-import { CheckCircle, User, Lightbulb } from "lucide-react";
+import { User, Lightbulb } from "lucide-react";
 import { useApplicationContext } from "@/context/ApplicationContext";
 import { isValidEmail, sanitizeNumeric } from "@/lib/utils";
-import RadioButtonGroup from "@/components/ui/RadioButtonGroup";
-import { sendEmailOTPAction, submitPersonalInfoAction } from "@/lib/actions/personal-info.action";
-
-const genders = ["Male", "Female", "Other"];
-const employmentTypes = ["Salaried", "Self-Employed"];
+import { submitPersonalInfoAction } from "@/lib/actions/personal-info.action";
 
 function PersonalInfo() {
   const router = useRouter();
@@ -22,106 +17,42 @@ function PersonalInfo() {
   const saved = application.personalInfo;
 
   const [form, setForm] = useState({
-    fullName: saved?.fullName || "",
+    firstName: saved?.firstName || "",
+    secondName: saved?.secondName || "",
+    lastName: saved?.lastName || "",
     fatherName: saved?.fatherName || "",
     email: saved?.email || "",
     dob: saved?.dob || "",
-    gender: saved?.gender || "Male",
     salary: saved?.salary || "",
-    employmentType: saved?.employmentType || "Salaried",
-    address1: saved?.address1 || "",
-    address2: saved?.address2 || "",
-    pincode: saved?.pincode || "",
-    city: saved?.city || "",
     state: saved?.state || "",
+    city: saved?.city || "",
+    pincode: saved?.pincode || "",
   });
 
   const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState(false);
 
-  const [emailVerified, setEmailVerified] = useState(false);
-  const [otpSent, setOtpSent] = useState(false);
-  const [otp, setOtp] = useState("");
-  const [serverOtp, setServerOtp] = useState("");
-  const [sendingOtp, setSendingOtp] = useState(false);
-
   const handleChange = (key: string, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
-
-    if (key === "email") {
-      setEmailVerified(false);
-      setOtpSent(false);
-      setOtp("");
-      setServerOtp("");
-    }
-
     if (errors[key]) {
       setErrors((prev: any) => ({ ...prev, [key]: "" }));
     }
   };
 
-  const handleSendOtp = async () => {
-    if (!form.email) {
-      setErrors((prev: any) => ({ ...prev, email: "Email is required" }));
-      return;
-    }
-
-    if (!isValidEmail(form.email)) {
-      setErrors((prev: any) => ({ ...prev, email: "Invalid email" }));
-      return;
-    }
-
-    setSendingOtp(true);
-
-    try {
-      const result = await sendEmailOTPAction(form.email);
-
-      if (!result.success) {
-        setErrors((prev: any) => ({ ...prev, email: result.error || "Failed to send OTP" }));
-        return;
-      }
-
-      setServerOtp(result.data?.otp || "");
-      setOtpSent(true);
-      setOtp("");
-    } finally {
-      setSendingOtp(false);
-    }
-  };
-
-  const handleVerifyOtp = () => {
-    if (!otp) {
-      setErrors((prev: any) => ({ ...prev, otp: "OTP is required" }));
-      return;
-    }
-
-    if (otp !== serverOtp) {
-      setErrors((prev: any) => ({ ...prev, otp: "Invalid OTP" }));
-      return;
-    }
-
-    setEmailVerified(true);
-    setOtpSent(false);
-    setErrors((prev: any) => ({ ...prev, otp: "" }));
-  };
-
   const validate = () => {
     const newErrors: any = {};
 
-    if (!form.fullName) newErrors.fullName = "Full name is required";
+    if (!form.firstName) newErrors.firstName = "First name is required";
     if (!form.fatherName) newErrors.fatherName = "Father name is required";
 
     if (!form.email) {
       newErrors.email = "Email is required";
     } else if (!isValidEmail(form.email)) {
       newErrors.email = "Invalid email";
-    } else if (!emailVerified) {
-      newErrors.email = "Please verify your email";
     }
 
     if (!form.dob) newErrors.dob = "Date of birth is required";
     if (!form.salary) newErrors.salary = "Salary is required";
-    if (!form.address1) newErrors.address1 = "Address is required";
 
     if (!form.pincode) {
       newErrors.pincode = "Pincode is required";
@@ -166,8 +97,8 @@ function PersonalInfo() {
 
   return (
     <StepCard
-      title="Basic Info"
-      subtitle="To continue, please share some basic personal information. It helps us confirm your identity and ensure everything is ready for a seamless experience."
+      title="Personal Details"
+      subtitle="Provide your personal information to help us verify your identity."
       className="lg:w-[800px] mx-auto"
       steper={true}
       tips={{
@@ -180,15 +111,15 @@ function PersonalInfo() {
           <ul className="space-y-2 text-sm leading-6">
             <li className="flex items-start gap-2">
               <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
-              Enter your active email address and verify it before continuing.
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
               Ensure your name matches your PAN and Aadhaar records.
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
-              Double-check your mobile number for important application updates.
+              Enter your active email address for communication.
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
+              Second name and last name are optional.
             </li>
           </ul>
         ),
@@ -196,17 +127,30 @@ function PersonalInfo() {
       }}
     >
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Personal Details */}
         <div>
           <h3 className="text-lg font-semibold mb-4">Personal Details</h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <TextInput
-              label="Full Name (as per PAN)"
-              value={form.fullName}
-              onChange={(e) => handleChange("fullName", e.target.value)}
-              error={errors.fullName}
+              label="First Name"
+              value={form.firstName}
+              onChange={(e) => handleChange("firstName", e.target.value)}
+              error={errors.firstName}
               require
+            />
+
+            <TextInput
+              label="Second Name (Optional)"
+              value={form.secondName}
+              onChange={(e) => handleChange("secondName", e.target.value)}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+            <TextInput
+              label="Last Name (Optional)"
+              value={form.lastName}
+              onChange={(e) => handleChange("lastName", e.target.value)}
             />
 
             <TextInput
@@ -219,7 +163,6 @@ function PersonalInfo() {
           </div>
         </div>
 
-        {/* DOB + Salary */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <CustomDatePicker
             label="Date of Birth"
@@ -238,127 +181,30 @@ function PersonalInfo() {
           />
         </div>
 
-        {/* Gender + Employment */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <RadioButtonGroup
-            heading="Gender"
-            name="gender"
-            options={genders.map((g) => ({ value: g, label: g }))}
-            value={form.gender}
-            onChange={(v) => handleChange("gender", v)}
-          />
-          <RadioButtonGroup
-            heading="Employment Type"
-            disabled={true}
-            name="employmentType"
-            options={employmentTypes.map((t) => ({ value: t, label: t }))}
-            value={form.employmentType}
-            onChange={(v) => handleChange("employmentType", v)}
-          />
-        </div>
-
-        {/* Email Details */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Email Details</h3>
+          <h3 className="text-lg font-semibold mb-4">Contact Details</h3>
 
-          <div className="space-y-3">
-            <div className="flex items-start gap-3">
-              <div className="flex-1">
-                <TextInput
-                  type="email"
-                  label="Email"
-                  value={form.email}
-                  onChange={(e) => handleChange("email", e.target.value)}
-                  error={errors.email}
-                  require
-                  rightIcon={
-                    !emailVerified ? (
-                      <button
-                        type="button"
-                        onClick={handleSendOtp}
-                        disabled={sendingOtp}
-                        className="cursor-pointer h-[41px] px-4 rounded-[5px] rounded-l-none
-                          text-primary-foreground font-medium flex items-center justify-center gap-2
-                          bg-gradient-to-r mr-[-13px] from-secondary to-secondary/90
-                          disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100"
-                      >
-                        Verify Email
-                      </button>
-                    ) : (
-                      <CheckCircle className="w-6 h-6 text-success text-sm" />
-                    )
-                  }
-                />
-              </div>
-            </div>
-
-            {otpSent && !emailVerified && (
-              <div className="space-y-2">
-                <div className="flex gap-3 max-w-[400px]">
-                  <OTPInput
-                    length={6}
-                    onComplete={(code) => {
-                      setOtp(code);
-                    }}
-                  />
-
-                  <button
-                    type="button"
-                    onClick={handleVerifyOtp}
-                    className="h-[48px] px-5 rounded-xl bg-primary text-white text-sm font-medium
-                      whitespace-nowrap"
-                  >
-                    Verify
-                  </button>
-                </div>
-
-                {errors.otp && <p className="text-sm text-error">{errors.otp}</p>}
-              </div>
-            )}
-
-            {emailVerified && (
-              <p className="text-sm font-medium text-success">Email verified successfully</p>
-            )}
-          </div>
+          <TextInput
+            type="email"
+            label="Email"
+            value={form.email}
+            onChange={(e) => handleChange("email", e.target.value)}
+            error={errors.email}
+            require
+          />
         </div>
 
-        {/* Address */}
         <div>
           <h3 className="text-lg font-semibold mb-4">Address Details</h3>
 
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <TextInput
-              label="Address Line 1"
-              value={form.address1}
-              onChange={(e) => handleChange("address1", e.target.value)}
-              error={errors.address1}
+              label="City"
+              value={form.city}
+              onChange={(e) => handleChange("city", e.target.value)}
+              error={errors.city}
               require
             />
-
-            <TextInput
-              label="Address Line 2 (Optional)"
-              value={form.address2}
-              onChange={(e) => handleChange("address2", e.target.value)}
-            />
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <TextInput
-                label="Pincode"
-                value={form.pincode}
-                onChange={(e) => handleChange("pincode", sanitizeNumeric(e.target.value))}
-                maxLength={6}
-                error={errors.pincode}
-                require
-              />
-
-              <TextInput
-                label="City"
-                value={form.city}
-                onChange={(e) => handleChange("city", e.target.value)}
-                error={errors.city}
-                require
-              />
-            </div>
 
             <TextInput
               label="State"
@@ -368,9 +214,20 @@ function PersonalInfo() {
               require
             />
           </div>
+
+          <div className="mt-4">
+            <TextInput
+              label="Pincode"
+              value={form.pincode}
+              onChange={(e) => handleChange("pincode", sanitizeNumeric(e.target.value))}
+              maxLength={6}
+              error={errors.pincode}
+              require
+            />
+          </div>
         </div>
 
-        <GradientButton type="submit" className="w-full mt-4" disabled={loading || !emailVerified}>
+        <GradientButton type="submit" className="w-full mt-4" disabled={loading}>
           {loading ? "Submitting..." : "Submit"}
         </GradientButton>
       </form>
