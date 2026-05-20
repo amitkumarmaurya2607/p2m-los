@@ -56,9 +56,7 @@ function ReviewApplication() {
     { label: "PAN", value: "N/A" },
     { label: "DOB", value: "N/A" },
   ];
-  const employmentFields = [
-    { label: "Company", value: "N/A" },
-  ];
+  const employmentFields = [{ label: "Company", value: "N/A" }];
 
   const bankFields = [
     { label: "Account", value: "N/A" },

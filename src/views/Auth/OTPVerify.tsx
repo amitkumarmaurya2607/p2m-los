@@ -16,7 +16,7 @@ type OTPVerifyProps = {
   back: () => void;
 };
 
-function OTPVerify({ resend = () => { }, method, userName, back }: OTPVerifyProps) {
+function OTPVerify({ resend = () => {}, method, userName, back }: OTPVerifyProps) {
   const router = useRouter();
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
@@ -62,8 +62,9 @@ function OTPVerify({ resend = () => { }, method, userName, back }: OTPVerifyProp
     >
       <StepCard
         title="Verify OTP"
-        subtitle={`We've sent a 6-digit code to your ${method === "email" ? "email" : "mobile number"
-          } (${maskedValue})`}
+        subtitle={`We've sent a 6-digit code to your ${
+          method === "email" ? "email" : "mobile number"
+        } (${maskedValue})`}
         className="w-full max-w-[448px]"
         back={back}
       >

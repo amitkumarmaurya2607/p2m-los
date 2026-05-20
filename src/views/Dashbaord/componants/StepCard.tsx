@@ -40,7 +40,7 @@ const StepCard: React.FC<StepCardProps> = ({
 
   if (version === "v2") {
     return (
-      <div className="w-full  flex items-center justify-center">
+      <div className="w-full flex items-center justify-center">
         <div
           className="w-full max-w-[1150px] lg:w-auto min-h-[220px] rounded-[12px] bg-white
             shadow-[0px_30px_80px_rgba(15,23,42,0.18)] flex"
@@ -154,7 +154,8 @@ const StepCard: React.FC<StepCardProps> = ({
                 <div className="flex items-start gap-4">
                   {icon && (
                     <div
-                      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-mute ${iconBgClassName}`}
+                      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl
+                      bg-primary-mute ${iconBgClassName}`}
                     >
                       {icon}
                     </div>
@@ -162,15 +163,14 @@ const StepCard: React.FC<StepCardProps> = ({
 
                   <div>
                     <h2
-                      className="text-[28px] font-extrabold leading-[36px] tracking-[-0.75px] text-text-heading"
+                      className="text-[28px] font-extrabold leading-[36px] tracking-[-0.75px]
+                        text-text-heading"
                     >
                       {title}
                     </h2>
 
                     {subtitle && (
-                      <p className="mt-2 text-[16px] leading-[24px] text-text-muted">
-                        {subtitle}
-                      </p>
+                      <p className="mt-2 text-[16px] leading-[24px] text-text-muted">{subtitle}</p>
                     )}
                   </div>
                 </div>

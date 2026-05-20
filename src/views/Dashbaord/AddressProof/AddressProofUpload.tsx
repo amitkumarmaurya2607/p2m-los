@@ -108,7 +108,6 @@ function AddressProofUpload() {
     >
       <div className="mt-6 space-y-6">
         <div>
-
           <SelectBox
             options={DOCUMENT_TYPES}
             value={docType}
@@ -128,31 +127,38 @@ function AddressProofUpload() {
 
         <div
           onClick={() => inputRef.current?.click()}
-          className="flex h-36 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border-medium bg-surface transition hover:border-primary"
+          className="flex h-36 cursor-pointer flex-col items-center justify-center rounded-2xl
+            border-2 border-dashed border-border-medium bg-surface transition hover:border-primary"
         >
           <Upload className="h-8 w-8 text-text-muted" />
-          <h3 className="mt-3 text-sm font-bold text-text-heading">
-            Click to upload document
-          </h3>
+          <h3 className="mt-3 text-sm font-bold text-text-heading">Click to upload document</h3>
           <p className="mt-1 text-xs text-text-muted-dark">PDF, JPG or PNG (Max 5MB)</p>
         </div>
 
         {file && (
-          <div className="flex items-center justify-between rounded-2xl border border-border-light bg-surface p-4">
+          <div
+            className="flex items-center justify-between rounded-2xl border border-border-light
+              bg-surface p-4"
+          >
             <div className="flex items-center gap-3 min-w-0">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border-medium bg-white">
+              <div
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border
+                  border-border-medium bg-white"
+              >
                 <FileText className="h-5 w-5 text-text-muted-dark" />
               </div>
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-text-heading truncate">{file.name}</p>
-                <p className="text-xs text-text-muted">
-                  {(file.size / 1024 / 1024).toFixed(2)} MB
-                </p>
+                <p className="text-xs text-text-muted">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <CheckCircle className="h-5 w-5 text-secondary" />
-              <button type="button" onClick={removeFile} className="rounded-lg p-1 text-destructive">
+              <button
+                type="button"
+                onClick={removeFile}
+                className="rounded-lg p-1 text-destructive"
+              >
                 <X className="h-5 w-5" />
               </button>
             </div>

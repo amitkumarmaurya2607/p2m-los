@@ -114,9 +114,7 @@ function AlternateMobile() {
                 placeholder="Relation"
                 menuPlacement="auto"
               />
-              {errors.r1 && (
-                <p className="mt-1 text-sm text-destructive px-1">{errors.r1}</p>
-              )}
+              {errors.r1 && <p className="mt-1 text-sm text-destructive px-1">{errors.r1}</p>}
             </div>
           </div>
         </div>
@@ -150,9 +148,7 @@ function AlternateMobile() {
                 placeholder="Relation"
                 menuPlacement="auto"
               />
-              {errors.r2 && (
-                <p className="mt-1 text-sm text-destructive px-1">{errors.r2}</p>
-              )}
+              {errors.r2 && <p className="mt-1 text-sm text-destructive px-1">{errors.r2}</p>}
             </div>
           </div>
         </div>

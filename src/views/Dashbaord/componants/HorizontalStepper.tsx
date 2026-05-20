@@ -69,12 +69,13 @@ const HorizontalStepper = ({ version = "v1" }: { version?: "v1" | "v2" }) => {
                 <span
                   onClick={() => status !== "pending" && goToStep(step.key)}
                   className={`h-2 w-2 rounded-full transition-all
-                  ${status !== "pending" ? "cursor-pointer" : ""} ${status === "progress"
+                  ${status !== "pending" ? "cursor-pointer" : ""} ${
+                    status === "progress"
                       ? "border-2 border-primary bg-white"
                       : status === "complete"
                         ? "bg-primary"
                         : "bg-slate-300"
-                    } `}
+                  } `}
                 />
 
                 <div
@@ -109,29 +110,29 @@ const HorizontalStepper = ({ version = "v1" }: { version?: "v1" | "v2" }) => {
           return (
             <div key={step.id} className="flex items-center flex-shrink-0 md:flex-1">
               <div
-                className={`flex flex-col items-center text-center min-w-[70px] md:min-w-[100px]
-               `}
-
+                className={"flex flex-col items-center text-center min-w-[70px] md:min-w-[100px] "}
               >
                 <div
                   className={`w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full
-                  text-xs md:text-sm font-semibold ${status === "complete"
+                  text-xs md:text-sm font-semibold ${
+                    status === "complete"
                       ? "bg-stepper-complete text-white"
                       : status === "progress"
                         ? "bg-stepper-progress text-white"
                         : "bg-stepper-pending text-stepper-pending-text"
-                    }`}
+                  }`}
                 >
                   {status === "complete" ? <Check size={14} className="md:w-4 md:h-4" /> : step.id}
                 </div>
 
                 <p
-                  className={`mt-1 md:mt-2 text-[10px] md:text-xs font-semibold whitespace-nowrap ${status === "progress"
-                    ? "text-primary"
-                    : status === "complete"
-                      ? "text-text-heading"
-                      : "text-stepper-pending-text"
-                    }`}
+                  className={`mt-1 md:mt-2 text-[10px] md:text-xs font-semibold whitespace-nowrap ${
+                    status === "progress"
+                      ? "text-primary"
+                      : status === "complete"
+                        ? "text-text-heading"
+                        : "text-stepper-pending-text"
+                  }`}
                 >
                   {step.title}
                 </p>

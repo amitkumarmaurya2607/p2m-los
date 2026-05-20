@@ -1,6 +1,11 @@
 export const MOCK_APPLICATION_DATA = {
   mobile: { number: "9876543210", verified: true },
-  geoLocation: { latitude: 12.9716, longitude: 77.5946, accuracy: 10, capturedAt: new Date().toISOString() },
+  geoLocation: {
+    latitude: 12.9716,
+    longitude: 77.5946,
+    accuracy: 10,
+    capturedAt: new Date().toISOString(),
+  },
   pan: { number: "ABCDE1234F" },
   personalInfo: {
     firstName: "Rahul",
@@ -30,7 +35,12 @@ export const MOCK_APPLICATION_DATA = {
   },
   selfie: { captured: true },
   addressProof: { uploaded: true, fileName: "address_proof.pdf" },
-  alternateMobile: { number1: "9988776655", relation1: "spouse", number2: "8877665544", relation2: "sibling" },
+  alternateMobile: {
+    number1: "9988776655",
+    relation1: "spouse",
+    number2: "8877665544",
+    relation2: "sibling",
+  },
   loanEligibility: {
     eligibleAmount: 1500000,
     selectedAmount: 500000,

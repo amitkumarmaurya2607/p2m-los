@@ -123,10 +123,15 @@ function AccountStatementUpload() {
 
         <div
           onClick={() => inputRef.current?.click()}
-          onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setDragActive(true);
+          }}
           onDragLeave={() => setDragActive(false)}
           onDrop={handleDrop}
-          className={`flex h-48 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed transition ${dragActive ? "border-primary bg-primary-muted" : "border-border-medium bg-surface"
+          className={`flex h-48 cursor-pointer flex-col items-center justify-center rounded-2xl
+            border-2 border-dashed transition ${
+              dragActive ? "border-primary bg-primary-muted" : "border-border-medium bg-surface"
             }`}
         >
           <UploadCloudIcon />
@@ -137,21 +142,29 @@ function AccountStatementUpload() {
         </div>
 
         {file && (
-          <div className="flex items-center justify-between rounded-2xl border border-border-light bg-surface p-4">
+          <div
+            className="flex items-center justify-between rounded-2xl border border-border-light
+              bg-surface p-4"
+          >
             <div className="flex items-center gap-3 min-w-0">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border-medium bg-white">
+              <div
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border
+                  border-border-medium bg-white"
+              >
                 <FileText className="h-5 w-5 text-text-muted-dark" />
               </div>
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-text-heading truncate">{file.name}</p>
-                <p className="text-xs text-text-muted">
-                  {(file.size / 1024 / 1024).toFixed(2)} MB
-                </p>
+                <p className="text-xs text-text-muted">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <CheckCircle className="h-5 w-5 text-secondary" />
-              <button type="button" onClick={removeFile} className="rounded-lg p-1 text-destructive">
+              <button
+                type="button"
+                onClick={removeFile}
+                className="rounded-lg p-1 text-destructive"
+              >
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -175,8 +188,18 @@ function AccountStatementUpload() {
 
 function UploadCloudIcon() {
   return (
-    <svg className="h-12 w-12 text-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+    <svg
+      className="h-12 w-12 text-text-muted"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={1.5}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"
+      />
     </svg>
   );
 }

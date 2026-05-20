@@ -74,7 +74,10 @@ const SectionCard = ({
 }) => (
   <div className="rounded-2xl border border-border-light bg-surface p-5 space-y-4">
     <div className="flex items-center gap-2">
-      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-muted text-primary">
+      <div
+        className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-muted
+          text-primary"
+      >
         {icon}
       </div>
       <h3 className="text-base font-bold text-text-heading">{title}</h3>
@@ -83,13 +86,7 @@ const SectionCard = ({
   </div>
 );
 
-const TimelineItem = ({
-  step,
-  isLast,
-}: {
-  step: (typeof timeline)[number];
-  isLast: boolean;
-}) => {
+const TimelineItem = ({ step, isLast }: { step: (typeof timeline)[number]; isLast: boolean }) => {
   const colors = statusColors[step.status];
 
   return (
@@ -101,7 +98,10 @@ const TimelineItem = ({
       <div className="pb-8 flex-1">
         <h4 className={`text-sm font-bold ${colors.text}`}>{step.title}</h4>
         {step.status === "active" ? (
-          <div className="mt-2 flex items-center gap-2 rounded-xl border border-border-light bg-surface-muted px-4 py-3 text-sm font-medium text-text-body">
+          <div
+            className="mt-2 flex items-center gap-2 rounded-xl border border-border-light
+              bg-surface-muted px-4 py-3 text-sm font-medium text-text-body"
+          >
             <Shield className="h-4 w-4 text-home-purple shrink-0" />
             {step.desc}
           </div>
@@ -146,26 +146,34 @@ function TrackApplicationV2() {
       }}
     >
       <div className="space-y-6">
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-text-heading to-home-border-dark p-6 shadow-card">
+        <div
+          className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-text-heading
+            to-home-border-dark p-6 shadow-card"
+        >
           <div className="absolute -right-2 -top-10 h-32 w-32 rounded-full bg-white/5 blur-[40px]" />
           <div className="flex items-center justify-between">
             <div>
-              <span className="rounded-full bg-[#FEF3C6] px-3 py-1 text-[11px] font-bold uppercase tracking-[1px] text-[#E17100]">
+              <span
+                className="rounded-full bg-[#FEF3C6] px-3 py-1 text-[11px] font-bold uppercase
+                  tracking-[1px] text-[#E17100]"
+              >
                 In Progress
               </span>
-              <p className="mt-2 text-xs font-medium text-text-on-dark-muted">
-                ID: APP-9874-FX21
-              </p>
+              <p className="mt-2 text-xs font-medium text-text-on-dark-muted">ID: APP-9874-FX21</p>
             </div>
             <div className="flex items-center gap-2">
               <Link
                 href="/profile"
-                className="flex h-10 cursor-pointer items-center gap-2 rounded-xl bg-white/10 px-4 text-sm font-bold text-white"
+                className="flex h-10 cursor-pointer items-center gap-2 rounded-xl bg-white/10 px-4
+                  text-sm font-bold text-white"
               >
                 <User className="h-4 w-4" />
                 Profile
               </Link>
-              <button className="flex h-10 cursor-pointer items-center gap-2 rounded-xl bg-white/10 px-4 text-sm font-bold text-white">
+              <button
+                className="flex h-10 cursor-pointer items-center gap-2 rounded-xl bg-white/10 px-4
+                  text-sm font-bold text-white"
+              >
                 <Headphones className="h-4 w-4" />
                 Support
               </button>

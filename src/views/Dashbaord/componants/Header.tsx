@@ -68,14 +68,17 @@ const Header: React.FC<HeaderProps> = ({
       className="sticky top-0 z-50 flex items-center justify-between w-full h-[80px]
         bg-surface-overlay-90 bg-background border-b border-border shadow-[var(--shadow-sm)]"
     >
-      <div className="w-full max-w-[var(--max-width-section)] mx-auto  px-5 md:px-8 lg:px-0 flex items-center justify-between ">
+      <div
+        className="w-full max-w-[var(--max-width-section)] mx-auto px-5 md:px-8 lg:px-0 flex
+          items-center justify-between"
+      >
         <div className="flex items-center gap-4">
           {progressItem ? (
             <>
               <button
                 onClick={onBack}
                 className={` w-10 h-10 rounded-xl flex items-center justify-center
-                shadow-[0px_10px_30px_rgba(0,0,0,0.2)] ${progressItem.iconContainerClassName} `}
+                  shadow-[0px_10px_30px_rgba(0,0,0,0.2)] ${progressItem.iconContainerClassName} `}
               >
                 {Icon && <Icon className={progressItem.iconClassName} />}
               </button>
@@ -109,7 +112,7 @@ const Header: React.FC<HeaderProps> = ({
             {dropdownOpen && (
               <div
                 className="absolute right-0 mt-2 w-40 bg-surface border border-border rounded-md
-                shadow-md z-10"
+                  shadow-md z-10"
               >
                 <a
                   href="/profile"

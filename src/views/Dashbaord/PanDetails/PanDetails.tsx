@@ -59,7 +59,6 @@ function PanDetails() {
       steper={true}
       className="lg:w-[600px] mx-auto"
       icon={<CreditCard className="w-6 h-6 text-primary" />}
-
       tips={{
         title: "Why PAN?",
         description:

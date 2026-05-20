@@ -8,10 +8,7 @@ export const metadata: Metadata = {
   description: "Dashboard pages",
 };
 
-
-
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -20,9 +17,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <div className="grow-1">
           <ProgressBar />
           <div className="flex justify-center px-4 pt-12 pb-6">
-            <ErrorBoundary label="Dashboard">
-              {children}
-            </ErrorBoundary>
+            <ErrorBoundary label="Dashboard">{children}</ErrorBoundary>
           </div>
         </div>
       </div>

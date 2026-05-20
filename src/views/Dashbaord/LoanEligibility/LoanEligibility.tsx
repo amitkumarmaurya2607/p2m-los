@@ -2,7 +2,15 @@
 
 import React, { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { BadgeCheck, Lightbulb, CheckCircle, Edit3, Shield, BadgeCheckIcon, IndianRupee } from "lucide-react";
+import {
+  BadgeCheck,
+  Lightbulb,
+  CheckCircle,
+  Edit3,
+  Shield,
+  BadgeCheckIcon,
+  IndianRupee,
+} from "lucide-react";
 import GradientButton from "@/components/ui/GradientButton";
 import { showToast } from "@/lib/toast";
 import { submitApplicationAction } from "@/lib/actions/application.action";
@@ -26,7 +34,10 @@ const SectionCard = ({
 }) => (
   <div className="rounded-2xl border border-border-light bg-surface p-5 space-y-4">
     <div className="flex items-center gap-2">
-      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-muted text-primary">
+      <div
+        className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-muted
+          text-primary"
+      >
         {icon}
       </div>
       <h3 className="text-base font-bold text-text-heading">{title}</h3>
@@ -65,7 +76,13 @@ function LoanEligibility() {
     }
 
     setSubmitting(true);
-    const result = await submitApplicationAction({ loanAmount, tenure, interestRate, emi, totalPayable });
+    const result = await submitApplicationAction({
+      loanAmount,
+      tenure,
+      interestRate,
+      emi,
+      totalPayable,
+    });
     if (result.success) {
       showToast({ message: "Application submitted successfully!", type: "success" });
       router.push("/track-application");
@@ -77,8 +94,6 @@ function LoanEligibility() {
 
   return (
     <>
-
-
       <StepCard
         title="Loan Eligibility & Application"
         subtitle={`   Review your loan eligibility, customize your plan, and submit your application`}
@@ -113,27 +128,33 @@ function LoanEligibility() {
 
               <li className="flex items-start gap-2">
                 <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
-                Ensure your bank account and personal information are accurate to avoid processing delays.
+                Ensure your bank account and personal information are accurate to avoid processing
+                delays.
               </li>
 
               <li className="flex items-start gap-2">
                 <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
-                Approval and eligible loan amount may vary based on verification and lending criteria.
+                Approval and eligible loan amount may vary based on verification and lending
+                criteria.
               </li>
             </ul>
           ),
         }}
       >
         <div className="flex flex-col gap-6">
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-text-heading to-home-border-dark p-6 shadow-card">
+          <div
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-text-heading
+              to-home-border-dark p-6 shadow-card"
+          >
             <div className="absolute -right-2 -top-10 h-32 w-32 rounded-full bg-white/5 blur-[40px]" />
             <p className="text-xs font-semibold uppercase tracking-wider text-text-on-dark-muted">
               You are eligible for up to
             </p>
-            <h2 className="mt-1 text-3xl font-extrabold text-white">
-              ₹{formatINR(maxEligible)}
-            </h2>
-            <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4 text-xs text-text-on-dark-muted">
+            <h2 className="mt-1 text-3xl font-extrabold text-white">₹{formatINR(maxEligible)}</h2>
+            <div
+              className="mt-4 flex items-center justify-between border-t border-white/10 pt-4
+                text-xs text-text-on-dark-muted"
+            >
               <span>Interest Rate: {interestRate}% p.a.</span>
               <span>Estimated EMI: ₹{formatINR(emi)}/mo</span>
             </div>
@@ -151,7 +172,8 @@ function LoanEligibility() {
                 step={10000}
                 value={loanAmount}
                 onChange={(e) => setLoanAmount(Number(e.target.value))}
-                className="h-2 w-full cursor-pointer appearance-none rounded-full bg-border-medium accent-primary"
+                className="h-2 w-full cursor-pointer appearance-none rounded-full bg-border-medium
+                  accent-primary"
               />
               <div className="mt-2 flex justify-between text-xs font-semibold text-text-muted-light">
                 <span>₹1L</span>
@@ -171,7 +193,8 @@ function LoanEligibility() {
                 step={1}
                 value={tenure}
                 onChange={(e) => setTenure(Number(e.target.value))}
-                className="h-2 w-full cursor-pointer appearance-none rounded-full bg-border-medium accent-secondary"
+                className="h-2 w-full cursor-pointer appearance-none rounded-full bg-border-medium
+                  accent-secondary"
               />
               <div className="mt-2 flex justify-between text-xs font-semibold text-text-muted-light">
                 <span>12m</span>
@@ -179,14 +202,19 @@ function LoanEligibility() {
               </div>
             </div>
 
-            <div className="mt-4 grid grid-cols-2 gap-4 rounded-xl bg-white p-4 border border-border-medium">
+            <div
+              className="mt-4 grid grid-cols-2 gap-4 rounded-xl bg-white p-4 border
+                border-border-medium"
+            >
               <div>
                 <p className="text-xs text-text-muted">Monthly EMI</p>
                 <p className="text-xl font-extrabold text-text-heading">₹{formatINR(emi)}</p>
               </div>
               <div>
                 <p className="text-xs text-text-muted">Total Payable</p>
-                <p className="text-xl font-extrabold text-text-heading">₹{formatINR(totalPayable)}</p>
+                <p className="text-xl font-extrabold text-text-heading">
+                  ₹{formatINR(totalPayable)}
+                </p>
               </div>
             </div>
           </SectionCard>
@@ -202,14 +230,17 @@ function LoanEligibility() {
             <ReviewField label="Employment" value="-" />
           </SectionCard>
 
-          <div className="flex items-start gap-3 rounded-2xl border border-border-light bg-surface p-5">
+          <div
+            className="flex items-start gap-3 rounded-2xl border border-border-light bg-surface p-5"
+          >
             <Shield className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
             <div>
               <p className="text-sm font-semibold text-text-heading">
                 I confirm that all the information provided is true and correct
               </p>
               <p className="mt-1 text-xs text-text-muted">
-                By submitting, you agree to our terms and conditions and authorize us to verify your information.
+                By submitting, you agree to our terms and conditions and authorize us to verify your
+                information.
               </p>
               <label className="mt-3 flex items-center gap-2 cursor-pointer">
                 <input

@@ -17,7 +17,9 @@ function GeoLocation() {
     accuracy: number;
   } | null>(null);
   const [error, setError] = useState("");
-  const [permissionState, setPermissionState] = useState<"prompt" | "granted" | "denied" | "unavailable">("prompt");
+  const [permissionState, setPermissionState] = useState<
+    "prompt" | "granted" | "denied" | "unavailable"
+  >("prompt");
 
   useEffect(() => {
     if (!navigator.geolocation) {
@@ -140,14 +142,21 @@ function GeoLocation() {
       <div className="mt-6 space-y-6">
         {permissionState === "denied" && !location && (
           <div className="flex flex-col items-center py-10">
-            <div className="flex h-24 w-24 items-center justify-center rounded-full bg-destructive/10 mb-6">
+            <div
+              className="flex h-24 w-24 items-center justify-center rounded-full bg-destructive/10
+                mb-6"
+            >
               <ShieldAlert className="h-12 w-12 text-destructive" />
             </div>
             <h3 className="text-lg font-bold text-text-heading mb-2">Location Access Denied</h3>
             <p className="text-center text-text-muted mb-4 max-w-sm">
-              Location access is blocked. Please enable location permissions in your browser settings to continue.
+              Location access is blocked. Please enable location permissions in your browser
+              settings to continue.
             </p>
-            <div className="rounded-xl border border-border-light bg-surface p-4 max-w-sm w-full text-sm text-text-muted space-y-2">
+            <div
+              className="rounded-xl border border-border-light bg-surface p-4 max-w-sm w-full
+                text-sm text-text-muted space-y-2"
+            >
               <p className="font-semibold text-text-heading">How to enable:</p>
               <ol className="list-decimal list-inside space-y-1">
                 <li>Click the lock/info icon in the address bar</li>
@@ -162,7 +171,10 @@ function GeoLocation() {
 
         {permissionState === "unavailable" && !location && (
           <div className="flex flex-col items-center py-10">
-            <div className="flex h-24 w-24 items-center justify-center rounded-full bg-destructive/10 mb-6">
+            <div
+              className="flex h-24 w-24 items-center justify-center rounded-full bg-destructive/10
+                mb-6"
+            >
               <Globe className="h-12 w-12 text-destructive" />
             </div>
             <h3 className="text-lg font-bold text-text-heading mb-2">Geolocation Not Supported</h3>
@@ -174,7 +186,10 @@ function GeoLocation() {
 
         {!location && permissionState !== "denied" && permissionState !== "unavailable" && (
           <div className="flex flex-col items-center py-10">
-            <div className="flex h-24 w-24 items-center justify-center rounded-full bg-primary-muted mb-6">
+            <div
+              className="flex h-24 w-24 items-center justify-center rounded-full bg-primary-muted
+                mb-6"
+            >
               <MapPin className="h-12 w-12 text-primary" />
             </div>
             <p className="text-center text-text-muted mb-6 max-w-sm">
@@ -190,9 +205,7 @@ function GeoLocation() {
             >
               {loading ? "Detecting Location..." : "Detect My Location"}
             </GradientButton>
-            {error && (
-              <p className="mt-4 text-sm text-destructive text-center max-w-sm">{error}</p>
-            )}
+            {error && <p className="mt-4 text-sm text-destructive text-center max-w-sm">{error}</p>}
           </div>
         )}
 
@@ -220,7 +233,6 @@ function GeoLocation() {
             </div>
 
             <div className="flex gap-3">
-
               <GradientButton type="button" onClick={handleSubmit} className="flex-1">
                 Confirm & Continue
               </GradientButton>

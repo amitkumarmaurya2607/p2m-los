@@ -104,7 +104,8 @@ export function middleware(request: NextRequest) {
     if (completedSet.has(currentStep)) {
       const nextPending = stepOrder.find((s) => !completedSet.has(s));
       if (nextPending) {
-        const target = nextPending === "mobile" ? "/apply-now" : stepRouteMap[nextPending] || "/apply-now";
+        const target =
+          nextPending === "mobile" ? "/apply-now" : stepRouteMap[nextPending] || "/apply-now";
         return NextResponse.redirect(new URL(target, request.url));
       }
     }
@@ -114,7 +115,8 @@ export function middleware(request: NextRequest) {
 
     if (firstIncompleteIndex !== -1 && currentIndex > firstIncompleteIndex) {
       const nextPending = stepOrder[firstIncompleteIndex];
-      const target = nextPending === "mobile" ? "/apply-now" : stepRouteMap[nextPending] || "/apply-now";
+      const target =
+        nextPending === "mobile" ? "/apply-now" : stepRouteMap[nextPending] || "/apply-now";
       return NextResponse.redirect(new URL(target, request.url));
     }
   }

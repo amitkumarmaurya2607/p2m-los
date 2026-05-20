@@ -52,7 +52,11 @@ export async function verifyBankAction(accountNumber: string, ifsc: string, acco
   }
 }
 
-export async function saveGeoLocationAction(data: { latitude: number; longitude: number; accuracy: number }) {
+export async function saveGeoLocationAction(data: {
+  latitude: number;
+  longitude: number;
+  accuracy: number;
+}) {
   try {
     await saveStepCookie("geoLocation");
     return { success: true as const };
