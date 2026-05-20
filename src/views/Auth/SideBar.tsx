@@ -35,9 +35,14 @@ const SideBar = () => {
     >
       <div>
         <div className="mb-16">
-          <Link href="/">
-            {" "}
-            <Logo />
+          <Link href="/" className="flex items-center gap-2">
+            <span
+              className="h-8 w-8 rotate-12 rounded-[10px] bg-gradient-to-br from-secondary to-primary
+              shadow-lg shadow-primary/20 text-[18px] font-bold leading-none text-white items-center flex justify-center"
+            >R</span>
+            <span className="text-[24px] font-black leading-8 tracking-[-1.2px] text-white">
+              RinSetu<span className="text-secondary">.</span>
+            </span>
           </Link>
         </div>
         <h1 className="text-5xl font-extrabold leading-[1.1] mb-6">
