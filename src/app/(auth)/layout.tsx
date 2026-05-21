@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default async function layout({ children }: { children: React.ReactNode }) {
   const token = await getSession();
-  console.log("Session token:", token); // Debugging line
+  console.log("Session token:", token);
   if (token) {
     redirect("/pan-details");
   }

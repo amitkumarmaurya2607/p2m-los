@@ -7,6 +7,7 @@ import { saveStepCookie } from "@/lib/step-cookie";
 export async function sendOTPAction(phone: string) {
   try {
     const result = await sendOTP(phone);
+    console.log("sendOTP result:", result);
     return { success: result.success, data: result.data, error: null };
   } catch (err) {
     return {

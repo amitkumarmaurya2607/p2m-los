@@ -1,7 +1,9 @@
+
+const losService = '/los-service';
 export const API = {
   auth: {
-    sendOTP: "/auth/send-otp",
-    verifyOTP: "/auth/verify-otp",
+    sendOTP: `${losService}/api/mobile/genOtp`,
+    verifyOTP: `${losService}/auth/verify-otp`,
   },
   pan: {
     verify: "/pan/verify",
