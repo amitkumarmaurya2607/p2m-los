@@ -3,6 +3,7 @@
 import { Camera, Lightbulb, ScanFace } from "lucide-react";
 import StepCard from "../componants/StepCard";
 import SelfieCapture from "./SelfieCapture";
+import PulseDot from "@/components/PulseDot";
 
 function SelfiePage() {
   return (
@@ -21,15 +22,15 @@ function SelfiePage() {
         noteDescription: (
           <ul className="space-y-2 text-sm leading-6">
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <PulseDot />
               Ensure your face is clearly visible without masks or sunglasses.
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <PulseDot />
               Use good lighting and avoid blurry or dark photos.
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <PulseDot />
               Keep your camera steady and look directly at the screen.
             </li>
           </ul>

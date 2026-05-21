@@ -11,6 +11,7 @@ interface CustomSelectProps extends SelectProps<any, boolean, GroupBase<any>> {
   required?: boolean;
   containerClassName?: string;
   version?: "v1" | "v2";
+  className?: string;
 }
 
 const SelectBox = ({
@@ -19,8 +20,9 @@ const SelectBox = ({
   rightIcon,
   error,
   required,
+  className,
   containerClassName,
-  version = "v2",
+  version = "v1",
   ...props
 }: CustomSelectProps) => {
   const id = props.id || useId();
@@ -89,84 +91,120 @@ const SelectBox = ({
             <div className="absolute right-3 top-1/2 -translate-y-1/2">{rightIcon}</div>
           )}
         </div>
-        {error && <p className="mt-1 text-sm text-destructive px-1">{error}</p>}
+        {error && <p className="mt-1 text-[12px] text-destructive px-1">{error}</p>}
       </div>
     );
   }
 
+
   return (
     <div className={cn("w-full", containerClassName)}>
-      <div
-        className={cn(
-          "relative flex items-center w-full h-[64px]",
-          "",
-          "bg-input-bg rounded-[16px]",
-          "shadow-[var(--shadow-sm)]",
-          error ? "border border-destructive" : "border border-transparent",
+      <div className="relative w-full">
+        {label && (
+          <label
+            htmlFor={id}
+            className={cn(
+              "absolute z-10 pointer-events-none font-semibold transition-all duration-200",
+              isActive
+                ? "left-5 top-2 text-[11px] text-primary"
+                : cn(
+                  "top-1/2 -translate-y-1/2 text-xs text-muted-foreground",
+                  leftIcon ? "left-12" : "left-5"
+                )
+            )}
+          >
+            {label}
+            {required && <span className="ml-0.5 text-destructive">*</span>}
+          </label>
         )}
-      >
-        {leftIcon && <div className="mr-[10px] flex items-center">{leftIcon}</div>}
 
-        <div className="relative flex-1">
-          <Select
-            {...props}
-            inputId={id}
-            unstyled
-            placeholder=" "
-            menuPortalTarget={typeof document !== "undefined" ? document.body : undefined}
-            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-            onFocus={(e) => {
-              setIsFocused(true);
-              props.onFocus?.(e);
-            }}
-            onBlur={(e) => {
-              setIsFocused(false);
-              props.onBlur?.(e);
-            }}
-            classNames={{
-              control: () =>
-                "bg-transparent border-none shadow-none min-h-0 h-auto px-[20px] pt-[24px] pb-[8px]",
-              valueContainer: () => "p-0 m-0",
-              input: () => "m-0 p-0 text-[14px] ",
-              singleValue: () => "text-[14px]",
-              indicatorsContainer: () => "p-0 ml-2",
-              dropdownIndicator: () => "p-0  ",
-              clearIndicator: () => "p-0",
-              menu: () => "mt-2 bg-surface border rounded-md shadow-lg z-50 w-full",
-              option: ({ isFocused, isSelected }) =>
-                cn(
-                  "px-3 py-2 text-sm cursor-pointer",
-                  isFocused && "bg-muted",
-                  isSelected && "bg-info/10 text-info",
-                ),
-            }}
-          />
+        {leftIcon && (
+          <div className="absolute left-5 top-1/2 z-10 -translate-y-1/2 text-muted-foreground">
+            {leftIcon}
+          </div>
+        )}
 
-          {label && (
-            <label
-              htmlFor={id}
-              className={cn(
-                `absolute left-0 font-medium -translate-y-1/2 text-[16px] transition-all
-                duration-200 `,
-                leftIcon ? "left-[20px]" : "left-[20px]",
+        <Select
+          {...props}
+          inputId={id}
+          unstyled
+          placeholder=" "
+          menuPortalTarget={
+            typeof document !== "undefined" ? document.body : undefined
+          }
+          styles={{
+            menuPortal: (base) => ({
+              ...base,
+              zIndex: 9999,
+            }),
+          }}
+          onFocus={(e) => {
+            setIsFocused(true);
+            props.onFocus?.(e);
+          }}
+          onBlur={(e) => {
+            setIsFocused(false);
+            props.onBlur?.(e);
+          }}
+          classNames={{
+            control: ({ isFocused }) =>
+              cn(
+                "min-h-[64px] h-[64px] rounded-2xl bg-[#F8FAFC]",
+                "px-5 pt-6 pb-2",
+                "shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)]",
+                "border cursor-pointer transition-all duration-200",
+                error
+                  ? "border-destructive"
+                  : isFocused
+                    ? "border-primary"
+                    : "border-transparent",
+                className
+              ),
 
-                error ? "text-destructive" : "text-text-muted",
+            valueContainer: () =>
+              cn("m-0 p-0", leftIcon && "pl-7", rightIcon && "pr-7"),
 
-                !isActive && "top-[24px] ",
-                isActive && "top-[16px] text-text-label",
-              )}
-            >
-              {label} {required && <span className="text-destructive ml-0.5">*</span>}
-            </label>
-          )}
-        </div>
+            input: () => "m-0 p-0 text-sm text-foreground",
 
-        {rightIcon && <div className="ml-[10px] flex items-center">{rightIcon}</div>}
+            singleValue: () => "text-sm text-foreground",
+
+            placeholder: () => "text-sm text-muted-foreground",
+
+            indicatorsContainer: () => "h-full p-0",
+
+            dropdownIndicator: () => "p-0 text-muted-foreground",
+
+            clearIndicator: () => "p-0 text-muted-foreground",
+
+            indicatorSeparator: () => "hidden",
+
+            menu: () =>
+              "mt-2 overflow-hidden rounded-xl border border-border bg-background shadow-lg z-50",
+
+            menuList: () => "py-1",
+
+            option: ({ isFocused, isSelected }) =>
+              cn(
+                "cursor-pointer px-4 py-3 text-sm transition-colors",
+                isFocused && "bg-muted",
+                isSelected && "bg-primary/10 text-primary"
+              ),
+
+            noOptionsMessage: () => "px-4 py-3 text-sm text-muted-foreground",
+          }}
+        />
+
+        {rightIcon && (
+          <div className="absolute right-12 top-1/2 z-10 -translate-y-1/2 text-muted-foreground">
+            {rightIcon}
+          </div>
+        )}
       </div>
 
-      {error && <p className="mt-1 text-sm text-destructive px-1">{error}</p>}
+      {error && <p className="mt-1 px-1 text-[12px] text-destructive">{error}</p>}
     </div>
   );
+
 };
 
 export default SelectBox;

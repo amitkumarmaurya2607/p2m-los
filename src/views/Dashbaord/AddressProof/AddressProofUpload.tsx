@@ -8,6 +8,7 @@ import SelectBox from "@/components/ui/SelectBox";
 import { Upload, CheckCircle, FileText, X, Lightbulb, Home, FileCheck } from "lucide-react";
 import { showToast } from "@/lib/toast";
 import { submitAddressProofAction } from "@/lib/actions/document.action";
+import PulseDot from "@/components/PulseDot";
 
 const DOCUMENT_TYPES = [
   { value: "aadhaar", label: "Aadhaar Card" },
@@ -90,15 +91,15 @@ function AddressProofUpload() {
         noteDescription: (
           <ul className="space-y-2 text-sm leading-6">
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <PulseDot />
               Aadhaar Card with current address
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <PulseDot />
               Voter ID / Passport
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <PulseDot />
               Utility Bill or Rental Agreement
             </li>
           </ul>

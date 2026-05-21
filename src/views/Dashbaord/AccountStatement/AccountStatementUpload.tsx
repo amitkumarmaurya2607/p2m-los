@@ -96,15 +96,15 @@ function AccountStatementUpload() {
         noteDescription: (
           <ul className="space-y-2 text-sm leading-6">
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
               Upload statement for the last 6 months
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
               Supported formats: PDF, JPG, PNG
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
               Maximum file size: 5MB
             </li>
           </ul>
@@ -130,8 +130,7 @@ function AccountStatementUpload() {
           onDragLeave={() => setDragActive(false)}
           onDrop={handleDrop}
           className={`flex h-48 cursor-pointer flex-col items-center justify-center rounded-2xl
-            border-2 border-dashed transition ${
-              dragActive ? "border-primary bg-primary-muted" : "border-border-medium bg-surface"
+            border-2 border-dashed transition ${dragActive ? "border-primary bg-primary-muted" : "border-border-medium bg-surface"
             }`}
         >
           <UploadCloudIcon />

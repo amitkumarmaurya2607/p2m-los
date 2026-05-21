@@ -101,9 +101,9 @@ const StepCard: React.FC<StepCardProps> = ({
                   {tips.noteTitle}
                 </h1>
 
-                <p className="mt-8 text-[15px] leading-[24px] text-white/75 max-w-[350px]">
+                <div className="mt-8 text-[15px] leading-[24px] text-white/75 max-w-[350px]">
                   {tips.noteDescription}
-                </p>
+                </div>
               </div>
 
               <div

@@ -15,6 +15,7 @@ import GradientButton from "@/components/ui/GradientButton";
 import { showToast } from "@/lib/toast";
 import { submitApplicationAction } from "@/lib/actions/application.action";
 import StepCard from "../componants/StepCard";
+import PulseDot from "@/components/PulseDot";
 
 const ReviewField = ({ label, value }: { label: string; value: string }) => (
   <div className="flex items-center justify-between border-b border-border-light pb-3">
@@ -112,28 +113,28 @@ function LoanEligibility() {
           noteDescription: (
             <ul className="space-y-2 text-sm leading-6">
               <li className="flex items-start gap-2">
-                <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+                <PulseDot />
                 Borrow only the amount you genuinely need to keep repayments manageable.
               </li>
 
               <li className="flex items-start gap-2">
-                <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+                <PulseDot />
                 Compare different loan amounts and repayment tenures to find the most suitable EMI.
               </li>
 
               <li className="flex items-start gap-2">
-                <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+                <PulseDot />
                 Carefully review all application details before final submission.
               </li>
 
               <li className="flex items-start gap-2">
-                <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+                <PulseDot />
                 Ensure your bank account and personal information are accurate to avoid processing
                 delays.
               </li>
 
               <li className="flex items-start gap-2">
-                <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+                <PulseDot />
                 Approval and eligible loan amount may vary based on verification and lending
                 criteria.
               </li>

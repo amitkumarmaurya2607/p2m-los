@@ -1,7 +1,6 @@
 import SideBar from "@/views/Auth/SideBar";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { getSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 

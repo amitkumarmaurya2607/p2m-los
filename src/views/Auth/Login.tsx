@@ -1,14 +1,11 @@
 "use client";
-
 import GradientButton from "@/components/ui/GradientButton";
 import { ArrowRight } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import OTPVerify from "./OTPVerify";
 import TextInput from "@/components/ui/TextInput";
 import { isValidEmail, isValidMobile, sanitizeEmail, sanitizeNumeric } from "@/lib/utils";
 import { showToast } from "@/lib/toast";
-import Logo from "@/assets/icon/Logo";
-import { Popup } from "@/components/ui/Popup";
 import StepCard from "../Dashbaord/componants/StepCard";
 import { sendOTPAction } from "@/lib/actions/auth.action";
 import Link from "next/link";
@@ -66,11 +63,6 @@ const Login = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
 
-    if (method === "email") {
-      value = sanitizeEmail(value);
-      setUserName(value);
-      return;
-    }
 
     let raw = value.replace("+91", "");
     let digits = sanitizeNumeric(raw).slice(0, 10);
@@ -87,7 +79,15 @@ const Login = () => {
         >
           {/* Mobile Header */}
           <div className="lg:hidden text-primary-foreground max-w-[400px] mx-auto mb-8">
-            <Logo />
+            <Link href="/" className="flex items-center gap-2">
+              <span
+                className="h-8 w-8 rotate-12 rounded-[10px] bg-gradient-to-br from-secondary to-primary
+              shadow-lg shadow-primary/20 text-[18px] font-bold leading-none text-white items-center flex justify-center"
+              >R</span>
+              <span className="text-[24px] font-black leading-8 tracking-[-1.2px] text-white">
+                RinSetu<span className="text-secondary">.</span>
+              </span>
+            </Link>
             <h1 className="text-[32px] font-extrabold leading-[40.8px]">
               Access your <br /> financial dashboard
             </h1>
@@ -104,8 +104,8 @@ const Login = () => {
             <form onSubmit={submitHandler}>
               <div className="space-y-4">
                 <TextInput
-                  type={method === "mobile" ? "tel" : "email"}
-                  label={method === "mobile" ? "Mobile Number" : "Email Address"}
+
+                  label={"Mobile Number"}
                   onChange={handleChange}
                   value={userName}
                   error={error}

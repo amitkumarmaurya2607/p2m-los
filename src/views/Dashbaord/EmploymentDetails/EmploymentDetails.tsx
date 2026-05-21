@@ -10,6 +10,7 @@ import GradientButton from "@/components/ui/GradientButton";
 import { Briefcase, Calendar, ChevronRight, Lightbulb } from "lucide-react";
 import { isValidEmail, isValidPinCode, sanitizeNumeric } from "@/lib/utils";
 import { submitEmploymentAction } from "@/lib/actions/verification.action";
+import PulseDot from "@/components/PulseDot";
 
 function EmploymentDetails() {
   const router = useRouter();
@@ -104,15 +105,15 @@ function EmploymentDetails() {
         noteDescription: (
           <ul className="space-y-2 text-sm leading-6">
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <PulseDot />
               Enter your current company name and employment type correctly.
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <PulseDot />
               Provide accurate monthly income details for faster approval.
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <PulseDot />
               Ensure all employment information matches your official records.
             </li>
           </ul>

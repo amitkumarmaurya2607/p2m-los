@@ -9,6 +9,7 @@ import CustomDatePicker from "@/components/ui/CustomDatePicker";
 import { User, Lightbulb } from "lucide-react";
 import { isValidEmail, sanitizeNumeric } from "@/lib/utils";
 import { submitPersonalInfoAction } from "@/lib/actions/personal-info.action";
+import PulseDot from "@/components/PulseDot";
 
 function PersonalInfo() {
   const router = useRouter();
@@ -106,15 +107,15 @@ function PersonalInfo() {
         noteDescription: (
           <ul className="space-y-2 text-sm leading-6">
             <li className="flex items-start gap-2">
-              <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
+              <PulseDot />
               Ensure your name matches your PAN and Aadhaar records.
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
+              <PulseDot />
               Enter your active email address for communication.
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-1 h-2 w-2 flex-[0_0_8px] rounded-full bg-secondary" />
+              <PulseDot />
               Second name and last name are optional.
             </li>
           </ul>

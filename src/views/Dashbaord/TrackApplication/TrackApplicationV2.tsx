@@ -14,6 +14,7 @@ import {
   User,
 } from "lucide-react";
 import StepCard from "../componants/StepCard";
+import PulseDot from "@/components/PulseDot";
 
 const docs = ["PAN Card", "Aadhaar Card", "Bank Statement", "Video KYC"];
 
@@ -129,15 +130,15 @@ function TrackApplicationV2() {
         noteDescription: (
           <ul className="space-y-2 text-sm leading-6">
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <PulseDot />
               Application review typically takes 24-48 hours
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <PulseDot />
               You will be notified via SMS and email on each update
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <PulseDot />
               Contact support if you have any questions
             </li>
           </ul>
