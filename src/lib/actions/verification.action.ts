@@ -9,7 +9,8 @@ import { saveStepCookie } from "@/lib/step-cookie";
 export async function verifyPANAction(panNumber: string) {
   try {
     const result = await verifyPAN(panNumber);
-    if (!result.success) return { error: result.message || "PAN verification failed" };
+    console.log("PAN verification result:", result);
+    if (result.code !== "0000") return { error: result.message || "PAN verification failed" };
     await saveStepCookie("pan");
     return { success: true as const };
   } catch (err) {

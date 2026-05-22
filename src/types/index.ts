@@ -17,9 +17,12 @@ export interface LogEntry {
 }
 
 export interface ApiResponse<T> {
-  data: T;
+  data?: T;
+  success?: boolean;
+    msg?: string;
+  errorCodeList?: unknown[];
+  code: string;
   message?: string;
-  success: boolean;
 }
 
 export interface PaginationParams {

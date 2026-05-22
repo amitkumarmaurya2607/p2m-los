@@ -6,7 +6,7 @@ export const API = {
     verifyOTP: `${losService}/api/mobile/verify`,
   },
   pan: {
-    verify: "/pan/verify",
+    verify: `${losService}/api/kyc/pan/verify`,
   },
   aadhaar: {
     sendOTP: "/aadhaar/send-otp",

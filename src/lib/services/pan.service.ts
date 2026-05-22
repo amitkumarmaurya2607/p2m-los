@@ -3,9 +3,9 @@ import { API } from "@/lib/api/urls";
 import type { ApiResponse } from "@/types";
 
 interface VerifyPANResponse {
-  number: string;
+  number?: string;
   fullName?: string;
-  verified: boolean;
+  verified?: boolean;
 }
 
 export async function verifyPAN(panNumber: string): Promise<ApiResponse<VerifyPANResponse>> {

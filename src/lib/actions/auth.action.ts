@@ -28,7 +28,7 @@ export async function verifyOTPAction(payload: loginVerifyPayload) {
     const result = await verifyOTP(payload);
     console.log("verifyOTP result:", result); // Debugging line 
   if (result?.code !== "0001" && result.data) {
-      const token = result.data?.accessToken || crypto.randomUUID();
+      const token = result.data?.accessToken;
     await createSession(token);
     await saveStepCookie("mobile");
       return { success: true as const, data: result.data };
