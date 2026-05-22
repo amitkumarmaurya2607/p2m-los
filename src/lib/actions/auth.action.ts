@@ -3,32 +3,37 @@
 import { sendOTP, verifyOTP } from "@/lib/services/auth.service";
 import { createSession } from "@/lib/session";
 import { saveStepCookie } from "@/lib/step-cookie";
+import { loginPayload, loginVerifyPayload } from "@/views/Auth/type";
 
-export async function sendOTPAction(phone: string) {
-  try {
-    const result = await sendOTP(phone);
-    console.log("sendOTP result:", result);
-    return { success: result.success, data: result.data, error: null };
+export async function sendOTPAction(mobileNumber: string) {
+  const payload: loginPayload = {
+    mobileNumber,
+    orgId: process.env.ORG_ID || "",
+  };  try {
+    const result = await sendOTP(payload);
+    console.log("sendOTP result:", result); // Debugging line
+    if (result.code !== "0001" && result.data) {
+      return { success: true as const, data: result.data };
+    }
+    return { error: result.msg || result.message || "Failed to send OTP" };
   } catch (err) {
-    return {
-      success: false,
-      data: null,
-      error: err instanceof Error ? err.message : "Failed to send OTP",
-    };
+    return { error: err instanceof Error ? err.message : "Failed to send OTP" };
   }
 }
 
-export async function verifyOTPAction(phone: string, code: string) {
+export async function verifyOTPAction(payload: loginVerifyPayload) {
+  payload.orgId = process.env.ORG_ID || "";
+  console.log("Verifying OTP with payload:", payload); // Debugging line
   try {
-    const result = await verifyOTP(phone, code);
-    if (!result.success) return { error: result.message || "Verification failed" };
-
-    const token = result.data?.token || crypto.randomUUID();
+    const result = await verifyOTP(payload);
+    console.log("verifyOTP result:", result); // Debugging line 
+  if (result?.code !== "0001" && result.data) {
+      const token = result.data?.accessToken || crypto.randomUUID();
     await createSession(token);
-
     await saveStepCookie("mobile");
-
-    return { success: true as const, data: result.data };
+      return { success: true as const, data: result.data };
+    }
+    return { error: result.msg || result.message || "Failed to send OTP" };
   } catch (err) {
     return { error: err instanceof Error ? err.message : "Verification failed" };
   }

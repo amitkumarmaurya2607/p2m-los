@@ -13,8 +13,6 @@ May 19, 2026
 1. **Loan Application Flow Expanded from 9 to 12 Steps**
    - Updated `src/lib/sessionStorage.ts` — reordered steps array to new 12-step sequence with appropriate icons
    - Updated `src/context/ApplicationContext.tsx` — added 5 new data types (`GeoLocationData`, `AccountStatementData`, `AddressProofData`, `AlternateMobileData`, `EligibilityData`), setters, API key mappings, state fields
-   - Updated `src/lib/mock/application-mock.ts` — added mock data for all new steps
-
 2. **5 New View Components + Route Pages Created**
    - `GeoLocation` (`/geo-location`) — GPS capture using `navigator.geolocation` with accuracy display
    - `AccountStatementUpload` (`/account-statement`) — bank statement file upload with drag-drop, validation
@@ -51,7 +49,7 @@ May 19, 2026
 
 ## Blockers
 
-- No API endpoints connected yet — all verification flows use simulated delays
+- No API endpoints connected yet — calls will fail until backend is reachable
 - File upload components don't POST to a server — files stored in state only
 
 ## Notes

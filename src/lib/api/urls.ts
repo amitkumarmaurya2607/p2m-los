@@ -3,7 +3,7 @@ const losService = '/los-service';
 export const API = {
   auth: {
     sendOTP: `${losService}/api/mobile/genOtp`,
-    verifyOTP: `${losService}/auth/verify-otp`,
+    verifyOTP: `${losService}/api/mobile/verify`,
   },
   pan: {
     verify: "/pan/verify",

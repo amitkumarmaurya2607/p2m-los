@@ -1,23 +1,38 @@
 import { apiPost } from "@/lib/axios";
 import { API } from "@/lib/api/urls";
 import type { ApiResponse } from "@/types";
+import { loginPayload, loginVerifyPayload } from "@/views/Auth/type";
 
-interface SendOTPResponse {
-  verified: boolean;
+export interface SendOTPResponse {
+  code: string;
+  message?: string;
+  data?: {
+    mobileNumber: string;
+    userId: string;
+  };
+  msg?: string;
+  errorCodeList?: unknown[];
 }
-
 interface VerifyOTPResponse {
-  verified: boolean;
-  token?: string;
+  code: string;
+  message?: string;
+  data?: {
+    mobileNumber: string;
+    userId: string;
+    refreshToken: string;
+    accessToken: string;
+   
+  };
+  msg?: string;
+  errorCodeList?: unknown[];
 }
 
-export async function sendOTP(phone: string): Promise<ApiResponse<SendOTPResponse>> {
-  return apiPost<ApiResponse<SendOTPResponse>>(API.auth.sendOTP, { phone });
+export async function sendOTP(payload:loginPayload): Promise<SendOTPResponse> {
+  return apiPost<SendOTPResponse>(API.auth.sendOTP, payload);
 }
 
 export async function verifyOTP(
-  phone: string,
-  code: string,
-): Promise<ApiResponse<VerifyOTPResponse>> {
-  return apiPost<ApiResponse<VerifyOTPResponse>>(API.auth.verifyOTP, { phone, code });
+  payload: loginVerifyPayload
+): Promise<VerifyOTPResponse> {
+  return apiPost<VerifyOTPResponse>(API.auth.verifyOTP, payload);
 }

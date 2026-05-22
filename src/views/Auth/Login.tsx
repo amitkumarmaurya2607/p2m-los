@@ -16,6 +16,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState<string>("");
   const [error, setError] = useState("");
+  const [userId, setUserId] = useState<string>("");
 
   const [accepted, setAccepted] = useState(false);
 
@@ -45,17 +46,22 @@ const Login = () => {
     setError("");
     setLoading(true);
 
+
+
     sendOTPAction(userName).then((result) => {
       setLoading(false);
-      if (result.success) {
+      console.log("sendOTPAction result in component:", result); // Debugging line
+      if ("success" in result && result.success) {
+        setUserId(result.data.userId);
         setSendOtp(true);
         showToast({
           message: type === "resend" ? "OTP resent successfully!" : "OTP sent successfully!",
           type: "success",
         });
       } else {
-        setError(result.error || "Failed to send OTP");
-        showToast({ message: result.error || "Failed to send OTP", type: "error" });
+        const errorMsg = "error" in result ? result.error : "Failed to send OTP";
+        setError(errorMsg);
+        showToast({ message: errorMsg, type: "error" });
       }
     });
   };
@@ -153,6 +159,7 @@ const Login = () => {
           resend={() => submitHandler(null, "resend")}
           method={method}
           userName={userName}
+          userId={userId}
         />
       )}
     </>
