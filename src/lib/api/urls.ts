@@ -8,6 +8,9 @@ export const API = {
   pan: {
     verify: `${losService}/api/kyc/pan/verify`,
   },
+    personalInfo: {
+    submit: `${losService}/api/kyc/update/personalDetail`,
+  },
   aadhaar: {
     sendOTP: "/aadhaar/send-otp",
     verifyOTP: "/aadhaar/verify-otp",
@@ -28,9 +31,7 @@ export const API = {
   email: {
     sendOTP: "/email/send-otp",
   },
-  personalInfo: {
-    submit: "/personal-info/submit",
-  },
+
   lookup: {
     schemes: "/lookup/schemes",
   },

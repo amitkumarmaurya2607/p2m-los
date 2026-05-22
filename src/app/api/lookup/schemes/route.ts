@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { apiGet } from "@/lib/axios";
 import { API } from "@/lib/api/urls";
+import { withApiLogging } from "@/lib/api-logger";
 import type { ApiResponse } from "@/types";
 
 interface LoanScheme {
@@ -12,7 +13,7 @@ interface LoanScheme {
   maxTenure: number;
 }
 
-export async function GET() {
+async function getHandler() {
   try {
     const result = await apiGet<ApiResponse<LoanScheme[]>>(API.lookup.schemes);
     return NextResponse.json(result);
@@ -21,3 +22,5 @@ export async function GET() {
     return NextResponse.json({ success: false, message }, { status: 500 });
   }
 }
+
+export const GET = withApiLogging(getHandler);

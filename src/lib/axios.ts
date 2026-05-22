@@ -1,7 +1,17 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosError } from "axios";
 import { getSession } from "@/lib/session";
+import { logApiRequest, logApiResponse } from "@/lib/api-logger";
 
 const BASE_URL = process.env.API_BASE_URL || "http://localhost:8080/api";
+
+function headersToRecord(headers: unknown): Record<string, string> {
+  const result: Record<string, string> = {};
+  if (!headers || typeof headers !== "object") return result;
+  for (const [key, value] of Object.entries(headers)) {
+    result[key] = Array.isArray(value) ? value.join(", ") : String(value);
+  }
+  return result;
+}
 
 function createClient(): AxiosInstance {
   const client = axios.create({
@@ -12,24 +22,47 @@ function createClient(): AxiosInstance {
 
   client.interceptors.request.use(
     async (config) => {
-      if (typeof process !== "undefined" && process.env?.NODE_ENV !== "production") {
-        console.log(`[API] ${config.method?.toUpperCase()} ${config.url}`);
-      }
-
       const token = await getSession();
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
 
+      const method = (config.method?.toUpperCase() ?? "GET") as string;
+      const url = config.baseURL ? config.url?.replace(config.baseURL, "") ?? config.url ?? "" : config.url ?? "";
+
+      (config as unknown as Record<string, unknown>)._reqStart = Date.now();
+
+      logApiRequest("outgoing", method, url, headersToRecord(config.headers), config.data);
+
       return config;
     },
-    (error) => Promise.reject(error),
+    (error) => {
+      logApiResponse("outgoing", "", "", 0, 0, undefined, error);
+      return Promise.reject(error);
+    },
   );
 
   client.interceptors.response.use(
-    (response) => response,
+    (response) => {
+      const method = (response.config.method?.toUpperCase() ?? "GET") as string;
+      const url = response.config.url ?? "";
+      const start = (response.config as unknown as Record<string, unknown>)._reqStart as number | undefined;
+      const duration = start ? Date.now() - start : 0;
+
+      logApiResponse("outgoing", method, url, response.status, duration, response.data);
+
+      return response;
+    },
     (error: AxiosError) => {
-      if (error.response?.status === 401) {
+      const method = (error.config?.method?.toUpperCase() ?? "GET") as string;
+      const url = error.config?.url ?? "";
+      const start = (error.config as unknown as Record<string, unknown>)?._reqStart as number | undefined;
+      const duration = start ? Date.now() - start : 0;
+      const status = error.response?.status ?? 0;
+
+      logApiResponse("outgoing", method, url, status, duration, error.response?.data, error);
+
+      if (status === 401 && typeof window !== "undefined") {
         window.location.href = "/apply-now?type=exper";
       }
 
