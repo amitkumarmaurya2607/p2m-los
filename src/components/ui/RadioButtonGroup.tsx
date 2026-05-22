@@ -1,4 +1,5 @@
 "use client";
+import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 type RadioOption = {
@@ -11,7 +12,7 @@ type RadioButtonGroupProps = {
   name: string;
   value?: string;
   onChange: (value: string) => void;
-  heading?: string;
+  heading?: ReactNode;
   error?: string;
   disabled?: boolean;
   className?: string;

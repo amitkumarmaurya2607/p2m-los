@@ -14,7 +14,7 @@ type AadhaarDetailsProps = {
   resend?: () => void;
 };
 
-function AadhaarDetails({ resend = () => {} }: AadhaarDetailsProps) {
+function AadhaarDetails({ resend = () => { } }: AadhaarDetailsProps) {
   const router = useRouter();
   const [aadhaar, setAadhaar] = useState("");
   const [otp, setOtp] = useState("");

@@ -18,13 +18,28 @@ export async function sendEmailOTPAction(email: string) {
   }
 }
 
+function buildPayload(data: Record<string, unknown>) {
+  return {
+    fatherName: data.fatherName ?? "",
+    pinCode: data.pincode ?? "",
+    firstName: data.firstName ?? "",
+    middleName: data.secondName ?? "",
+    lastName: data.lastName ?? "",
+    state: data.state ?? "",
+    city: data.city ?? "",
+    address: data.address ?? "",
+    gender: data.gender ?? "",
+    emailId: data.email ?? "",
+  };
+}
+
 export async function submitPersonalInfoAction(data: Record<string, unknown>) {
   try {
     const result = await apiPost<ApiResponse<{ submitted: boolean }>>(
       API.personalInfo.submit,
-      data,
+      buildPayload(data),
     );
-    if (!result.success) return { error: result.message || "Submission failed" };
+    if (result.code !== "0000") return { error: result.message || "Submission failed" };
     await saveStepCookie("personalInfo");
     return { success: true as const };
   } catch (err) {

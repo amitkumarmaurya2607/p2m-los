@@ -6,10 +6,12 @@ import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import StepCard from "../componants/StepCard";
 import CustomDatePicker from "@/components/ui/CustomDatePicker";
+import RadioButtonGroup from "@/components/ui/RadioButtonGroup";
 import { User, Lightbulb } from "lucide-react";
 import { isValidEmail, sanitizeNumeric } from "@/lib/utils";
 import { submitPersonalInfoAction } from "@/lib/actions/personal-info.action";
 import PulseDot from "@/components/PulseDot";
+import { showToast } from "@/lib/toast";
 
 function PersonalInfo() {
   const router = useRouter();
@@ -24,6 +26,8 @@ function PersonalInfo() {
     state: "",
     city: "",
     pincode: "",
+    address: "",
+    gender: "",
   });
 
   const [errors, setErrors] = useState<any>({});
@@ -59,6 +63,8 @@ function PersonalInfo() {
 
     if (!form.city) newErrors.city = "City is required";
     if (!form.state) newErrors.state = "State is required";
+    if (!form.address) newErrors.address = "Address is required";
+    if (!form.gender) newErrors.gender = "Gender is required";
 
     return newErrors;
   };
@@ -78,12 +84,20 @@ function PersonalInfo() {
 
       const result = await submitPersonalInfoAction(form);
 
-      if (result?.error) {
-        setErrors((prev: any) => ({ ...prev, submit: result.error }));
+      if (result?.success) {
+        router.push("/aadhar-details");
+        showToast({
+          message: "Personal information added successfully!",
+          type: "success",
+        });
         return;
       }
 
-      router.push("/aadhar-details");
+      setErrors((prev: any) => ({ ...prev, submit: result?.error || "Submission failed" }));
+      return;
+
+
+
     } catch (err) {
       setErrors((prev: any) => ({ ...prev, submit: "Something went wrong" }));
     } finally {
@@ -160,6 +174,25 @@ function PersonalInfo() {
           </div>
         </div>
 
+        <div className="w-full mt-4">
+          <RadioButtonGroup
+            options={[
+              { value: "Male", label: "Male" },
+              { value: "Female", label: "Female" },
+              { value: "Other", label: "Other" },
+            ]}
+            name="gender"
+            value={form.gender}
+            onChange={(value) => handleChange("gender", value)}
+            heading={
+              <span>
+                Gender <span className="text-destructive">*</span>
+              </span>
+            }
+            error={errors.gender}
+          />
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <CustomDatePicker
             label="Date of Birth"
@@ -193,6 +226,16 @@ function PersonalInfo() {
 
         <div>
           <h3 className="text-lg font-semibold mb-4">Address Details</h3>
+
+          <div className="mb-4">
+            <TextInput
+              label="Address"
+              value={form.address}
+              onChange={(e) => handleChange("address", e.target.value)}
+              error={errors.address}
+              require
+            />
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <TextInput
