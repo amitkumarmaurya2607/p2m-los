@@ -14,6 +14,7 @@ export const API = {
   aadhaar: {
     sendOTP: "/aadhaar/send-otp",
     verifyOTP: "/aadhaar/verify-otp",
+    digiLocker: `${losService}/api/kyc/digiLocker`,
   },
   bank: {
     verify: "/bank/verify",

@@ -1,10 +1,11 @@
 "use server";
 
 import { verifyPAN } from "@/lib/services/pan.service";
-import { sendAadhaarOTP, verifyAadhaarOTP } from "@/lib/services/aadhaar.service";
+import { digiLockerApi, sendAadhaarOTP, verifyAadhaarOTP } from "@/lib/services/aadhaar.service";
 import { verifyBank } from "@/lib/services/bank.service";
 import { submitEmployment } from "@/lib/services/employment.service";
 import { saveStepCookie } from "@/lib/step-cookie";
+import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
 
 export async function verifyPANAction(panNumber: string) {
   try {
@@ -14,7 +15,19 @@ export async function verifyPANAction(panNumber: string) {
     await saveStepCookie("pan");
     return { success: true as const };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : "PAN verification failed" };
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "PAN verification failed") };
+  }
+}
+
+export async function digiLockerAction() {
+  try {
+    const result = await digiLockerApi();
+     if (result.code !== "0000") return { error: result.message || "digiLocker verification failed" };
+    return { success: true, data: result.data, response: result?.data };
+  } catch (err) {
+    rethrowIfRedirect(err);
+    return { success: false, error: getErrorMessage(err, "digiLocker failed") };
   }
 }
 
@@ -23,11 +36,8 @@ export async function sendAadhaarOTPAction(aadhaarNumber: string) {
     const result = await sendAadhaarOTP(aadhaarNumber);
     return { success: result.success, data: result.data, error: null };
   } catch (err) {
-    return {
-      success: false,
-      data: null,
-      error: err instanceof Error ? err.message : "Failed to send Aadhaar OTP",
-    };
+    rethrowIfRedirect(err);
+    return { success: false, data: null, error: getErrorMessage(err, "Failed to send Aadhaar OTP") };
   }
 }
 
@@ -38,7 +48,8 @@ export async function verifyAadhaarOTPAction(aadhaarNumber: string, code: string
     await saveStepCookie("aadhaar");
     return { success: true as const };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : "Failed to verify Aadhaar OTP" };
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Failed to verify Aadhaar OTP") };
   }
 }
 
@@ -49,7 +60,8 @@ export async function verifyBankAction(accountNumber: string, ifsc: string, acco
     await saveStepCookie("bankDetails");
     return { success: true as const };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : "Bank verification failed" };
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Bank verification failed") };
   }
 }
 
@@ -62,7 +74,8 @@ export async function saveGeoLocationAction(data: {
     await saveStepCookie("geoLocation");
     return { success: true as const };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : "Failed to save geo location" };
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Failed to save geo location") };
   }
 }
 
@@ -83,6 +96,7 @@ export async function submitEmploymentAction(data: {
     await saveStepCookie("employmentDetails");
     return { success: true as const };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : "Failed to submit employment details" };
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Failed to submit employment details") };
   }
 }

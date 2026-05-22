@@ -13,6 +13,21 @@ function headersToRecord(headers: unknown): Record<string, string> {
   return result;
 }
 
+async function handleServer401(): Promise<never> {
+  if (typeof window === "undefined") {
+    const { deleteSession } = await import("@/lib/session") as typeof import("@/lib/session");
+    const { deleteStepCookie } = await import("@/lib/step-cookie") as typeof import("@/lib/step-cookie");
+    const { redirect } = await import("next/navigation") as typeof import("next/navigation");
+    await deleteSession();
+    await deleteStepCookie();
+    redirect("/apply-now?type=exp");
+  } else {
+    await fetch("/api/logout", { method: "POST" });
+    window.location.href = "/apply-now?type=exp";
+  }
+  throw new Error("unreachable");
+}
+
 function createClient(): AxiosInstance {
   const client = axios.create({
     baseURL: BASE_URL,
@@ -62,8 +77,8 @@ function createClient(): AxiosInstance {
 
       logApiResponse("outgoing", method, url, status, duration, error.response?.data, error);
 
-      if (status === 401 && typeof window !== "undefined") {
-        window.location.href = "/apply-now?type=exper";
+      if (status === 401) {
+        return Promise.reject(error);
       }
 
       const message =
@@ -81,9 +96,19 @@ function createClient(): AxiosInstance {
 
 const apiClient = createClient();
 
+async function handle401<T>(promise: Promise<T>): Promise<T> {
+  try {
+    return await promise;
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response?.status === 401) {
+      await handleServer401();
+    }
+    throw err;
+  }
+}
+
 export async function apiGet<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
-  const { data } = await apiClient.get<T>(url, config);
-  return data;
+  return handle401(apiClient.get<T>(url, config).then((r) => r.data));
 }
 
 export async function apiPost<T>(
@@ -91,8 +116,7 @@ export async function apiPost<T>(
   body?: unknown,
   config?: AxiosRequestConfig,
 ): Promise<T> {
-  const { data } = await apiClient.post<T>(url, body, config);
-  return data;
+  return handle401(apiClient.post<T>(url, body, config).then((r) => r.data));
 }
 
 export async function apiPut<T>(
@@ -100,13 +124,11 @@ export async function apiPut<T>(
   body?: unknown,
   config?: AxiosRequestConfig,
 ): Promise<T> {
-  const { data } = await apiClient.put<T>(url, body, config);
-  return data;
+  return handle401(apiClient.put<T>(url, body, config).then((r) => r.data));
 }
 
 export async function apiDelete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
-  const { data } = await apiClient.delete<T>(url, config);
-  return data;
+  return handle401(apiClient.delete<T>(url, config).then((r) => r.data));
 }
 
 export default apiClient;

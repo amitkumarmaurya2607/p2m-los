@@ -3,6 +3,7 @@
 import { apiPost } from "@/lib/axios";
 import { API } from "@/lib/api/urls";
 import { saveStepCookie } from "@/lib/step-cookie";
+import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
 import type { ApiResponse } from "@/types";
 
 export async function sendEmailOTPAction(email: string) {
@@ -10,11 +11,8 @@ export async function sendEmailOTPAction(email: string) {
     const result = await apiPost<ApiResponse<{ otp: string }>>(API.email.sendOTP, { email });
     return { success: result.success, data: result.data, error: null };
   } catch (err) {
-    return {
-      success: false,
-      data: null,
-      error: err instanceof Error ? err.message : "Failed to send email OTP",
-    };
+    rethrowIfRedirect(err);
+    return { success: false, data: null, error: getErrorMessage(err, "Failed to send email OTP") };
   }
 }
 
@@ -41,8 +39,9 @@ export async function submitPersonalInfoAction(data: Record<string, unknown>) {
     );
     if (result.code !== "0000") return { error: result.message || "Submission failed" };
     await saveStepCookie("personalInfo");
-    return { success: true as const };
-  } catch (err) {
-    return { error: err instanceof Error ? err.message : "Failed to submit personal info" };
-  }
+      return { success: true as const };
+    } catch (err) {
+      rethrowIfRedirect(err);
+      return { error: getErrorMessage(err, "Failed to submit personal info") };
+    }
 }

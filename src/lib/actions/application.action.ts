@@ -2,6 +2,7 @@
 
 import { submitApplication, getApplicationStatus } from "@/lib/services/application.service";
 import { saveStepCookie } from "@/lib/step-cookie";
+import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
 
 export async function submitApplicationAction(data: unknown) {
   try {
@@ -10,7 +11,8 @@ export async function submitApplicationAction(data: unknown) {
     await saveStepCookie("loanEligibility");
     return { success: true as const, data: result.data };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : "Failed to submit application" };
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Failed to submit application") };
   }
 }
 
@@ -19,10 +21,7 @@ export async function getApplicationStatusAction(id: string) {
     const result = await getApplicationStatus(id);
     return { success: result.success, data: result.data, error: null };
   } catch (err) {
-    return {
-      success: false,
-      data: null,
-      error: err instanceof Error ? err.message : "Failed to fetch application status",
-    };
+    rethrowIfRedirect(err);
+    return { success: false, data: null, error: getErrorMessage(err, "Failed to fetch application status") };
   }
 }

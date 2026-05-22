@@ -11,6 +11,10 @@ interface VerifyAadhaarOTPResponse {
   number: string;
 }
 
+export async function digiLockerApi(): Promise<ApiResponse<unknown>> {
+  return apiPost<ApiResponse<unknown>>(API.aadhaar.digiLocker, {});
+}
+
 export async function sendAadhaarOTP(
   aadhaarNumber: string,
 ): Promise<ApiResponse<SendAadhaarOTPResponse>> {
