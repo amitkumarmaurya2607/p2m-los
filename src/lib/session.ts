@@ -6,10 +6,11 @@ const SESSION_MAX_AGE = 60 * 60 * 24 * 7;
 
 export async function createSession(token: string) {
   const cookieStore = await cookies();
+  const isDev = process.env.NODE_ENV === "development";
   cookieStore.set(SESSION_NAME, token, {
     httpOnly: true,
-    secure: true,
-    sameSite: "lax",
+    secure: !isDev,
+    sameSite: isDev ? undefined : "lax",
     path: "/",
     maxAge: SESSION_MAX_AGE,
   });

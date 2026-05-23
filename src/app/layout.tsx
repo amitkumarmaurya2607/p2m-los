@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { GlobalErrorHandler } from "@/components/GlobalErrorHandler";
 import "./globals.css";
@@ -16,7 +16,12 @@ export const metadata: Metadata = {
     "Experience fast, transparent, and secure digital lending. RinSetu connects you with RBI-registered partners for instant loan approvals.",
   keywords: ["loan", "fintech", "personal loan", "digital lending", "RinSetu", "credit"],
   authors: [{ name: "RinSetu Team" }],
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({

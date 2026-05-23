@@ -21,6 +21,43 @@ function GeoLocation() {
     "prompt" | "granted" | "denied" | "unavailable"
   >("prompt");
 
+  const [isMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent,
+    );
+  });
+
+  const [os, setOs] = useState<"android" | "ios" | "other">("other");
+
+  const [browserPkg, setBrowserPkg] = useState<string>("com.android.chrome");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const ua = navigator.userAgent;
+    if (/Android/i.test(ua)) {
+      setOs("android");
+      if (/Edg/i.test(ua)) setBrowserPkg("com.microsoft.emmx");
+      else if (/Firefox/i.test(ua)) setBrowserPkg("org.mozilla.firefox");
+      else if (/Samsung/i.test(ua)) setBrowserPkg("com.sec.android.app.sbrowser");
+      else if (/OPR|Opt/i.test(ua)) setBrowserPkg("com.opera.browser");
+      else setBrowserPkg("com.android.chrome");
+    } else if (/iPhone|iPad|iPod/i.test(ua)) {
+      setOs("ios");
+    }
+  }, []);
+
+  const openSystemSettings = () => {
+    if (os === "android") {
+      const intentUrl = `intent://settings/#Intent;action=android.settings.APPLICATION_DETAILS_SETTINGS;S:android.provider.extra.APP_PACKAGE=${browserPkg};end`;
+      const a = document.createElement("a");
+      a.href = intentUrl;
+      a.click();
+    } else if (os === "ios") {
+      window.location.href = "App-Prefs:root=Privacy&path=LOCATION";
+    }
+  };
+
   useEffect(() => {
     if (!navigator.geolocation) {
       setPermissionState("unavailable");
@@ -28,17 +65,22 @@ function GeoLocation() {
     }
 
     if (navigator.permissions) {
-      navigator.permissions.query({ name: "geolocation" }).then((result) => {
-        setPermissionState(result.state as "prompt" | "granted" | "denied");
-
-        if (result.state === "granted") {
-          useCurrentLocation();
-        }
-
-        result.onchange = () => {
+      navigator.permissions
+        .query({ name: "geolocation" })
+        .then((result) => {
           setPermissionState(result.state as "prompt" | "granted" | "denied");
-        };
-      });
+
+          if (result.state === "granted") {
+            useCurrentLocation();
+          }
+
+          result.onchange = () => {
+            setPermissionState(result.state as "prompt" | "granted" | "denied");
+          };
+        })
+        .catch(() => {
+          // Permissions API unsupported or threw — stay in "prompt" state
+        });
     }
   }, []);
 
@@ -150,22 +192,60 @@ function GeoLocation() {
             </div>
             <h3 className="text-lg font-bold text-text-heading mb-2">Location Access Denied</h3>
             <p className="text-center text-text-muted mb-4 max-w-sm">
-              Location access is blocked. Please enable location permissions in your browser
-              settings to continue.
+              Location access is blocked. Please enable location permissions to continue.
             </p>
             <div
               className="rounded-xl border border-border-light bg-surface p-4 max-w-sm w-full
                 text-sm text-text-muted space-y-2"
             >
               <p className="font-semibold text-text-heading">How to enable:</p>
-              <ol className="list-decimal list-inside space-y-1">
-                <li>Click the lock/info icon in the address bar</li>
-                <li>Find "Location" permission</li>
-                <li>Change it to "Allow"</li>
-                <li>Refresh the page</li>
-              </ol>
+              {isMobile && os === "android" ? (
+                <ol className="list-decimal list-inside space-y-1">
+                  <li>Open <strong>Settings</strong> on your device</li>
+                  <li>Go to <strong>Apps</strong> &gt; <strong>Chrome</strong></li>
+                  <li>Tap <strong>Permissions</strong></li>
+                  <li>Tap <strong>Location</strong></li>
+                  <li>Select <strong>Allow</strong></li>
+                  <li>Return here and tap "Try Again" below</li>
+                </ol>
+              ) : isMobile && os === "ios" ? (
+                <ol className="list-decimal list-inside space-y-1">
+                  <li>Open <strong>Settings</strong> on your device</li>
+                  <li>Scroll down and tap <strong>Safari</strong></li>
+                  <li>Tap <strong>Location</strong></li>
+                  <li>Select <strong>Allow</strong></li>
+                  <li>Return here and tap "Try Again" below</li>
+                </ol>
+              ) : (
+                <ol className="list-decimal list-inside space-y-1">
+                  <li>Click the lock/info icon in the address bar</li>
+                  <li>Find "Location" permission</li>
+                  <li>Change it to "Allow"</li>
+                  <li>Refresh the page</li>
+                </ol>
+              )}
             </div>
+            {isMobile && (
+              <button
+                type="button"
+                onClick={openSystemSettings}
+                className="mt-3 text-sm font-semibold text-primary underline underline-offset-2 hover:text-primary/80"
+              >
+                Open System Settings
+              </button>
+            )}
             {error && <p className="mt-4 text-sm text-destructive text-center max-w-sm">{error}</p>}
+            <GradientButton
+              type="button"
+              onClick={() => {
+                setPermissionState("prompt");
+                useCurrentLocation();
+              }}
+              disabled={loading}
+              className="mt-4 w-full max-w-xs"
+            >
+              {loading ? "Detecting Location..." : "Try Again"}
+            </GradientButton>
           </div>
         )}
 

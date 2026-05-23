@@ -11,10 +11,11 @@ export async function saveStepCookie(step: string) {
   if (!steps.includes(step)) {
     steps.push(step);
   }
+  const isDev = process.env.NODE_ENV === "development";
   cookieStore.set(STEP_COOKIE_NAME, steps.join(","), {
     httpOnly: true,
-    secure: true,
-    sameSite: "lax",
+    secure: !isDev,
+    sameSite: isDev ? undefined : "lax",
     path: "/",
     maxAge: STEP_COOKIE_MAX_AGE,
   });
