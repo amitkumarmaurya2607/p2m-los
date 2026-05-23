@@ -1,6 +1,7 @@
 import Header from "@/views/Dashbaord/componants/Header";
 import ProgressBar from "@/views/Dashbaord/componants/ProgressBar";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import GeoLocationGuard from "@/components/GeoLocationGuard";
 
 import type { Metadata } from "next";
 export const metadata: Metadata = {
@@ -17,7 +18,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <div className="grow-1">
           <ProgressBar />
           <div className="flex justify-center px-4 pt-12 pb-6">
-            <ErrorBoundary label="Dashboard">{children}</ErrorBoundary>
+            <ErrorBoundary label="Dashboard">
+              <GeoLocationGuard>{children}</GeoLocationGuard>
+            </ErrorBoundary>
           </div>
         </div>
       </div>

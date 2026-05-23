@@ -92,12 +92,8 @@ function PersonalInfo() {
         });
         return;
       }
-
       setErrors((prev: any) => ({ ...prev, submit: result?.error || "Submission failed" }));
       return;
-
-
-
     } catch (err) {
       setErrors((prev: any) => ({ ...prev, submit: "Something went wrong" }));
     } finally {

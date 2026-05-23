@@ -1,7 +1,7 @@
 "use client";
 import GradientButton from "@/components/ui/GradientButton";
 import { ArrowRight } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import OTPVerify from "./OTPVerify";
 import TextInput from "@/components/ui/TextInput";
 import { isValidEmail, isValidMobile, sanitizeEmail, sanitizeNumeric } from "@/lib/utils";
@@ -10,7 +10,7 @@ import StepCard from "../Dashbaord/componants/StepCard";
 import { sendOTPAction } from "@/lib/actions/auth.action";
 import Link from "next/link";
 
-const Login = () => {
+const Login = ({ type }: { type?: string }) => {
   const [method, setMethod] = useState<"mobile" | "email">("mobile");
   const [sendOtp, setSendOtp] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -19,6 +19,13 @@ const Login = () => {
   const [userId, setUserId] = useState<string>("");
 
   const [accepted, setAccepted] = useState(false);
+
+  useEffect(() => {
+    if (type === "exp") {
+      showToast({ message: "Your session has expired. Please sign in again.", type: "error" });
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+  }, [type]);
 
   const validate = () => {
     if (method === "mobile") return isValidMobile(userName);
@@ -107,6 +114,14 @@ const Login = () => {
             subtitle="Please enter your details to sign in."
             className="w-full max-w-[448px] items-start lg:items-center"
           >
+            {type === "exp" && (
+              <div
+                className="mb-4 rounded-xl border border-yellow-300 bg-yellow-50 px-4 py-3 text-sm
+                  text-yellow-800"
+              >
+                Your session has expired. Please sign in again.
+              </div>
+            )}
             <form onSubmit={submitHandler}>
               <div className="space-y-4">
                 <TextInput

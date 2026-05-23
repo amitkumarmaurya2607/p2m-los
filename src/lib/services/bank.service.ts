@@ -3,20 +3,16 @@ import { API } from "@/lib/api/urls";
 import type { ApiResponse } from "@/types";
 
 interface VerifyBankResponse {
-  accountNumber: string;
-  ifsc: string;
-  accountType: string;
-  verified: boolean;
+  code: string;
+  message?: string;
 }
 
-export async function verifyBank(
-  accountNumber: string,
-  ifsc: string,
-  accountType: string,
-): Promise<ApiResponse<VerifyBankResponse>> {
-  return apiPost<ApiResponse<VerifyBankResponse>>(API.bank.verify, {
-    accountNumber,
-    ifsc,
-    accountType,
-  });
+export async function verifyBank(data: {
+  userId: string;
+  orgId: string;
+  accountNumber: string;
+  ifscCode: string;
+  benName: string;
+}): Promise<ApiResponse<VerifyBankResponse>> {
+  return apiPost<ApiResponse<VerifyBankResponse>>(API.bank.verify, data);
 }

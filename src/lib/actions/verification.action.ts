@@ -53,12 +53,21 @@ export async function verifyAadhaarOTPAction(aadhaarNumber: string, code: string
   }
 }
 
-export async function verifyBankAction(accountNumber: string, ifsc: string, accountType: string) {
+export async function verifyBankAction(data: {
+  userId: string;
+  accountNumber: string;
+  ifscCode: string;
+  benName: string;
+}) {
   try {
-    const result = await verifyBank(accountNumber, ifsc, accountType);
-    if (!result.success) return { error: result.message || "Bank verification failed" };
+    const result = await verifyBank({
+      ...data,
+      orgId: process.env.ORG_ID?.trim() || "",
+    });
+     if (result.code !== "0000") return { error: result.message || "Bank verification failed" };
+   
     await saveStepCookie("bankDetails");
-    return { success: true as const };
+    return { success: true as const, data: result.data };
   } catch (err) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Bank verification failed") };
@@ -76,6 +85,32 @@ export async function saveGeoLocationAction(data: {
   } catch (err) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Failed to save geo location") };
+  }
+}
+
+export async function saveLocationCookiesAction(data: {
+  latitude: number;
+  longitude: number;
+  accuracy: number;
+}) {
+  try {
+    const { cookies } = await import("next/headers");
+    const cookieStore = await cookies();
+    const isDev = process.env.NODE_ENV === "development";
+    const opts = {
+      httpOnly: true,
+      secure: !isDev,
+      sameSite: "lax" as const,
+      path: "/" as const,
+      maxAge: 60 * 60 * 24 * 7,
+    };
+    cookieStore.set("p2m-lat", String(data.latitude), opts);
+    cookieStore.set("p2m-lng", String(data.longitude), opts);
+    cookieStore.set("p2m-acc", String(data.accuracy), opts);
+    return { success: true as const };
+  } catch (err) {
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Failed to save location cookies") };
   }
 }
 

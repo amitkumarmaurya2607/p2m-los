@@ -1,26 +1,31 @@
 "use client";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import StepCard from "../componants/StepCard";
 import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import { CreditCard, Check, Landmark } from "lucide-react";
-import SelectBox from "@/components/ui/SelectBox";
 import { isValidIFSCCode, sanitizeNumeric, sanitizeIFSC } from "@/lib/utils";
 import { verifyBankAction } from "@/lib/actions/verification.action";
+import { showToast } from "@/lib/toast";
 
 function BankDetails() {
-  const router = useRouter();
   const [form, setForm] = useState({
     accountNumber: "",
     confirmAccountNumber: "",
-    ifsc: "",
-    accountType: "savings",
+    ifscCode: "",
+    benName: "",
   });
 
   const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
+
+  const userId = typeof window !== "undefined"
+    ? document.cookie
+      .split("; ")
+      .find((r) => r.startsWith("p2m-user-id="))
+      ?.split("=")[1] || ""
+    : "";
 
   const handleChange = (key: string, value: string) => {
     let v = value;
@@ -29,7 +34,7 @@ function BankDetails() {
       v = sanitizeNumeric(value);
     }
 
-    if (key === "ifsc") {
+    if (key === "ifscCode") {
       v = sanitizeIFSC(value);
     }
 
@@ -49,12 +54,12 @@ function BankDetails() {
       err.confirmAccountNumber = "Account numbers do not match";
     }
 
-    if (!form.ifsc) err.ifsc = "Required";
-    else if (!isValidIFSCCode(form.ifsc)) {
-      err.ifsc = "Invalid IFSC";
+    if (!form.ifscCode) err.ifscCode = "Required";
+    else if (!isValidIFSCCode(form.ifscCode)) {
+      err.ifscCode = "Invalid IFSC";
     }
 
-    // if (!form.accountType) err.accountType = "Required";
+    if (!form.benName) err.benName = "Required";
 
     return err;
   };
@@ -71,14 +76,28 @@ function BankDetails() {
     try {
       setLoading(true);
 
-      const result = await verifyBankAction(form.accountNumber, form.ifsc, form.accountType);
+      const result = await verifyBankAction({
+        userId,
+        accountNumber: form.accountNumber,
+        ifscCode: form.ifscCode,
+        benName: form.benName,
+      });
+      console.log("result", result)
+      if (result?.success) {
+        setVerified(true);
 
-      if (result?.error) {
-        setErrors((prev: any) => ({ ...prev, bank: result.error }));
+        showToast({
+          message: "Personal information added successfully!",
+          type: "success",
+        });
         return;
+
       }
 
-      router.push("/account-statement");
+      const errorMsg = result?.error || "Something went wrong";
+      setErrors((prev: any) => ({ ...prev, bank: errorMsg }));
+      showToast({ message: errorMsg, type: "error" });
+
     } finally {
       setLoading(false);
     }
@@ -87,11 +106,6 @@ function BankDetails() {
   const maskedAccount = form.accountNumber
     ? `XXXX XXXX ${form.accountNumber.slice(-4)}`
     : "XXXX XXXX XXXX";
-
-  const accountTypeOptions = [
-    { label: "Savings Account", value: "savings" },
-    { label: "Current Account", value: "current" },
-  ];
 
   if (verified) {
     return (
@@ -136,18 +150,18 @@ function BankDetails() {
                 >
                   IFSC Code
                 </p>
-                <p className="mt-1 font-mono text-[16px] font-bold text-[#1D293D]">{form.ifsc}</p>
+                <p className="mt-1 font-mono text-[16px] font-bold text-[#1D293D]">
+                  {form.ifscCode}
+                </p>
               </div>
 
               <div>
                 <p
                   className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-muted-light"
                 >
-                  Account Type
+                  Beneficiary
                 </p>
-                <p className="mt-1 text-[16px] font-bold capitalize text-[#1D293D]">
-                  {form.accountType}
-                </p>
+                <p className="mt-1 text-[16px] font-bold text-[#1D293D]">{form.benName}</p>
               </div>
             </div>
           </div>
@@ -203,20 +217,19 @@ function BankDetails() {
 
           <TextInput
             label="IFSC CODE"
-            value={form.ifsc}
-            onChange={(e) => handleChange("ifsc", e.target.value)}
-            error={errors.ifsc}
+            value={form.ifscCode}
+            onChange={(e) => handleChange("ifscCode", e.target.value)}
+            error={errors.ifscCode}
             maxLength={11}
             require
           />
 
-          <SelectBox
-            isDisabled={true}
-            label="Account Type"
-            options={accountTypeOptions}
-            value={accountTypeOptions.find((opt) => opt.value === form.accountType)}
-            onChange={(selected: any) => handleChange("accountType", selected?.value || "")}
-            error={errors.accountType}
+          <TextInput
+            label="Beneficiary Name"
+            value={form.benName}
+            onChange={(e) => handleChange("benName", e.target.value)}
+            error={errors.benName}
+            require
           />
         </div>
 
@@ -231,6 +244,10 @@ function BankDetails() {
             completely safe.
           </p>
         </div>
+
+        {errors.bank && (
+          <p className="text-sm text-destructive text-center">{errors.bank}</p>
+        )}
 
         {/* Button */}
         <GradientButton type="submit" className="w-full mt-4 sm:mt-6" disabled={loading}>

@@ -17,7 +17,7 @@ export const API = {
     digiLocker: `${losService}/api/kyc/digiLocker`,
   },
   bank: {
-    verify: "/bank/verify",
+    verify: `${losService}/api/kyc/bank/verify`,
   },
   employment: {
     submit: "/employment/submit",

@@ -6,7 +6,10 @@ import StepCard from "../componants/StepCard";
 import GradientButton from "@/components/ui/GradientButton";
 import { MapPin, Navigation, Lightbulb, ShieldAlert, Globe } from "lucide-react";
 import { showToast } from "@/lib/toast";
-import { saveGeoLocationAction } from "@/lib/actions/verification.action";
+import {
+  saveGeoLocationAction,
+  saveLocationCookiesAction,
+} from "@/lib/actions/verification.action";
 
 function GeoLocation() {
   const router = useRouter();
@@ -95,12 +98,15 @@ function GeoLocation() {
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          accuracy: position.coords.accuracy,
-        });
+        const { latitude, longitude, accuracy } = position.coords;
+        setLocation({ latitude, longitude, accuracy });
         setLoading(false);
+        localStorage.setItem("gl_done", "1");
+        saveLocationCookiesAction({
+          latitude,
+          longitude,
+          accuracy: Math.round(accuracy),
+        });
         showToast({ message: "Location captured successfully", type: "success" });
       },
       (err) => {
@@ -145,6 +151,12 @@ function GeoLocation() {
       return;
     }
 
+    localStorage.setItem("gl_done", "1");
+    await saveLocationCookiesAction({
+      latitude: location.latitude,
+      longitude: location.longitude,
+      accuracy: Math.round(location.accuracy),
+    });
     showToast({ message: "Location verified successfully", type: "success" });
     router.push("/pan-details");
   };
