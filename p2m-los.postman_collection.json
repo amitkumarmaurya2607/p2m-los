@@ -1,0 +1,301 @@
+{
+  "info": {
+    "name": "P2M LOS API",
+    "description": "Loan Origination System API — Login, PAN, Personal Info, Aadhaar (DigiLocker), Bank Verification.\n\n## Setup\n1. Set `mobileNumber` and `otp` in collection variables before running.\n2. Run **Send OTP** → **Verify OTP** (token auto-sets for all subsequent requests).\n3. Set `panNumber` and other variables as needed.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "p2m-los"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://15.207.64.232:8091",
+      "type": "string"
+    },
+    {
+      "key": "orgId",
+      "value": "5d8868eb-40e8-47f8-a497-cd2ce6216c4f",
+      "type": "string"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "mobileNumber",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "otp",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "panNumber",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "firstName",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "middleName",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "lastName",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "fatherName",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "emailId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "gender",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "state",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "city",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "address",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "pinCode",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "accountNumber",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "ifscCode",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "benName",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "1. Send OTP",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "",
+              "if (json.data?.userId) {",
+              "  pm.collectionVariables.set('userId', json.data.userId);",
+              "  pm.collectionVariables.set('mobileNumber', pm.variables.get('mobileNumber') || json.data.mobileNumber);",
+              "  console.log('userId set:', json.data.userId);",
+              "}",
+              "",
+              "if (json.code === '0001') {",
+              "  console.warn('Send OTP failed:', json.message || json.msg);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mobileNumber\": \"{{mobileNumber}}\",\n  \"orgId\": \"{{orgId}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/los-service/api/mobile/genOtp",
+          "host": ["{{baseUrl}}"],
+          "path": ["los-service", "api", "mobile", "genOtp"]
+        },
+        "description": "Send OTP to the user's mobile number. Sets `userId` collection variable from response."
+      }
+    },
+    {
+      "name": "2. Verify OTP",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "",
+              "if (json.data?.accessToken) {",
+              "  pm.collectionVariables.set('accessToken', json.data.accessToken);",
+              "  console.log('accessToken set successfully');",
+              "}",
+              "",
+              "if (json.code === '0001') {",
+              "  console.warn('OTP verification failed:', json.message || json.msg);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mobileNumber\": \"{{mobileNumber}}\",\n  \"userId\": \"{{userId}}\",\n  \"otp\": \"{{otp}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/los-service/api/mobile/verify",
+          "host": ["{{baseUrl}}"],
+          "path": ["los-service", "api", "mobile", "verify"]
+        },
+        "description": "Verify OTP. On success, `accessToken` is automatically saved and applied as Bearer token to all subsequent requests via collection-level auth."
+      }
+    },
+    {
+      "name": "3. Verify PAN",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pan\": \"{{panNumber}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/los-service/api/kyc/pan/verify",
+          "host": ["{{baseUrl}}"],
+          "path": ["los-service", "api", "kyc", "pan", "verify"]
+        },
+        "description": "Verify PAN card details."
+      }
+    },
+    {
+      "name": "4. Submit Personal Info",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fatherName\": \"{{fatherName}}\",\n  \"pinCode\": \"{{pinCode}}\",\n  \"firstName\": \"{{firstName}}\",\n  \"middleName\": \"{{middleName}}\",\n  \"lastName\": \"{{lastName}}\",\n  \"state\": \"{{state}}\",\n  \"city\": \"{{city}}\",\n  \"address\": \"{{address}}\",\n  \"gender\": \"{{gender}}\",\n  \"emailId\": \"{{emailId}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/los-service/api/kyc/update/personalDetail",
+          "host": ["{{baseUrl}}"],
+          "path": ["los-service", "api", "kyc", "update", "personalDetail"]
+        },
+        "description": "Submit personal and address details."
+      }
+    },
+    {
+      "name": "5. DigiLocker (Aadhaar)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{baseUrl}}/los-service/api/kyc/digiLocker",
+          "host": ["{{baseUrl}}"],
+          "path": ["los-service", "api", "kyc", "digiLocker"]
+        },
+        "description": "Initiate DigiLocker verification for Aadhaar. No request body needed."
+      }
+    },
+    {
+      "name": "6. Verify Bank",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"orgId\": \"{{orgId}}\",\n  \"accountNumber\": \"{{accountNumber}}\",\n  \"ifscCode\": \"{{ifscCode}}\",\n  \"benName\": \"{{benName}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/los-service/api/kyc/bank/verify",
+          "host": ["{{baseUrl}}"],
+          "path": ["los-service", "api", "kyc", "bank", "verify"]
+        },
+        "description": "Verify bank account details (IFSC, account number, beneficiary name)."
+      }
+    }
+  ]
+}

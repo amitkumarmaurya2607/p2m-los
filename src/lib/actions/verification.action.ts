@@ -7,6 +7,16 @@ import { submitEmployment } from "@/lib/services/employment.service";
 import { saveStepCookie } from "@/lib/step-cookie";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
 
+export async function handleDigiLockerCallbackAction() {
+  try {
+    await saveStepCookie("aadhaar");
+    return { success: true as const };
+  } catch (err) {
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Failed to save progress") };
+  }
+}
+
 export async function verifyPANAction(panNumber: string) {
   try {
     const result = await verifyPAN(panNumber);

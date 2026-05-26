@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { steps as allSteps, StepItem } from "@/lib/sessionStorage";
 import { logoutAction } from "@/lib/actions/logout.action";
 import Logo from "@/assets/icon/Logo";
+import { useLoanApp } from "@/contexts/LoanAppContext";
 
 type HeaderProps = {
   title?: string;
@@ -38,6 +39,10 @@ const Header: React.FC<HeaderProps> = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const pathname = usePathname();
+  const { application } = useLoanApp();
+  const userName = application?.personalInfo?.firstName
+    ? `${application.personalInfo.firstName} ${application.personalInfo.lastName}`.trim()
+    : null;
 
   const handleLogout = async () => {
     await logoutAction();
@@ -102,6 +107,11 @@ const Header: React.FC<HeaderProps> = ({
         </div>
 
         <div className="flex items-center gap-3">
+          {userName && (
+            <span className="hidden text-sm font-medium text-text-heading sm:block">
+              {userName}
+            </span>
+          )}
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}

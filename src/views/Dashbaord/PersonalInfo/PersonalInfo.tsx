@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useLoanApp } from "@/contexts/LoanAppContext";
 import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import StepCard from "../componants/StepCard";
@@ -15,6 +16,11 @@ import { showToast } from "@/lib/toast";
 
 function PersonalInfo() {
   const router = useRouter();
+  const { refreshApp } = useLoanApp();
+
+  useEffect(() => {
+    refreshApp();
+  }, [refreshApp]);
   const [form, setForm] = useState({
     firstName: "",
     secondName: "",

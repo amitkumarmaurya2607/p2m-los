@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { User } from "lucide-react";
+import { useLoanApp } from "@/contexts/LoanAppContext";
 
 const Field = ({
   label,
@@ -47,6 +48,12 @@ const TabContent = ({
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("Profile");
+  const { application, refreshApp } = useLoanApp();
+  const pi = application?.personalInfo;
+
+  useEffect(() => {
+    refreshApp();
+  }, [refreshApp]);
 
   const menuItems = [
     "Profile",
@@ -116,10 +123,14 @@ const Profile = () => {
           </h3>
 
           <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
-            <Field label="First Name" value="John" />
-            <Field label="Last Name" value="Doe" />
-            <Field label="Email Address" value="john.doe@example.com" />
-            <Field label="Phone Number" value="+1 (555) 123-4567" />
+            <Field label="First Name" value={pi?.firstName ?? ""} />
+            <Field label="Middle Name" value={pi?.middleName ?? ""} />
+            <Field label="Last Name" value={pi?.lastName ?? ""} />
+            <Field label="Father Name" value={pi?.fatherName ?? ""} />
+            <Field label="Email Address" value={pi?.emailId ?? ""} />
+            <Field label="Date of Birth" value={pi?.dob ?? ""} />
+            <Field label="Gender" value={pi?.gender ?? ""} />
+            <Field label="Salary" value={pi?.salary ?? ""} />
           </div>
         </section>
 
@@ -129,9 +140,10 @@ const Profile = () => {
           </h3>
 
           <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
-            <Field label="Company" value="Acme Corporation" />
-            <Field label="Job Title" value="Marketing Director" />
-            <Field label="Website" value="https://johndoe.com" full />
+            <Field label="State" value={pi?.state ?? ""} />
+            <Field label="City" value={pi?.city ?? ""} />
+            <Field label="Pincode" value={pi?.pinCode ?? ""} />
+            <Field label="Address" value={pi?.address ?? ""} full />
           </div>
         </section>
       </>
@@ -185,13 +197,15 @@ const Profile = () => {
 
                 <div className="min-w-0">
                   <h3 className="break-words text-xl font-semibold text-text-heading">
-                    John Doe
+                    {pi?.firstName
+                      ? `${pi.firstName} ${pi.lastName}`.trim()
+                      : "User"}
                   </h3>
                   <p className="mt-1 max-w-full break-all text-sm text-text-secondary">
-                    john.doe@example.com
+                    {pi?.emailId || "user@example.com"}
                   </p>
                   <p className="mt-1 break-words text-sm text-text-secondary">
-                    123 Main Street
+                    {pi?.address || ""}
                   </p>
                 </div>
               </div>

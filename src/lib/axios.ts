@@ -50,9 +50,7 @@ function createClient(): AxiosInstance {
       const cookieStore = await cookies();
       const lat = cookieStore.get("p2m-lat")?.value;
       const lng = cookieStore.get("p2m-lng")?.value;
-      if (lat) config.headers["X-User-Latitude"] = lat;
-      if (lng) config.headers["X-User-Longitude"] = lng;
-
+      if (lat) config.headers["X-User-Location"] = lat,lng;
       const method = (config.method?.toUpperCase() ?? "GET") as string;
       const url = config.baseURL ? config.url?.replace(config.baseURL, "") ?? config.url ?? "" : config.url ?? "";
 
