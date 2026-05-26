@@ -2,8 +2,9 @@
 
 import { saveStepCookie } from "@/lib/step-cookie";
 
-export async function submitSelfieAction() {
+export async function submitSelfieAction(formData:any) {
   try {
+    console.log("formData",formData)
     await saveStepCookie("selfie");
     return { success: true as const };
   } catch (err) {

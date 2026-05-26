@@ -14,31 +14,43 @@ function SelfiePage() {
       className="lg:w-[600px] mx-auto"
       icon={<ScanFace className="w-6 h-6 text-primary" />}
       tips={{
-        title: "Capture Your Selfie",
+        title: "AI Selfie Verification",
         description:
-          "Please take a clear selfie to verify your identity and enhance the security of your application process. Make sure your face is clearly visible and well-lit.",
+          "To verify your identity securely, we’ll capture a live selfie using AI face detection and blink verification. Please keep your face clearly visible inside the frame.",
         Icon: <Camera className="w-5 h-5 text-primary" />,
-        noteTitle: "Quick Selfie Tips",
+        noteTitle: "Selfie Capture Tips",
         noteDescription: (
           <ul className="space-y-2 text-sm leading-6">
             <li className="flex items-start gap-2">
               <PulseDot />
-              Ensure your face is clearly visible without masks or sunglasses.
+              Position your face properly inside the oval frame.
             </li>
+
             <li className="flex items-start gap-2">
               <PulseDot />
-              Use good lighting and avoid blurry or dark photos.
+              Ensure good lighting and avoid dark surroundings.
             </li>
+
             <li className="flex items-start gap-2">
               <PulseDot />
-              Keep your camera steady and look directly at the screen.
+              Remove sunglasses, masks, or anything covering your face.
+            </li>
+
+            <li className="flex items-start gap-2">
+              <PulseDot />
+              Look directly at the camera and blink naturally for auto capture.
+            </li>
+
+            <li className="flex items-start gap-2">
+              <PulseDot />
+              Keep your device steady while verification is in progress.
             </li>
           </ul>
         ),
         NoteIcon: Lightbulb,
       }}
     >
-      <div className="space-y-4">
+      <div>
         <SelfieCapture />
       </div>
     </StepCard>

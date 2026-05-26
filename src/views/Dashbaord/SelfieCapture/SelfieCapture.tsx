@@ -1,188 +1,410 @@
-import GradientButton from "@/components/ui/GradientButton";
+"use client";
+
 import React, { useEffect, useRef, useState } from "react";
+import Webcam from "react-webcam";
+import {
+  Camera,
+  CheckCircle2,
+  Loader2,
+  RefreshCw,
+  ScanFace,
+  ShieldCheck,
+  X,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
+
+import {
+  FaceLandmarker,
+  FilesetResolver,
+} from "@mediapipe/tasks-vision";
+
+import GradientButton from "@/components/ui/GradientButton";
+
+import { showToast } from "@/lib/toast";
 import { submitSelfieAction } from "@/lib/actions/selfie.action";
 
-type CaptureProps = {
-  mode?: "photo" | "video";
-  onSubmit?: (file: Blob) => void;
+type CaptureStatus =
+  | "loading"
+  | "ready"
+  | "face-not-found"
+  | "blink-required"
+  | "capturing"
+  | "captured";
+
+type Props = {
+  onSubmit?: (blob: Blob) => void;
 };
 
-const SelfieCapture: React.FC<CaptureProps> = ({ mode = "photo", onSubmit }) => {
+function SelfieCapture({ onSubmit }: Props) {
   const router = useRouter();
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
 
-  const [stream, setStream] = useState<MediaStream | null>(null);
-  const [recording, setRecording] = useState(false);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [capturedBlob, setCapturedBlob] = useState<Blob | null>(null);
+  const webcamRef = useRef<Webcam>(null);
 
+  const [faceLandmarker, setFaceLandmarker] =
+    useState<FaceLandmarker | null>(null);
+
+  const [capturedImage, setCapturedImage] =
+    useState<string | null>(null);
+
+  const [capturedBlob, setCapturedBlob] =
+    useState<Blob | null>(null);
+
+  const [status, setStatus] =
+    useState<CaptureStatus>("loading");
+
+  const [submitting, setSubmitting] =
+    useState(false);
+
+  const blinkedRef = useRef(false);
+
+  const isCapturedRef = useRef(false);
+
+  const [retakeKey, setRetakeKey] = useState(0);
+
+  const [showPopup, setShowPopup] = useState(false);
+
+  // LOAD MEDIAPIPE
   useEffect(() => {
-    startCamera();
-
-    return () => {
-      stopCamera();
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    loadModel();
   }, []);
 
-  const startCamera = async () => {
+  async function loadModel() {
     try {
-      const media = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: mode === "video",
-      });
+      const vision = await FilesetResolver.forVisionTasks(
+        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+      );
 
-      setStream(media);
+      const landmarker =
+        await FaceLandmarker.createFromOptions(
+          vision,
+          {
+            baseOptions: {
+              modelAssetPath:
+                "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task",
+            },
+            runningMode: "VIDEO",
+            numFaces: 1,
+          }
+        );
 
-      if (videoRef.current) {
-        videoRef.current.srcObject = media;
-      }
-    } catch (err) {
-      console.error("Camera error:", err);
+      setFaceLandmarker(landmarker);
+
+      setStatus("ready");
+    } catch (error) {
+      console.error(error);
+
+      showToast(
+        {
+          type: "error",
+          message: "Failed to initialize camera AI"
+        }
+      );
     }
-  };
+  }
 
-  const stopCamera = () => {
-    stream?.getTracks().forEach((track) => track.stop());
-  };
+  // BLINK DETECTION
+  useEffect(() => {
+    if (!faceLandmarker) return;
 
-  const capturePhoto = () => {
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-
-    if (!video || !canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    canvas.toBlob((blob) => {
-      if (!blob) return;
-
-      const imageUrl = URL.createObjectURL(blob);
-
-      setCapturedBlob(blob);
-      setPreviewUrl(imageUrl);
-      stopCamera();
-    }, "image/png");
-  };
-
-  const startRecording = () => {
-    if (!stream || recording) return;
-
-    const recorder = new MediaRecorder(stream);
-    mediaRecorderRef.current = recorder;
-
-    const chunks: Blob[] = [];
-
-    recorder.ondataavailable = (e) => {
-      if (e.data.size > 0) chunks.push(e.data);
-    };
-
-    recorder.onstop = () => {
-      const blob = new Blob(chunks, { type: "video/webm" });
-      const videoUrl = URL.createObjectURL(blob);
-
-      setCapturedBlob(blob);
-      setPreviewUrl(videoUrl);
-      setRecording(false);
-      stopCamera();
-    };
-
-    recorder.start();
-    setRecording(true);
-
-    setTimeout(() => {
-      if (recorder.state === "recording") {
-        recorder.stop();
+    const interval = setInterval(async () => {
+      if (
+        !webcamRef.current ||
+        !webcamRef.current.video ||
+        isCapturedRef.current
+      ) {
+        return;
       }
-    }, 20000);
-  };
 
-  const handleTryAgain = async () => {
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
+      const video = webcamRef.current.video;
 
-    setPreviewUrl(null);
+      if (
+        !video ||
+        video.readyState < 2 ||
+        video.videoWidth === 0 ||
+        video.videoHeight === 0 ||
+        video.paused
+      ) {
+        return;
+      }
+
+      const results =
+        faceLandmarker.detectForVideo(
+          video,
+          performance.now()
+        );
+
+      // NO FACE
+      if (!results.faceLandmarks.length) {
+        setStatus("face-not-found");
+        return;
+      }
+
+      setStatus("blink-required");
+
+      const landmarks = results.faceLandmarks[0];
+
+      // LEFT EYE
+      const top = landmarks[159];
+      const bottom = landmarks[145];
+
+      const eyeOpenDistance = Math.abs(
+        top.y - bottom.y
+      );
+
+      // EYES CLOSED
+      if (eyeOpenDistance < 0.01) {
+        blinkedRef.current = true;
+      }
+
+      // EYES OPENED AGAIN
+      if (
+        blinkedRef.current &&
+        eyeOpenDistance > 0.02
+      ) {
+        blinkedRef.current = false;
+
+        setStatus("capturing");
+
+        const imageSrc =
+          webcamRef.current.getScreenshot();
+
+        if (imageSrc) {
+          const blob =
+            await convertBase64ToBlob(imageSrc);
+
+          isCapturedRef.current = true;
+
+          setCapturedBlob(blob);
+
+          setCapturedImage(imageSrc);
+
+          setShowPopup(true);
+
+          setTimeout(() => {
+            setStatus("captured");
+          }, 800);
+        }
+      }
+    }, 120);
+
+    return () => clearInterval(interval);
+  }, [faceLandmarker, retakeKey]);
+
+  // CONVERT IMAGE TO BLOB
+  async function convertBase64ToBlob(
+    imageSrc: string
+  ) {
+    const response = await fetch(imageSrc);
+
+    return await response.blob();
+  }
+
+  // RETAKE
+  function retakePhoto() {
+    setCapturedImage(null);
+
     setCapturedBlob(null);
-    setRecording(false);
 
-    await startCamera();
-  };
+    isCapturedRef.current = false;
 
+    setStatus("ready");
+
+    setRetakeKey((k) => k + 1);
+  }
+
+  // SUBMIT
   const handleSubmit = async () => {
     if (!capturedBlob) return;
 
-    onSubmit?.(capturedBlob);
+    try {
+      setSubmitting(true);
 
-    const result = await submitSelfieAction();
-    if (!result?.error) {
+      onSubmit?.(capturedBlob);
+
+      const formData = new FormData();
+
+      formData.append(
+        "selfie",
+        capturedBlob,
+        `selfie-${Date.now()}.jpg`
+      );
+
+      const result =
+        await submitSelfieAction(formData);
+
+      if (result?.error) {
+        showToast({ type: "error", message: result?.error });
+        return;
+      }
+
+      showToast(
+        {
+          type: "success",
+          message: "Selfie uploaded successfully"
+        }
+      );
+
       router.push("/address-proof");
+    } catch (error) {
+      console.error(error);
+
+      showToast(
+        {
+          type: "error",
+          message: "Failed to upload selfie"
+        }
+      );
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-center gap-6">
-      <div className="relative w-[280px] h-[280px]">
-        <div className="absolute inset-0 rounded-full border-2 border-dashed border-border" />
-
-        <div className="absolute inset-3 rounded-full overflow-hidden border-2 border-success">
-          {previewUrl ? (
-            mode === "photo" ? (
-              <img src={previewUrl} alt="Selfie Preview" className="w-full h-full object-cover" />
-            ) : (
-              <video src={previewUrl} controls className="w-full h-full object-cover" />
-            )
-          ) : (
-            <video
-              ref={videoRef}
-              autoPlay
-              muted
-              playsInline
-              className="w-full h-full object-cover"
+    <div className="space-y-5">
+      {/* CAMERA CARD */}
+      <div className="relative overflow-hidden rounded-3xl border bg-black h-[350px]">
+        {!capturedImage ? (
+          <>
+            <Webcam
+              ref={webcamRef}
+              mirrored
+              audio={false}
+              screenshotFormat="image/jpeg"
+              videoConstraints={{
+                facingMode: "user",
+              }}
+              className="w-full h-[350px] object-cover"
             />
-          )}
-        </div>
+
+            {/* FACE FRAME */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="w-[200px] h-[260px] sm:w-[220px] sm:h-[290px] border-[3px] border-white/90 rounded-[120px] shadow-[0_0_0_9999px_rgba(0,0,0,0.35)]" />
+            </div>
+
+            {/* STATUS */}
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20">
+              <div className="px-4 py-2 rounded-full bg-black/70 backdrop-blur-md text-white text-sm flex items-center gap-2">
+                {status === "loading" && (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Loading AI Detection...
+                  </>
+                )}
+
+                {status === "ready" && (
+                  <>
+                    <ScanFace className="w-4 h-4" />
+                    Align Your Face
+                  </>
+                )}
+
+                {status === "face-not-found" && (
+                  <>
+                    <Camera className="w-4 h-4" />
+                    Face Not Detected
+                  </>
+                )}
+
+                {status === "blink-required" && (
+                  <>
+                    <ScanFace className="w-4 h-4" />
+                    Blink Your Eyes
+                  </>
+                )}
+
+                {status === "capturing" && (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Capturing Selfie...
+                  </>
+                )}
+              </div>
+            </div>
+
+          </>
+        ) : (
+          <div className="relative h-[350px]">
+            <img
+              src={capturedImage}
+              alt="Captured Selfie"
+              className="w-full h-[350px] object-cover"
+            />
+
+            {/* SUCCESS OVERLAY */}
+            {showPopup && (
+              <div className="absolute inset-0 bg-black/50 flex items-center justify-center p-4">
+                <div className="bg-white rounded-3xl p-5 text-center max-w-[280px] shadow-2xl relative">
+                  <button
+                    onClick={() => setShowPopup(false)}
+                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition"
+                  >
+                    <X className="w-4 h-4 text-text-muted" />
+                  </button>
+                  <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+                    <ShieldCheck className="w-10 h-10 text-green-600" />
+                  </div>
+
+                  <h3 className="text-xl font-bold mb-2">
+                    Selfie Captured
+                  </h3>
+
+                  <p className="text-sm text-muted-foreground mb-5">
+                    Your selfie has been securely captured
+                    for identity verification.
+                  </p>
+
+                  <div className="flex items-center justify-center gap-2 text-green-600 text-sm font-medium">
+                    <CheckCircle2 className="w-4 h-4" />
+                    Verification Ready
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* BOTTOM GUIDE */}
+
       </div>
 
-      <canvas ref={canvasRef} className="hidden" />
-
-      {!previewUrl ? (
-        <GradientButton
-          type="button"
-          className="mt-8"
-          disabled={recording}
-          onClick={mode === "photo" ? capturePhoto : startRecording}
-        >
-          <span className="flex items-center gap-2">
-            {mode === "photo" ? "Take Selfie" : recording ? "Recording..." : "Record 20s Video"}
-          </span>
-        </GradientButton>
-      ) : (
-        <div className="mt-8 flex flex-col items-center gap-3 w-full">
-          <GradientButton type="button" onClick={handleSubmit}>
-            <span className="flex items-center gap-2">Submit</span>
+      {/* ACTIONS */}
+      {capturedImage ? (
+        <div className="space-y-3">
+          <GradientButton
+            onClick={handleSubmit}
+            disabled={submitting}
+            className="w-full"
+          >
+            {submitting
+              ? "Uploading..."
+              : "Continue Verification"}
           </GradientButton>
 
           <button
-            type="button"
-            onClick={handleTryAgain}
-            className="text-sm font-medium text-primary underline underline-offset-4
-              hover:text-primary/80"
+            onClick={retakePhoto}
+            disabled={submitting}
+            className="w-full border rounded-xl py-3 text-sm font-medium flex items-center justify-center gap-2 hover:bg-muted transition disabled:opacity-50"
           >
-            Try again
+            <RefreshCw className="w-4 h-4" />
+            Retake Selfie
           </button>
         </div>
-      )}
+      )
+        : <div className="">
+          <div className="bg-black/60 backdrop-blur-md rounded-2xl px-4 py-3 text-center text-white">
+            <p className="text-sm font-medium">
+              Position your face inside the frame
+            </p>
+
+            <p className="text-xs text-white/70 mt-1">
+              Auto capture will happen after eye
+              blink
+            </p>
+          </div>
+        </div>
+      }
     </div>
   );
-};
+}
 
 export default SelfieCapture;
