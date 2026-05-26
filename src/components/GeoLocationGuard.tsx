@@ -1,12 +1,17 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import { ShieldAlert, MapPin, Navigation, Lightbulb } from "lucide-react";
 import { saveLocationCookiesAction } from "@/lib/actions/verification.action";
 import GradientButton from "@/components/ui/GradientButton";
 import StepCard from "@/views/Dashbaord/componants/StepCard";
 
 function GeoLocationGuard({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const skipPaths = ["/geo-location", "/profile", "/track-application"];
+  if (skipPaths.some((p) => pathname.startsWith(p))) return <>{children}</>;
+
   const [blocked, setBlocked] = useState(false);
 
   const [isMobile] = useState(() => {
@@ -54,7 +59,6 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
           saveLocationCookiesAction({
             latitude: pos.coords.latitude,
             longitude: pos.coords.longitude,
-            accuracy: Math.round(pos.coords.accuracy),
           });
           onSuccess?.();
         },

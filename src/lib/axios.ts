@@ -18,8 +18,12 @@ async function handleServer401(): Promise<never> {
     const { deleteSession } = await import("@/lib/session") as typeof import("@/lib/session");
     const { deleteStepCookie } = await import("@/lib/step-cookie") as typeof import("@/lib/step-cookie");
     const { redirect } = await import("next/navigation") as typeof import("next/navigation");
+    const { cookies: getCookies } = await import("next/headers") as typeof import("next/headers");
     await deleteSession();
     await deleteStepCookie();
+    const cookieStore = await getCookies();
+    cookieStore.delete("p2m-lat");
+    cookieStore.delete("p2m-lng");
     redirect("/apply-now?type=exp");
   } else {
     await fetch("/api/logout", { method: "POST" });
@@ -41,6 +45,13 @@ function createClient(): AxiosInstance {
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
+
+      const { cookies } = await import("next/headers");
+      const cookieStore = await cookies();
+      const lat = cookieStore.get("p2m-lat")?.value;
+      const lng = cookieStore.get("p2m-lng")?.value;
+      if (lat) config.headers["X-User-Latitude"] = lat;
+      if (lng) config.headers["X-User-Longitude"] = lng;
 
       const method = (config.method?.toUpperCase() ?? "GET") as string;
       const url = config.baseURL ? config.url?.replace(config.baseURL, "") ?? config.url ?? "" : config.url ?? "";

@@ -105,7 +105,6 @@ function GeoLocation() {
         saveLocationCookiesAction({
           latitude,
           longitude,
-          accuracy: Math.round(accuracy),
         });
         showToast({ message: "Location captured successfully", type: "success" });
       },
@@ -155,7 +154,6 @@ function GeoLocation() {
     await saveLocationCookiesAction({
       latitude: location.latitude,
       longitude: location.longitude,
-      accuracy: Math.round(location.accuracy),
     });
     showToast({ message: "Location verified successfully", type: "success" });
     router.push("/pan-details");

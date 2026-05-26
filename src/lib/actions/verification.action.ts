@@ -91,7 +91,6 @@ export async function saveGeoLocationAction(data: {
 export async function saveLocationCookiesAction(data: {
   latitude: number;
   longitude: number;
-  accuracy: number;
 }) {
   try {
     const { cookies } = await import("next/headers");
@@ -106,7 +105,6 @@ export async function saveLocationCookiesAction(data: {
     };
     cookieStore.set("p2m-lat", String(data.latitude), opts);
     cookieStore.set("p2m-lng", String(data.longitude), opts);
-    cookieStore.set("p2m-acc", String(data.accuracy), opts);
     return { success: true as const };
   } catch (err) {
     rethrowIfRedirect(err);
