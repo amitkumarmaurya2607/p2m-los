@@ -37,6 +37,7 @@ function getLogsDir(): string {
 
 function writeApiLog(entry: ApiLogEntry): void {
   if (typeof window !== "undefined") return;
+  if (process.env.LOG_ENABLED === "false" || process.env.LOG_ENABLED === "0") return;
   try {
     const { existsSync, mkdirSync, appendFileSync } = require("fs") as typeof import("fs");
     const { join } = require("path") as typeof import("path");

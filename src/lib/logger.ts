@@ -95,6 +95,7 @@ async function logToApi(entry: LogEntry): Promise<void> {
 }
 
 function log(level: LogLevel, message: string, context?: Record<string, unknown>): void {
+  if (process.env.LOG_ENABLED === "false" || process.env.LOG_ENABLED === "0") return;
   const entry = makeEntry(level, message, context);
 
   if (typeof window === "undefined") {
