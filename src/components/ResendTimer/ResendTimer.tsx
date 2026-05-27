@@ -6,9 +6,10 @@ interface ResendTimerProps {
   onResend: () => void;
   seconds?: number;
   icon?: boolean;
+  disabled?: boolean;
 }
 
-const ResendTimer: React.FC<ResendTimerProps> = ({ onResend, seconds = 48, icon }) => {
+const ResendTimer: React.FC<ResendTimerProps> = ({ onResend, seconds = 48, icon, disabled = false }) => {
   const { timeLeft, isActive, resetTimer } = useCountdownTimer(seconds);
 
   const handleResendClick = () => {
@@ -23,6 +24,7 @@ const ResendTimer: React.FC<ResendTimerProps> = ({ onResend, seconds = 48, icon 
         <span>Resend in {timeLeft}s</span>
       ) : (
         <button
+          disabled={disabled}
           onClick={handleResendClick}
           className="text-primary hover:text-primary/80 font-semibold cursor-pointer border-none
             bg-transparent p-0"

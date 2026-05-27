@@ -23,6 +23,8 @@ function GeoLocation() {
   const [permissionState, setPermissionState] = useState<
     "prompt" | "granted" | "denied" | "unavailable"
   >("prompt");
+  const [isRedirect, setIsRedirect] = useState(false)
+
 
   const [isMobile] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -138,7 +140,7 @@ function GeoLocation() {
       showToast({ message: "Please capture your location first", type: "error" });
       return;
     }
-
+    setLoading(true);
     const result = await saveGeoLocationAction({
       latitude: location.latitude,
       longitude: location.longitude,
@@ -147,6 +149,7 @@ function GeoLocation() {
 
     if (result.error) {
       showToast({ message: result.error, type: "error" });
+      setLoading(false);
       return;
     }
 
@@ -155,6 +158,8 @@ function GeoLocation() {
       latitude: location.latitude,
       longitude: location.longitude,
     });
+    setLoading(false);
+    setIsRedirect(true);
     showToast({ message: "Location verified successfully", type: "success" });
     router.push("/pan-details");
   };
@@ -324,7 +329,7 @@ function GeoLocation() {
 
             <div className="flex gap-3">
               <GradientButton type="button" onClick={handleSubmit} className="flex-1">
-                Confirm & Continue
+                {isRedirect ? "Redirecting..." : loading ? "Saving..." : "Verify & Continue"}
               </GradientButton>
             </div>
           </div>

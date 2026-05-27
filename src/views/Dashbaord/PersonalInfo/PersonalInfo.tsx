@@ -38,6 +38,7 @@ function PersonalInfo() {
 
   const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState(false);
+  const [isRedirect, setIsRedirect] = useState(false)
 
   const handleChange = (key: string, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -91,6 +92,7 @@ function PersonalInfo() {
       const result = await submitPersonalInfoAction(form);
 
       if (result?.success) {
+        setIsRedirect(true);
         router.push("/aadhar-details");
         showToast({
           message: "Personal information added successfully!",
@@ -98,9 +100,17 @@ function PersonalInfo() {
         });
         return;
       }
+      showToast({
+        message: result?.error || "Submission failed",
+        type: "error",
+      });
       setErrors((prev: any) => ({ ...prev, submit: result?.error || "Submission failed" }));
       return;
     } catch (err) {
+      showToast({
+        message: "Something went wrong",
+        type: "error",
+      });
       setErrors((prev: any) => ({ ...prev, submit: "Something went wrong" }));
     } finally {
       setLoading(false);
@@ -270,7 +280,7 @@ function PersonalInfo() {
         </div>
 
         <GradientButton type="submit" className="w-full mt-4" disabled={loading}>
-          {loading ? "Submitting..." : "Submit"}
+          {isRedirect ? "Redirecting..." : loading ? "Submitting..." : "Submit & Continue"}
         </GradientButton>
       </form>
     </StepCard>

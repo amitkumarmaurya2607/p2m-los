@@ -18,6 +18,7 @@ const Login = ({ type }: { type?: string }) => {
   const [error, setError] = useState("");
   const [userId, setUserId] = useState<string>("");
 
+
   const [accepted, setAccepted] = useState(false);
 
   useEffect(() => {

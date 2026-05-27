@@ -21,6 +21,8 @@ function AadhaarDetails() {
   const [digiLockerData, setDigiLockerData] = useState<unknown>(null);
   const [digiLockerLoading, setDigiLockerLoading] = useState(true);
   const [digiLockerError, setDigiLockerError] = useState<string | null>(null);
+  const [isRedirect, setIsRedirect] = useState(false);
+  const [loading, setLoadin] = useState(false);
 
   async function callDigiLocker() {
     setDigiLockerLoading(true);
@@ -36,11 +38,28 @@ function AadhaarDetails() {
   }
 
   const handleContinue = useCallback(async () => {
-    const res = await handleDigiLockerCallbackAction();
-    if (res.success) {
-      router.push("/bank-details");
-      showToast({ message: "Aadhaar verified successfully!", type: "success" });
+    try {
+      setLoadin(true)
+      const res = await handleDigiLockerCallbackAction();
+
+      if (res?.success) {
+        setIsRedirect(true);
+        router.push("/bank-details");
+        showToast({ message: "Aadhaar verified successfully!", type: "success" });
+        return
+      } else if (res?.error) {
+        showToast({ message: "Aadhaar  verification failed", type: "error" });
+        return;
+      }
+
+
+    } catch (err) {
+
+      showToast({ message: err instanceof Error ? err.message : "Something went wrong", type: "error" });
+    } finally {
+      setLoadin(false);
     }
+
   }, [router]);
 
   useEffect(() => {
@@ -137,8 +156,9 @@ function AadhaarDetails() {
             className="w-full flex justify-center items-center"
             onClick={handleContinue}
           >
-            Continue
-            <ArrowRight className="w-4 h-4 ml-2" />
+
+            {isRedirect ? "Redirecting..." : loading ? "Verifying..." : " Continue"}
+            {!isRedirect && !loading && <ArrowRight className="w-4 h-4 ml-2" />}
           </GradientButton>
         </div>
       </StepCard>

@@ -23,6 +23,7 @@ function OTPVerify({ resend = () => { }, method, userName, back, userId }: OTPVe
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isRedirect, setIsRedirect] = useState(false)
 
   const maskedValue = method === "email" ? maskEmail(userName) : maskMobile(userName);
 
@@ -49,7 +50,7 @@ function OTPVerify({ resend = () => { }, method, userName, back, userId }: OTPVe
         showToast({ message: result.error, type: "error" });
         return;
       }
-
+      setIsRedirect(true);
       showToast({ message: "OTP verified successfully!", type: "success" });
 
       router.push("/geo-location");
@@ -85,12 +86,12 @@ function OTPVerify({ resend = () => { }, method, userName, back, userId }: OTPVe
           {error && <p className="text-sm text-destructive text-center">{error}</p>}
 
           <GradientButton type="submit" disabled={loading} className="mt-6">
-            {loading ? "Verifying..." : "Verify & Continue"}
+            {isRedirect ? "Redirecting..." : loading ? "Verifying..." : "Verify & Continue"}
           </GradientButton>
 
           <p className="mt-6 text-center text-sm text-text-muted flex justify-center gap-1">
             <span>Didn't receive code?</span>
-            <ResendTimer onResend={resend} />
+            <ResendTimer disabled={loading || isRedirect} onResend={resend} />
           </p>
         </form>
       </StepCard>

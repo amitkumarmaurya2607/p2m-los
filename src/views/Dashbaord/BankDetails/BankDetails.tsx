@@ -19,6 +19,7 @@ function BankDetails() {
   const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
+  const [isRedirect, setIsRedirect] = useState(false);
 
   const userId = typeof window !== "undefined"
     ? document.cookie
@@ -82,7 +83,6 @@ function BankDetails() {
         ifscCode: form.ifscCode,
         benName: form.benName,
       });
-      console.log("result", result)
       if (result?.success) {
         setVerified(true);
 
