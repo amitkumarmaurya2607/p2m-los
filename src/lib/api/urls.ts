@@ -18,6 +18,8 @@ export const API = {
   },
   bank: {
     verify: `${losService}/api/kyc/bank/verify`,
+    uploadStatement: `${losService}/api/kyc/upload/statement`,
+    initiateFetch: `${losService}/api/kyc/statement/initiate`,
   },
   employment: {
     submit: "/employment/submit",
