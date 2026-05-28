@@ -100,8 +100,10 @@ export const blankLoanApplication: LoanApplication = {
 
   alternateMobile: {
     status: "pending",
+    name1: "",
     number1: "",
     relation1: "",
+    name2: "",
     number2: "",
     relation2: "",
     completedAt: null,

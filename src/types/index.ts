@@ -114,8 +114,10 @@ export interface LoanApplication {
   };
   alternateMobile: {
     status: string;
+    name1: string;
     number1: string;
     relation1: string;
+    name2: string;
     number2: string;
     relation2: string;
     completedAt: string | null;

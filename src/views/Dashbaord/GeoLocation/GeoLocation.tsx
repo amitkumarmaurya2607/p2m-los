@@ -10,6 +10,7 @@ import {
   saveGeoLocationAction,
   saveLocationCookiesAction,
 } from "@/lib/actions/verification.action";
+import PulseDot from "@/components/PulseDot";
 
 function GeoLocation() {
   const router = useRouter();
@@ -180,15 +181,15 @@ function GeoLocation() {
         noteDescription: (
           <ul className="space-y-2 text-sm leading-6">
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <PulseDot />
               Verify your physical presence for compliance
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <PulseDot />
               Ensure accurate regional loan processing
             </li>
             <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-secondary shrink-0" />
+              <PulseDot />
               Your location is used only for this verification
             </li>
           </ul>
