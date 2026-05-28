@@ -5,17 +5,18 @@ import type { ApiResponse } from "@/types";
 interface EmploymentData {
   companyName: string;
   designation: string;
-  email: string;
-  salaryMode: string;
+  officialEmail: string;
   joiningDate: string;
-  uan: string;
-  state: string;
-  city: string;
-  pincode: string;
+  salary: number;
+  companyAddress: string;
+  pinCode: string;
+  uanNumber: string;
+  expectedDateOfSalary: number;
+  modeOfSalary: string;
 }
 
 interface EmploymentResponse {
-  verified: boolean;
+  submitted: boolean;
 }
 
 export async function submitEmployment(

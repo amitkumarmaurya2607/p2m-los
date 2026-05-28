@@ -5,10 +5,20 @@ import { useRouter } from "next/navigation";
 import StepCard from "../componants/StepCard";
 import GradientButton from "@/components/ui/GradientButton";
 import SelectBox from "@/components/ui/SelectBox";
+import TextInput from "@/components/ui/TextInput";
 import { Upload, CheckCircle, FileText, X, Lightbulb, Home, FileCheck } from "lucide-react";
 import { showToast } from "@/lib/toast";
 import { submitAddressProofAction } from "@/lib/actions/document.action";
 import PulseDot from "@/components/PulseDot";
+
+const PROOF_TYPE_MAP: Record<string, string> = {
+  aadhaar: "AADHAAR",
+  voter: "VOTER_ID",
+  passport: "PASSPORT",
+  utility: "UTILITY_BILL",
+  rental: "RENTAL_AGREEMENT",
+  bank: "BANK_STATEMENT",
+};
 
 const DOCUMENT_TYPES = [
   { value: "aadhaar", label: "Aadhaar Card" },
@@ -21,11 +31,17 @@ const DOCUMENT_TYPES = [
 
 function AddressProofUpload() {
   const router = useRouter();
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const [file, setFile] = useState<File | null>(null);
+  const frontInputRef = useRef<HTMLInputElement | null>(null);
+  const backInputRef = useRef<HTMLInputElement | null>(null);
+  const [frontFile, setFrontFile] = useState<File | null>(null);
+  const [backFile, setBackFile] = useState<File | null>(null);
   const [docType, setDocType] = useState<string>("");
+  const [documentNumber, setDocumentNumber] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isRedirect, setIsRedirect] = useState(false);
+
+  const isAadhaar = docType === "aadhaar";
 
   const validateFile = (f: File) => {
     const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
@@ -35,7 +51,7 @@ function AddressProofUpload() {
     return "";
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFrontFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (!f) return;
     const validationError = validateFile(f);
@@ -44,14 +60,36 @@ function AddressProofUpload() {
       showToast({ message: validationError, type: "error" });
       return;
     }
-    setFile(f);
+    setFrontFile(f);
     setError("");
     e.target.value = "";
   };
 
-  const removeFile = () => {
-    setFile(null);
+  const handleBackFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    const validationError = validateFile(f);
+    if (validationError) {
+      setError(validationError);
+      showToast({ message: validationError, type: "error" });
+      return;
+    }
+    setBackFile(f);
     setError("");
+    e.target.value = "";
+  };
+
+  const removeFile = (side: "front" | "back") => {
+    if (side === "front") setFrontFile(null);
+    else setBackFile(null);
+    setError("");
+  };
+
+  const handleDocTypeChange = (val: string) => {
+    setDocType(val);
+    if (val !== "aadhaar") {
+      setBackFile(null);
+    }
   };
 
   const handleSubmit = async () => {
@@ -59,20 +97,53 @@ function AddressProofUpload() {
       showToast({ message: "Please select document type", type: "error" });
       return;
     }
-    if (!file) {
-      showToast({ message: "Please upload your address proof document", type: "error" });
+    if (!documentNumber.trim()) {
+      showToast({ message: "Please enter document number", type: "error" });
+      return;
+    }
+    if (!frontFile) {
+      showToast({ message: "Please upload the front side of your document", type: "error" });
+      return;
+    }
+    if (isAadhaar && !backFile) {
+      showToast({ message: "Please upload the back side of your Aadhaar card", type: "error" });
       return;
     }
 
-    const result = await submitAddressProofAction();
-    if (result?.error) {
-      showToast({ message: result.error, type: "error" });
+    try {
+      setLoading(true);
+      setError("");
+
+      const formData = new FormData();
+      formData.append("frontFile", frontFile);
+      if (isAadhaar && backFile) {
+        formData.append("backFile", backFile);
+      }
+      formData.append(
+        "data",
+        JSON.stringify({
+          proofType: PROOF_TYPE_MAP[docType],
+          documentNumber: documentNumber.trim(),
+        }),
+      );
+
+      const result = await submitAddressProofAction(formData);
+      if (result?.error) {
+        setError(result.error);
+        showToast({ message: result.error, type: "error" });
+        return;
+      }
+
+      setIsRedirect(true);
+      showToast({ message: "Address proof uploaded successfully", type: "success" });
+      router.push("/alternate-mobile");
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Something went wrong";
+      setError(msg);
+      showToast({ message: msg, type: "error" });
+    } finally {
       setLoading(false);
-      return;
     }
-    setLoading(false);
-    showToast({ message: "Address proof uploaded successfully", type: "success" });
-    router.push("/alternate-mobile");
   };
 
   return (
@@ -112,57 +183,139 @@ function AddressProofUpload() {
           <SelectBox
             options={DOCUMENT_TYPES}
             value={docType}
-            onChange={(val: string) => setDocType(val)}
+            onChange={handleDocTypeChange}
             label="Document Type"
             menuPlacement="auto"
           />
         </div>
 
+        <div>
+          <TextInput
+            label="Document Number"
+            value={documentNumber}
+            onChange={(e) => setDocumentNumber(e.target.value)}
+            placeholder="Enter document number"
+            require
+          />
+        </div>
+
         <input
-          ref={inputRef}
+          ref={frontInputRef}
           type="file"
           accept=".pdf,.jpg,.jpeg,.png"
           className="hidden"
-          onChange={handleFileChange}
+          onChange={handleFrontFileChange}
         />
 
-        <div
-          onClick={() => inputRef.current?.click()}
-          className="flex h-36 cursor-pointer flex-col items-center justify-center rounded-2xl
-            border-2 border-dashed border-border-medium bg-surface transition hover:border-primary"
-        >
-          <Upload className="h-8 w-8 text-text-muted" />
-          <h3 className="mt-3 text-sm font-bold text-text-heading">Click to upload document</h3>
-          <p className="mt-1 text-xs text-text-muted-dark">PDF, JPG or PNG (Max 5MB)</p>
-        </div>
+        {isAadhaar && (
+          <input
+            ref={backInputRef}
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png"
+            className="hidden"
+            onChange={handleBackFileChange}
+          />
+        )}
 
-        {file && (
-          <div
-            className="flex items-center justify-between rounded-2xl border border-border-light
-              bg-surface p-4"
-          >
-            <div className="flex items-center gap-3 min-w-0">
+        {isAadhaar ? (
+          <div className="space-y-4">
+            <div>
+              <p className="mb-2 text-sm font-semibold text-text-heading">Front Side</p>
+              {!frontFile ? (
+                <div
+                  onClick={() => frontInputRef.current?.click()}
+                  className="flex h-32 cursor-pointer flex-col items-center justify-center rounded-2xl
+                    border-2 border-dashed border-border-medium bg-surface transition hover:border-primary"
+                >
+                  <Upload className="h-7 w-7 text-text-muted" />
+                  <h3 className="mt-2 text-sm font-bold text-text-heading">Upload front side</h3>
+                  <p className="mt-1 text-xs text-text-muted-dark">PDF, JPG or PNG (Max 5MB)</p>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between rounded-2xl border border-border-light bg-surface p-4">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border-medium bg-white">
+                      <FileText className="h-5 w-5 text-text-muted-dark" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-text-heading truncate">{frontFile.name}</p>
+                      <p className="text-xs text-text-muted">{(frontFile.size / 1024 / 1024).toFixed(2)} MB</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-secondary" />
+                    <button type="button" onClick={() => removeFile("front")} className="rounded-lg p-1 text-destructive">
+                      <X className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div>
+              <p className="mb-2 text-sm font-semibold text-text-heading">Back Side</p>
+              {!backFile ? (
+                <div
+                  onClick={() => backInputRef.current?.click()}
+                  className="flex h-32 cursor-pointer flex-col items-center justify-center rounded-2xl
+                    border-2 border-dashed border-border-medium bg-surface transition hover:border-primary"
+                >
+                  <Upload className="h-7 w-7 text-text-muted" />
+                  <h3 className="mt-2 text-sm font-bold text-text-heading">Upload back side</h3>
+                  <p className="mt-1 text-xs text-text-muted-dark">PDF, JPG or PNG (Max 5MB)</p>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between rounded-2xl border border-border-light bg-surface p-4">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border-medium bg-white">
+                      <FileText className="h-5 w-5 text-text-muted-dark" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-text-heading truncate">{backFile.name}</p>
+                      <p className="text-xs text-text-muted">{(backFile.size / 1024 / 1024).toFixed(2)} MB</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-secondary" />
+                    <button type="button" onClick={() => removeFile("back")} className="rounded-lg p-1 text-destructive">
+                      <X className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div>
+            {!frontFile ? (
               <div
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border
-                  border-border-medium bg-white"
+                onClick={() => frontInputRef.current?.click()}
+                className="flex h-36 cursor-pointer flex-col items-center justify-center rounded-2xl
+                  border-2 border-dashed border-border-medium bg-surface transition hover:border-primary"
               >
-                <FileText className="h-5 w-5 text-text-muted-dark" />
+                <Upload className="h-8 w-8 text-text-muted" />
+                <h3 className="mt-3 text-sm font-bold text-text-heading">Click to upload document</h3>
+                <p className="mt-1 text-xs text-text-muted-dark">PDF, JPG or PNG (Max 5MB)</p>
               </div>
-              <div className="min-w-0">
-                <p className="text-sm font-semibold text-text-heading truncate">{file.name}</p>
-                <p className="text-xs text-text-muted">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+            ) : (
+              <div className="flex items-center justify-between rounded-2xl border border-border-light bg-surface p-4">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border-medium bg-white">
+                    <FileText className="h-5 w-5 text-text-muted-dark" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-text-heading truncate">{frontFile.name}</p>
+                    <p className="text-xs text-text-muted">{(frontFile.size / 1024 / 1024).toFixed(2)} MB</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <CheckCircle className="h-5 w-5 text-secondary" />
+                  <button type="button" onClick={() => removeFile("front")} className="rounded-lg p-1 text-destructive">
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <CheckCircle className="h-5 w-5 text-secondary" />
-              <button
-                type="button"
-                onClick={removeFile}
-                className="rounded-lg p-1 text-destructive"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
+            )}
           </div>
         )}
 
@@ -171,10 +324,10 @@ function AddressProofUpload() {
         <GradientButton
           type="button"
           onClick={handleSubmit}
-          disabled={!docType || !file || loading}
+          disabled={!docType || !documentNumber.trim() || !frontFile || (isAadhaar && !backFile) || loading || isRedirect}
           className="w-full"
         >
-          {loading ? "Uploading..." : "Upload & Continue"}
+          {isRedirect ? "Redirecting..." : loading ? "Uploading..." : "Upload & Continue"}
         </GradientButton>
       </div>
     </StepCard>

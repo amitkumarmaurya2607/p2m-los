@@ -9,7 +9,7 @@ import GradientButton from "@/components/ui/GradientButton";
 import { Phone, Lightbulb } from "lucide-react";
 import { isValidMobile, sanitizeNumeric } from "@/lib/utils";
 import { showToast } from "@/lib/toast";
-import { submitAlternateMobileAction } from "@/lib/actions/document.action";
+import { submitAlternateMobileAction, saveAlternateMobileStepAction } from "@/lib/actions/document.action";
 
 const RELATION_OPTIONS = [
   { value: "spouse", label: "Spouse" },
@@ -21,21 +21,38 @@ const RELATION_OPTIONS = [
   { value: "other", label: "Other" },
 ];
 
+const RELATION_MAP: Record<string, string> = {
+  spouse: "SPOUSE",
+  parent: "PARENT",
+  sibling: "SIBLING",
+  child: "CHILD",
+  friend: "FRIEND",
+  colleague: "COLLEAGUE",
+  other: "OTHER",
+};
+
 function AlternateMobile() {
   const router = useRouter();
+  const [name1, setName1] = useState("");
   const [number1, setNumber1] = useState("");
   const [relation1, setRelation1] = useState("");
+  const [name2, setName2] = useState("");
   const [number2, setNumber2] = useState("");
   const [relation2, setRelation2] = useState("");
-  const [errors, setErrors] = useState<{ n1?: string; n2?: string; r1?: string; r2?: string }>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(false);
+  const [isRedirect, setIsRedirect] = useState(false);
+  const [submittingFor, setSubmittingFor] = useState(0);
 
   const validate = () => {
-    const errs: typeof errors = {};
+    const errs: Record<string, string> = {};
+    if (!name1.trim()) errs.n1 = "Enter contact name";
     const s1 = sanitizeNumeric(number1);
-    if (!s1 || !isValidMobile(s1)) errs.n1 = "Enter a valid 10-digit mobile number";
+    if (!s1 || !isValidMobile(s1)) errs.n1m = "Enter a valid 10-digit mobile number";
     if (!relation1) errs.r1 = "Select relation";
+    if (!name2.trim()) errs.n2 = "Enter contact name";
     const s2 = sanitizeNumeric(number2);
-    if (!s2 || !isValidMobile(s2)) errs.n2 = "Enter a valid 10-digit mobile number";
+    if (!s2 || !isValidMobile(s2)) errs.n2m = "Enter a valid 10-digit mobile number";
     if (!relation2) errs.r2 = "Select relation";
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -43,13 +60,55 @@ function AlternateMobile() {
 
   const handleSubmit = async () => {
     if (!validate()) return;
-    const result = await submitAlternateMobileAction();
-    if (result?.error) {
-      showToast({ message: result.error, type: "error" });
-      return;
+
+    setLoading(true);
+    setErrors({});
+
+    try {
+      setSubmittingFor(1);
+      const r1 = await submitAlternateMobileAction({
+        mobileNumber: sanitizeNumeric(number1),
+        name: name1.trim(),
+        relationType: RELATION_MAP[relation1],
+      });
+      if (r1?.error) {
+        showToast({ message: `Contact 1: ${r1.error}`, type: "error" });
+        return;
+      }
+
+      setSubmittingFor(2);
+      const r2 = await submitAlternateMobileAction({
+        mobileNumber: sanitizeNumeric(number2),
+        name: name2.trim(),
+        relationType: RELATION_MAP[relation2],
+      });
+      if (r2?.error) {
+        showToast({ message: `Contact 2: ${r2.error}`, type: "error" });
+        return;
+      }
+
+      const stepResult = await saveAlternateMobileStepAction();
+      if (stepResult?.error) {
+        showToast({ message: stepResult.error, type: "error" });
+        return;
+      }
+
+      setIsRedirect(true);
+      showToast({ message: "Alternate contact details saved", type: "success" });
+      router.push("/loan-eligibility");
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Something went wrong";
+      showToast({ message: msg, type: "error" });
+    } finally {
+      setLoading(false);
     }
-    showToast({ message: "Alternate contact details saved", type: "success" });
-    router.push("/loan-eligibility");
+  };
+
+  const getButtonText = () => {
+    if (isRedirect) return "Redirecting...";
+    if (loading && submittingFor === 1) return "Saving Contact 1 of 2...";
+    if (loading && submittingFor === 2) return "Saving Contact 2 of 2...";
+    return "Save & Continue";
   };
 
   return (
@@ -87,74 +146,105 @@ function AlternateMobile() {
       <div className="mt-6 space-y-6">
         <div className="space-y-4 rounded-2xl border border-border-light bg-surface p-5">
           <h3 className="text-sm font-bold text-text-heading">Contact Person 1</h3>
-          <div className="flex gap-3">
-            <div className="flex-1">
-              <TextInput
-                label="Mobile Number"
-                type="tel"
-                value={number1}
-                maxLength={10}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setNumber1(sanitizeNumeric(e.target.value));
-                  setErrors((p) => ({ ...p, n1: undefined }));
-                }}
-                placeholder="10-digit mobile number"
-                error={errors.n1}
-              />
-            </div>
-            <div className="w-[180px] shrink-0">
-              <SelectBox
-                options={RELATION_OPTIONS}
-                value={relation1}
-                label="Relation"
-                onChange={(val: string) => {
-                  setRelation1(val);
-                  setErrors((p) => ({ ...p, r1: undefined }));
-                }}
-                placeholder="Relation"
-                menuPlacement="auto"
-              />
-              {errors.r1 && <p className="mt-1 text-sm text-destructive px-1">{errors.r1}</p>}
+          <div className="space-y-3">
+            <TextInput
+              label="Full Name"
+              value={name1}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setName1(e.target.value);
+                setErrors((p) => ({ ...p, n1: "" }));
+              }}
+              placeholder="Contact person name"
+              error={errors.n1}
+              require
+            />
+            <div className="flex gap-3">
+              <div className="flex-1">
+                <TextInput
+                  label="Mobile Number"
+                  type="tel"
+                  value={number1}
+                  maxLength={10}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setNumber1(sanitizeNumeric(e.target.value));
+                    setErrors((p) => ({ ...p, n1m: "" }));
+                  }}
+                  placeholder="10-digit mobile number"
+                  error={errors.n1m}
+                />
+              </div>
+              <div className="w-[180px] shrink-0">
+                <SelectBox
+                  options={RELATION_OPTIONS}
+                  value={relation1}
+                  label="Relation"
+                  onChange={(val: string) => {
+                    setRelation1(val);
+                    setErrors((p) => ({ ...p, r1: "" }));
+                  }}
+                  placeholder="Relation"
+                  menuPlacement="auto"
+                />
+                {errors.r1 && <p className="mt-1 text-sm text-destructive px-1">{errors.r1}</p>}
+              </div>
             </div>
           </div>
         </div>
 
         <div className="space-y-4 rounded-2xl border border-border-light bg-surface p-5">
           <h3 className="text-sm font-bold text-text-heading">Contact Person 2</h3>
-          <div className="flex gap-3">
-            <div className="flex-1">
-              <TextInput
-                label="Mobile Number"
-                type="tel"
-                value={number2}
-                maxLength={10}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setNumber2(sanitizeNumeric(e.target.value));
-                  setErrors((p) => ({ ...p, n2: undefined }));
-                }}
-                placeholder="10-digit mobile number"
-                error={errors.n2}
-              />
-            </div>
-            <div className="w-[180px] shrink-0">
-              <SelectBox
-                options={RELATION_OPTIONS}
-                value={relation2}
-                label="Relation"
-                onChange={(val: string) => {
-                  setRelation2(val);
-                  setErrors((p) => ({ ...p, r2: undefined }));
-                }}
-                placeholder="Relation"
-                menuPlacement="auto"
-              />
-              {errors.r2 && <p className="mt-1 text-sm text-destructive px-1">{errors.r2}</p>}
+          <div className="space-y-3">
+            <TextInput
+              label="Full Name"
+              value={name2}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setName2(e.target.value);
+                setErrors((p) => ({ ...p, n2: "" }));
+              }}
+              placeholder="Contact person name"
+              error={errors.n2}
+              require
+            />
+            <div className="flex gap-3">
+              <div className="flex-1">
+                <TextInput
+                  label="Mobile Number"
+                  type="tel"
+                  value={number2}
+                  maxLength={10}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setNumber2(sanitizeNumeric(e.target.value));
+                    setErrors((p) => ({ ...p, n2m: "" }));
+                  }}
+                  placeholder="10-digit mobile number"
+                  error={errors.n2m}
+                />
+              </div>
+              <div className="w-[180px] shrink-0">
+                <SelectBox
+                  options={RELATION_OPTIONS}
+                  value={relation2}
+                  label="Relation"
+                  onChange={(val: string) => {
+                    setRelation2(val);
+                    setErrors((p) => ({ ...p, r2: "" }));
+                  }}
+                  placeholder="Relation"
+                  menuPlacement="auto"
+                />
+                {errors.r2 && <p className="mt-1 text-sm text-destructive px-1">{errors.r2}</p>}
+              </div>
             </div>
           </div>
         </div>
 
-        <GradientButton type="button" onClick={handleSubmit} className="w-full">
-          Save & Continue
+        <GradientButton
+          type="button"
+          onClick={handleSubmit}
+          disabled={loading || isRedirect}
+          className="w-full"
+        >
+          {getButtonText()}
         </GradientButton>
       </div>
     </StepCard>

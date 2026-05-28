@@ -122,20 +122,29 @@ export async function saveLocationCookiesAction(data: {
   }
 }
 
-export async function submitEmploymentAction(data: {
-  companyName: string;
-  designation: string;
-  email: string;
-  salaryMode: string;
-  joiningDate: string;
-  uan: string;
-  state: string;
-  city: string;
-  pincode: string;
-}) {
+export async function submitEmploymentAction(data: Record<string, unknown>) {
   try {
-    const result = await submitEmployment(data);
-    if (!result.success) return { error: result.message || "Employment submission failed" };
+    const modeMap: Record<string, string> = {
+      "Bank Transfer": "BANK_TRANSFER",
+      Cash: "CASH",
+      Cheque: "CHEQUE",
+    };
+
+    const payload = {
+      companyName: data.companyName as string ?? "",
+      designation: data.designation as string ?? "",
+      officialEmail: data.officialEmail as string ?? "",
+      joiningDate: data.joiningDate as string ?? "",
+      salary: Number(data.salary) || 0,
+      companyAddress: [data.city, data.state].filter(Boolean).join(", "),
+      pinCode: data.pinCode as string ?? "",
+      uanNumber: data.uanNumber as string ?? "",
+      expectedDateOfSalary: Number(data.expectedDateOfSalary) || 0,
+      modeOfSalary: modeMap[String(data.modeOfSalary)] || String(data.modeOfSalary),
+    };
+
+    const result = await submitEmployment(payload);
+    if (result.code !== "0000") return { error: result.message || "Submission failed" };
     await saveStepCookie("employmentDetails");
     return { success: true as const };
   } catch (err) {

@@ -22,7 +22,13 @@ export const API = {
     initiateFetch: `${losService}/api/kyc/statement/initiate`,
   },
   employment: {
-    submit: "/employment/submit",
+    submit: `${losService}/api/kyc/upsertEmployment`,
+  },
+  addressProof: {
+    upload: `${losService}/api/kyc/upload/localAddProof`,
+  },
+  alternateMobile: {
+    update: `${losService}/api/kyc/update/alternateMobNum`,
   },
   application: {
     submit: "/application/submit",
@@ -35,6 +41,9 @@ export const API = {
     sendOTP: "/email/send-otp",
   },
 
+  selfie: {
+    upload: `${losService}/api/kyc/upload/media`,
+  },
   lookup: {
     schemes: "/lookup/schemes",
   },

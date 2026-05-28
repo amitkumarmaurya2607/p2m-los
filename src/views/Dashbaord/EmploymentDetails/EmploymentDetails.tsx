@@ -7,27 +7,33 @@ import TextInput from "@/components/ui/TextInput";
 import SelectBox from "@/components/ui/SelectBox";
 import CustomDatePicker from "@/components/ui/CustomDatePicker";
 import GradientButton from "@/components/ui/GradientButton";
-import { Briefcase, Calendar, ChevronRight, Lightbulb } from "lucide-react";
+import { Briefcase, Lightbulb } from "lucide-react";
 import { isValidEmail, isValidPinCode, sanitizeNumeric } from "@/lib/utils";
 import { submitEmploymentAction } from "@/lib/actions/verification.action";
 import PulseDot from "@/components/PulseDot";
+import { showToast } from "@/lib/toast";
 
 function EmploymentDetails() {
   const router = useRouter();
   const [form, setForm] = useState({
     companyName: "",
     designation: "",
-    email: "",
-    salaryMode: "",
+    officialEmail: "",
+    modeOfSalary: "",
     joiningDate: "",
-    uan: "",
+    uanNumber: "",
     state: "",
     city: "",
-    pincode: "",
+    pinCode: "",
+    salary: "",
+    expectedDateOfSalary: "",
   });
 
   const [error, setError] = useState<any>({});
   const [loading, setLoading] = useState(false);
+  const [isRedirect, setIsRedirect] = useState(false);
+
+
 
   // 🔹 Handle Change
   const handleChange = (field: string, value: string) => {
@@ -44,10 +50,10 @@ function EmploymentDetails() {
     if (!form.companyName) newError.companyName = "Company name is required";
     if (!form.designation) newError.designation = "Designation is required";
 
-    if (!form.email) {
-      newError.email = "Email is required";
-    } else if (!isValidEmail(form.email)) {
-      newError.email = "Invalid email";
+    if (!form.officialEmail) {
+      newError.officialEmail = "Email is required";
+    } else if (!isValidEmail(form.officialEmail)) {
+      newError.officialEmail = "Invalid email";
     }
 
     if (!form.joiningDate) newError.joiningDate = "Joining date required";
@@ -55,17 +61,22 @@ function EmploymentDetails() {
     if (!form.state) newError.state = "State is required";
     if (!form.city) newError.city = "City is required";
 
-    if (!form.pincode) {
-      newError.pincode = "Pincode required";
-    } else if (!isValidPinCode(form.pincode)) {
-      newError.pincode = "Invalid pincode";
+    if (!form.pinCode) {
+      newError.pinCode = "Pincode required";
+    } else if (!isValidPinCode(form.pinCode)) {
+      newError.pinCode = "Invalid pincode";
+    }
+
+    if (!form.salary) newError.salary = "Salary is required";
+
+    if (!form.expectedDateOfSalary) {
+      newError.expectedDateOfSalary = "Expected date of salary is required";
     }
 
     setError(newError);
     return Object.keys(newError).length === 0;
   };
 
-  // 🔹 Submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -76,13 +87,25 @@ function EmploymentDetails() {
 
       const result = await submitEmploymentAction(form);
 
-      if (result?.error) {
-        setError((prev: any) => ({ ...prev, submit: result.error }));
+      if (result?.success) {
+        setIsRedirect(true);
+        showToast({
+          message: "Employment details submitted successfully!",
+          type: "success",
+        });
+        router.push("/selfie-capture")
         return;
       }
-
-      router.push("/selfie-capture");
+      showToast({
+        message: result?.error || "Submission failed",
+        type: "error",
+      });
+      setError((prev: any) => ({ ...prev, submit: result?.error || "Submission failed" }));
     } catch (err) {
+      showToast({
+        message: "Something went wrong",
+        type: "error",
+      });
       setError((prev: any) => ({ ...prev, submit: "Something went wrong" }));
     } finally {
       setLoading(false);
@@ -153,22 +176,22 @@ function EmploymentDetails() {
 
           <TextInput
             label="Official Email ID"
-            value={form.email}
-            onChange={(e) => handleChange("email", e.target.value)}
-            error={error.email}
+            value={form.officialEmail}
+            onChange={(e) => handleChange("officialEmail", e.target.value)}
+            error={error.officialEmail}
             require
           />
 
           <SelectBox
-            label="Salary Mode"
+            label="Mode of Salary"
             options={[
               { value: "Bank Transfer", label: "Bank Transfer" },
               { value: "Cash", label: "Cash" },
               { value: "Cheque", label: "Cheque" },
             ]}
-            value={form.salaryMode ? { value: form.salaryMode, label: form.salaryMode } : null}
-            onChange={(option: any) => handleChange("salaryMode", option?.value || "")}
-            error={error.salaryMode}
+            value={form.modeOfSalary ? { value: form.modeOfSalary, label: form.modeOfSalary } : null}
+            onChange={(option: any) => handleChange("modeOfSalary", option?.value || "")}
+            error={error.modeOfSalary}
           />
 
           <CustomDatePicker
@@ -183,8 +206,33 @@ function EmploymentDetails() {
 
           <TextInput
             label="UAN Number"
-            value={form.uan}
-            onChange={(e) => handleChange("uan", sanitizeNumeric(e.target.value))}
+            value={form.uanNumber}
+            onChange={(e) => handleChange("uanNumber", sanitizeNumeric(e.target.value))}
+          />
+
+          <TextInput
+            type="text"
+            label="Monthly Salary"
+            value={form.salary}
+            onChange={(e) => handleChange("salary", sanitizeNumeric(e.target.value))}
+            error={error.salary}
+            require
+          />
+
+          <SelectBox
+            label="Expected Date of Salary"
+            options={Array.from({ length: 31 }, (_, i) => ({
+              value: String(i + 1),
+              label: String(i + 1),
+            }))}
+            value={
+              form.expectedDateOfSalary
+                ? { value: form.expectedDateOfSalary, label: form.expectedDateOfSalary }
+                : null
+            }
+            onChange={(option: any) => handleChange("expectedDateOfSalary", option?.value || "")}
+            error={error.expectedDateOfSalary}
+            required
           />
         </div>
 
@@ -213,21 +261,18 @@ function EmploymentDetails() {
           <div className="mt-4">
             <TextInput
               label="Company Pincode"
-              value={form.pincode}
-              onChange={(e) => handleChange("pincode", sanitizeNumeric(e.target.value))}
+              value={form.pinCode}
+              onChange={(e) => handleChange("pinCode", sanitizeNumeric(e.target.value))}
               maxLength={6}
-              error={error.pincode}
+              error={error.pinCode}
               require
             />
           </div>
         </div>
 
         {/* Submit */}
-        <GradientButton type="submit" className="mt-6 w-full" disabled={loading}>
-          <span className="flex items-center justify-center gap-2">
-            {loading ? "Submitting..." : "Review Application"}
-            {!loading && <ChevronRight className="w-5 h-5" />}
-          </span>
+        <GradientButton type="submit" className="mt-6 w-full" disabled={loading || isRedirect}>
+          {isRedirect ? "Redirecting..." : loading ? "Submitting..." : "Submit & Continue"}
         </GradientButton>
       </form>
     </StepCard>

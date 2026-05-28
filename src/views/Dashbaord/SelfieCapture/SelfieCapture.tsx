@@ -63,6 +63,8 @@ function SelfieCapture({ onSubmit }: Props) {
 
   const [showPopup, setShowPopup] = useState(false);
 
+  const [isRedirect, setIsRedirect] = useState(false);
+
   // LOAD MEDIAPIPE
   useEffect(() => {
     loadModel();
@@ -224,9 +226,14 @@ function SelfieCapture({ onSubmit }: Props) {
       const formData = new FormData();
 
       formData.append(
-        "selfie",
+        "mediaFile",
         capturedBlob,
         `selfie-${Date.now()}.jpg`
+      );
+
+      formData.append(
+        "data",
+        JSON.stringify({ mediaType: "IMAGE" }),
       );
 
       const result =
@@ -237,14 +244,15 @@ function SelfieCapture({ onSubmit }: Props) {
         return;
       }
 
+      setIsRedirect(true);
+      router.push("/address-proof");
+
       showToast(
         {
           type: "success",
           message: "Selfie uploaded successfully"
         }
       );
-
-      router.push("/address-proof");
     } catch (error) {
       console.error(error);
 
@@ -372,12 +380,10 @@ function SelfieCapture({ onSubmit }: Props) {
         <div className="space-y-3">
           <GradientButton
             onClick={handleSubmit}
-            disabled={submitting}
+            disabled={submitting || isRedirect}
             className="w-full"
           >
-            {submitting
-              ? "Uploading..."
-              : "Continue Verification"}
+            {isRedirect ? "Redirecting..." : submitting ? "Uploading..." : "Continue Verification"}
           </GradientButton>
 
           <button
