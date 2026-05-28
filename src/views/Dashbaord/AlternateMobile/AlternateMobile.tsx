@@ -67,6 +67,7 @@ function AlternateMobile() {
         setContact2Saved(true);
       }
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
   }, [application]);
 
   const validateContact1 = () => {

@@ -102,6 +102,7 @@ export default function FAQClient({ faqData }: { faqData: FAQItem[] }) {
     }
 
     return results;
+    // eslint-disable-next-line react-hooks/set-state-in-render
   }, [searchQuery, activeCategory, faqData]);
 
   return (

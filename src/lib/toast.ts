@@ -127,9 +127,6 @@ export function updateToast(
   toastId: string,
   config: Omit<ToastConfig, "message"> & { message: string },
 ): void {
-  const updatedConfig = {
-    ...config,
-    render: config.message,
-  };
+
   toast.success(config.message, { id: toastId, ...config });
 }

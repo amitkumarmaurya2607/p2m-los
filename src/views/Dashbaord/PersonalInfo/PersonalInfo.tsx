@@ -35,19 +35,19 @@ function PersonalInfo() {
     gender: "",
   });
 
-  const [errors, setErrors] = useState<any>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
 
   const handleChange = (key: string, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
     if (errors[key]) {
-      setErrors((prev: any) => ({ ...prev, [key]: "" }));
+      setErrors((prev) => ({ ...prev, [key]: "" }));
     }
   };
 
   const validate = () => {
-    const newErrors: any = {};
+    const newErrors: Record<string, string> = {};
 
     if (!form.firstName) newErrors.firstName = "First name is required";
     if (!form.fatherName) newErrors.fatherName = "Father name is required";
@@ -102,14 +102,15 @@ function PersonalInfo() {
         message: result?.error || "Submission failed",
         type: "error",
       });
-      setErrors((prev: any) => ({ ...prev, submit: result?.error || "Submission failed" }));
+      setErrors((prev) => ({ ...prev, submit: result?.error || "Submission failed" }));
       return;
     } catch (err) {
+      console.log("err", err)
       showToast({
         message: "Something went wrong",
         type: "error",
       });
-      setErrors((prev: any) => ({ ...prev, submit: "Something went wrong" }));
+      setErrors((prev) => ({ ...prev, submit: "Something went wrong" }));
     } finally {
       setLoading(false);
     }

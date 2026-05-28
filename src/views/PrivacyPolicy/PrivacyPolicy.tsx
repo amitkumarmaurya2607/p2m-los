@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Shield, Lock, Key, CheckCircle2, MessageCircle, ArrowRight } from "lucide-react";
+import { Shield, CheckCircle2, MessageCircle, ArrowRight } from "lucide-react";
 import PrivacyClient from "./PrivacyClient";
 
 const PRIVACY_SECTIONS = [

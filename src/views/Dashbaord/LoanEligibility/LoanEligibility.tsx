@@ -3,9 +3,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
-  BadgeCheck,
-  Lightbulb,
-  CheckCircle,
   Edit3,
   Shield,
   BadgeCheckIcon,
@@ -53,7 +50,7 @@ function LoanEligibility() {
   const [tenure, setTenure] = useState(36);
   const [agreed, setAgreed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [programs, setPrograms] = useState<unknown[]>([]);
+  const [, setPrograms] = useState<unknown[]>([]);
 
   useEffect(() => {
     getLoanProgramsAction()
@@ -64,7 +61,7 @@ function LoanEligibility() {
         }
         setPrograms(res.data);
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const interestRate = 10.5;

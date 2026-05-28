@@ -33,24 +33,23 @@ function GeoLocation() {
     );
   });
 
-  const [os, setOs] = useState<"android" | "ios" | "other">("other");
-
-  const [browserPkg, setBrowserPkg] = useState<string>("com.android.chrome");
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+  const [os] = useState<"android" | "ios" | "other">(() => {
+    if (typeof window === "undefined") return "other";
     const ua = navigator.userAgent;
-    if (/Android/i.test(ua)) {
-      setOs("android");
-      if (/Edg/i.test(ua)) setBrowserPkg("com.microsoft.emmx");
-      else if (/Firefox/i.test(ua)) setBrowserPkg("org.mozilla.firefox");
-      else if (/Samsung/i.test(ua)) setBrowserPkg("com.sec.android.app.sbrowser");
-      else if (/OPR|Opt/i.test(ua)) setBrowserPkg("com.opera.browser");
-      else setBrowserPkg("com.android.chrome");
-    } else if (/iPhone|iPad|iPod/i.test(ua)) {
-      setOs("ios");
-    }
-  }, []);
+    if (/Android/i.test(ua)) return "android";
+    if (/iPhone|iPad|iPod/i.test(ua)) return "ios";
+    return "other";
+  });
+
+  const [browserPkg] = useState(() => {
+    if (typeof window === "undefined") return "com.android.chrome";
+    const ua = navigator.userAgent;
+    if (/Edg/i.test(ua)) return "com.microsoft.emmx";
+    if (/Firefox/i.test(ua)) return "org.mozilla.firefox";
+    if (/Samsung/i.test(ua)) return "com.sec.android.app.sbrowser";
+    if (/OPR|Opt/i.test(ua)) return "com.opera.browser";
+    return "com.android.chrome";
+  });
 
   const openSystemSettings = () => {
     if (os === "android") {
@@ -63,32 +62,7 @@ function GeoLocation() {
     }
   };
 
-  useEffect(() => {
-    if (!navigator.geolocation) {
-      setPermissionState("unavailable");
-      return;
-    }
-
-    if (navigator.permissions) {
-      navigator.permissions
-        .query({ name: "geolocation" })
-        .then((result) => {
-          setPermissionState(result.state as "prompt" | "granted" | "denied");
-
-          if (result.state === "granted") {
-            useCurrentLocation();
-          }
-
-          result.onchange = () => {
-            setPermissionState(result.state as "prompt" | "granted" | "denied");
-          };
-        })
-        .catch(() => {
-          // Permissions API unsupported or threw — stay in "prompt" state
-        });
-    }
-  }, []);
-
+  // eslint-disable-next-line react-hooks/immutability
   const useCurrentLocation = () => {
     if (!navigator.geolocation) {
       setError("Geolocation is not supported by your browser");
@@ -134,6 +108,31 @@ function GeoLocation() {
       { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 },
     );
   };
+
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      setPermissionState("unavailable");
+      return;
+    }
+
+    if (navigator.permissions) {
+      navigator.permissions
+        .query({ name: "geolocation" })
+        .then((result) => {
+          setPermissionState(result.state as "prompt" | "granted" | "denied");
+
+          if (result.state === "granted") {
+            useCurrentLocation();
+          }
+
+          result.onchange = () => {
+            setPermissionState(result.state as "prompt" | "granted" | "denied");
+          };
+        })
+        .catch(() => {});
+    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+  }, []);
 
   const handleSubmit = async () => {
     if (!location) {

@@ -3,20 +3,17 @@
 import React from "react";
 import Link from "next/link";
 import {
-  CheckCircle,
   Clock3,
-  FileText,
   Headphones,
   Shield,
   BadgeCheck,
-  Circle,
   Activity,
   User,
 } from "lucide-react";
 import StepCard from "../componants/StepCard";
 import PulseDot from "@/components/PulseDot";
 
-const docs = ["PAN Card", "Aadhaar Card", "Bank Statement", "Video KYC"];
+
 
 const timeline = [
   {

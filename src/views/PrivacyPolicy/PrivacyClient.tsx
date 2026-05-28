@@ -36,7 +36,14 @@ const getIcon = (id: string) => {
   }
 };
 
-export default function PrivacyClient({ sections }: { sections: any[] }) {
+interface Section {
+  id: string;
+  title: string;
+  content: React.ReactNode | string;
+  iconId: string;
+}
+
+export default function PrivacyClient({ sections }: { sections: Section[] }) {
   const [activeSection, setActiveSection] = useState(sections[0]?.id || "");
   const [isMobileAccordionOpen, setIsMobileAccordionOpen] = useState<Record<string, boolean>>({
     [sections[0]?.id]: true,

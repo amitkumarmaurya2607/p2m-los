@@ -70,52 +70,23 @@ function SelfieCapture({ onSubmit }: Props) {
     );
   });
 
-  const [os, setOs] = useState<"android" | "ios" | "other">("other");
-
-  const [browserPkg, setBrowserPkg] = useState<string>("com.android.chrome");
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+  const [os] = useState<"android" | "ios" | "other">(() => {
+    if (typeof window === "undefined") return "other";
     const ua = navigator.userAgent;
-    if (/Android/i.test(ua)) {
-      setOs("android");
-      if (/Edg/i.test(ua)) setBrowserPkg("com.microsoft.emmx");
-      else if (/Firefox/i.test(ua)) setBrowserPkg("org.mozilla.firefox");
-      else if (/Samsung/i.test(ua)) setBrowserPkg("com.sec.android.app.sbrowser");
-      else if (/OPR|Opt/i.test(ua)) setBrowserPkg("com.opera.browser");
-      else setBrowserPkg("com.android.chrome");
-    } else if (/iPhone|iPad|iPod/i.test(ua)) {
-      setOs("ios");
-    }
-  }, []);
+    if (/Android/i.test(ua)) return "android";
+    if (/iPhone|iPad|iPod/i.test(ua)) return "ios";
+    return "other";
+  });
 
-  useEffect(() => {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      setCameraPermission("unavailable");
-      return;
-    }
-
-    if (navigator.permissions) {
-      navigator.permissions
-        .query({ name: "camera" as PermissionName })
-        .then((result) => {
-          setCameraPermission(result.state as "prompt" | "granted" | "denied");
-
-          if (result.state === "granted") {
-            loadModel();
-          }
-
-          result.onchange = () => {
-            setCameraPermission(result.state as "prompt" | "granted" | "denied");
-          };
-        })
-        .catch(() => {
-          setCameraPermission("prompt");
-        });
-    } else {
-      setCameraPermission("prompt");
-    }
-  }, []);
+  const [browserPkg] = useState(() => {
+    if (typeof window === "undefined") return "com.android.chrome";
+    const ua = navigator.userAgent;
+    if (/Edg/i.test(ua)) return "com.microsoft.emmx";
+    if (/Firefox/i.test(ua)) return "org.mozilla.firefox";
+    if (/Samsung/i.test(ua)) return "com.sec.android.app.sbrowser";
+    if (/OPR|Opt/i.test(ua)) return "com.opera.browser";
+    return "com.android.chrome";
+  });
 
   const openSystemSettings = () => {
     if (os === "android") {
@@ -167,6 +138,42 @@ function SelfieCapture({ onSubmit }: Props) {
         message: "Failed to initialize camera AI",
       });
     }
+  }
+
+  useEffect(() => {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setCameraPermission("unavailable");
+      return;
+    }
+
+    if (navigator.permissions) {
+      navigator.permissions
+        .query({ name: "camera" as PermissionName })
+        .then((result) => {
+          setCameraPermission(result.state as "prompt" | "granted" | "denied");
+
+          if (result.state === "granted") {
+            loadModel();
+          }
+
+          result.onchange = () => {
+            setCameraPermission(result.state as "prompt" | "granted" | "denied");
+          };
+        })
+        .catch(() => {
+          setCameraPermission("prompt");
+        });
+    } else {
+      setCameraPermission("prompt");
+    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+  }, []);
+
+  // CONVERT IMAGE TO BLOB
+  async function convertBase64ToBlob(imageSrc: string) {
+    const response = await fetch(imageSrc);
+
+    return await response.blob();
   }
 
   // BLINK DETECTION
@@ -222,6 +229,7 @@ function SelfieCapture({ onSubmit }: Props) {
         const imageSrc = webcamRef.current.getScreenshot();
 
         if (imageSrc) {
+          // eslint-disable-next-line react-hooks/immutability
           const blob = await convertBase64ToBlob(imageSrc);
 
           isCapturedRef.current = true;
@@ -241,13 +249,6 @@ function SelfieCapture({ onSubmit }: Props) {
 
     return () => clearInterval(interval);
   }, [faceLandmarker, retakeKey]);
-
-  // CONVERT IMAGE TO BLOB
-  async function convertBase64ToBlob(imageSrc: string) {
-    const response = await fetch(imageSrc);
-
-    return await response.blob();
-  }
 
   // RETAKE
   function retakePhoto() {

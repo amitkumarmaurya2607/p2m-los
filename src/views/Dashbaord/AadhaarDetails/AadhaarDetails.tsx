@@ -67,6 +67,7 @@ function AadhaarDetails() {
     if (!hasCallBack) {
       callDigiLocker();
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
   }, [hasCallBack]);
 
   if (hasCallBack) {
@@ -197,7 +198,7 @@ function AadhaarDetails() {
         <div className="mb-4">
           <GradientButton
             type="button"
-            onClick={() => window.open((digiLockerData as any).DIGI_KYC_URL, "_blank")}
+            onClick={() => window.open((digiLockerData as Record<string, string>).DIGI_KYC_URL, "_blank")}
             className="w-full"
           >
             Verify with DigiLocker

@@ -10,7 +10,7 @@ import StepCard from "@/views/Dashbaord/componants/StepCard";
 function GeoLocationGuard({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const skipPaths = ["/geo-location", "/profile", "/track-application"];
-  if (skipPaths.some((p) => pathname.startsWith(p))) return <>{children}</>;
+  const shouldSkip = skipPaths.some((p) => pathname.startsWith(p));
 
   const [blocked, setBlocked] = useState(false);
 
@@ -21,23 +21,23 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
     );
   });
 
-  const [os, setOs] = useState<"android" | "ios" | "other">("other");
-  const [browserPkg, setBrowserPkg] = useState("com.android.chrome");
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+  const [os] = useState<"android" | "ios" | "other">(() => {
+    if (typeof window === "undefined") return "other";
     const ua = navigator.userAgent;
-    if (/Android/i.test(ua)) {
-      setOs("android");
-      if (/Edg/i.test(ua)) setBrowserPkg("com.microsoft.emmx");
-      else if (/Firefox/i.test(ua)) setBrowserPkg("org.mozilla.firefox");
-      else if (/Samsung/i.test(ua)) setBrowserPkg("com.sec.android.app.sbrowser");
-      else if (/OPR|Opt/i.test(ua)) setBrowserPkg("com.opera.browser");
-      else setBrowserPkg("com.android.chrome");
-    } else if (/iPhone|iPad|iPod/i.test(ua)) {
-      setOs("ios");
-    }
-  }, []);
+    if (/Android/i.test(ua)) return "android";
+    if (/iPhone|iPad|iPod/i.test(ua)) return "ios";
+    return "other";
+  });
+
+  const [browserPkg] = useState(() => {
+    if (typeof window === "undefined") return "com.android.chrome";
+    const ua = navigator.userAgent;
+    if (/Edg/i.test(ua)) return "com.microsoft.emmx";
+    if (/Firefox/i.test(ua)) return "org.mozilla.firefox";
+    if (/Samsung/i.test(ua)) return "com.sec.android.app.sbrowser";
+    if (/OPR|Opt/i.test(ua)) return "com.opera.browser";
+    return "com.android.chrome";
+  });
 
   const openSystemSettings = () => {
     if (os === "android") {
@@ -104,6 +104,8 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
       window.removeEventListener("pageshow", checkLocation);
     };
   }, [checkLocation]);
+
+  if (shouldSkip) return <>{children}</>;
 
   if (blocked) {
     return (

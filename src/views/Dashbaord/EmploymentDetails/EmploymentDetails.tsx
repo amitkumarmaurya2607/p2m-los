@@ -29,7 +29,7 @@ function EmploymentDetails() {
     expectedDateOfSalary: "",
   });
 
-  const [error, setError] = useState<any>({});
+  const [error, setError] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
 
@@ -37,13 +37,13 @@ function EmploymentDetails() {
   const handleChange = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
     if (error[field]) {
-      setError((prev: any) => ({ ...prev, [field]: "" }));
+      setError((prev) => ({ ...prev, [field]: "" }));
     }
   };
 
   // 🔹 Validation
   const validate = () => {
-    let newError: any = {};
+    const newError: Record<string, string> = {};
 
     if (!form.companyName) newError.companyName = "Company name is required";
     if (!form.designation) newError.designation = "Designation is required";
@@ -98,13 +98,14 @@ function EmploymentDetails() {
         message: result?.error || "Submission failed",
         type: "error",
       });
-      setError((prev: any) => ({ ...prev, submit: result?.error || "Submission failed" }));
+      setError((prev) => ({ ...prev, submit: result?.error || "Submission failed" }));
     } catch (err) {
+      console.log(err)
       showToast({
         message: "Something went wrong",
         type: "error",
       });
-      setError((prev: any) => ({ ...prev, submit: "Something went wrong" }));
+      setError((prev) => ({ ...prev, submit: "Something went wrong" }));
     } finally {
       setLoading(false);
     }
@@ -167,7 +168,7 @@ function EmploymentDetails() {
               { value: "Other", label: "Other" },
             ]}
             value={form.designation ? { value: form.designation, label: form.designation } : null}
-            onChange={(option: any) => handleChange("designation", option?.value || "")}
+            onChange={(option) => handleChange("designation", option?.value || "")}
             error={error.designation}
             required
           />
@@ -190,7 +191,7 @@ function EmploymentDetails() {
             value={
               form.modeOfSalary ? { value: form.modeOfSalary, label: form.modeOfSalary } : null
             }
-            onChange={(option: any) => handleChange("modeOfSalary", option?.value || "")}
+            onChange={(option) => handleChange("modeOfSalary", option?.value || "")}
             error={error.modeOfSalary}
           />
 
@@ -230,7 +231,7 @@ function EmploymentDetails() {
                 ? { value: form.expectedDateOfSalary, label: form.expectedDateOfSalary }
                 : null
             }
-            onChange={(option: any) => handleChange("expectedDateOfSalary", option?.value || "")}
+            onChange={(option) => handleChange("expectedDateOfSalary", option?.value || "")}
             error={error.expectedDateOfSalary}
             required
           />

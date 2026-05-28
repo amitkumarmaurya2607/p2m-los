@@ -1,6 +1,5 @@
 import { apiPost } from "@/lib/axios";
 import { API } from "@/lib/api/urls";
-import type { ApiResponse } from "@/types";
 import { loginPayload, loginVerifyPayload } from "@/views/Auth/type";
 
 export interface SendOTPResponse {

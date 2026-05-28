@@ -1,4 +1,4 @@
-import Logo from "@/assets/icon/Logo";
+
 import InfoCard from "@/components/Cards/InfoCard";
 import { ShieldCheck, TrendingUp, Users } from "lucide-react";
 import Link from "next/link";
@@ -57,7 +57,7 @@ const SideBar = () => {
         </p>
 
         <div className="mt-12 space-y-4">
-          {features?.map((value, i) => {
+          {features?.map((value) => {
             return (
               <InfoCard
                 key={value.id}

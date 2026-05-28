@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import React, { ReactNode, useId, useState } from "react";
 import Select, { Props as SelectProps, GroupBase } from "react-select";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface CustomSelectProps extends SelectProps<any, boolean, GroupBase<any>> {
   label?: string;
   leftIcon?: ReactNode;
@@ -25,7 +26,8 @@ const SelectBox = ({
   version = "v1",
   ...props
 }: CustomSelectProps) => {
-  const id = props.id || useId();
+  const generatedId = useId();
+  const id = props.id || generatedId;
   const [isFocused, setIsFocused] = useState(false);
 
   const hasValue = props.value && (Array.isArray(props.value) ? props.value.length > 0 : true);

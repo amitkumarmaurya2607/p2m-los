@@ -5,7 +5,7 @@ import { Check } from "lucide-react";
 import { steps as allSteps, type StepStatus } from "@/lib/sessionStorage";
 
 const StepperAlt = () => {
-  const getStepStatus = (stepKey: string): StepStatus => {
+  const getStepStatus = (_stepKey: string): StepStatus => {
     return "progress";
   };
 

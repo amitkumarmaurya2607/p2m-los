@@ -4,14 +4,14 @@ import { ArrowRight } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import OTPVerify from "./OTPVerify";
 import TextInput from "@/components/ui/TextInput";
-import { isValidEmail, isValidMobile, sanitizeEmail, sanitizeNumeric } from "@/lib/utils";
+import { isValidMobile, sanitizeNumeric } from "@/lib/utils";
 import { showToast } from "@/lib/toast";
 import StepCard from "../Dashbaord/componants/StepCard";
 import { sendOTPAction } from "@/lib/actions/auth.action";
 import Link from "next/link";
 
 const Login = ({ type }: { type?: string }) => {
-  const [method, setMethod] = useState<"mobile" | "email">("mobile");
+
   const [sendOtp, setSendOtp] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState<string>("");
@@ -28,8 +28,8 @@ const Login = ({ type }: { type?: string }) => {
   }, [type]);
 
   const validate = () => {
-    if (method === "mobile") return isValidMobile(userName);
-    return isValidEmail(userName);
+    return isValidMobile(userName);
+
   };
 
   const submitHandler = (e?: React.FormEvent | null, type?: "resend") => {
@@ -43,7 +43,7 @@ const Login = ({ type }: { type?: string }) => {
     const isValid = validate();
 
     if (!isValid) {
-      const msg = method === "mobile" ? "Enter valid mobile number" : "Enter valid email";
+      const msg = "Enter valid mobile number";
 
       setError(msg);
       showToast({ message: msg, type: "error" });
@@ -72,10 +72,10 @@ const Login = ({ type }: { type?: string }) => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
+    const value = e.target.value;
 
-    let raw = value.replace("+91", "");
-    let digits = sanitizeNumeric(raw).slice(0, 10);
+    const raw = value.replace("+91", "");
+    const digits = sanitizeNumeric(raw).slice(0, 10);
 
     setUserName(digits ? "+91" + digits : "");
   };
@@ -171,7 +171,7 @@ const Login = ({ type }: { type?: string }) => {
         <OTPVerify
           back={() => setSendOtp(false)}
           resend={() => submitHandler(null, "resend")}
-          method={method}
+          method={"mobile"}
           userName={userName}
           userId={userId}
         />

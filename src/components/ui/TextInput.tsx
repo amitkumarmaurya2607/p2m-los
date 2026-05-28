@@ -20,7 +20,8 @@ const TextInput = ({
   version = "v1",
   ...props
 }: TextInputProps) => {
-  const id = props?.id || useId();
+  const generatedId = useId();
+  const id = props?.id || generatedId;
   const [isFocused, setIsFocused] = useState(false);
   const hasValue = props?.value !== undefined && props?.value !== "";
   const isFloating = isFocused || hasValue;

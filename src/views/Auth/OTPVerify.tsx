@@ -18,7 +18,7 @@ type OTPVerifyProps = {
   userId: string;
 };
 
-function OTPVerify({ resend = () => {}, method, userName, back, userId }: OTPVerifyProps) {
+function OTPVerify({ resend = () => { }, method, userName, back, userId }: OTPVerifyProps) {
   const router = useRouter();
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
@@ -55,6 +55,7 @@ function OTPVerify({ resend = () => {}, method, userName, back, userId }: OTPVer
 
       router.push("/geo-location");
     } catch (err) {
+      console.log(err)
       showToast({ message: "Invalid OTP. Please try again.", type: "error" });
       setError("Invalid OTP");
     } finally {
@@ -69,9 +70,8 @@ function OTPVerify({ resend = () => {}, method, userName, back, userId }: OTPVer
     >
       <StepCard
         title="Verify OTP"
-        subtitle={`We've sent a 6-digit code to your ${
-          method === "email" ? "email" : "mobile number"
-        } (${maskedValue})`}
+        subtitle={`We've sent a 6-digit code to your ${method === "email" ? "email" : "mobile number"
+          } (${maskedValue})`}
         className="w-full max-w-[448px]"
         back={back}
       >

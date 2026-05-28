@@ -21,7 +21,7 @@ const TrustStats = () => {
             className="absolute -right-10 top-0 h-64 w-64 rounded-full bg-secondary/5 blur-[64px]"
           />
 
-          {stats.map((item, index) => (
+          {stats.map((item) => (
             <div
               key={item.label}
               className="relative flex flex-col items-center gap-2 text-center lg:border-r

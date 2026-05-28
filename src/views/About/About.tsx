@@ -16,6 +16,7 @@ import {
   Home as HomeIcon,
 } from "lucide-react";
 import { COMPANY_DETAILS } from "@/config/company";
+import Image from "next/image";
 
 const HeroSection = () => (
   <section className="relative pt-20 pb-32 px-6 lg:px-12 bg-surface-muted overflow-hidden">
@@ -339,7 +340,9 @@ const StorySection = () => (
           <div
             className="relative rounded-[40px] overflow-hidden shadow-2xl border-8 border-surface"
           >
-            <img
+            <Image
+              height={30}
+              width={30}
               src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop"
               alt="Our Team Working"
               className="w-full h-auto object-cover"

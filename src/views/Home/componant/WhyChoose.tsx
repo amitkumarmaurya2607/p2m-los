@@ -83,7 +83,17 @@ const WhyChoose = () => {
   );
 };
 
-const FeatureCard = ({ title, desc, icon: Icon, color, glow, tall, index }: any) => {
+interface FeatureCardProps {
+  title: string;
+  desc: string;
+  icon: React.ComponentType<{ className?: string }>;
+  color: string;
+  glow: string;
+  tall?: boolean;
+  index: number;
+}
+
+const FeatureCard = ({ title, desc, icon: Icon, color, glow, tall, index }: FeatureCardProps) => {
   return (
     <div
       className={`feature-card group relative overflow-hidden rounded-[32px] border
@@ -108,7 +118,7 @@ const FeatureCard = ({ title, desc, icon: Icon, color, glow, tall, index }: any)
           shadow-[var(--shadow-btn-soft)] transition-transform duration-500 group-hover:rotate-6
           group-hover:scale-110 ${color}`}
       >
-        <Icon size={24} strokeWidth={2} />
+        <Icon />
       </div>
 
       {/* Title */}

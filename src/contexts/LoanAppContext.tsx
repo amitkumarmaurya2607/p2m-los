@@ -33,6 +33,7 @@ export function LoanAppProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     refreshApp();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
   }, [refreshApp]);
 
   return (

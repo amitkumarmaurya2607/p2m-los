@@ -16,17 +16,16 @@ function BankDetails() {
     benName: "",
   });
 
-  const [errors, setErrors] = useState<any>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
-  const [isRedirect, setIsRedirect] = useState(false);
 
   const userId =
     typeof window !== "undefined"
       ? document.cookie
-          .split("; ")
-          .find((r) => r.startsWith("p2m-user-id="))
-          ?.split("=")[1] || ""
+        .split("; ")
+        .find((r) => r.startsWith("p2m-user-id="))
+        ?.split("=")[1] || ""
       : "";
 
   const handleChange = (key: string, value: string) => {
@@ -43,12 +42,12 @@ function BankDetails() {
     setForm((prev) => ({ ...prev, [key]: v }));
 
     if (errors[key]) {
-      setErrors((prev: any) => ({ ...prev, [key]: "" }));
+      setErrors((prev) => ({ ...prev, [key]: "" }));
     }
   };
 
   const validate = () => {
-    const err: any = {};
+    const err: Record<string, string> = {};
 
     if (!form.accountNumber) err.accountNumber = "Required";
     if (!form.confirmAccountNumber) err.confirmAccountNumber = "Required";
@@ -95,7 +94,7 @@ function BankDetails() {
       }
 
       const errorMsg = result?.error || "Something went wrong";
-      setErrors((prev: any) => ({ ...prev, bank: errorMsg }));
+      setErrors((prev) => ({ ...prev, bank: errorMsg }));
       showToast({ message: errorMsg, type: "error" });
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Something went wrong";

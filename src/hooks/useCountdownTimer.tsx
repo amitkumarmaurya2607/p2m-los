@@ -3,25 +3,20 @@ import { useState, useEffect, useCallback } from "react";
 
 export const useCountdownTimer = (initialSeconds: number) => {
   const [timeLeft, setTimeLeft] = useState(initialSeconds);
-  const [isActive, setIsActive] = useState(true);
+  const isActive = timeLeft > 0;
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    if (timeLeft <= 0) return;
 
-    if (isActive && timeLeft > 0) {
-      interval = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
-      }, 1000);
-    } else if (timeLeft === 0) {
-      setIsActive(false);
-    }
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
 
     return () => clearInterval(interval);
-  }, [isActive, timeLeft]);
+  }, [timeLeft]);
 
   const resetTimer = useCallback(() => {
     setTimeLeft(initialSeconds);
-    setIsActive(true);
   }, [initialSeconds]);
 
   return { timeLeft, isActive, resetTimer };

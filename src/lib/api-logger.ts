@@ -30,6 +30,7 @@ let _logsDir: string | null = null;
 
 function getLogsDir(): string {
   if (_logsDir) return _logsDir;
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { join } = require("path") as typeof import("path");
   _logsDir = join(process.cwd(), "logs", "api");
   return _logsDir;
@@ -39,7 +40,9 @@ function writeApiLog(entry: ApiLogEntry): void {
   if (typeof window !== "undefined") return;
   if (process.env.LOG_ENABLED === "false" || process.env.LOG_ENABLED === "0") return;
   try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { existsSync, mkdirSync, appendFileSync } = require("fs") as typeof import("fs");
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { join } = require("path") as typeof import("path");
 
     const dir = getLogsDir();
@@ -173,9 +176,11 @@ export function logApiResponse(
   });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type NextRouteHandler = (...args: any[]) => Promise<Response> | Response;
 
 export function withApiLogging<T extends NextRouteHandler>(handler: T): T {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const wrapped = async (...handlerArgs: any[]): Promise<Response> => {
     const request = handlerArgs[0] as NextRequest;
     const method = request.method;

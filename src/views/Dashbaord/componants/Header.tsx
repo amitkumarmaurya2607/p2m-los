@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useEffect, useMemo } from "react";
-import { ArrowLeft, User } from "lucide-react";
+import { User } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { steps as allSteps, StepItem } from "@/lib/sessionStorage";
 import { logoutAction } from "@/lib/actions/logout.action";
@@ -30,10 +30,7 @@ const routeStepMap: Record<string, string> = {
 };
 
 const Header: React.FC<HeaderProps> = ({
-  title = "Verification",
-  subtitle = "APPLICATION",
   onBack,
-  onSave,
 }) => {
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);

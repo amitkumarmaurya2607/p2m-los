@@ -3,8 +3,6 @@
 import {
   verifyPAN,
   digiLockerApi,
-  sendAadhaarOTP,
-  verifyAadhaarOTP,
   verifyBank,
   submitEmployment,
 } from "@/lib/services/verification.service";
@@ -65,7 +63,7 @@ export async function verifyBankAction(data: {
   }
 }
 
-export async function saveGeoLocationAction(data: {
+export async function saveGeoLocationAction(_data: {
   latitude: number;
   longitude: number;
   accuracy: number;

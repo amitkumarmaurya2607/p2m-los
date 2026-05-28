@@ -1,4 +1,4 @@
-import { ArrowLeft, Info, Star } from "lucide-react";
+import { ArrowLeft, Info } from "lucide-react";
 import React from "react";
 import StepNotes from "./StepNotes";
 import HorizontalStepper from "./HorizontalStepper";
