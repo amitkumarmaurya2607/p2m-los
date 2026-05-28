@@ -2,9 +2,7 @@ import { apiPost } from "@/lib/axios";
 import { API } from "@/lib/api/urls";
 import type { ApiResponse } from "@/types";
 
-export async function sendEmailOTP(
-  email: string,
-): Promise<ApiResponse<{ otp: string }>> {
+export async function sendEmailOTP(email: string): Promise<ApiResponse<{ otp: string }>> {
   return apiPost<ApiResponse<{ otp: string }>>(API.email.sendOTP, { email });
 }
 

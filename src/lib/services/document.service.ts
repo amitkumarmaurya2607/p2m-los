@@ -13,8 +13,10 @@ export async function uploadAddressProof(
   return apiPost<{ code?: string; message?: string }>(API.addressProof.upload, formData);
 }
 
-export async function updateAlternateMobile(
-  contact: { mobileNumber: string; name: string; relationType: string },
-): Promise<{ code?: string; message?: string }> {
+export async function updateAlternateMobile(contact: {
+  mobileNumber: string;
+  name: string;
+  relationType: string;
+}): Promise<{ code?: string; message?: string }> {
   return apiPost<{ code?: string; message?: string }>(API.alternateMobile.update, contact);
 }

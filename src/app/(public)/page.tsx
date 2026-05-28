@@ -1,11 +1,9 @@
-"use client"
+"use client";
 import Home from "@/views/Home/Home";
 
 const page = () => {
-
   const lat = 28.5162668; // Replace with your lat
   const lon = 77.0705353; // Replace with your lon
-
 
   async function getOSMAddress() {
     try {
@@ -14,9 +12,9 @@ const page = () => {
         {
           headers: {
             // CRITICAL: Replace this with your actual app name or email
-            'User-Agent': 'MyTravelApp/1.0 (contact@mywebsite.com)'
-          }
-        }
+            "User-Agent": "MyTravelApp/1.0 (contact@mywebsite.com)",
+          },
+        },
       );
 
       if (!response.ok) {

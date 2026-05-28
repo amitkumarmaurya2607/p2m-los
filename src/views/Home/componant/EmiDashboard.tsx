@@ -47,28 +47,34 @@ const EmiDashboard = () => {
   return (
     <section
       id="emi-calculator"
-      className="relative w-full overflow-hidden bg-surface-accent px-4 py-14 sm:px-6 lg:px-[91px] lg:py-24"
+      className="relative w-full overflow-hidden bg-surface-accent px-4 py-14 sm:px-6 lg:px-[91px]
+        lg:py-24"
     >
       <div
-        className="absolute -right-[160px] -top-[250px] h-[500px] w-[500px] rounded-full bg-white/40 blur-[64px]"
+        className="absolute -right-[160px] -top-[250px] h-[500px] w-[500px] rounded-full bg-white/40
+          blur-[64px]"
       />
 
       <div
-        className="relative mx-auto flex max-w-[1257px] flex-col items-center justify-between gap-12 lg:flex-row lg:gap-16"
+        className="relative mx-auto flex max-w-[1257px] flex-col items-center justify-between gap-12
+          lg:flex-row lg:gap-16"
       >
         <div className="w-full max-w-[584px]">
           <div
-            className="flex h-16 w-16 rotate-[3deg] items-center justify-center rounded-2xl bg-white shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.1),0px_2px_4px_-2px_rgba(0,0,0,0.1)]"
+            className="flex h-16 w-16 rotate-[3deg] items-center justify-center rounded-2xl bg-white
+              shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.1),0px_2px_4px_-2px_rgba(0,0,0,0.1)]"
           >
             <Calculator className="h-8 w-8 text-home-purple" />
           </div>
 
           <h2
-          className="mt-7 text-[42px] font-extrabold leading-[52px] text-dark-navy sm:text-[48px] sm:leading-[60px]"
+            className="mt-7 text-[42px] font-extrabold leading-[52px] text-dark-navy sm:text-[48px]
+              sm:leading-[60px]"
           >
             Smart LOS <br />
             <span
-            className="bg-gradient-to-r from-home-purple to-home-green bg-clip-text text-transparent"
+              className="bg-gradient-to-r from-home-purple to-home-green bg-clip-text
+                text-transparent"
             >
               Loan Planning
             </span>
@@ -81,7 +87,9 @@ const EmiDashboard = () => {
 
           <div className="mt-8 flex max-w-[448px] flex-col gap-4">
             <div
-              className="flex h-[76px] items-center gap-4 rounded-[14px] bg-white p-4 shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0px_14px_35px_rgba(0,0,0,0.12)]"
+              className="flex h-[76px] items-center gap-4 rounded-[14px] bg-white p-4
+                shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1
+                hover:shadow-[0px_14px_35px_rgba(0,0,0,0.12)]"
             >
               <div
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-home-green/10"
@@ -96,7 +104,9 @@ const EmiDashboard = () => {
             </div>
 
             <div
-              className="flex h-[76px] items-center gap-4 rounded-[14px] bg-white p-4 shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0px_14px_35px_rgba(0,0,0,0.12)]"
+              className="flex h-[76px] items-center gap-4 rounded-[14px] bg-white p-4
+                shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1
+                hover:shadow-[0px_14px_35px_rgba(0,0,0,0.12)]"
             >
               <div
                 className="flex h-10 w-10 items-center justify-center rounded-full
@@ -114,17 +124,23 @@ const EmiDashboard = () => {
         </div>
 
         <div
-          className="relative w-full max-w-[584px] rounded-[32px] border border-white bg-white p-6 shadow-[0px_24px_48px_rgba(0,0,0,0.06)] sm:p-[33px]"
+          className="relative w-full max-w-[584px] rounded-[32px] border border-white bg-white p-6
+            shadow-[0px_24px_48px_rgba(0,0,0,0.06)] sm:p-[33px]"
         >
           <div
-            className="group absolute -bottom-[38px] -right-6 z-20 rotate-[6deg] rounded-[14px] text-sm font-bold text-white"
+            className="group absolute -bottom-[38px] -right-6 z-20 rotate-[6deg] rounded-[14px]
+              text-sm font-bold text-white"
           >
             <div
-              className="relative overflow-hidden rounded-[16px] bg-gradient-to-r from-home-purple to-home-green px-6 py-4 shadow-[0px_16px_35px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:rotate-[6deg] hover:scale-105 hover:shadow-[0px_22px_45px_rgba(0,0,0,0.24)]"
+              className="relative overflow-hidden rounded-[16px] bg-gradient-to-r from-home-purple
+                to-home-green px-6 py-4 shadow-[0px_16px_35px_rgba(0,0,0,0.18)] transition-all
+                duration-300 hover:-translate-y-1 hover:rotate-[6deg] hover:scale-105
+                hover:shadow-[0px_22px_45px_rgba(0,0,0,0.24)]"
             >
               <div className="absolute inset-0 overflow-hidden rounded-[14px]">
                 <div
-                className="animate-[shine_3s_linear_infinite] absolute top-0 h-full w-10 rotate-[20deg] bg-white/20 blur-md"
+                  className="animate-[shine_3s_linear_infinite] absolute top-0 h-full w-10
+                    rotate-[20deg] bg-white/20 blur-md"
                 />
               </div>
 
@@ -155,7 +171,8 @@ const EmiDashboard = () => {
             <h3 className="text-xl font-bold text-dark-navy">Repayment Plan</h3>
 
             <span
-            className="rounded-full bg-home-bg-green-light px-3 py-1 text-sm font-bold text-home-green"
+              className="rounded-full bg-home-bg-green-light px-3 py-1 text-sm font-bold
+                text-home-green"
             >
               {annualRate}% p.a.
             </span>
@@ -212,7 +229,9 @@ const EmiDashboard = () => {
               </div>
 
               <div
-                className="rounded-2xl border border-muted bg-home-bg-gray-light px-6 py-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0px_14px_35px_rgba(0,0,0,0.1)]"
+                className="rounded-2xl border border-muted bg-home-bg-gray-light px-6 py-6
+                  transition-all duration-300 hover:-translate-y-1
+                  hover:shadow-[0px_14px_35px_rgba(0,0,0,0.1)]"
               >
                 <p className="text-sm text-home-muted">Monthly EMI</p>
 
@@ -224,11 +243,13 @@ const EmiDashboard = () => {
 
             <div className="flex flex-col items-center justify-center">
               <div
-                className="relative flex h-40 w-40 items-center justify-center rounded-full transition-all duration-300 hover:scale-105"
+                className="relative flex h-40 w-40 items-center justify-center rounded-full
+                  transition-all duration-300 hover:scale-105"
                 style={circleStyle}
               >
                 <div
-                className="flex h-[120px] w-[120px] flex-col items-center justify-center rounded-full bg-white"
+                  className="flex h-[120px] w-[120px] flex-col items-center justify-center
+                    rounded-full bg-white"
                 >
                   <p className="text-xs font-medium text-home-muted">Total Amount</p>
 

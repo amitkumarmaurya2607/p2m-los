@@ -10,7 +10,10 @@ import { Phone, Lightbulb } from "lucide-react";
 import { isValidMobile, sanitizeNumeric } from "@/lib/utils";
 import { showToast } from "@/lib/toast";
 import { useLoanApp } from "@/contexts/LoanAppContext";
-import { submitAlternateMobileAction, saveAlternateMobileStepAction } from "@/lib/actions/document.action";
+import {
+  submitAlternateMobileAction,
+  saveAlternateMobileStepAction,
+} from "@/lib/actions/document.action";
 import PulseDot from "@/components/PulseDot";
 
 const RELATION_OPTIONS = [
@@ -248,7 +251,10 @@ function AlternateMobile() {
           )}
         </div>
 
-        <div className={`space-y-4 rounded-2xl border border-border-light bg-surface p-5 ${contact2Disabled ? "opacity-50 pointer-events-none" : ""}`}>
+        <div
+          className={`space-y-4 rounded-2xl border border-border-light bg-surface p-5
+            ${contact2Disabled ? "opacity-50 pointer-events-none" : ""}`}
+        >
           <h3 className="text-sm font-bold text-text-heading">Contact Person 2</h3>
           <div className="space-y-3">
             <TextInput

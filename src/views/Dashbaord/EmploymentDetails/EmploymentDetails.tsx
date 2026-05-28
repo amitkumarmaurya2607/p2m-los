@@ -33,8 +33,6 @@ function EmploymentDetails() {
   const [loading, setLoading] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
 
-
-
   // 🔹 Handle Change
   const handleChange = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -93,7 +91,7 @@ function EmploymentDetails() {
           message: "Employment details submitted successfully!",
           type: "success",
         });
-        router.push("/selfie-capture")
+        router.push("/selfie-capture");
         return;
       }
       showToast({
@@ -189,7 +187,9 @@ function EmploymentDetails() {
               { value: "Cash", label: "Cash" },
               { value: "Cheque", label: "Cheque" },
             ]}
-            value={form.modeOfSalary ? { value: form.modeOfSalary, label: form.modeOfSalary } : null}
+            value={
+              form.modeOfSalary ? { value: form.modeOfSalary, label: form.modeOfSalary } : null
+            }
             onChange={(option: any) => handleChange("modeOfSalary", option?.value || "")}
             error={error.modeOfSalary}
           />

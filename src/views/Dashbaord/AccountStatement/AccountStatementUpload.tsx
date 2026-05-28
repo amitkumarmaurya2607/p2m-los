@@ -102,66 +102,81 @@ function AccountStatementUpload() {
   return (
     <StepCard
       title={activeTab === "upload" ? "Account Statement Upload" : "Account Aggregator"}
-      subtitle={activeTab === "upload" ? "Upload your latest bank statement for verification" : "Securely connect your bank account to fetch your statement"}
-      icon={activeTab === "upload" ? <Upload className="w-6 h-6 text-primary" /> : <Landmark className="w-6 h-6 text-primary" />}
+      subtitle={
+        activeTab === "upload"
+          ? "Upload your latest bank statement for verification"
+          : "Securely connect your bank account to fetch your statement"
+      }
+      icon={
+        activeTab === "upload" ? (
+          <Upload className="w-6 h-6 text-primary" />
+        ) : (
+          <Landmark className="w-6 h-6 text-primary" />
+        )
+      }
       className="lg:w-[600px] mx-auto"
       steper={true}
-      tips={activeTab === "upload" ? {
-        title: "Bank Statement",
-        description:
-          "Upload your latest bank statement (last 6 months) for income and transaction verification.",
-        Icon: <Upload className="w-5 h-5 text-primary" />,
-        noteTitle: "Document Guidelines",
-        noteDescription: (
-          <ul className="space-y-2 text-sm leading-6">
-            <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
-              Upload statement for the last 6 months
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
-              Supported formats: PDF, JPG, PNG
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
-              Maximum file size: 5MB
-            </li>
-          </ul>
-        ),
-        NoteIcon: Lightbulb,
-      } : {
-        title: "Account Aggregator",
-        description:
-          "Securely connect your bank account via our trusted account aggregator to fetch your statement instantly.",
-        Icon: <Landmark className="w-5 h-5 text-primary" />,
-        noteTitle: "How it works",
-        noteDescription: (
-          <ul className="space-y-2 text-sm leading-6">
-            <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
-              Click "Connect Bank Account" to begin
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
-              Securely log in via your bank's portal
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
-              Your statement is fetched automatically
-            </li>
-          </ul>
-        ),
-        NoteIcon: Lightbulb,
-      }}
+      tips={
+        activeTab === "upload"
+          ? {
+              title: "Bank Statement",
+              description:
+                "Upload your latest bank statement (last 6 months) for income and transaction verification.",
+              Icon: <Upload className="w-5 h-5 text-primary" />,
+              noteTitle: "Document Guidelines",
+              noteDescription: (
+                <ul className="space-y-2 text-sm leading-6">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
+                    Upload statement for the last 6 months
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
+                    Supported formats: PDF, JPG, PNG
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
+                    Maximum file size: 5MB
+                  </li>
+                </ul>
+              ),
+              NoteIcon: Lightbulb,
+            }
+          : {
+              title: "Account Aggregator",
+              description:
+                "Securely connect your bank account via our trusted account aggregator to fetch your statement instantly.",
+              Icon: <Landmark className="w-5 h-5 text-primary" />,
+              noteTitle: "How it works",
+              noteDescription: (
+                <ul className="space-y-2 text-sm leading-6">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
+                    Click "Connect Bank Account" to begin
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
+                    Securely log in via your bank's portal
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
+                    Your statement is fetched automatically
+                  </li>
+                </ul>
+              ),
+              NoteIcon: Lightbulb,
+            }
+      }
     >
       {/* Tab navigation */}
       <div className="mt-6 flex gap-2">
         <button
           type="button"
           onClick={() => setActiveTab("fetch")}
-          className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${activeTab === "fetch"
-            ? "bg-secondary text-white shadow-md"
-            : "border border-border-light text-text-muted hover:bg-muted"
+          className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
+            activeTab === "fetch"
+              ? "bg-secondary text-white shadow-md"
+              : "border border-border-light text-text-muted hover:bg-muted"
             }`}
         >
           Account Aggregator
@@ -169,9 +184,10 @@ function AccountStatementUpload() {
         <button
           type="button"
           onClick={() => setActiveTab("upload")}
-          className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${activeTab === "upload"
-            ? "bg-secondary text-white shadow-md"
-            : "border border-border-light text-text-muted hover:bg-muted"
+          className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
+            activeTab === "upload"
+              ? "bg-secondary text-white shadow-md"
+              : "border border-border-light text-text-muted hover:bg-muted"
             }`}
         >
           Upload Statement
@@ -197,7 +213,8 @@ function AccountStatementUpload() {
             onDragLeave={() => setDragActive(false)}
             onDrop={handleDrop}
             className={`flex h-48 cursor-pointer flex-col items-center justify-center rounded-2xl
-              border-2 border-dashed transition ${dragActive ? "border-primary bg-primary-muted" : "border-border-medium bg-surface"
+              border-2 border-dashed transition ${
+                dragActive ? "border-primary bg-primary-muted" : "border-border-medium bg-surface"
               }`}
           >
             <UploadCloudIcon />
@@ -221,7 +238,9 @@ function AccountStatementUpload() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-semibold text-text-heading truncate">{file.name}</p>
-                  <p className="text-xs text-text-muted">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                  <p className="text-xs text-text-muted">
+                    {(file.size / 1024 / 1024).toFixed(2)} MB
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -248,8 +267,11 @@ function AccountStatementUpload() {
             {isRedirect ? "Redirecting..." : loading ? "Uploading..." : "Upload & Continue"}
           </GradientButton>
         </div>
-      ) : <div className="mt-6"><AccountAggregator /></div>
-      }
+      ) : (
+        <div className="mt-6">
+          <AccountAggregator />
+        </div>
+      )}
     </StepCard>
   );
 }

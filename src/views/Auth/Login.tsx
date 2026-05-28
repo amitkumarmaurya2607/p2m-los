@@ -18,7 +18,6 @@ const Login = ({ type }: { type?: string }) => {
   const [error, setError] = useState("");
   const [userId, setUserId] = useState<string>("");
 
-
   const [accepted, setAccepted] = useState(false);
 
   useEffect(() => {
@@ -54,8 +53,6 @@ const Login = ({ type }: { type?: string }) => {
     setError("");
     setLoading(true);
 
-
-
     sendOTPAction(userName).then((result) => {
       setLoading(false);
       console.log("sendOTPAction result in component:", result); // Debugging line
@@ -77,7 +74,6 @@ const Login = ({ type }: { type?: string }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
 
-
     let raw = value.replace("+91", "");
     let digits = sanitizeNumeric(raw).slice(0, 10);
 
@@ -95,9 +91,12 @@ const Login = ({ type }: { type?: string }) => {
           <div className="lg:hidden text-primary-foreground max-w-[400px] mx-auto mb-8">
             <Link href="/" className="flex items-center gap-2">
               <span
-                className="h-8 w-8 rotate-12 rounded-[10px] bg-gradient-to-br from-secondary to-primary
-              shadow-lg shadow-primary/20 text-[18px] font-bold leading-none text-white items-center flex justify-center"
-              >R</span>
+                className="h-8 w-8 rotate-12 rounded-[10px] bg-gradient-to-br from-secondary
+                  to-primary shadow-lg shadow-primary/20 text-[18px] font-bold leading-none
+                  text-white items-center flex justify-center"
+              >
+                R
+              </span>
               <span className="text-[24px] font-black leading-8 tracking-[-1.2px] text-white">
                 RinSetu<span className="text-secondary">.</span>
               </span>
@@ -126,7 +125,6 @@ const Login = ({ type }: { type?: string }) => {
             <form onSubmit={submitHandler}>
               <div className="space-y-4">
                 <TextInput
-
                   label={"Mobile Number"}
                   onChange={handleChange}
                   value={userName}

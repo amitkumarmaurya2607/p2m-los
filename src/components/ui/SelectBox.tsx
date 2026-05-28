@@ -96,7 +96,6 @@ const SelectBox = ({
     );
   }
 
-
   return (
     <div className={cn("w-full", containerClassName)}>
       <div className="relative w-full">
@@ -108,9 +107,9 @@ const SelectBox = ({
               isActive
                 ? "left-5 top-2 text-[11px] text-primary"
                 : cn(
-                  "top-1/2 -translate-y-1/2 text-xs text-muted-foreground",
-                  leftIcon ? "left-12" : "left-5"
-                )
+                    "top-1/2 -translate-y-1/2 text-xs text-muted-foreground",
+                    leftIcon ? "left-12" : "left-5",
+                  ),
             )}
           >
             {label}
@@ -129,9 +128,7 @@ const SelectBox = ({
           inputId={id}
           unstyled
           placeholder=" "
-          menuPortalTarget={
-            typeof document !== "undefined" ? document.body : undefined
-          }
+          menuPortalTarget={typeof document !== "undefined" ? document.body : undefined}
           styles={{
             menuPortal: (base) => ({
               ...base,
@@ -153,16 +150,11 @@ const SelectBox = ({
                 "px-5 pt-6 pb-2",
                 "shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)]",
                 "border cursor-pointer transition-all duration-200",
-                error
-                  ? "border-destructive"
-                  : isFocused
-                    ? "border-primary"
-                    : "border-transparent",
-                className
+                error ? "border-destructive" : isFocused ? "border-primary" : "border-transparent",
+                className,
               ),
 
-            valueContainer: () =>
-              cn("m-0 p-0", leftIcon && "pl-7", rightIcon && "pr-7"),
+            valueContainer: () => cn("m-0 p-0", leftIcon && "pl-7", rightIcon && "pr-7"),
 
             input: () => "m-0 p-0 text-sm text-foreground",
 
@@ -187,7 +179,7 @@ const SelectBox = ({
               cn(
                 "cursor-pointer px-4 py-3 text-sm transition-colors",
                 isFocused && "bg-muted",
-                isSelected && "bg-primary/10 text-primary"
+                isSelected && "bg-primary/10 text-primary",
               ),
 
             noOptionsMessage: () => "px-4 py-3 text-sm text-muted-foreground",
@@ -204,7 +196,6 @@ const SelectBox = ({
       {error && <p className="mt-1 px-1 text-[12px] text-destructive">{error}</p>}
     </div>
   );
-
 };
 
 export default SelectBox;

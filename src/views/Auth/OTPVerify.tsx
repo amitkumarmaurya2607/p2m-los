@@ -18,12 +18,12 @@ type OTPVerifyProps = {
   userId: string;
 };
 
-function OTPVerify({ resend = () => { }, method, userName, back, userId }: OTPVerifyProps) {
+function OTPVerify({ resend = () => {}, method, userName, back, userId }: OTPVerifyProps) {
   const router = useRouter();
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isRedirect, setIsRedirect] = useState(false)
+  const [isRedirect, setIsRedirect] = useState(false);
 
   const maskedValue = method === "email" ? maskEmail(userName) : maskMobile(userName);
 
@@ -42,7 +42,7 @@ function OTPVerify({ resend = () => { }, method, userName, back, userId }: OTPVe
         mobileNumber: userName,
         userId: userId,
         otp: otp,
-      }
+      };
       const result = await verifyOTPAction(payload);
       // Debugging line
       if (result?.error) {
@@ -69,8 +69,9 @@ function OTPVerify({ resend = () => { }, method, userName, back, userId }: OTPVe
     >
       <StepCard
         title="Verify OTP"
-        subtitle={`We've sent a 6-digit code to your ${method === "email" ? "email" : "mobile number"
-          } (${maskedValue})`}
+        subtitle={`We've sent a 6-digit code to your ${
+          method === "email" ? "email" : "mobile number"
+        } (${maskedValue})`}
         className="w-full max-w-[448px]"
         back={back}
       >

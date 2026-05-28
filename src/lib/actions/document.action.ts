@@ -1,7 +1,11 @@
 "use server";
 
 import { saveStepCookie } from "@/lib/step-cookie";
-import { uploadAccountStatement, uploadAddressProof, updateAlternateMobile } from "@/lib/services/document.service";
+import {
+  uploadAccountStatement,
+  uploadAddressProof,
+  updateAlternateMobile,
+} from "@/lib/services/document.service";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
 
 export async function submitAccountStatementAction(formData: FormData) {
@@ -32,9 +36,11 @@ export async function submitAddressProofAction(formData: FormData) {
   }
 }
 
-export async function submitAlternateMobileAction(
-  contact: { mobileNumber: string; name: string; relationType: string }
-) {
+export async function submitAlternateMobileAction(contact: {
+  mobileNumber: string;
+  name: string;
+  relationType: string;
+}) {
   try {
     const result = await updateAlternateMobile(contact);
     if (result.code !== "0000") {

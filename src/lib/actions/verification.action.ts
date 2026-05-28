@@ -1,6 +1,13 @@
 "use server";
 
-import { verifyPAN, digiLockerApi, sendAadhaarOTP, verifyAadhaarOTP, verifyBank, submitEmployment } from "@/lib/services/verification.service";
+import {
+  verifyPAN,
+  digiLockerApi,
+  sendAadhaarOTP,
+  verifyAadhaarOTP,
+  verifyBank,
+  submitEmployment,
+} from "@/lib/services/verification.service";
 import { saveStepCookie } from "@/lib/step-cookie";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
 
@@ -29,15 +36,14 @@ export async function verifyPANAction(panNumber: string) {
 export async function digiLockerAction() {
   try {
     const result = await digiLockerApi();
-    if (result.code !== "0000") return { error: result.message || "digiLocker verification failed" };
+    if (result.code !== "0000")
+      return { error: result.message || "digiLocker verification failed" };
     return { success: true as const, data: result.data };
   } catch (err) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "digiLocker failed") };
   }
 }
-
-
 
 export async function verifyBankAction(data: {
   userId: string;
@@ -73,10 +79,7 @@ export async function saveGeoLocationAction(data: {
   }
 }
 
-export async function saveLocationCookiesAction(data: {
-  latitude: number;
-  longitude: number;
-}) {
+export async function saveLocationCookiesAction(data: { latitude: number; longitude: number }) {
   try {
     const { cookies } = await import("next/headers");
     const cookieStore = await cookies();

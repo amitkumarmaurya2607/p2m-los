@@ -37,7 +37,7 @@ function PersonalInfo() {
 
   const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState(false);
-  const [isRedirect, setIsRedirect] = useState(false)
+  const [isRedirect, setIsRedirect] = useState(false);
 
   const handleChange = (key: string, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -221,8 +221,6 @@ function PersonalInfo() {
             require
           />
         </div>
-
-
 
         <div>
           <h3 className="text-lg font-semibold mb-4">Address Details</h3>

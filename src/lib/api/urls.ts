@@ -1,5 +1,4 @@
-
-const losService = '/los-service';
+const losService = "/los-service";
 export const API = {
   auth: {
     sendOTP: `${losService}/api/mobile/genOtp`,
@@ -8,7 +7,7 @@ export const API = {
   pan: {
     verify: `${losService}/api/kyc/pan/verify`,
   },
-    personalInfo: {
+  personalInfo: {
     submit: `${losService}/api/kyc/update/personalDetail`,
   },
   aadhaar: {

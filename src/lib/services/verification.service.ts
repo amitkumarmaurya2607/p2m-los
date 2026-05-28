@@ -2,9 +2,9 @@ import { apiPost } from "@/lib/axios";
 import { API } from "@/lib/api/urls";
 import type { ApiResponse } from "@/types";
 
-export async function verifyPAN(panNumber: string): Promise<
-  ApiResponse<{ number?: string; fullName?: string; verified?: boolean }>
-> {
+export async function verifyPAN(
+  panNumber: string,
+): Promise<ApiResponse<{ number?: string; fullName?: string; verified?: boolean }>> {
   return apiPost<ApiResponse<{ number?: string; fullName?: string; verified?: boolean }>>(
     API.pan.verify,
     { pan: panNumber },

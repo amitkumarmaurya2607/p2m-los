@@ -15,10 +15,11 @@ function headersToRecord(headers: unknown): Record<string, string> {
 
 async function handleServer401(): Promise<never> {
   if (typeof window === "undefined") {
-    const { deleteSession } = await import("@/lib/session") as typeof import("@/lib/session");
-    const { deleteStepCookie } = await import("@/lib/step-cookie") as typeof import("@/lib/step-cookie");
-    const { redirect } = await import("next/navigation") as typeof import("next/navigation");
-    const { cookies: getCookies } = await import("next/headers") as typeof import("next/headers");
+    const { deleteSession } = (await import("@/lib/session")) as typeof import("@/lib/session");
+    const { deleteStepCookie } =
+      (await import("@/lib/step-cookie")) as typeof import("@/lib/step-cookie");
+    const { redirect } = (await import("next/navigation")) as typeof import("next/navigation");
+    const { cookies: getCookies } = (await import("next/headers")) as typeof import("next/headers");
     await deleteSession();
     await deleteStepCookie();
     const cookieStore = await getCookies();
@@ -50,9 +51,11 @@ function createClient(): AxiosInstance {
       const cookieStore = await cookies();
       const lat = cookieStore.get("p2m-lat")?.value;
       const lng = cookieStore.get("p2m-lng")?.value;
-      if (lat) config.headers["X-User-Location"] = lat,lng;
+      if (lat) ((config.headers["X-User-Location"] = lat), lng);
       const method = (config.method?.toUpperCase() ?? "GET") as string;
-      const url = config.baseURL ? config.url?.replace(config.baseURL, "") ?? config.url ?? "" : config.url ?? "";
+      const url = config.baseURL
+        ? (config.url?.replace(config.baseURL, "") ?? config.url ?? "")
+        : (config.url ?? "");
 
       (config as unknown as Record<string, unknown>)._reqStart = Date.now();
 
@@ -70,7 +73,9 @@ function createClient(): AxiosInstance {
     (response) => {
       const method = (response.config.method?.toUpperCase() ?? "GET") as string;
       const url = response.config.url ?? "";
-      const start = (response.config as unknown as Record<string, unknown>)._reqStart as number | undefined;
+      const start = (response.config as unknown as Record<string, unknown>)._reqStart as
+        | number
+        | undefined;
       const duration = start ? Date.now() - start : 0;
 
       logApiResponse("outgoing", method, url, response.status, duration, response.data);
@@ -80,7 +85,9 @@ function createClient(): AxiosInstance {
     (error: AxiosError) => {
       const method = (error.config?.method?.toUpperCase() ?? "GET") as string;
       const url = error.config?.url ?? "";
-      const start = (error.config as unknown as Record<string, unknown>)?._reqStart as number | undefined;
+      const start = (error.config as unknown as Record<string, unknown>)?._reqStart as
+        | number
+        | undefined;
       const duration = start ? Date.now() - start : 0;
       const status = error.response?.status ?? 0;
 

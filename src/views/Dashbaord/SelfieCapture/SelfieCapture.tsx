@@ -15,10 +15,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import {
-  FaceLandmarker,
-  FilesetResolver,
-} from "@mediapipe/tasks-vision";
+import { FaceLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
 
 import GradientButton from "@/components/ui/GradientButton";
 
@@ -42,20 +39,15 @@ function SelfieCapture({ onSubmit }: Props) {
 
   const webcamRef = useRef<Webcam>(null);
 
-  const [faceLandmarker, setFaceLandmarker] =
-    useState<FaceLandmarker | null>(null);
+  const [faceLandmarker, setFaceLandmarker] = useState<FaceLandmarker | null>(null);
 
-  const [capturedImage, setCapturedImage] =
-    useState<string | null>(null);
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
 
-  const [capturedBlob, setCapturedBlob] =
-    useState<Blob | null>(null);
+  const [capturedBlob, setCapturedBlob] = useState<Blob | null>(null);
 
-  const [status, setStatus] =
-    useState<CaptureStatus>("loading");
+  const [status, setStatus] = useState<CaptureStatus>("loading");
 
-  const [submitting, setSubmitting] =
-    useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const blinkedRef = useRef(false);
 
@@ -152,21 +144,17 @@ function SelfieCapture({ onSubmit }: Props) {
   async function loadModel() {
     try {
       const vision = await FilesetResolver.forVisionTasks(
-        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm",
       );
 
-      const landmarker =
-        await FaceLandmarker.createFromOptions(
-          vision,
-          {
-            baseOptions: {
-              modelAssetPath:
-                "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task",
-            },
-            runningMode: "VIDEO",
-            numFaces: 1,
-          }
-        );
+      const landmarker = await FaceLandmarker.createFromOptions(vision, {
+        baseOptions: {
+          modelAssetPath:
+            "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task",
+        },
+        runningMode: "VIDEO",
+        numFaces: 1,
+      });
 
       setFaceLandmarker(landmarker);
 
@@ -174,12 +162,10 @@ function SelfieCapture({ onSubmit }: Props) {
     } catch (error) {
       console.error(error);
 
-      showToast(
-        {
-          type: "error",
-          message: "Failed to initialize camera AI"
-        }
-      );
+      showToast({
+        type: "error",
+        message: "Failed to initialize camera AI",
+      });
     }
   }
 
@@ -188,11 +174,7 @@ function SelfieCapture({ onSubmit }: Props) {
     if (!faceLandmarker) return;
 
     const interval = setInterval(async () => {
-      if (
-        !webcamRef.current ||
-        !webcamRef.current.video ||
-        isCapturedRef.current
-      ) {
+      if (!webcamRef.current || !webcamRef.current.video || isCapturedRef.current) {
         return;
       }
 
@@ -208,11 +190,7 @@ function SelfieCapture({ onSubmit }: Props) {
         return;
       }
 
-      const results =
-        faceLandmarker.detectForVideo(
-          video,
-          performance.now()
-        );
+      const results = faceLandmarker.detectForVideo(video, performance.now());
 
       // NO FACE
       if (!results.faceLandmarks.length) {
@@ -228,9 +206,7 @@ function SelfieCapture({ onSubmit }: Props) {
       const top = landmarks[159];
       const bottom = landmarks[145];
 
-      const eyeOpenDistance = Math.abs(
-        top.y - bottom.y
-      );
+      const eyeOpenDistance = Math.abs(top.y - bottom.y);
 
       // EYES CLOSED
       if (eyeOpenDistance < 0.01) {
@@ -238,20 +214,15 @@ function SelfieCapture({ onSubmit }: Props) {
       }
 
       // EYES OPENED AGAIN
-      if (
-        blinkedRef.current &&
-        eyeOpenDistance > 0.02
-      ) {
+      if (blinkedRef.current && eyeOpenDistance > 0.02) {
         blinkedRef.current = false;
 
         setStatus("capturing");
 
-        const imageSrc =
-          webcamRef.current.getScreenshot();
+        const imageSrc = webcamRef.current.getScreenshot();
 
         if (imageSrc) {
-          const blob =
-            await convertBase64ToBlob(imageSrc);
+          const blob = await convertBase64ToBlob(imageSrc);
 
           isCapturedRef.current = true;
 
@@ -272,9 +243,7 @@ function SelfieCapture({ onSubmit }: Props) {
   }, [faceLandmarker, retakeKey]);
 
   // CONVERT IMAGE TO BLOB
-  async function convertBase64ToBlob(
-    imageSrc: string
-  ) {
+  async function convertBase64ToBlob(imageSrc: string) {
     const response = await fetch(imageSrc);
 
     return await response.blob();
@@ -304,19 +273,11 @@ function SelfieCapture({ onSubmit }: Props) {
 
       const formData = new FormData();
 
-      formData.append(
-        "mediaFile",
-        capturedBlob,
-        `selfie-${Date.now()}.jpg`
-      );
+      formData.append("mediaFile", capturedBlob, `selfie-${Date.now()}.jpg`);
 
-      formData.append(
-        "data",
-        JSON.stringify({ mediaType: "IMAGE" }),
-      );
+      formData.append("data", JSON.stringify({ mediaType: "IMAGE" }));
 
-      const result =
-        await submitSelfieAction(formData);
+      const result = await submitSelfieAction(formData);
 
       if (result?.error) {
         showToast({ type: "error", message: result?.error });
@@ -326,21 +287,17 @@ function SelfieCapture({ onSubmit }: Props) {
       setIsRedirect(true);
       router.push("/address-proof");
 
-      showToast(
-        {
-          type: "success",
-          message: "Selfie uploaded successfully"
-        }
-      );
+      showToast({
+        type: "success",
+        message: "Selfie uploaded successfully",
+      });
     } catch (error) {
       console.error(error);
 
-      showToast(
-        {
-          type: "error",
-          message: "Failed to upload selfie"
-        }
-      );
+      showToast({
+        type: "error",
+        message: "Failed to upload selfie",
+      });
     } finally {
       setSubmitting(false);
     }
@@ -350,30 +307,54 @@ function SelfieCapture({ onSubmit }: Props) {
     <div className="space-y-5">
       {cameraPermission === "denied" && !capturedImage && (
         <div className="flex flex-col items-center py-10">
-          <div className="flex h-24 w-24 items-center justify-center rounded-full bg-destructive/10 mb-6">
+          <div
+            className="flex h-24 w-24 items-center justify-center rounded-full bg-destructive/10
+              mb-6"
+          >
             <ShieldAlert className="h-12 w-12 text-destructive" />
           </div>
           <h3 className="text-lg font-bold text-text-heading mb-2">Camera Access Denied</h3>
           <p className="text-center text-text-muted mb-4 max-w-sm">
             Camera access is blocked. Please enable camera permissions to continue.
           </p>
-          <div className="rounded-xl border border-border-light bg-surface p-4 max-w-sm w-full text-sm text-text-muted space-y-2">
+          <div
+            className="rounded-xl border border-border-light bg-surface p-4 max-w-sm w-full text-sm
+              text-text-muted space-y-2"
+          >
             <p className="font-semibold text-text-heading">How to enable:</p>
             {isMobile && os === "android" ? (
               <ol className="list-decimal list-inside space-y-1">
-                <li>Open <strong>Settings</strong> on your device</li>
-                <li>Go to <strong>Apps</strong> &gt; <strong>Chrome</strong></li>
-                <li>Tap <strong>Permissions</strong></li>
-                <li>Tap <strong>Camera</strong></li>
-                <li>Select <strong>Allow</strong></li>
+                <li>
+                  Open <strong>Settings</strong> on your device
+                </li>
+                <li>
+                  Go to <strong>Apps</strong> &gt; <strong>Chrome</strong>
+                </li>
+                <li>
+                  Tap <strong>Permissions</strong>
+                </li>
+                <li>
+                  Tap <strong>Camera</strong>
+                </li>
+                <li>
+                  Select <strong>Allow</strong>
+                </li>
                 <li>Return here and tap "Try Again" below</li>
               </ol>
             ) : isMobile && os === "ios" ? (
               <ol className="list-decimal list-inside space-y-1">
-                <li>Open <strong>Settings</strong> on your device</li>
-                <li>Scroll down and tap <strong>Safari</strong></li>
-                <li>Tap <strong>Camera</strong></li>
-                <li>Select <strong>Allow</strong></li>
+                <li>
+                  Open <strong>Settings</strong> on your device
+                </li>
+                <li>
+                  Scroll down and tap <strong>Safari</strong>
+                </li>
+                <li>
+                  Tap <strong>Camera</strong>
+                </li>
+                <li>
+                  Select <strong>Allow</strong>
+                </li>
                 <li>Return here and tap "Try Again" below</li>
               </ol>
             ) : (
@@ -389,7 +370,8 @@ function SelfieCapture({ onSubmit }: Props) {
             <button
               type="button"
               onClick={openSystemSettings}
-              className="mt-3 text-sm font-semibold text-primary underline underline-offset-2 hover:text-primary/80"
+              className="mt-3 text-sm font-semibold text-primary underline underline-offset-2
+                hover:text-primary/80"
             >
               Open System Settings
             </button>
@@ -406,7 +388,10 @@ function SelfieCapture({ onSubmit }: Props) {
 
       {cameraPermission === "unavailable" && !capturedImage && (
         <div className="flex flex-col items-center py-10">
-          <div className="flex h-24 w-24 items-center justify-center rounded-full bg-destructive/10 mb-6">
+          <div
+            className="flex h-24 w-24 items-center justify-center rounded-full bg-destructive/10
+              mb-6"
+          >
             <Globe className="h-12 w-12 text-destructive" />
           </div>
           <h3 className="text-lg font-bold text-text-heading mb-2">Camera Not Supported</h3>
@@ -441,12 +426,18 @@ function SelfieCapture({ onSubmit }: Props) {
 
             {/* FACE FRAME */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-[200px] h-[260px] sm:w-[220px] sm:h-[290px] border-[3px] border-white/90 rounded-[120px] shadow-[0_0_0_9999px_rgba(0,0,0,0.35)]" />
+              <div
+                className="w-[200px] h-[260px] sm:w-[220px] sm:h-[290px] border-[3px]
+                  border-white/90 rounded-[120px] shadow-[0_0_0_9999px_rgba(0,0,0,0.35)]"
+              />
             </div>
 
             {/* STATUS */}
             <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20">
-              <div className="px-4 py-2 rounded-full bg-black/70 backdrop-blur-md text-white text-sm flex items-center gap-2">
+              <div
+                className="px-4 py-2 rounded-full bg-black/70 backdrop-blur-md text-white text-sm
+                  flex items-center gap-2"
+              >
                 {status === "loading" && (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -487,12 +478,8 @@ function SelfieCapture({ onSubmit }: Props) {
 
           {/* BOTTOM GUIDE */}
           <div className="bg-black/60 backdrop-blur-md rounded-2xl px-4 py-3 text-center text-white">
-            <p className="text-sm font-medium">
-              Position your face inside the frame
-            </p>
-            <p className="text-xs text-white/70 mt-1">
-              Auto capture will happen after eye blink
-            </p>
+            <p className="text-sm font-medium">Position your face inside the frame</p>
+            <p className="text-xs text-white/70 mt-1">Auto capture will happen after eye blink</p>
           </div>
         </>
       )}
@@ -511,27 +498,34 @@ function SelfieCapture({ onSubmit }: Props) {
               {/* SUCCESS OVERLAY */}
               {showPopup && (
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center p-4">
-                  <div className="bg-white rounded-3xl p-5 text-center max-w-[280px] shadow-2xl relative">
+                  <div
+                    className="bg-white rounded-3xl p-5 text-center max-w-[280px] shadow-2xl
+                      relative"
+                  >
                     <button
                       onClick={() => setShowPopup(false)}
-                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition"
+                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-muted flex
+                        items-center justify-center hover:bg-muted/80 transition"
                     >
                       <X className="w-4 h-4 text-text-muted" />
                     </button>
-                    <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+                    <div
+                      className="w-20 h-20 rounded-full bg-green-100 flex items-center
+                        justify-center mx-auto mb-4"
+                    >
                       <ShieldCheck className="w-10 h-10 text-green-600" />
                     </div>
 
-                    <h3 className="text-xl font-bold mb-2">
-                      Selfie Captured
-                    </h3>
+                    <h3 className="text-xl font-bold mb-2">Selfie Captured</h3>
 
                     <p className="text-sm text-muted-foreground mb-5">
-                      Your selfie has been securely captured
-                      for identity verification.
+                      Your selfie has been securely captured for identity verification.
                     </p>
 
-                    <div className="flex items-center justify-center gap-2 text-green-600 text-sm font-medium">
+                    <div
+                      className="flex items-center justify-center gap-2 text-green-600 text-sm
+                        font-medium"
+                    >
                       <CheckCircle2 className="w-4 h-4" />
                       Verification Ready
                     </div>
@@ -548,13 +542,18 @@ function SelfieCapture({ onSubmit }: Props) {
               disabled={submitting || isRedirect}
               className="w-full"
             >
-              {isRedirect ? "Redirecting..." : submitting ? "Uploading..." : "Continue Verification"}
+              {isRedirect
+                ? "Redirecting..."
+                : submitting
+                  ? "Uploading..."
+                  : "Continue Verification"}
             </GradientButton>
 
             <button
               onClick={retakePhoto}
               disabled={submitting || isRedirect}
-              className="w-full border rounded-xl py-3 text-sm font-medium flex items-center justify-center gap-2 hover:bg-muted transition disabled:opacity-50"
+              className="w-full border rounded-xl py-3 text-sm font-medium flex items-center
+                justify-center gap-2 hover:bg-muted transition disabled:opacity-50"
             >
               <RefreshCw className="w-4 h-4" />
               Retake Selfie

@@ -4,9 +4,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import StepCard from "../componants/StepCard";
 import GradientButton from "@/components/ui/GradientButton";
 import { ArrowRight, CheckCircle2, Fingerprint, ShieldCheck, XCircle } from "lucide-react";
-import { digiLockerAction, handleDigiLockerCallbackAction } from "@/lib/actions/verification.action";
+import {
+  digiLockerAction,
+  handleDigiLockerCallbackAction,
+} from "@/lib/actions/verification.action";
 import { showToast } from "@/lib/toast";
-
 
 function AadhaarDetails() {
   const router = useRouter();
@@ -39,27 +41,26 @@ function AadhaarDetails() {
 
   const handleContinue = useCallback(async () => {
     try {
-      setLoadin(true)
+      setLoadin(true);
       const res = await handleDigiLockerCallbackAction();
 
       if (res?.success) {
         setIsRedirect(true);
         router.push("/bank-details");
         showToast({ message: "Aadhaar verified successfully!", type: "success" });
-        return
+        return;
       } else if (res?.error) {
         showToast({ message: "Aadhaar  verification failed", type: "error" });
         return;
       }
-
-
     } catch (err) {
-
-      showToast({ message: err instanceof Error ? err.message : "Something went wrong", type: "error" });
+      showToast({
+        message: err instanceof Error ? err.message : "Something went wrong",
+        type: "error",
+      });
     } finally {
       setLoadin(false);
     }
-
   }, [router]);
 
   useEffect(() => {
@@ -79,13 +80,14 @@ function AadhaarDetails() {
           icon={<XCircle className="w-6 h-6 text-destructive" />}
         >
           <div className="flex flex-col items-center text-center py-6">
-            <div className="w-24 h-24 rounded-full bg-destructive/10 flex items-center justify-center mb-5">
+            <div
+              className="w-24 h-24 rounded-full bg-destructive/10 flex items-center justify-center
+                mb-5"
+            >
               <XCircle className="w-14 h-14 text-destructive" />
             </div>
 
-            <h2 className="text-2xl font-bold mb-2">
-              Verification Failed
-            </h2>
+            <h2 className="text-2xl font-bold mb-2">Verification Failed</h2>
 
             <p className="text-sm text-muted-foreground max-w-md mb-6">
               {errMsg || "The verification process was not completed. Please try again."}
@@ -110,7 +112,6 @@ function AadhaarDetails() {
               rightIcon={<ArrowRight className="w-4 h-4 ml-2" />}
             >
               Try Again
-
             </GradientButton>
           </div>
         </StepCard>
@@ -130,13 +131,11 @@ function AadhaarDetails() {
             <ShieldCheck className="w-14 h-14 text-green-600" />
           </div>
 
-          <h2 className="text-2xl font-bold mb-2">
-            Aadhaar Verified Successfully
-          </h2>
+          <h2 className="text-2xl font-bold mb-2">Aadhaar Verified Successfully</h2>
 
           <p className="text-sm text-muted-foreground max-w-md mb-6">
-            Your identity has been securely verified through DigiLocker.
-            You can now continue with the next step of your application.
+            Your identity has been securely verified through DigiLocker. You can now continue with
+            the next step of your application.
           </p>
 
           <div className="w-full rounded-2xl border bg-muted/40 p-4 text-left mb-6">
@@ -145,8 +144,7 @@ function AadhaarDetails() {
               <div>
                 <p className="font-medium text-sm">Verification Completed</p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Your Aadhaar details were validated securely using
-                  DigiLocker authentication.
+                  Your Aadhaar details were validated securely using DigiLocker authentication.
                 </p>
               </div>
             </div>
@@ -158,9 +156,7 @@ function AadhaarDetails() {
             disabled={isRedirect || loading}
             rightIcon={!isRedirect && !loading && <ArrowRight className="w-4 h-4 ml-2" />}
           >
-
             {isRedirect ? "Redirecting..." : loading ? "Verifying..." : " Continue"}
-
           </GradientButton>
         </div>
       </StepCard>
@@ -185,9 +181,7 @@ function AadhaarDetails() {
       }}
     >
       {digiLockerLoading && (
-        <div className="text-center text-sm text-muted-foreground mb-4">
-          Loading DigiLocker...
-        </div>
+        <div className="text-center text-sm text-muted-foreground mb-4">Loading DigiLocker...</div>
       )}
 
       {digiLockerError && (
@@ -203,12 +197,7 @@ function AadhaarDetails() {
         <div className="mb-4">
           <GradientButton
             type="button"
-            onClick={() =>
-              window.open(
-                (digiLockerData as any).DIGI_KYC_URL,
-                "_blank",
-              )
-            }
+            onClick={() => window.open((digiLockerData as any).DIGI_KYC_URL, "_blank")}
             className="w-full"
           >
             Verify with DigiLocker

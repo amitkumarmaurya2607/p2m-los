@@ -19,7 +19,7 @@ export interface LogEntry {
 export interface ApiResponse<T> {
   data?: T;
   success?: boolean;
-    msg?: string;
+  msg?: string;
   errorCodeList?: unknown[];
   code: string;
   message?: string;

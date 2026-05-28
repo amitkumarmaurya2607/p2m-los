@@ -24,8 +24,7 @@ function GeoLocation() {
   const [permissionState, setPermissionState] = useState<
     "prompt" | "granted" | "denied" | "unavailable"
   >("prompt");
-  const [isRedirect, setIsRedirect] = useState(false)
-
+  const [isRedirect, setIsRedirect] = useState(false);
 
   const [isMobile] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -217,19 +216,37 @@ function GeoLocation() {
               <p className="font-semibold text-text-heading">How to enable:</p>
               {isMobile && os === "android" ? (
                 <ol className="list-decimal list-inside space-y-1">
-                  <li>Open <strong>Settings</strong> on your device</li>
-                  <li>Go to <strong>Apps</strong> &gt; <strong>Chrome</strong></li>
-                  <li>Tap <strong>Permissions</strong></li>
-                  <li>Tap <strong>Location</strong></li>
-                  <li>Select <strong>Allow</strong></li>
+                  <li>
+                    Open <strong>Settings</strong> on your device
+                  </li>
+                  <li>
+                    Go to <strong>Apps</strong> &gt; <strong>Chrome</strong>
+                  </li>
+                  <li>
+                    Tap <strong>Permissions</strong>
+                  </li>
+                  <li>
+                    Tap <strong>Location</strong>
+                  </li>
+                  <li>
+                    Select <strong>Allow</strong>
+                  </li>
                   <li>Return here and tap "Try Again" below</li>
                 </ol>
               ) : isMobile && os === "ios" ? (
                 <ol className="list-decimal list-inside space-y-1">
-                  <li>Open <strong>Settings</strong> on your device</li>
-                  <li>Scroll down and tap <strong>Safari</strong></li>
-                  <li>Tap <strong>Location</strong></li>
-                  <li>Select <strong>Allow</strong></li>
+                  <li>
+                    Open <strong>Settings</strong> on your device
+                  </li>
+                  <li>
+                    Scroll down and tap <strong>Safari</strong>
+                  </li>
+                  <li>
+                    Tap <strong>Location</strong>
+                  </li>
+                  <li>
+                    Select <strong>Allow</strong>
+                  </li>
                   <li>Return here and tap "Try Again" below</li>
                 </ol>
               ) : (
@@ -245,7 +262,8 @@ function GeoLocation() {
               <button
                 type="button"
                 onClick={openSystemSettings}
-                className="mt-3 text-sm font-semibold text-primary underline underline-offset-2 hover:text-primary/80"
+                className="mt-3 text-sm font-semibold text-primary underline underline-offset-2
+                  hover:text-primary/80"
               >
                 Open System Settings
               </button>
@@ -329,7 +347,12 @@ function GeoLocation() {
             </div>
 
             <div className="flex gap-3">
-              <GradientButton type="button" onClick={handleSubmit} disabled={isRedirect || loading} className="flex-1">
+              <GradientButton
+                type="button"
+                onClick={handleSubmit}
+                disabled={isRedirect || loading}
+                className="flex-1"
+              >
                 {isRedirect ? "Redirecting..." : loading ? "Saving..." : "Verify & Continue"}
               </GradientButton>
             </div>

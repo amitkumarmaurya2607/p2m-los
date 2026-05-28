@@ -13,7 +13,7 @@ function PanDetails() {
   const [pan, setPan] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isRedirect, setIsRedirect] = useState(false)
+  const [isRedirect, setIsRedirect] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = sanitizePAN(e.target.value);
@@ -47,13 +47,12 @@ function PanDetails() {
           message: "PAN verified successfully!",
           type: "success",
         });
-        setIsRedirect(true)
+        setIsRedirect(true);
         router.push("/personal-info");
       } else if (result?.error) {
         setError(result?.error || "PAN verification failed");
         return;
       }
-
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -89,9 +88,13 @@ function PanDetails() {
           require
         />
 
-        <GradientButton type="submit" className="mt-8 w-full" disabled={isRedirect || loading} rightIcon={!loading && !isRedirect && <ChevronRight className="w-5 h-5" />}>
+        <GradientButton
+          type="submit"
+          className="mt-8 w-full"
+          disabled={isRedirect || loading}
+          rightIcon={!loading && !isRedirect && <ChevronRight className="w-5 h-5" />}
+        >
           {isRedirect ? "Redirecting..." : loading ? "Verifying..." : "Verify PAN"}
-
         </GradientButton>
       </form>
     </StepCard>

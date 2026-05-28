@@ -21,12 +21,13 @@ function BankDetails() {
   const [verified, setVerified] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
 
-  const userId = typeof window !== "undefined"
-    ? document.cookie
-      .split("; ")
-      .find((r) => r.startsWith("p2m-user-id="))
-      ?.split("=")[1] || ""
-    : "";
+  const userId =
+    typeof window !== "undefined"
+      ? document.cookie
+          .split("; ")
+          .find((r) => r.startsWith("p2m-user-id="))
+          ?.split("=")[1] || ""
+      : "";
 
   const handleChange = (key: string, value: string) => {
     let v = value;
@@ -91,13 +92,11 @@ function BankDetails() {
           type: "success",
         });
         return;
-
       }
 
       const errorMsg = result?.error || "Something went wrong";
       setErrors((prev: any) => ({ ...prev, bank: errorMsg }));
       showToast({ message: errorMsg, type: "error" });
-
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Something went wrong";
       showToast({ message: msg, type: "error" });
@@ -248,9 +247,7 @@ function BankDetails() {
           </p>
         </div>
 
-        {errors.bank && (
-          <p className="text-sm text-destructive text-center">{errors.bank}</p>
-        )}
+        {errors.bank && <p className="text-sm text-destructive text-center">{errors.bank}</p>}
 
         {/* Button */}
         <GradientButton type="submit" className="w-full mt-4 sm:mt-6" disabled={loading}>
