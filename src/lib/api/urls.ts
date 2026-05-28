@@ -47,6 +47,9 @@ export const API = {
   lookup: {
     schemes: "/lookup/schemes",
   },
+  loan: {
+    program: `${losService}/api/loan/program`,
+  },
   progress: {
     save: "/application/progress",
     get: "/application/progress",

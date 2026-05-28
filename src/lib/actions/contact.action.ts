@@ -6,9 +6,10 @@ import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
 export async function submitContactAction(data: { name: string; email: string; message: string }) {
   try {
     const result = await submitContact(data);
-    return { success: result.success, data: result.data, error: null };
+    if (result.code !== "0000") return { error: result.message || "Failed to send message" };
+    return { success: true as const };
   } catch (err) {
     rethrowIfRedirect(err);
-    return { success: false, data: null, error: getErrorMessage(err, "Failed to send message") };
+    return { error: getErrorMessage(err, "Failed to send message") };
   }
 }

@@ -98,6 +98,9 @@ function BankDetails() {
       setErrors((prev: any) => ({ ...prev, bank: errorMsg }));
       showToast({ message: errorMsg, type: "error" });
 
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Something went wrong";
+      showToast({ message: msg, type: "error" });
     } finally {
       setLoading(false);
     }

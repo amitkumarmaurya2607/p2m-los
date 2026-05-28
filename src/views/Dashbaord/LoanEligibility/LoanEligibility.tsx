@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import GradientButton from "@/components/ui/GradientButton";
 import { showToast } from "@/lib/toast";
-import { submitApplicationAction } from "@/lib/actions/application.action";
+import { submitApplicationAction, getLoanProgramsAction } from "@/lib/actions/apply.action";
 import StepCard from "../componants/StepCard";
 import PulseDot from "@/components/PulseDot";
 
@@ -53,6 +53,19 @@ function LoanEligibility() {
   const [tenure, setTenure] = useState(36);
   const [agreed, setAgreed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [programs, setPrograms] = useState<unknown[]>([]);
+
+  useEffect(() => {
+    getLoanProgramsAction()
+      .then((res) => {
+        if ("error" in res) {
+          showToast({ message: res.error || "Something went wrong", type: "error" });
+          return;
+        }
+        setPrograms(res.data);
+      })
+      .catch(() => {});
+  }, []);
 
   const interestRate = 10.5;
   const maxEligible = 1500000;

@@ -5,6 +5,7 @@ import { Send, CheckCircle2, Loader2 } from "lucide-react";
 import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import { submitContactAction } from "@/lib/actions/contact.action";
+import { showToast } from "@/lib/toast";
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,6 +27,8 @@ export default function ContactForm() {
     setIsSubmitting(false);
     if (result.success) {
       setIsSubmitted(true);
+    } else {
+      showToast({ message: result.error || "Something went wrong", type: "error" });
     }
   };
 

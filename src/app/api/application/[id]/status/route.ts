@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { getApplicationStatus } from "@/lib/services/application.service";
+import { getApplicationStatus } from "@/lib/services/apply.service";
 import { withApiLogging } from "@/lib/api-logger";
 
 async function getHandler(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
