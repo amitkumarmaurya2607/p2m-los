@@ -28,7 +28,6 @@ function PersonalInfo() {
     fatherName: "",
     email: "",
     dob: "",
-    salary: "",
     state: "",
     city: "",
     pincode: "",
@@ -60,7 +59,6 @@ function PersonalInfo() {
     }
 
     if (!form.dob) newErrors.dob = "Date of birth is required";
-    if (!form.salary) newErrors.salary = "Salary is required";
 
     if (!form.pincode) {
       newErrors.pincode = "Pincode is required";
@@ -215,18 +213,6 @@ function PersonalInfo() {
           />
 
           <TextInput
-            label="Monthly Salary"
-            value={form.salary}
-            onChange={(e) => handleChange("salary", sanitizeNumeric(e.target.value))}
-            error={errors.salary}
-            require
-          />
-        </div>
-
-        <div>
-          <h3 className="text-lg font-semibold mb-4">Contact Details</h3>
-
-          <TextInput
             type="email"
             label="Email"
             value={form.email}
@@ -235,6 +221,8 @@ function PersonalInfo() {
             require
           />
         </div>
+
+
 
         <div>
           <h3 className="text-lg font-semibold mb-4">Address Details</h3>
@@ -279,7 +267,7 @@ function PersonalInfo() {
           </div>
         </div>
 
-        <GradientButton type="submit" className="w-full mt-4" disabled={loading}>
+        <GradientButton type="submit" className="w-full mt-4" disabled={loading || isRedirect}>
           {isRedirect ? "Redirecting..." : loading ? "Submitting..." : "Submit & Continue"}
         </GradientButton>
       </form>

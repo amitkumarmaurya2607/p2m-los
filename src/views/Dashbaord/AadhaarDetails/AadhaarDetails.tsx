@@ -155,10 +155,12 @@ function AadhaarDetails() {
           <GradientButton
             className="w-full flex justify-center items-center"
             onClick={handleContinue}
+            disabled={isRedirect || loading}
+            rightIcon={!isRedirect && !loading && <ArrowRight className="w-4 h-4 ml-2" />}
           >
 
             {isRedirect ? "Redirecting..." : loading ? "Verifying..." : " Continue"}
-            {!isRedirect && !loading && <ArrowRight className="w-4 h-4 ml-2" />}
+
           </GradientButton>
         </div>
       </StepCard>

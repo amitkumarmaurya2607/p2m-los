@@ -9,6 +9,8 @@ import {
   RefreshCw,
   ScanFace,
   ShieldCheck,
+  ShieldAlert,
+  Globe,
   X,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -65,11 +67,88 @@ function SelfieCapture({ onSubmit }: Props) {
 
   const [isRedirect, setIsRedirect] = useState(false);
 
-  // LOAD MEDIAPIPE
+  const [cameraPermission, setCameraPermission] = useState<
+    "loading" | "prompt" | "granted" | "denied" | "unavailable"
+  >("loading");
+
+  const [isMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent,
+    );
+  });
+
+  const [os, setOs] = useState<"android" | "ios" | "other">("other");
+
+  const [browserPkg, setBrowserPkg] = useState<string>("com.android.chrome");
+
   useEffect(() => {
-    loadModel();
+    if (typeof window === "undefined") return;
+    const ua = navigator.userAgent;
+    if (/Android/i.test(ua)) {
+      setOs("android");
+      if (/Edg/i.test(ua)) setBrowserPkg("com.microsoft.emmx");
+      else if (/Firefox/i.test(ua)) setBrowserPkg("org.mozilla.firefox");
+      else if (/Samsung/i.test(ua)) setBrowserPkg("com.sec.android.app.sbrowser");
+      else if (/OPR|Opt/i.test(ua)) setBrowserPkg("com.opera.browser");
+      else setBrowserPkg("com.android.chrome");
+    } else if (/iPhone|iPad|iPod/i.test(ua)) {
+      setOs("ios");
+    }
   }, []);
 
+  useEffect(() => {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setCameraPermission("unavailable");
+      return;
+    }
+
+    if (navigator.permissions) {
+      navigator.permissions
+        .query({ name: "camera" as PermissionName })
+        .then((result) => {
+          setCameraPermission(result.state as "prompt" | "granted" | "denied");
+
+          if (result.state === "granted") {
+            loadModel();
+          }
+
+          result.onchange = () => {
+            setCameraPermission(result.state as "prompt" | "granted" | "denied");
+          };
+        })
+        .catch(() => {
+          setCameraPermission("prompt");
+        });
+    } else {
+      setCameraPermission("prompt");
+    }
+  }, []);
+
+  const openSystemSettings = () => {
+    if (os === "android") {
+      const intentUrl = `intent://settings/#Intent;action=android.settings.APPLICATION_DETAILS_SETTINGS;S:android.provider.extra.APP_PACKAGE=${browserPkg};end`;
+      const a = document.createElement("a");
+      a.href = intentUrl;
+      a.click();
+    } else if (os === "ios") {
+      window.location.href = "App-Prefs:root=Privacy&path=CAMERA";
+    }
+  };
+
+  const requestCameraAccess = async () => {
+    try {
+      setCameraPermission("loading");
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      stream.getTracks().forEach((track) => track.stop());
+      setCameraPermission("granted");
+      loadModel();
+    } catch {
+      setCameraPermission("denied");
+    }
+  };
+
+  // LOAD MEDIAPIPE
   async function loadModel() {
     try {
       const vision = await FilesetResolver.forVisionTasks(
@@ -269,10 +348,78 @@ function SelfieCapture({ onSubmit }: Props) {
 
   return (
     <div className="space-y-5">
-      {/* CAMERA CARD */}
-      <div className="relative overflow-hidden rounded-3xl border bg-black h-[350px]">
-        {!capturedImage ? (
-          <>
+      {cameraPermission === "denied" && !capturedImage && (
+        <div className="flex flex-col items-center py-10">
+          <div className="flex h-24 w-24 items-center justify-center rounded-full bg-destructive/10 mb-6">
+            <ShieldAlert className="h-12 w-12 text-destructive" />
+          </div>
+          <h3 className="text-lg font-bold text-text-heading mb-2">Camera Access Denied</h3>
+          <p className="text-center text-text-muted mb-4 max-w-sm">
+            Camera access is blocked. Please enable camera permissions to continue.
+          </p>
+          <div className="rounded-xl border border-border-light bg-surface p-4 max-w-sm w-full text-sm text-text-muted space-y-2">
+            <p className="font-semibold text-text-heading">How to enable:</p>
+            {isMobile && os === "android" ? (
+              <ol className="list-decimal list-inside space-y-1">
+                <li>Open <strong>Settings</strong> on your device</li>
+                <li>Go to <strong>Apps</strong> &gt; <strong>Chrome</strong></li>
+                <li>Tap <strong>Permissions</strong></li>
+                <li>Tap <strong>Camera</strong></li>
+                <li>Select <strong>Allow</strong></li>
+                <li>Return here and tap "Try Again" below</li>
+              </ol>
+            ) : isMobile && os === "ios" ? (
+              <ol className="list-decimal list-inside space-y-1">
+                <li>Open <strong>Settings</strong> on your device</li>
+                <li>Scroll down and tap <strong>Safari</strong></li>
+                <li>Tap <strong>Camera</strong></li>
+                <li>Select <strong>Allow</strong></li>
+                <li>Return here and tap "Try Again" below</li>
+              </ol>
+            ) : (
+              <ol className="list-decimal list-inside space-y-1">
+                <li>Click the lock/info icon in the address bar</li>
+                <li>Find "Camera" permission</li>
+                <li>Change it to "Allow"</li>
+                <li>Refresh the page</li>
+              </ol>
+            )}
+          </div>
+          {isMobile && (
+            <button
+              type="button"
+              onClick={openSystemSettings}
+              className="mt-3 text-sm font-semibold text-primary underline underline-offset-2 hover:text-primary/80"
+            >
+              Open System Settings
+            </button>
+          )}
+          <GradientButton
+            type="button"
+            onClick={requestCameraAccess}
+            className="mt-4 w-full max-w-xs"
+          >
+            Try Again
+          </GradientButton>
+        </div>
+      )}
+
+      {cameraPermission === "unavailable" && !capturedImage && (
+        <div className="flex flex-col items-center py-10">
+          <div className="flex h-24 w-24 items-center justify-center rounded-full bg-destructive/10 mb-6">
+            <Globe className="h-12 w-12 text-destructive" />
+          </div>
+          <h3 className="text-lg font-bold text-text-heading mb-2">Camera Not Supported</h3>
+          <p className="text-center text-text-muted max-w-sm">
+            Your browser does not support camera access. Please use a different browser or device.
+          </p>
+        </div>
+      )}
+
+      {!capturedImage && cameraPermission !== "denied" && cameraPermission !== "unavailable" && (
+        <>
+          {/* CAMERA CARD */}
+          <div className="relative overflow-hidden rounded-3xl border bg-black h-[350px]">
             <Webcam
               ref={webcamRef}
               mirrored
@@ -280,6 +427,14 @@ function SelfieCapture({ onSubmit }: Props) {
               screenshotFormat="image/jpeg"
               videoConstraints={{
                 facingMode: "user",
+              }}
+              onUserMediaError={() => {
+                setCameraPermission("denied");
+              }}
+              onUserMedia={() => {
+                if (cameraPermission === "loading" || cameraPermission === "prompt") {
+                  setCameraPermission("granted");
+                }
               }}
               className="w-full h-[350px] object-cover"
             />
@@ -328,87 +483,85 @@ function SelfieCapture({ onSubmit }: Props) {
                 )}
               </div>
             </div>
-
-          </>
-        ) : (
-          <div className="relative h-[350px]">
-            <img
-              src={capturedImage}
-              alt="Captured Selfie"
-              className="w-full h-[350px] object-cover"
-            />
-
-            {/* SUCCESS OVERLAY */}
-            {showPopup && (
-              <div className="absolute inset-0 bg-black/50 flex items-center justify-center p-4">
-                <div className="bg-white rounded-3xl p-5 text-center max-w-[280px] shadow-2xl relative">
-                  <button
-                    onClick={() => setShowPopup(false)}
-                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition"
-                  >
-                    <X className="w-4 h-4 text-text-muted" />
-                  </button>
-                  <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
-                    <ShieldCheck className="w-10 h-10 text-green-600" />
-                  </div>
-
-                  <h3 className="text-xl font-bold mb-2">
-                    Selfie Captured
-                  </h3>
-
-                  <p className="text-sm text-muted-foreground mb-5">
-                    Your selfie has been securely captured
-                    for identity verification.
-                  </p>
-
-                  <div className="flex items-center justify-center gap-2 text-green-600 text-sm font-medium">
-                    <CheckCircle2 className="w-4 h-4" />
-                    Verification Ready
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
-        )}
 
-        {/* BOTTOM GUIDE */}
-
-      </div>
-
-      {/* ACTIONS */}
-      {capturedImage ? (
-        <div className="space-y-3">
-          <GradientButton
-            onClick={handleSubmit}
-            disabled={submitting || isRedirect}
-            className="w-full"
-          >
-            {isRedirect ? "Redirecting..." : submitting ? "Uploading..." : "Continue Verification"}
-          </GradientButton>
-
-          <button
-            onClick={retakePhoto}
-            disabled={submitting}
-            className="w-full border rounded-xl py-3 text-sm font-medium flex items-center justify-center gap-2 hover:bg-muted transition disabled:opacity-50"
-          >
-            <RefreshCw className="w-4 h-4" />
-            Retake Selfie
-          </button>
-        </div>
-      )
-        : <div className="">
+          {/* BOTTOM GUIDE */}
           <div className="bg-black/60 backdrop-blur-md rounded-2xl px-4 py-3 text-center text-white">
             <p className="text-sm font-medium">
               Position your face inside the frame
             </p>
-
             <p className="text-xs text-white/70 mt-1">
-              Auto capture will happen after eye
-              blink
+              Auto capture will happen after eye blink
             </p>
           </div>
-        </div>
-      }
+        </>
+      )}
+
+      {capturedImage && (
+        <>
+          {/* CAMERA CARD */}
+          <div className="relative overflow-hidden rounded-3xl border bg-black h-[350px]">
+            <div className="relative h-[350px]">
+              <img
+                src={capturedImage}
+                alt="Captured Selfie"
+                className="w-full h-[350px] object-cover"
+              />
+
+              {/* SUCCESS OVERLAY */}
+              {showPopup && (
+                <div className="absolute inset-0 bg-black/50 flex items-center justify-center p-4">
+                  <div className="bg-white rounded-3xl p-5 text-center max-w-[280px] shadow-2xl relative">
+                    <button
+                      onClick={() => setShowPopup(false)}
+                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition"
+                    >
+                      <X className="w-4 h-4 text-text-muted" />
+                    </button>
+                    <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+                      <ShieldCheck className="w-10 h-10 text-green-600" />
+                    </div>
+
+                    <h3 className="text-xl font-bold mb-2">
+                      Selfie Captured
+                    </h3>
+
+                    <p className="text-sm text-muted-foreground mb-5">
+                      Your selfie has been securely captured
+                      for identity verification.
+                    </p>
+
+                    <div className="flex items-center justify-center gap-2 text-green-600 text-sm font-medium">
+                      <CheckCircle2 className="w-4 h-4" />
+                      Verification Ready
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* ACTIONS */}
+          <div className="space-y-3">
+            <GradientButton
+              onClick={handleSubmit}
+              disabled={submitting || isRedirect}
+              className="w-full"
+            >
+              {isRedirect ? "Redirecting..." : submitting ? "Uploading..." : "Continue Verification"}
+            </GradientButton>
+
+            <button
+              onClick={retakePhoto}
+              disabled={submitting || isRedirect}
+              className="w-full border rounded-xl py-3 text-sm font-medium flex items-center justify-center gap-2 hover:bg-muted transition disabled:opacity-50"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Retake Selfie
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

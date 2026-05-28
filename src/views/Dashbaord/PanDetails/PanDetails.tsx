@@ -89,12 +89,9 @@ function PanDetails() {
           require
         />
 
-        <GradientButton type="submit" className="mt-8 w-full" disabled={loading}>
-          <span className="flex items-center justify-center gap-2">
-            {loading ? "Verifying..." : ""}
-            {isRedirect ? "Redirecting..." : loading ? "Verifying..." : "Verify PAN"}
-            {!loading && !isRedirect && <ChevronRight className="w-5 h-5" />}
-          </span>
+        <GradientButton type="submit" className="mt-8 w-full" disabled={isRedirect || loading} rightIcon={!loading && !isRedirect && <ChevronRight className="w-5 h-5" />}>
+          {isRedirect ? "Redirecting..." : loading ? "Verifying..." : "Verify PAN"}
+
         </GradientButton>
       </form>
     </StepCard>

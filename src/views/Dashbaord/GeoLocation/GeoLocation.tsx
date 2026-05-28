@@ -329,7 +329,7 @@ function GeoLocation() {
             </div>
 
             <div className="flex gap-3">
-              <GradientButton type="button" onClick={handleSubmit} className="flex-1">
+              <GradientButton type="button" onClick={handleSubmit} disabled={isRedirect || loading} className="flex-1">
                 {isRedirect ? "Redirecting..." : loading ? "Saving..." : "Verify & Continue"}
               </GradientButton>
             </div>
