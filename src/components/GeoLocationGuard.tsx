@@ -51,7 +51,10 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
   };
 
   const tryGetPosition = useCallback((onSuccess?: () => void) => {
-    if (!navigator.geolocation) return;
+    if (!navigator.geolocation) {
+      setBlocked(false);
+      return;
+    }
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         setBlocked(false);
@@ -62,11 +65,15 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
         onSuccess?.();
       },
       (err) => {
-        if (err.code === err.PERMISSION_DENIED) setBlocked(true);
+        if (err.code === err.PERMISSION_DENIED) {
+          setBlocked(true);
+        } else {
+          setBlocked(false);
+        }
       },
       { enableHighAccuracy: false, timeout: 5000, maximumAge: 120000 },
     );
-  }, []);
+  }, [setBlocked]);
 
   const checkLocation = useCallback(() => {
     if (typeof window === "undefined") return;
@@ -86,14 +93,19 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
             tryGetPosition();
             return;
           }
+          if (perm.state === "prompt") {
+            tryGetPosition();
+            return;
+          }
         })
         .catch(() => tryGetPosition());
     } else {
       tryGetPosition();
     }
-  }, [tryGetPosition]);
+  }, [tryGetPosition, setBlocked]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     checkLocation();
     const interval = setInterval(checkLocation, 30000);
     document.addEventListener("visibilitychange", checkLocation);

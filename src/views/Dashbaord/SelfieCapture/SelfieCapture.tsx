@@ -21,6 +21,7 @@ import GradientButton from "@/components/ui/GradientButton";
 
 import { showToast } from "@/lib/toast";
 import { submitSelfieAction } from "@/lib/actions/selfie.action";
+import Image from "next/image";
 
 type CaptureStatus =
   | "loading"
@@ -141,6 +142,7 @@ function SelfieCapture({ onSubmit }: Props) {
   }
 
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       setCameraPermission("unavailable");
       return;
@@ -166,7 +168,7 @@ function SelfieCapture({ onSubmit }: Props) {
     } else {
       setCameraPermission("prompt");
     }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
   // CONVERT IMAGE TO BLOB
@@ -229,7 +231,6 @@ function SelfieCapture({ onSubmit }: Props) {
         const imageSrc = webcamRef.current.getScreenshot();
 
         if (imageSrc) {
-          // eslint-disable-next-line react-hooks/immutability
           const blob = await convertBase64ToBlob(imageSrc);
 
           isCapturedRef.current = true;
@@ -490,7 +491,9 @@ function SelfieCapture({ onSubmit }: Props) {
           {/* CAMERA CARD */}
           <div className="relative overflow-hidden rounded-3xl border bg-black h-[350px]">
             <div className="relative h-[350px]">
-              <img
+              <Image
+                height={350}
+                width={400}
                 src={capturedImage}
                 alt="Captured Selfie"
                 className="w-full h-[350px] object-cover"

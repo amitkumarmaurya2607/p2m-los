@@ -65,9 +65,9 @@ function AadhaarDetails() {
 
   useEffect(() => {
     if (!hasCallBack) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       callDigiLocker();
     }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
   }, [hasCallBack]);
 
   if (hasCallBack) {

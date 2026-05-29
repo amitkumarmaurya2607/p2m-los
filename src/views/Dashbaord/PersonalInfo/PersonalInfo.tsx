@@ -207,7 +207,7 @@ function PersonalInfo() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <CustomDatePicker
             label="Date of Birth"
-            value={form.dob ? new Date(form.dob) : (null as any)}
+            value={form.dob ? new Date(form.dob) : null}
             onChange={(date: Date | null) => handleChange("dob", date ? date.toISOString() : "")}
             error={errors.dob}
             required

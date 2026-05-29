@@ -1,18 +1,23 @@
-import React from "react";
-import { ArrowRight, Check, FileCheck2 } from "lucide-react";
+"use client";
+
+import React, { useState } from "react";
+import { ArrowRight, Check, ChevronDown, FileCheck2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 const routeStepMap: Record<string, string> = {
   "/apply-now": "mobile",
+  "/geo-location": "geoLocation",
   "/pan-details": "pan",
   "/personal-info": "personalInfo",
   "/aadhar-details": "aadhaar",
   "/bank-details": "bankDetails",
-  "/selfie-capture": "selfie",
+  "/account-statement": "accountStatement",
   "/employment-details": "employmentDetails",
-  "/loan-calculator": "loanCalculator",
-  "/review": "review",
+  "/selfie-capture": "selfie",
+  "/address-proof": "addressProof",
+  "/alternate-mobile": "alternateMobile",
+  "/loan-apply": "apply",
 };
 
 type FinalCTAProps = {
@@ -21,6 +26,11 @@ type FinalCTAProps = {
 
 const FinalCTA = ({ version = "v2" }: FinalCTAProps) => {
   const stepCount = Object.keys(routeStepMap).length;
+
+  const [showAll, setShowAll] = useState(false);
+  const allSteps = Object.values(routeStepMap);
+  const visibleSteps = allSteps.slice(0, 6);
+  const hiddenSteps = allSteps.slice(6);
 
   if (version === "v2") {
     return (
@@ -79,15 +89,15 @@ const FinalCTA = ({ version = "v2" }: FinalCTAProps) => {
                 </h2>
 
                 <p className="mt-3 max-w-[700px] text-[15px] leading-6 text-white/70 md:text-[16px]">
-                  Complete mobile, PAN, Aadhaar, bank verification, employment details and final
-                  review using our guided LOS flow.
+                  Complete mobile, PAN, Aadhaar, bank verification, employment details, selfie,
+                  address proof and more using our guided LOS flow.
                 </p>
               </div>
             </div>
 
             {/* STEP CARDS */}
             <div className="mt-6 grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {Object.values(routeStepMap).map((step, index) => (
+              {visibleSteps.map((step, index) => (
                 <div
                   key={step}
                   className="group flex w-full items-center gap-3 rounded-xl border border-white/10
@@ -110,10 +120,46 @@ const FinalCTA = ({ version = "v2" }: FinalCTAProps) => {
                   </div>
                 </div>
               ))}
+
+              {showAll && hiddenSteps.map((step, index) => (
+                <div
+                  key={step}
+                  className="group flex w-full items-center gap-3 rounded-xl border
+                    border-white/10 bg-white/[0.05] px-3 py-3 transition-all duration-300
+                    hover:-translate-y-1 hover:border-home-green/40 hover:bg-home-green/10"
+                >
+                  <div
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full
+                      bg-home-green/15 text-[13px] font-black text-home-green"
+                  >
+                    {index + 7}
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[13px] font-semibold capitalize text-white">
+                      {step.replace(/([A-Z])/g, " $1")}
+                    </p>
+
+                    <p className="mt-0.5 text-[11px] text-white/50">Verification step</p>
+                  </div>
+                </div>
+              ))}
             </div>
 
-            {/* BUTTONS */}
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
+              <button
+                type="button"
+                onClick={() => setShowAll(!showAll)}
+                className="flex h-[52px] cursor-pointer items-center justify-center gap-2 rounded-[14px]
+                  border-2 border-white/20 px-7 text-[14px] font-semibold text-white transition-all
+                  duration-300 hover:-translate-y-1 hover:bg-white/10"
+              >
+                {showAll ? "Show less" : "View all steps"}
+                <ChevronDown
+                  className={`h-4 w-4 transition-transform ${showAll ? "rotate-180" : ""}`}
+                />
+              </button>
+
               <Link
                 href="/apply-now"
                 className="flex h-[52px] items-center justify-center gap-2 rounded-[14px] border-2
@@ -123,15 +169,6 @@ const FinalCTA = ({ version = "v2" }: FinalCTAProps) => {
               >
                 Start Application
                 <ArrowRight className="h-4 w-4" />
-              </Link>
-
-              <Link
-                href="/review"
-                className="flex h-[52px] items-center justify-center rounded-[14px] border-2
-                  border-white/20 px-7 text-[14px] font-semibold text-white transition-all
-                  duration-300 hover:-translate-y-1 hover:bg-white/10"
-              >
-                Review Details
               </Link>
             </div>
           </div>

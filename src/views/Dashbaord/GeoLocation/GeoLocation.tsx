@@ -62,8 +62,7 @@ function GeoLocation() {
     }
   };
 
-  // eslint-disable-next-line react-hooks/immutability
-  const useCurrentLocation = () => {
+  const getCurrentLocation = () => {
     if (!navigator.geolocation) {
       setError("Geolocation is not supported by your browser");
       return;
@@ -110,6 +109,7 @@ function GeoLocation() {
   };
 
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
     if (!navigator.geolocation) {
       setPermissionState("unavailable");
       return;
@@ -122,7 +122,7 @@ function GeoLocation() {
           setPermissionState(result.state as "prompt" | "granted" | "denied");
 
           if (result.state === "granted") {
-            useCurrentLocation();
+            getCurrentLocation();
           }
 
           result.onchange = () => {
@@ -131,7 +131,7 @@ function GeoLocation() {
         })
         .catch(() => {});
     }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
   const handleSubmit = async () => {
@@ -272,7 +272,7 @@ function GeoLocation() {
               type="button"
               onClick={() => {
                 setPermissionState("prompt");
-                useCurrentLocation();
+                getCurrentLocation();
               }}
               disabled={loading}
               className="mt-4 w-full max-w-xs"
@@ -312,7 +312,7 @@ function GeoLocation() {
             </p>
             <GradientButton
               type="button"
-              onClick={useCurrentLocation}
+              onClick={getCurrentLocation}
               disabled={loading}
               className="w-full max-w-xs"
             >

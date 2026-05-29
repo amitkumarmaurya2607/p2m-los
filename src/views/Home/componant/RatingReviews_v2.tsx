@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Quote, Star } from "lucide-react";
+import Image from "next/image";
 
 type Review = {
   name: string;
@@ -159,7 +160,9 @@ const RatingReviews_v2 = () => {
             </p>
 
             <div className="mt-6 flex items-center gap-4">
-              <img
+              <Image
+                height={48}
+                width={48}
                 src={review.image}
                 alt={review.name}
                 className="h-12 w-12 rounded-full object-cover"
@@ -180,11 +183,10 @@ const RatingReviews_v2 = () => {
           <button
             key={index}
             onClick={() => scrollToCard(index)}
-            className={`transition-all duration-300 ${
-              activeIndex === index
+            className={`transition-all duration-300 ${activeIndex === index
                 ? "h-3 w-3 rounded-full bg-[#3737C1]"
                 : "h-2 w-2 rounded-full bg-[#00C89C]/40"
-            }`}
+              }`}
           />
         ))}
       </div>

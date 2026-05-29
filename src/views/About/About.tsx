@@ -341,9 +341,9 @@ const StorySection = () => (
             className="relative rounded-[40px] overflow-hidden shadow-2xl border-8 border-surface"
           >
             <Image
-              height={30}
-              width={30}
-              src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop"
+              height={160}
+              width={160}
+              src="/images/aboutImg.png"
               alt="Our Team Working"
               className="w-full h-auto object-cover"
             />

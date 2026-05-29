@@ -46,7 +46,7 @@ function AccountAggregator() {
     return () => {
       window.removeEventListener("message", handleMessage);
     };
-  }, []);
+  }, [router]);
 
   const handleConnect = async () => {
     try {

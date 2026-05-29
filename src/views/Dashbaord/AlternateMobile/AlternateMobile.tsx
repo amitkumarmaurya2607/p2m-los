@@ -54,6 +54,7 @@ function AlternateMobile() {
   const [savingStep, setSavingStep] = useState(false);
 
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
     const alt = application?.alternateMobile;
     if (alt?.number1) {
       setName1(alt.name1 || "");
@@ -67,7 +68,7 @@ function AlternateMobile() {
         setContact2Saved(true);
       }
     }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, [application]);
 
   const validateContact1 = () => {

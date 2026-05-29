@@ -68,6 +68,7 @@ export async function saveGeoLocationAction(_data: {
   longitude: number;
   accuracy: number;
 }) {
+  console.log(_data)
   try {
     await saveStepCookie("geoLocation");
     return { success: true as const };

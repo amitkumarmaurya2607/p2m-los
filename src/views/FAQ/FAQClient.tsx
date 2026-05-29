@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Search, Plus, Minus, X } from "lucide-react";
 import TextInput from "@/components/ui/TextInput";
 
@@ -89,21 +89,21 @@ export default function FAQClient({ faqData }: { faqData: FAQItem[] }) {
   }, [faqData]);
 
   const filteredFAQs = useMemo(() => {
-    const results = faqData.filter((item) => {
+    return faqData.filter((item) => {
       const matchesSearch =
         item.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.answer.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = activeCategory === "All" || item.category === activeCategory;
       return matchesSearch && matchesCategory;
     });
-
-    if (searchQuery.length > 2 && results.length > 0) {
-      setOpenId(results[0].id);
-    }
-
-    return results;
-    // eslint-disable-next-line react-hooks/set-state-in-render
   }, [searchQuery, activeCategory, faqData]);
+
+  useEffect(() => {
+    if (searchQuery.length > 2 && filteredFAQs.length > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setOpenId(filteredFAQs[0].id);
+    }
+  }, [searchQuery, filteredFAQs]);
 
   return (
     <>
@@ -136,12 +136,11 @@ export default function FAQClient({ faqData }: { faqData: FAQItem[] }) {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-6 py-3 rounded-full font-bold text-sm transition-all border ${
-                  activeCategory === cat
+                className={`px-6 py-3 rounded-full font-bold text-sm transition-all border ${activeCategory === cat
                     ? "bg-primary text-white border-primary shadow-lg shadow-primary/20 scale-105"
                     : `bg-surface border-border text-text-secondary hover:border-primary/40
                       hover:text-primary`
-                }`}
+                  }`}
               >
                 {cat}
               </button>
