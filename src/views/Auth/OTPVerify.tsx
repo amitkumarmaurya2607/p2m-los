@@ -8,6 +8,7 @@ import { showToast } from "@/lib/toast";
 import { maskEmail, maskMobile } from "@/lib/utils";
 import StepCard from "../Dashbaord/componants/StepCard";
 import { verifyOTPAction } from "@/lib/actions/auth.action";
+import { callSecure } from "@/lib/secure-action";
 import { loginVerifyPayload } from "./type";
 
 type OTPVerifyProps = {
@@ -43,7 +44,7 @@ function OTPVerify({ resend = () => { }, method, userName, back, userId }: OTPVe
         userId: userId,
         otp: otp,
       };
-      const result = await verifyOTPAction(payload);
+      const result = await callSecure(verifyOTPAction, payload);
       // Debugging line
       if (result?.error) {
         setError(result.error);

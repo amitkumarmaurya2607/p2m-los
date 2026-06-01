@@ -14,6 +14,7 @@ import {
   submitAlternateMobileAction,
   saveAlternateMobileStepAction,
 } from "@/lib/actions/document.action";
+import { callSecure } from "@/lib/secure-action";
 import PulseDot from "@/components/PulseDot";
 
 const RELATION_OPTIONS = [
@@ -96,7 +97,7 @@ function AlternateMobile() {
     setLoading1(true);
     setErrors({});
     try {
-      const r1 = await submitAlternateMobileAction({
+      const r1 = await callSecure(submitAlternateMobileAction, {
         mobileNumber: sanitizeNumeric(number1),
         name: name1.trim(),
         relationType: RELATION_MAP[relation1],
@@ -120,7 +121,7 @@ function AlternateMobile() {
     setLoading2(true);
     setErrors({});
     try {
-      const r2 = await submitAlternateMobileAction({
+      const r2 = await callSecure(submitAlternateMobileAction, {
         mobileNumber: sanitizeNumeric(number2),
         name: name2.trim(),
         relationType: RELATION_MAP[relation2],

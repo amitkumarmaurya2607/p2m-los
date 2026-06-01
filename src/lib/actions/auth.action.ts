@@ -6,6 +6,7 @@ import { createSession } from "@/lib/session";
 import { saveStepCookie } from "@/lib/step-cookie";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
 import { loginPayload, loginVerifyPayload } from "@/views/Auth/type";
+import { withDecryption } from "@/lib/secure-action";
 
 export async function saveUserIdCookie(userId: string) {
   const cookieStore = await cookies();
@@ -19,7 +20,7 @@ export async function saveUserIdCookie(userId: string) {
   });
 }
 
-export async function sendOTPAction(mobileNumber: string) {
+export const sendOTPAction = withDecryption(async function sendOTPAction(mobileNumber: string) {
   const payload: loginPayload = {
     mobileNumber,
     orgId: process.env.ORG_ID || "",
@@ -35,9 +36,9 @@ export async function sendOTPAction(mobileNumber: string) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Failed to send OTP") };
   }
-}
+});
 
-export async function verifyOTPAction(payload: loginVerifyPayload) {
+export const verifyOTPAction = withDecryption(async function verifyOTPAction(payload: loginVerifyPayload) {
   payload.orgId = process.env.ORG_ID || "";
   console.log("Verifying OTP with payload:", payload);
   try {
@@ -55,4 +56,4 @@ export async function verifyOTPAction(payload: loginVerifyPayload) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Verification failed") };
   }
-}
+});

@@ -9,6 +9,7 @@ import TextInput from "@/components/ui/TextInput";
 import { Upload, CheckCircle, FileText, X, Lightbulb, Home, FileCheck } from "lucide-react";
 import { showToast } from "@/lib/toast";
 import { submitAddressProofAction } from "@/lib/actions/document.action";
+import { callSecureFormData } from "@/lib/secure-action";
 import PulseDot from "@/components/PulseDot";
 
 const PROOF_TYPE_MAP: Record<string, string> = {
@@ -127,7 +128,7 @@ function AddressProofUpload() {
         }),
       );
 
-      const result = await submitAddressProofAction(formData);
+      const result = await callSecureFormData(submitAddressProofAction, formData);
       if (result?.error) {
         setError(result.error);
         showToast({ message: result.error, type: "error" });

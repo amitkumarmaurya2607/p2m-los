@@ -47,10 +47,21 @@ May 19, 2026
 3. Add file upload endpoints for account statement and address proof
 4. Connect loan eligibility calculation to backend (instead of hardcoded max)
 
+## Active Decisions
+
 ## Blockers
 
 - No API endpoints connected yet — calls will fail until backend is reachable
 - File upload components don't POST to a server — files stored in state only
+
+## New Additions
+
+- **`src/lib/crypto.ts`** — AES-256-GCM encryption/decryption utility using Web Crypto API. Works on both client (browser) and server (Node.js v22+). Derives key via SHA-256 from `ENCRYPTION_KEY` env var. Exports `encrypt(plaintext)` and `decrypt(ciphertext)` — both async. Combined output format: `base64(iv + authTag + ciphertext)`.
+- **`src/lib/secure-action.ts`** — Client-side (`callSecure`, `callSecureFormData`) and server-side (`withDecryption`) helpers for transparent payload encryption. Toggled via `NEXT_PUBLIC_ENCRYPTION_ENABLED` (client) and `ENCRYPTION_ENABLED` (server) env vars. Disabled by default — when off, all wrappers are zero-overhead pass-throughs.
+  - JSON payloads: `callSecure(action, payload)` → encrypt → `{ __encrypted: true, data: "<base64>" }`
+  - FormData payloads: `callSecureFormData(action, formData)` → reads files as base64 → encrypt → reconstructs FormData on server
+- **All 9 server action files** wrapped with `withDecryption` — `auth.action.ts`, `verification.action.ts`, `personal-info.action.ts`, `document.action.ts`, `selfie.action.ts`, `apply.action.ts`, `contact.action.ts`
+- **All 14 component call sites** updated to use `callSecure`/`callSecureFormData`
 
 ## Notes
 

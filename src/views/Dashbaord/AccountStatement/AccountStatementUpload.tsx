@@ -7,6 +7,7 @@ import GradientButton from "@/components/ui/GradientButton";
 import { Upload, CheckCircle, FileText, X, Lightbulb, Landmark } from "lucide-react";
 import { showToast } from "@/lib/toast";
 import { submitAccountStatementAction } from "@/lib/actions/document.action";
+import { callSecureFormData } from "@/lib/secure-action";
 import AccountAggregator from "./AccountAggregator";
 
 function AccountStatementUpload() {
@@ -80,7 +81,7 @@ function AccountStatementUpload() {
       formData.append("file", file);
       formData.append("data", JSON.stringify({ filePassword: "" }));
 
-      const result = await submitAccountStatementAction(formData);
+      const result = await callSecureFormData(submitAccountStatementAction, formData);
       if (result?.error) {
         setError(result.error);
         showToast({ message: result.error, type: "error" });

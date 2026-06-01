@@ -10,6 +10,7 @@ import GradientButton from "@/components/ui/GradientButton";
 import { Briefcase, Lightbulb } from "lucide-react";
 import { isValidEmail, isValidPinCode, sanitizeNumeric } from "@/lib/utils";
 import { submitEmploymentAction } from "@/lib/actions/verification.action";
+import { callSecure } from "@/lib/secure-action";
 import PulseDot from "@/components/PulseDot";
 import { showToast } from "@/lib/toast";
 
@@ -83,7 +84,7 @@ function EmploymentDetails() {
     try {
       setLoading(true);
 
-      const result = await submitEmploymentAction(form);
+      const result = await callSecure(submitEmploymentAction, form);
 
       if (result?.success) {
         setIsRedirect(true);

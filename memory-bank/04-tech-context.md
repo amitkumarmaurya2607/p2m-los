@@ -83,6 +83,8 @@ p2m-los/
       Dashbaord/           # Dashboard page components (typo in dir name)
     lib/                   # Utilities
       utils.ts             # Helper functions (cn, validations)
+      crypto.ts            # AES-256-GCM encrypt/decrypt via Web Crypto API (client + server)
+      secure-action.ts     # Payload encryption wrapper (callSecure + withDecryption)
       toast.ts             # Toast helper
       logger.ts            # Universal logger (client + server) with PII sanitization
     hooks/                 # Custom hooks

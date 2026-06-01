@@ -11,6 +11,7 @@ import RadioButtonGroup from "@/components/ui/RadioButtonGroup";
 import { User, Lightbulb } from "lucide-react";
 import { isValidEmail, sanitizeNumeric } from "@/lib/utils";
 import { submitPersonalInfoAction } from "@/lib/actions/personal-info.action";
+import { callSecure } from "@/lib/secure-action";
 import PulseDot from "@/components/PulseDot";
 import { showToast } from "@/lib/toast";
 
@@ -87,7 +88,7 @@ function PersonalInfo() {
     try {
       setLoading(true);
 
-      const result = await submitPersonalInfoAction(form);
+      const result = await callSecure(submitPersonalInfoAction, form);
 
       if (result?.success) {
         setIsRedirect(true);

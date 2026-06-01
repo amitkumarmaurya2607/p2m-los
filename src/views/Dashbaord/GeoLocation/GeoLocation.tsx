@@ -10,6 +10,7 @@ import {
   saveGeoLocationAction,
   saveLocationCookiesAction,
 } from "@/lib/actions/verification.action";
+import { callSecure } from "@/lib/secure-action";
 import PulseDot from "@/components/PulseDot";
 
 function GeoLocation() {
@@ -77,7 +78,7 @@ function GeoLocation() {
         setLocation({ latitude, longitude, accuracy });
         setLoading(false);
         localStorage.setItem("gl_done", "1");
-        saveLocationCookiesAction({
+        callSecure(saveLocationCookiesAction, {
           latitude,
           longitude,
         });
@@ -140,7 +141,7 @@ function GeoLocation() {
       return;
     }
     setLoading(true);
-    const result = await saveGeoLocationAction({
+    const result = await callSecure(saveGeoLocationAction, {
       latitude: location.latitude,
       longitude: location.longitude,
       accuracy: Math.round(location.accuracy),
@@ -153,7 +154,7 @@ function GeoLocation() {
     }
 
     localStorage.setItem("gl_done", "1");
-    await saveLocationCookiesAction({
+    await callSecure(saveLocationCookiesAction, {
       latitude: location.latitude,
       longitude: location.longitude,
     });

@@ -7,8 +7,9 @@ import {
   updateAlternateMobile,
 } from "@/lib/services/document.service";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
+import { withDecryption } from "@/lib/secure-action";
 
-export async function submitAccountStatementAction(formData: FormData) {
+export const submitAccountStatementAction = withDecryption(async function submitAccountStatementAction(formData: FormData) {
   try {
     const result = await uploadAccountStatement(formData);
     if (result.code !== "0000") {
@@ -20,9 +21,9 @@ export async function submitAccountStatementAction(formData: FormData) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Failed to upload account statement") };
   }
-}
+});
 
-export async function submitAddressProofAction(formData: FormData) {
+export const submitAddressProofAction = withDecryption(async function submitAddressProofAction(formData: FormData) {
   try {
     const result = await uploadAddressProof(formData);
     if (result.code !== "0000") {
@@ -34,9 +35,9 @@ export async function submitAddressProofAction(formData: FormData) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Failed to upload address proof") };
   }
-}
+});
 
-export async function submitAlternateMobileAction(contact: {
+export const submitAlternateMobileAction = withDecryption(async function submitAlternateMobileAction(contact: {
   mobileNumber: string;
   name: string;
   relationType: string;
@@ -51,7 +52,7 @@ export async function submitAlternateMobileAction(contact: {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Failed to save contact") };
   }
-}
+});
 
 export async function saveAlternateMobileStepAction() {
   try {

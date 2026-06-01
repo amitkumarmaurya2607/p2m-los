@@ -8,6 +8,7 @@ import {
 } from "@/lib/services/verification.service";
 import { saveStepCookie } from "@/lib/step-cookie";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
+import { withDecryption } from "@/lib/secure-action";
 
 export async function handleDigiLockerCallbackAction() {
   try {
@@ -19,7 +20,7 @@ export async function handleDigiLockerCallbackAction() {
   }
 }
 
-export async function verifyPANAction(panNumber: string) {
+export const verifyPANAction = withDecryption(async function verifyPANAction(panNumber: string) {
   try {
     const result = await verifyPAN(panNumber);
     if (result.code !== "0000") return { error: result.message || "PAN verification failed" };
@@ -29,7 +30,7 @@ export async function verifyPANAction(panNumber: string) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "PAN verification failed") };
   }
-}
+});
 
 export async function digiLockerAction() {
   try {
@@ -43,7 +44,7 @@ export async function digiLockerAction() {
   }
 }
 
-export async function verifyBankAction(data: {
+export const verifyBankAction = withDecryption(async function verifyBankAction(data: {
   userId: string;
   accountNumber: string;
   ifscCode: string;
@@ -61,9 +62,9 @@ export async function verifyBankAction(data: {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Bank verification failed") };
   }
-}
+});
 
-export async function saveGeoLocationAction(_data: {
+export const saveGeoLocationAction = withDecryption(async function saveGeoLocationAction(_data: {
   latitude: number;
   longitude: number;
   accuracy: number;
@@ -76,9 +77,9 @@ export async function saveGeoLocationAction(_data: {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Failed to save geo location") };
   }
-}
+});
 
-export async function saveLocationCookiesAction(data: { latitude: number; longitude: number }) {
+export const saveLocationCookiesAction = withDecryption(async function saveLocationCookiesAction(data: { latitude: number; longitude: number }) {
   try {
     const { cookies } = await import("next/headers");
     const cookieStore = await cookies();
@@ -97,9 +98,9 @@ export async function saveLocationCookiesAction(data: { latitude: number; longit
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Failed to save location cookies") };
   }
-}
+});
 
-export async function submitEmploymentAction(data: Record<string, unknown>) {
+export const submitEmploymentAction = withDecryption(async function submitEmploymentAction(data: Record<string, unknown>) {
   try {
     const modeMap: Record<string, string> = {
       "Bank Transfer": "BANK_TRANSFER",
@@ -128,4 +129,4 @@ export async function submitEmploymentAction(data: Record<string, unknown>) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Failed to submit employment details") };
   }
-}
+});

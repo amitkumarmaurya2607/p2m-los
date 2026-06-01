@@ -8,6 +8,7 @@ import { isValidMobile, sanitizeNumeric } from "@/lib/utils";
 import { showToast } from "@/lib/toast";
 import StepCard from "../Dashbaord/componants/StepCard";
 import { sendOTPAction } from "@/lib/actions/auth.action";
+import { callSecure } from "@/lib/secure-action";
 import Link from "next/link";
 
 const Login = ({ type }: { type?: string }) => {
@@ -53,7 +54,7 @@ const Login = ({ type }: { type?: string }) => {
     setError("");
     setLoading(true);
 
-    sendOTPAction(userName).then((result) => {
+    callSecure(sendOTPAction, userName).then((result) => {
       setLoading(false);
       console.log("sendOTPAction result in component:", result); // Debugging line
       if ("success" in result && result.success) {

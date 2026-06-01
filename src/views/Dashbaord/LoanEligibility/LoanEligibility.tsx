@@ -11,6 +11,7 @@ import {
 import GradientButton from "@/components/ui/GradientButton";
 import { showToast } from "@/lib/toast";
 import { submitApplicationAction, getLoanProgramsAction } from "@/lib/actions/apply.action";
+import { callSecure } from "@/lib/secure-action";
 import StepCard from "../componants/StepCard";
 import PulseDot from "@/components/PulseDot";
 
@@ -87,7 +88,7 @@ function LoanEligibility() {
     }
 
     setSubmitting(true);
-    const result = await submitApplicationAction({
+    const result = await callSecure(submitApplicationAction, {
       loanAmount,
       tenure,
       interestRate,

@@ -5,6 +5,7 @@ import { Send, CheckCircle2, Loader2 } from "lucide-react";
 import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import { submitContactAction } from "@/lib/actions/contact.action";
+import { callSecure } from "@/lib/secure-action";
 import { showToast } from "@/lib/toast";
 
 export default function ContactForm() {
@@ -18,7 +19,7 @@ export default function ContactForm() {
     const form = e.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
 
-    const result = await submitContactAction({
+    const result = await callSecure(submitContactAction, {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       message: formData.get("message") as string,

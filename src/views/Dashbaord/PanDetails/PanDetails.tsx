@@ -7,6 +7,7 @@ import GradientButton from "@/components/ui/GradientButton";
 import { ChevronRight, CreditCard, ShieldCheck } from "lucide-react";
 import { isValidPAN, sanitizePAN } from "@/lib/utils";
 import { verifyPANAction } from "@/lib/actions/verification.action";
+import { callSecure } from "@/lib/secure-action";
 import { showToast } from "@/lib/toast";
 function PanDetails() {
   const router = useRouter();
@@ -40,7 +41,7 @@ function PanDetails() {
       setLoading(true);
       setError("");
 
-      const result = await verifyPANAction(pan);
+      const result = await callSecure(verifyPANAction, pan);
 
       if (result?.success) {
         showToast({

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { ShieldAlert, MapPin, Navigation, Lightbulb } from "lucide-react";
 import { saveLocationCookiesAction } from "@/lib/actions/verification.action";
+import { callSecure } from "@/lib/secure-action";
 import GradientButton from "@/components/ui/GradientButton";
 import StepCard from "@/views/Dashbaord/componants/StepCard";
 
@@ -58,7 +59,7 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         setBlocked(false);
-        saveLocationCookiesAction({
+        callSecure(saveLocationCookiesAction, {
           latitude: pos.coords.latitude,
           longitude: pos.coords.longitude,
         });

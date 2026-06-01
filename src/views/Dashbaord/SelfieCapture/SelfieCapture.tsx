@@ -21,6 +21,7 @@ import GradientButton from "@/components/ui/GradientButton";
 
 import { showToast } from "@/lib/toast";
 import { submitSelfieAction } from "@/lib/actions/selfie.action";
+import { callSecureFormData } from "@/lib/secure-action";
 import Image from "next/image";
 
 type CaptureStatus =
@@ -279,7 +280,7 @@ function SelfieCapture({ onSubmit }: Props) {
 
       formData.append("data", JSON.stringify({ mediaType: "IMAGE" }));
 
-      const result = await submitSelfieAction(formData);
+      const result = await callSecureFormData(submitSelfieAction, formData);
 
       if (result?.error) {
         showToast({ type: "error", message: result?.error });

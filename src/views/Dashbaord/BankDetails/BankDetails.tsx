@@ -6,6 +6,7 @@ import GradientButton from "@/components/ui/GradientButton";
 import { CreditCard, Check, Landmark } from "lucide-react";
 import { isValidIFSCCode, sanitizeNumeric, sanitizeIFSC } from "@/lib/utils";
 import { verifyBankAction } from "@/lib/actions/verification.action";
+import { callSecure } from "@/lib/secure-action";
 import { showToast } from "@/lib/toast";
 
 function BankDetails() {
@@ -77,7 +78,7 @@ function BankDetails() {
     try {
       setLoading(true);
 
-      const result = await verifyBankAction({
+      const result = await callSecure(verifyBankAction, {
         userId,
         accountNumber: form.accountNumber,
         ifscCode: form.ifscCode,

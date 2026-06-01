@@ -3,8 +3,9 @@
 import { saveStepCookie } from "@/lib/step-cookie";
 import { uploadSelfie } from "@/lib/services/selfie.service";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
+import { withDecryption } from "@/lib/secure-action";
 
-export async function submitSelfieAction(formData: FormData) {
+export const submitSelfieAction = withDecryption(async function submitSelfieAction(formData: FormData) {
   try {
     const result = await uploadSelfie(formData);
     if (result.code !== "0000") {
@@ -16,4 +17,4 @@ export async function submitSelfieAction(formData: FormData) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Failed to upload selfie") };
   }
-}
+});
