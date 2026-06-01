@@ -40,9 +40,11 @@ function OTPVerify({ resend = () => { }, method, userName, back, userId }: OTPVe
     try {
       setLoading(true);
       const payload: loginVerifyPayload = {
-        mobileNumber: userName,
+        // mobileNumber: userName,
         userId: userId,
         otp: otp,
+        type: "phone",
+        deviceId: "08df5ec3-68b0-4ac4-b695-87f44bf58c74"
       };
       const result = await callSecure(verifyOTPAction, payload);
       // Debugging line

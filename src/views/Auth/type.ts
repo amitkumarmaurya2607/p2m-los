@@ -1,10 +1,10 @@
 export type loginPayload = {
   mobileNumber: string;
-  orgId: string;
+  brandId: string;
 };
 export type loginVerifyPayload = {
   mobileNumber: string;
-  userId: string;
+  id: string;
   otp: string;
-  orgId?: string;
+  brandId?: string;
 };

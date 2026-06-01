@@ -10,6 +10,7 @@ import StepCard from "../Dashbaord/componants/StepCard";
 import { sendOTPAction } from "@/lib/actions/auth.action";
 import { callSecure } from "@/lib/secure-action";
 import Link from "next/link";
+import { decrypt, encrypt } from "@/lib/crypto";
 
 const Login = ({ type }: { type?: string }) => {
 
@@ -58,7 +59,7 @@ const Login = ({ type }: { type?: string }) => {
       setLoading(false);
       console.log("sendOTPAction result in component:", result); // Debugging line
       if ("success" in result && result.success) {
-        setUserId(result.data.userId);
+        setUserId(result.data?.id);
         setSendOtp(true);
         showToast({
           message: type === "resend" ? "OTP resent successfully!" : "OTP sent successfully!",
@@ -80,6 +81,8 @@ const Login = ({ type }: { type?: string }) => {
 
     setUserName(digits ? "+91" + digits : "");
   };
+
+
 
   return (
     <>

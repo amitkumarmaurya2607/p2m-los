@@ -23,7 +23,7 @@ export async function saveUserIdCookie(userId: string) {
 export const sendOTPAction = withDecryption(async function sendOTPAction(mobileNumber: string) {
   const payload: loginPayload = {
     mobileNumber,
-    orgId: process.env.ORG_ID || "",
+    brandId: process.env.ORG_ID || "",
   };
   try {
     const result = await sendOTP(payload);
@@ -39,7 +39,7 @@ export const sendOTPAction = withDecryption(async function sendOTPAction(mobileN
 });
 
 export const verifyOTPAction = withDecryption(async function verifyOTPAction(payload: loginVerifyPayload) {
-  payload.orgId = process.env.ORG_ID || "";
+  payload.brandId = process.env.ORG_ID || "";
   console.log("Verifying OTP with payload:", payload);
   try {
     const result = await verifyOTP(payload);
@@ -48,7 +48,7 @@ export const verifyOTPAction = withDecryption(async function verifyOTPAction(pay
       const token = result.data?.accessToken;
       await createSession(token);
       await saveStepCookie("mobile");
-      await saveUserIdCookie(result.data.userId);
+      await saveUserIdCookie(result.data?.id);
       return { success: true as const, data: result.data };
     }
     return { error: result.msg || result.message || "Failed to send OTP" };

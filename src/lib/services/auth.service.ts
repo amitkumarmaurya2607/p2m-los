@@ -7,7 +7,7 @@ export interface SendOTPResponse {
   message?: string;
   data?: {
     mobileNumber: string;
-    userId: string;
+    id: string;
   };
   msg?: string;
   errorCodeList?: unknown[];
@@ -17,7 +17,7 @@ interface VerifyOTPResponse {
   message?: string;
   data?: {
     mobileNumber: string;
-    userId: string;
+    id: string;
     refreshToken: string;
     accessToken: string;
   };
