@@ -30,17 +30,24 @@ function GeoLocation() {
   const [isRedirect, setIsRedirect] = useState(false);
 
   useEffect(() => {
-
+    let ipLocation: { city: string; country: string; region: string } | null = null;
 
     getLocationGuard()
       .then((loc) => {
-
         setIPLocation(loc);
+        ipLocation = loc;
       })
       .catch(() => {
         console.log("Failed to get IP geolocation");
       })
       .finally(() => {
+        callSecure(saveLocationCookiesAction, {
+          latitude: 0,
+          longitude: 0,
+          city: ipLocation?.city || "",
+          country: ipLocation?.country || "",
+          region: ipLocation?.region || "",
+        });
         getCurrentLocation();
       });
   }, [])

@@ -27,15 +27,25 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (blocked) return;
 
+    let ipLocation: { city: string; country: string; region: string } | null = null;
+
     getLocationGuard()
-      .then((location) => {
-        console.log("Location guard result:", location);
-        setLocation(location);
+      .then((loc) => {
+        console.log("Location guard result:", loc);
+        setLocation(loc);
+        ipLocation = loc;
       })
       .catch(() => {
         console.log("Failed to get IP geolocation");
       })
       .finally(() => {
+        callSecure(saveLocationCookiesAction, {
+          latitude: 0,
+          longitude: 0,
+          city: ipLocation?.city || "",
+          country: ipLocation?.country || "",
+          region: ipLocation?.region || "",
+        });
         tryGetPosition();
       });
   }, [blocked])

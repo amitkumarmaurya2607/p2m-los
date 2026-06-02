@@ -81,7 +81,7 @@ export const saveGeoLocationAction = withDecryption(async function saveGeoLocati
   }
 });
 
-export const saveLocationCookiesAction = withDecryption(async function saveLocationCookiesAction(data: { latitude: number; longitude: number,city:string,country:string,region:string }) {
+export const saveLocationCookiesAction = async function saveLocationCookiesAction(data: { latitude: number; longitude: number,city:string,country:string,region:string }) {
   try {
     const { cookies } = await import("next/headers");
     const cookieStore = await cookies();
@@ -103,7 +103,7 @@ export const saveLocationCookiesAction = withDecryption(async function saveLocat
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Failed to save location cookies") };
   }
-});
+};
 
 export const submitEmploymentAction = withDecryption(async function submitEmploymentAction(data: Record<string, unknown>) {
   try {

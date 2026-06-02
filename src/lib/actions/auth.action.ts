@@ -48,8 +48,6 @@ export const verifyOTPAction = withDecryption(async function verifyOTPAction(pay
     if (result?.code !== "0001" && result.data) {
       const token = result.data?.accessToken;
       await createSession(token);
-      await getStepProgressAction();
-
       await saveStepCookie("mobile");
       await saveUserIdCookie(result.data?.user?.id);
       return { success: true as const, data: result.data };

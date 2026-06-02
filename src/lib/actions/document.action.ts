@@ -18,6 +18,7 @@ export const submitAccountStatementAction = withDecryption(async function submit
     await saveStepCookie("accountStatement");
     return { success: true as const };
   } catch (err) {
+     console.log("Error in submitAddressProofAction:", err);
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Failed to upload account statement") };
   }
@@ -32,6 +33,7 @@ export const submitAddressProofAction = withDecryption(async function submitAddr
     await saveStepCookie("addressProof");
     return { success: true as const };
   } catch (err) {
+   
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Failed to upload address proof") };
   }

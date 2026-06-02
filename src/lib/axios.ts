@@ -25,6 +25,9 @@ async function handleServer401(): Promise<never> {
     const cookieStore = await getCookies();
     cookieStore.delete("p2m-lat");
     cookieStore.delete("p2m-lng");
+      cookieStore.delete("p2m-city");
+      cookieStore.delete("p2m-country");
+      cookieStore.delete("p2m-region");
     redirect("/apply-now?type=exp");
   } else {
     await fetch("/api/logout", { method: "POST" });

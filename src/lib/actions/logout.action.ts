@@ -10,4 +10,7 @@ export async function logoutAction() {
   const cookieStore = await cookies();
   cookieStore.delete("p2m-lat");
   cookieStore.delete("p2m-lng");
+  cookieStore.delete("p2m-city");
+  cookieStore.delete("p2m-country");
+  cookieStore.delete("p2m-region");
 }

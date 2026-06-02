@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { fetchLoanApplication } from "@/lib/services/loan-application.service";
 import type { LoanApplication } from "@/types";
+import { getStepProgressAction } from "@/lib/actions/auth.action";
 
 type LoanAppContextValue = {
   application: LoanApplication | null;
@@ -22,8 +23,9 @@ export function LoanAppProvider({ children }: { children: React.ReactNode }) {
     setLoading(true);
     setError(null);
     try {
-      const data = await fetchLoanApplication();
-      setApplication(data);
+      const data = await getStepProgressAction();
+      //setApplication(data);
+      console.log("data----", data);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to fetch loan application");
     } finally {
