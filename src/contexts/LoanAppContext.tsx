@@ -1,7 +1,6 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { fetchLoanApplication } from "@/lib/services/loan-application.service";
 import type { LoanApplication } from "@/types";
 import { getStepProgressAction } from "@/lib/actions/auth.action";
 

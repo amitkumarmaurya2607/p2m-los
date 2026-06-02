@@ -8,6 +8,7 @@ import { isValidIFSCCode, sanitizeNumeric, sanitizeIFSC } from "@/lib/utils";
 import { verifyBankAction } from "@/lib/actions/verification.action";
 import { callSecure } from "@/lib/secure-action";
 import { showToast } from "@/lib/toast";
+import BankDetailsVerify from "./BankDetailsVerify";
 
 function BankDetails() {
   const [form, setForm] = useState({
@@ -106,80 +107,24 @@ function BankDetails() {
     }
   };
 
-  const maskedAccount = form.accountNumber
-    ? `XXXX XXXX ${form.accountNumber.slice(-4)}`
-    : "XXXX XXXX XXXX";
+  const bankDetails = {
+    id: "064bed49-317a-444c-8fed-274d7c3b4c4f",
+    userId: "25d1260c-180d-4377-8732-fc4c71d75c7d",
+    accountHolderName: "Ajitha Goparaju",
+    accountNumber: "59191182222",
+    ifscCode: "IDIB000D578",
+    bankName: "indian bank",
+    accountType: "SAVINGS",
+    isVerified: false,
+    verificationStatus: "VERIFIED",
+    userDataStatus: "NOT_VERIFIED",
+    isPrimary: true,
+  };
+
 
   if (verified) {
     return (
-      <div
-        className="w-full max-w-[576px] bg-surface-overlay-90 border border-border-light p-8 lg:p-12
-          rounded-[16px] lg:rounded-[32px] shadow-[var(--shadow-lg)]"
-      >
-        <div
-          className="mx-auto flex h-16 w-16 lg:h-28 lg:w-28 items-center justify-center rounded-full
-            bg-gradient-to-r from-home-green to-home-green-dark shadow-[var(--shadow-green-glow)]"
-        >
-          <Check className="h-8 w-8 lg:h-14 lg:w-14 text-white" strokeWidth={4} />
-        </div>
-
-        <h2
-          className="mt-6 lg:mt-8 text-center text-[28px] lg:text-[36px] font-extrabold leading-10
-            tracking-[-0.9px] text-text-heading"
-        >
-          Bank Account Verified!
-        </h2>
-
-        <p
-          className="mt-4 text-center text-[14px] lg:text-[18px] font-medium leading-[29px]
-            text-text-muted-dark"
-        >
-          Your bank account has been successfully verified. Proceed to the next step.
-        </p>
-
-        <div className="mt-10 rounded-[24px] border border-border-medium bg-surface-muted px-6 py-6">
-          <div className="space-y-4">
-            <div>
-              <p className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-muted-light">
-                Account Number
-              </p>
-              <p className="mt-1 font-mono text-[20px] font-bold text-[#1D293D]">{maskedAccount}</p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p
-                  className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-muted-light"
-                >
-                  IFSC Code
-                </p>
-                <p className="mt-1 font-mono text-[16px] font-bold text-[#1D293D]">
-                  {form.ifscCode}
-                </p>
-              </div>
-
-              <div>
-                <p
-                  className="text-[12px] font-bold uppercase tracking-[0.6px] text-text-muted-light"
-                >
-                  Beneficiary
-                </p>
-                <p className="mt-1 text-[16px] font-bold text-[#1D293D]">{form.benName}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-10">
-          <GradientButton
-            onClick={() => (window.location.href = "/selfie-capture")}
-            type="button"
-            className="w-full mt-4 sm:mt-6 bg-gradient-to-r from-home-purple to-home-purple-dark"
-          >
-            Next Step
-          </GradientButton>
-        </div>
-      </div>
+      <BankDetailsVerify bankDetails={bankDetails} />
     );
   }
 
