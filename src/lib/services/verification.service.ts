@@ -15,30 +15,12 @@ export async function digiLockerApi(): Promise<ApiResponse<unknown>> {
   return apiPost<ApiResponse<unknown>>(API.aadhaar.digiLocker, {});
 }
 
-export async function sendAadhaarOTP(
-  aadhaarNumber: string,
-): Promise<ApiResponse<{ verified: boolean }>> {
-  return apiPost<ApiResponse<{ verified: boolean }>>(API.aadhaar.sendOTP, {
-    aadhaar: aadhaarNumber,
-  });
-}
-
-export async function verifyAadhaarOTP(
-  aadhaarNumber: string,
-  code: string,
-): Promise<ApiResponse<{ verified: boolean; number: string }>> {
-  return apiPost<ApiResponse<{ verified: boolean; number: string }>>(API.aadhaar.verifyOTP, {
-    aadhaar: aadhaarNumber,
-    code,
-  });
-}
 
 export async function verifyBank(data: {
-  userId: string;
-  orgId: string;
+   accountType: string;
   accountNumber: string;
   ifscCode: string;
-  benName: string;
+  bankName: string;
 }): Promise<ApiResponse<{ code: string; message?: string }>> {
   return apiPost<ApiResponse<{ code: string; message?: string }>>(API.bank.verify, data);
 }

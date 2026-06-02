@@ -51,7 +51,7 @@ function LoanEligibility() {
   const [tenure, setTenure] = useState(36);
   const [agreed, setAgreed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [, setPrograms] = useState<unknown[]>([]);
+  const [programs, setPrograms] = useState<unknown[]>([]);
 
   useEffect(() => {
     getLoanProgramsAction()
@@ -89,11 +89,10 @@ function LoanEligibility() {
 
     setSubmitting(true);
     const result = await callSecure(submitApplicationAction, {
-      loanAmount,
-      tenure,
-      interestRate,
-      emi,
-      totalPayable,
+      loanAmount: 50000,
+      remark: "test",
+      programId: programs?.tenures?.id,
+      dueDate: new Date(Date.now() + tenure * 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
     });
     if (result.success) {
       showToast({ message: "Application submitted successfully!", type: "success" });

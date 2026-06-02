@@ -2,15 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useLoanApp } from "@/contexts/LoanAppContext";
 import TextInput from "@/components/ui/TextInput";
 import GradientButton from "@/components/ui/GradientButton";
 import StepCard from "../componants/StepCard";
 import CustomDatePicker from "@/components/ui/CustomDatePicker";
 import RadioButtonGroup from "@/components/ui/RadioButtonGroup";
 import { User, Lightbulb } from "lucide-react";
-import { isValidEmail, sanitizeNumeric } from "@/lib/utils";
-import { getPersonalInfoAction, submitPersonalInfoAction } from "@/lib/actions/personal-info.action";
+import { cleanAddress, isValidEmail, sanitizeNumeric } from "@/lib/utils";
+import { submitPersonalInfoAction } from "@/lib/actions/personal-info.action";
 import { callSecure } from "@/lib/secure-action";
 import PulseDot from "@/components/PulseDot";
 import { showToast } from "@/lib/toast";
@@ -135,12 +134,12 @@ function PersonalInfo() {
           secondName: data.middleName || "",
           lastName: data.lastName || "",
           fatherName: data.fathersName || "",
-          // email: data?.email || "",
+          email: "",
           dob: data.dateOfBirth || "",
           state: data.state || "",
           city: data.city || "",
           pincode: data.pincode || "",
-          address: data.address || "",
+          address: cleanAddress(data.address, data.city, data.state, data.pincode) || "",
           gender: data.gender || "",
         }));
 
@@ -235,9 +234,9 @@ function PersonalInfo() {
         <div className="w-full mt-4">
           <RadioButtonGroup
             options={[
-              { value: "Male", label: "Male" },
-              { value: "Female", label: "Female" },
-              { value: "Other", label: "Other" },
+              { value: "MALE", label: "Male" },
+              { value: "FEMALE", label: "Female" },
+              { value: "OTHER", label: "Other" },
             ]}
             name="gender"
             value={form.gender}

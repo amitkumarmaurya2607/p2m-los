@@ -64,3 +64,25 @@ export const formatMobile = (value: string): string => {
   if (digits.length <= 5) return digits ? "+91 " + digits : "";
   return "+91 " + digits.slice(0, 5) + " " + digits.slice(5);
 };
+
+
+export const cleanAddress = (
+  address: string,
+  city?: string,
+  state?: string,
+  pincode?: string,
+  country: string = "India"
+) => {
+  let cleaned = address;
+
+  const removeValues = [pincode, city, state, country].filter(Boolean);
+
+  removeValues.forEach((value) => {
+    cleaned = cleaned.replace(new RegExp(`,?\\s*${value}\\s*,?`, "gi"), ",");
+  });
+
+  return cleaned
+    .replace(/,+/g, ",")
+    .replace(/^,\s*|\s*,$/g, "")
+    .trim();
+};

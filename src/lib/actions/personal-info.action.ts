@@ -28,8 +28,9 @@ function buildPayload(data: Record<string, unknown>) {
     city: data.city ?? "",
     address: data.address ?? "",
     dateOfBirth: data.dob ?? "",
+    email: data.email ?? "",
     // gender: data.gender ?? "",
-    // emailId: data.email ?? "",
+
   };
 }
 

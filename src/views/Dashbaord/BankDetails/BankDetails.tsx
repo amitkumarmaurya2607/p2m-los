@@ -79,10 +79,11 @@ function BankDetails() {
       setLoading(true);
 
       const result = await callSecure(verifyBankAction, {
-        userId,
+        accountType: "SAVINGS",
         accountNumber: form.accountNumber,
         ifscCode: form.ifscCode,
-        benName: form.benName,
+        bankName: form.benName,
+        // bankAddress: ""
       });
       if (result?.success) {
         setVerified(true);
@@ -227,7 +228,7 @@ function BankDetails() {
           />
 
           <TextInput
-            label="Beneficiary Name"
+            label="Bank Name"
             value={form.benName}
             onChange={(e) => handleChange("benName", e.target.value)}
             error={errors.benName}

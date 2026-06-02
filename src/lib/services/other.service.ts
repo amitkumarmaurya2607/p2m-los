@@ -5,74 +5,54 @@ import { apiGet } from "../axios";
 export type UserDetails = {
   id: string;
   userId: string;
-
   firstName: string;
   middleName: string;
   lastName: string;
   gender: "MALE" | "FEMALE" | "OTHER" | string;
   dateOfBirth: string;
-
   address: string;
   city: string;
   state: string;
   pincode: string;
-
   createdAt: string;
   updatedAt: string;
-
   profilePicUrl: string | null;
   fathersName: string;
   maritalStatus: string | null;
   spouseName: string | null;
   isCommunicationAddress: boolean;
-
   profileVideoUrl: string | null;
   userDataStatus: "VERIFIED" | "NOT_VERIFIED" | string;
-
   religion: string | null;
   residenceType: "OWNED" | "RENTED" | "FAMILY_OWNED" | string | null;
-
   filePrivateKey: string | null;
   addressProofType: string | null;
   mothersName: string | null;
-
   creditScore: number;
-
   aAdharName: string | null;
   aAdharDOB: string | null;
-
   userBlockAlert: string | null;
   age: number;
-
   geoLatitude: number | null;
   geoLongitude: number | null;
-
   isFraudulentByCMS: boolean;
   isGoaAndPanMatching: boolean;
   isServicablePinCodesByCMS: boolean;
-
   aadhaarPanLinkedByPanPlus: boolean;
   linkedAadhaarNumberByPanPlus: string | null;
   linkedAadhaarNumberByDigiLocker: string | null;
-
   aadhaar_digilocker_gz_key: string | null;
   aadhaar_digilocker_pdf_key: string | null;
   aadhaar_digilocker_photo_key: string | null;
   aadhaar_digilocker_xml_key: string | null;
-
   pan_details_gz_key: string | null;
-
   profile_photo_key: string | null;
   profile_video_key: string | null;
-
   aadhar_fathername: string | null;
-
   pan_name: string | null;
   pan_fathername: string | null;
   pan_dob: string | null;
-
   geolocation_pincode: string | null;
-
   face_match_score: number | null;
 };
 

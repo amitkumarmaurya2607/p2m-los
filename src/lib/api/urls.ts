@@ -13,14 +13,12 @@ export const API = {
     submit: `${losService}/api/web-proxy/personal-detail`,
   },
   aadhaar: {
-    sendOTP: "/aadhaar/send-otp",
-    verifyOTP: "/aadhaar/verify-otp",
     digiLocker: `${losService}/api/web-proxy/aadhar/generate`,
     verifyCallback: `${losService}/api/web-proxy/aadhar/verify-callback`,
   },
   bank: {
-    verify: `${losService}/api/kyc/bank/verify`,
-    uploadStatement: `${losService}/api/kyc/upload/statement`,
+    verify: `${losService}/api/web-proxy/bank/verify`,
+    uploadStatement: `${losService}/api/web-proxy/bank/statement`,
     initiateFetch: `${losService}/api/kyc/statement/initiate`,
   },
   employment: {
@@ -33,7 +31,7 @@ export const API = {
     update: `${losService}/api/kyc/update/alternateMobNum`,
   },
   application: {
-    submit: "/application/submit",
+    submit:`${losService}/api/web-proxy/apply-loan`,
     status: (id: string) => `/application/${id}/status`,
   },
   contact: {
@@ -44,13 +42,13 @@ export const API = {
   },
 
   selfie: {
-    upload: `${losService}/api/kyc/upload/media`,
+    upload:    `${losService}/api/web-proxy/media/upload`,
   },
   lookup: {
     schemes: "/lookup/schemes",
   },
   loan: {
-    program: `${losService}/api/loan/program`,
+    program: `${losService}/api/web-proxy/program`,
   },
   others: {
     stepProgress: `${losService}/api/web-proxy/user-progress`,

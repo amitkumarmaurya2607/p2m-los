@@ -46,16 +46,13 @@ export async function digiLockerAction() {
 }
 
 export const verifyBankAction = withDecryption(async function verifyBankAction(data: {
-  userId: string;
+  accountType: string;
   accountNumber: string;
   ifscCode: string;
-  benName: string;
+  bankName: string;
 }) {
   try {
-    const result = await verifyBank({
-      ...data,
-      orgId: process.env.ORG_ID?.trim() || "",
-    });
+    const result = await verifyBank(data);
     if (result.code !== "0000") return { error: result.message || "Bank verification failed" };
     await saveStepCookie("bankDetails");
     return { success: true as const };

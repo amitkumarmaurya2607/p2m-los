@@ -276,9 +276,9 @@ function SelfieCapture({ onSubmit }: Props) {
 
       const formData = new FormData();
 
-      formData.append("mediaFile", capturedBlob, `selfie-${Date.now()}.jpg`);
+      formData.append("file", capturedBlob, `selfie-${Date.now()}.jpg`);
 
-      formData.append("data", JSON.stringify({ mediaType: "IMAGE" }));
+      //formData.append("data", JSON.stringify({ mediaType: "IMAGE" }));
 
       const result = await callSecureFormData(submitSelfieAction, formData);
 

@@ -79,7 +79,8 @@ function AccountStatementUpload() {
 
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("data", JSON.stringify({ filePassword: "" }));
+      // formData.append("filePassword", "12345678");
+      formData.append("data", JSON.stringify({ filePassword: "12345678" }));
 
       const result = await callSecureFormData(submitAccountStatementAction, formData);
       if (result?.error) {
@@ -120,53 +121,53 @@ function AccountStatementUpload() {
       tips={
         activeTab === "upload"
           ? {
-              title: "Bank Statement",
-              description:
-                "Upload your latest bank statement (last 6 months) for income and transaction verification.",
-              Icon: <Upload className="w-5 h-5 text-primary" />,
-              noteTitle: "Document Guidelines",
-              noteDescription: (
-                <ul className="space-y-2 text-sm leading-6">
-                  <li className="flex items-start gap-2">
-                    <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
-                    Upload statement for the last 6 months
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
-                    Supported formats: PDF, JPG, PNG
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
-                    Maximum file size: 5MB
-                  </li>
-                </ul>
-              ),
-              NoteIcon: Lightbulb,
-            }
+            title: "Bank Statement",
+            description:
+              "Upload your latest bank statement (last 6 months) for income and transaction verification.",
+            Icon: <Upload className="w-5 h-5 text-primary" />,
+            noteTitle: "Document Guidelines",
+            noteDescription: (
+              <ul className="space-y-2 text-sm leading-6">
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
+                  Upload statement for the last 6 months
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
+                  Supported formats: PDF, JPG, PNG
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
+                  Maximum file size: 5MB
+                </li>
+              </ul>
+            ),
+            NoteIcon: Lightbulb,
+          }
           : {
-              title: "Account Aggregator",
-              description:
-                "Securely connect your bank account via our trusted account aggregator to fetch your statement instantly.",
-              Icon: <Landmark className="w-5 h-5 text-primary" />,
-              noteTitle: "How it works",
-              noteDescription: (
-                <ul className="space-y-2 text-sm leading-6">
-                  <li className="flex items-start gap-2">
-                    <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
-                    Click "Connect Bank Account" to begin
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
-                    Securely log in via your bank's portal
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
-                    Your statement is fetched automatically
-                  </li>
-                </ul>
-              ),
-              NoteIcon: Lightbulb,
-            }
+            title: "Account Aggregator",
+            description:
+              "Securely connect your bank account via our trusted account aggregator to fetch your statement instantly.",
+            Icon: <Landmark className="w-5 h-5 text-primary" />,
+            noteTitle: "How it works",
+            noteDescription: (
+              <ul className="space-y-2 text-sm leading-6">
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
+                  Click "Connect Bank Account" to begin
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
+                  Securely log in via your bank's portal
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-2 h-2 w-2 rounded-full bg-white shrink-0" />
+                  Your statement is fetched automatically
+                </li>
+              </ul>
+            ),
+            NoteIcon: Lightbulb,
+          }
       }
     >
       {/* Tab navigation */}
@@ -174,10 +175,9 @@ function AccountStatementUpload() {
         <button
           type="button"
           onClick={() => setActiveTab("fetch")}
-          className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
-            activeTab === "fetch"
-              ? "bg-secondary text-white shadow-md"
-              : "border border-border-light text-text-muted hover:bg-muted"
+          className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${activeTab === "fetch"
+            ? "bg-secondary text-white shadow-md"
+            : "border border-border-light text-text-muted hover:bg-muted"
             }`}
         >
           Account Aggregator
@@ -185,10 +185,9 @@ function AccountStatementUpload() {
         <button
           type="button"
           onClick={() => setActiveTab("upload")}
-          className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
-            activeTab === "upload"
-              ? "bg-secondary text-white shadow-md"
-              : "border border-border-light text-text-muted hover:bg-muted"
+          className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${activeTab === "upload"
+            ? "bg-secondary text-white shadow-md"
+            : "border border-border-light text-text-muted hover:bg-muted"
             }`}
         >
           Upload Statement
@@ -214,8 +213,7 @@ function AccountStatementUpload() {
             onDragLeave={() => setDragActive(false)}
             onDrop={handleDrop}
             className={`flex h-48 cursor-pointer flex-col items-center justify-center rounded-2xl
-              border-2 border-dashed transition ${
-                dragActive ? "border-primary bg-primary-muted" : "border-border-medium bg-surface"
+              border-2 border-dashed transition ${dragActive ? "border-primary bg-primary-muted" : "border-border-medium bg-surface"
               }`}
           >
             <UploadCloudIcon />
