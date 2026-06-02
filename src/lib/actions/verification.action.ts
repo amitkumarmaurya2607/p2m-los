@@ -81,7 +81,7 @@ export const saveGeoLocationAction = withDecryption(async function saveGeoLocati
   }
 });
 
-export const saveLocationCookiesAction = withDecryption(async function saveLocationCookiesAction(data: { latitude: number; longitude: number }) {
+export const saveLocationCookiesAction = withDecryption(async function saveLocationCookiesAction(data: { latitude: number; longitude: number,city:string,country:string,region:string }) {
   try {
     const { cookies } = await import("next/headers");
     const cookieStore = await cookies();
@@ -95,6 +95,9 @@ export const saveLocationCookiesAction = withDecryption(async function saveLocat
     };
     cookieStore.set("p2m-lat", String(data.latitude), opts);
     cookieStore.set("p2m-lng", String(data.longitude), opts);
+    cookieStore.set("p2m-city", data.city, opts);
+    cookieStore.set("p2m-country", data.country, opts);
+    cookieStore.set("p2m-region", data.region, opts);
     return { success: true as const };
   } catch (err) {
     rethrowIfRedirect(err);
@@ -132,3 +135,6 @@ export const submitEmploymentAction = withDecryption(async function submitEmploy
     return { error: getErrorMessage(err, "Failed to submit employment details") };
   }
 });
+
+
+

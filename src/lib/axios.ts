@@ -51,7 +51,14 @@ function createClient(): AxiosInstance {
       const cookieStore = await cookies();
       const lat = cookieStore.get("p2m-lat")?.value;
       const lng = cookieStore.get("p2m-lng")?.value;
-      if (lat) { config.headers["X-User-Location"] = `${lat},${lng}`; }
+      const country = cookieStore.get("p2m-country")?.value;
+      const city = cookieStore.get("p2m-city")?.value;
+      const region = cookieStore.get("p2m-region")?.value;
+      if (lat) { config.headers["LATITUDE"] = `${lat}`; }
+      if (lng) { config.headers["LONGITUDE"] = lng; }
+      if (city) { config.headers["CITY"] = city; }
+      if (country) { config.headers["COUNTRY"] = country; }
+      if (region) { config.headers["REGION"] = region; }
       const method = (config.method?.toUpperCase() ?? "GET") as string;
       const url = config.baseURL
         ? (config.url?.replace(config.baseURL, "") ?? config.url ?? "")

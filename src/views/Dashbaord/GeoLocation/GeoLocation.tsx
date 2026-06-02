@@ -12,6 +12,7 @@ import {
 } from "@/lib/actions/verification.action";
 import { callSecure } from "@/lib/secure-action";
 import PulseDot from "@/components/PulseDot";
+import { getLocationGuard } from "@/lib/location-guard";
 
 function GeoLocation() {
   const router = useRouter();
@@ -21,11 +22,28 @@ function GeoLocation() {
     longitude: number;
     accuracy: number;
   } | null>(null);
+  const [ipLocation, setIPLocation] = useState<{ region: string; city: string; country: string } | null>(null);
   const [error, setError] = useState("");
   const [permissionState, setPermissionState] = useState<
     "prompt" | "granted" | "denied" | "unavailable"
   >("prompt");
   const [isRedirect, setIsRedirect] = useState(false);
+
+  useEffect(() => {
+
+
+    getLocationGuard()
+      .then((loc) => {
+
+        setIPLocation(loc);
+      })
+      .catch(() => {
+        console.log("Failed to get IP geolocation");
+      })
+      .finally(() => {
+        getCurrentLocation();
+      });
+  }, [])
 
   const [isMobile] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -81,6 +99,9 @@ function GeoLocation() {
         callSecure(saveLocationCookiesAction, {
           latitude,
           longitude,
+          city: ipLocation?.city || "",
+          country: ipLocation?.country || "",
+          region: ipLocation?.region || "",
         });
         showToast({ message: "Location captured successfully", type: "success" });
       },
@@ -130,7 +151,7 @@ function GeoLocation() {
             setPermissionState(result.state as "prompt" | "granted" | "denied");
           };
         })
-        .catch(() => {});
+        .catch(() => { });
     }
     /* eslint-enable react-hooks/set-state-in-effect */
   }, []);

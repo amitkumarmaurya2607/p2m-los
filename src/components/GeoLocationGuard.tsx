@@ -7,6 +7,7 @@ import { saveLocationCookiesAction } from "@/lib/actions/verification.action";
 import { callSecure } from "@/lib/secure-action";
 import GradientButton from "@/components/ui/GradientButton";
 import StepCard from "@/views/Dashbaord/componants/StepCard";
+import { getLocationGuard } from "@/lib/location-guard";
 
 function GeoLocationGuard({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -14,6 +15,7 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
   const shouldSkip = skipPaths.some((p) => pathname.startsWith(p));
 
   const [blocked, setBlocked] = useState(false);
+  const [location, setLocation] = useState<{ region: string; city: string; country: string } | null>(null);
 
   const [isMobile] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -22,6 +24,21 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
     );
   });
 
+  useEffect(() => {
+    if (blocked) return;
+
+    getLocationGuard()
+      .then((location) => {
+        console.log("Location guard result:", location);
+        setLocation(location);
+      })
+      .catch(() => {
+        console.log("Failed to get IP geolocation");
+      })
+      .finally(() => {
+        tryGetPosition();
+      });
+  }, [blocked])
   const [os] = useState<"android" | "ios" | "other">(() => {
     if (typeof window === "undefined") return "other";
     const ua = navigator.userAgent;
@@ -62,6 +79,9 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
         callSecure(saveLocationCookiesAction, {
           latitude: pos.coords.latitude,
           longitude: pos.coords.longitude,
+          city: location?.city || "",
+          country: location?.country || "",
+          region: location?.region || "",
         });
         onSuccess?.();
       },
@@ -117,6 +137,8 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
       window.removeEventListener("pageshow", checkLocation);
     };
   }, [checkLocation]);
+
+
 
   if (shouldSkip) return <>{children}</>;
 
