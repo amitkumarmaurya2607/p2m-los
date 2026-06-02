@@ -79,7 +79,13 @@ export function middleware(request: NextRequest) {
   }
 
   const stepCookie = request.cookies.get(STEP_COOKIE)?.value;
-  const completedSteps = stepCookie ? stepCookie.split(",").filter(Boolean) : [];
+  let completedSteps: string[] = [];
+  if (stepCookie) {
+    const match = stepCookie.match(/^step(\d+)$/);
+    if (match) {
+      completedSteps = stepOrder.slice(0, parseInt(match[1]));
+    }
+  }
   const completedSet = new Set(completedSteps);
 
   if (pathname.startsWith("/track-application")) {
@@ -87,8 +93,8 @@ export function middleware(request: NextRequest) {
     if (!allComplete) {
       const nextPending = stepOrder.find((s) => !completedSet.has(s));
       if (nextPending) {
-        const target = stepRouteMap[nextPending] || "/apply-now";
-        return NextResponse.redirect(new URL(target, request.url));
+        const target = stepRouteMap[nextPending] || "/apply-now"; 
+        return NextResponse.redirect(new URL(target, request.url)); 
       }
     }
     return NextResponse.next();

@@ -32,7 +32,7 @@ function AadhaarDetails() {
     const res = await digiLockerAction();
     console.log("digiLocker response:", res);
     if (res.success) {
-      setDigiLockerData(res.data);
+      setDigiLockerData(res.data?.raw?.model);
     } else {
       setDigiLockerError(res.error || "digiLocker failed");
     }
@@ -198,7 +198,7 @@ function AadhaarDetails() {
         <div className="mb-4">
           <GradientButton
             type="button"
-            onClick={() => window.open((digiLockerData as Record<string, string>).DIGI_KYC_URL, "_blank")}
+            onClick={() => window.open((digiLockerData as Record<string, string>).kycUrl, "_blank")}
             className="w-full"
           >
             Verify with DigiLocker

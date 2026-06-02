@@ -43,6 +43,19 @@ export async function verifyBank(data: {
   return apiPost<ApiResponse<{ code: string; message?: string }>>(API.bank.verify, data);
 }
 
+export async function verifyDigiLockerCallback(
+  token: string,
+): Promise<ApiResponse<{ verified: boolean }>> {
+  return apiPost<ApiResponse<{ verified: boolean }>>(API.aadhaar.verifyCallback, { token });
+}
+
+export async function saveGeoLocation(data: {
+  geoLatitude: number;
+  geoLongitude: number;
+}): Promise<ApiResponse<{ success: boolean }>> {
+  return apiPost<ApiResponse<{ success: boolean }>>(API.others.geoLocation, data);
+}
+
 export async function submitEmployment(
   data: Record<string, unknown>,
 ): Promise<ApiResponse<{ submitted: boolean }>> {

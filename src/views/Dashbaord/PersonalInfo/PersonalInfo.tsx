@@ -10,18 +10,19 @@ import CustomDatePicker from "@/components/ui/CustomDatePicker";
 import RadioButtonGroup from "@/components/ui/RadioButtonGroup";
 import { User, Lightbulb } from "lucide-react";
 import { isValidEmail, sanitizeNumeric } from "@/lib/utils";
-import { submitPersonalInfoAction } from "@/lib/actions/personal-info.action";
+import { getPersonalInfoAction, submitPersonalInfoAction } from "@/lib/actions/personal-info.action";
 import { callSecure } from "@/lib/secure-action";
 import PulseDot from "@/components/PulseDot";
 import { showToast } from "@/lib/toast";
+import { getProfileDataAction } from "@/lib/actions/other.action";
 
 function PersonalInfo() {
   const router = useRouter();
-  const { refreshApp } = useLoanApp();
+
 
   useEffect(() => {
-    refreshApp();
-  }, [refreshApp]);
+    getDetails();
+  }, []);
   const [form, setForm] = useState({
     firstName: "",
     secondName: "",
@@ -39,6 +40,7 @@ function PersonalInfo() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
+  const [personalInfo, setPersonalInfo] = useState<unknown | null>(null);
 
   const handleChange = (key: string, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -104,6 +106,50 @@ function PersonalInfo() {
         type: "error",
       });
       setErrors((prev) => ({ ...prev, submit: result?.error || "Submission failed" }));
+      return;
+    } catch (err) {
+      console.log("err", err)
+      showToast({
+        message: "Something went wrong",
+        type: "error",
+      });
+      setErrors((prev) => ({ ...prev, submit: "Something went wrong" }));
+    } finally {
+      setLoading(false);
+    }
+  };
+  const getDetails = async () => {
+
+
+    try {
+      setLoading(true);
+
+      const result = await getProfileDataAction();
+
+      if (result?.success && result?.data) {
+        const data = result.data;
+        setPersonalInfo(data);
+        setForm((prev) => ({
+          ...prev,
+          firstName: data.firstName || "",
+          secondName: data.middleName || "",
+          lastName: data.lastName || "",
+          fatherName: data.fathersName || "",
+          // email: data?.email || "",
+          dob: data.dateOfBirth || "",
+          state: data.state || "",
+          city: data.city || "",
+          pincode: data.pincode || "",
+          address: data.address || "",
+          gender: data.gender || "",
+        }));
+
+        return;
+      }
+      showToast({
+        message: result?.error || "Submission failed",
+        type: "error",
+      });
       return;
     } catch (err) {
       console.log("err", err)

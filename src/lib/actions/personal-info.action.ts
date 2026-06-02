@@ -1,6 +1,6 @@
 "use server";
 
-import { sendEmailOTP, submitPersonalInfo } from "@/lib/services/personal-info.service";
+import { getPersonalInfo, sendEmailOTP, submitPersonalInfo } from "@/lib/services/personal-info.service";
 import { saveStepCookie } from "@/lib/step-cookie";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
 import { withDecryption } from "@/lib/secure-action";
@@ -16,9 +16,10 @@ export const sendEmailOTPAction = withDecryption(async function sendEmailOTPActi
   }
 });
 
+
 function buildPayload(data: Record<string, unknown>) {
   return {
-    fatherName: data.fatherName ?? "",
+    fathersName: data.fatherName ?? "",
     pinCode: data.pincode ?? "",
     firstName: data.firstName ?? "",
     middleName: data.secondName ?? "",
@@ -26,8 +27,9 @@ function buildPayload(data: Record<string, unknown>) {
     state: data.state ?? "",
     city: data.city ?? "",
     address: data.address ?? "",
-    gender: data.gender ?? "",
-    emailId: data.email ?? "",
+    dateOfBirth: data.dob ?? "",
+    // gender: data.gender ?? "",
+    // emailId: data.email ?? "",
   };
 }
 
@@ -42,3 +44,14 @@ export const submitPersonalInfoAction = withDecryption(async function submitPers
     return { error: getErrorMessage(err, "Failed to submit personal info") };
   }
 });
+
+export async function getPersonalInfoAction() {
+  try {
+    const result = await getPersonalInfo();
+    if (result.code !== "0000") return { error: result.message || "Failed to fetch progress" };
+    return { success: true as const, data: result.data };
+  } catch (err) {
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Failed to fetch progress") };
+  }
+}

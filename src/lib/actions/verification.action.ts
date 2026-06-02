@@ -5,6 +5,7 @@ import {
   digiLockerApi,
   verifyBank,
   submitEmployment,
+  saveGeoLocation,
 } from "@/lib/services/verification.service";
 import { saveStepCookie } from "@/lib/step-cookie";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
@@ -69,8 +70,12 @@ export const saveGeoLocationAction = withDecryption(async function saveGeoLocati
   longitude: number;
   accuracy: number;
 }) {
-  console.log(_data)
   try {
+    const result = await saveGeoLocation({
+      geoLatitude: _data.latitude,
+      geoLongitude: _data.longitude,
+    });
+    if (result.code !== "0000") return { error: result.message || "Failed to save geo location" };
     await saveStepCookie("geoLocation");
     return { success: true as const };
   } catch (err) {

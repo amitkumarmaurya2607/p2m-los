@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { sendOTP, verifyOTP } from "@/lib/services/auth.service";
+import { sendOTP, verifyOTP, getStepProgress } from "@/lib/services/auth.service";
 import { createSession } from "@/lib/session";
 import { saveStepCookie } from "@/lib/step-cookie";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
@@ -19,6 +19,7 @@ export async function saveUserIdCookie(userId: string) {
     maxAge: 60 * 60 * 24 * 7,
   });
 }
+
 
 export const sendOTPAction = withDecryption(async function sendOTPAction(mobileNumber: string) {
   const payload: loginPayload = {
@@ -47,8 +48,10 @@ export const verifyOTPAction = withDecryption(async function verifyOTPAction(pay
     if (result?.code !== "0001" && result.data) {
       const token = result.data?.accessToken;
       await createSession(token);
+      await getStepProgressAction();
+
       await saveStepCookie("mobile");
-      await saveUserIdCookie(result.data?.id);
+      await saveUserIdCookie(result.data?.user?.id);
       return { success: true as const, data: result.data };
     }
     return { error: result.msg || result.message || "Failed to send OTP" };
@@ -57,3 +60,16 @@ export const verifyOTPAction = withDecryption(async function verifyOTPAction(pay
     return { error: getErrorMessage(err, "Verification failed") };
   }
 });
+
+
+
+export async function getStepProgressAction() {
+  try {
+    const result = await getStepProgress();
+    if (result.code !== "0000") return { error: result.message || "Failed to fetch progress" };
+    return { success: true as const, data: result.data };
+  } catch (err) {
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Failed to fetch progress") };
+  }
+}

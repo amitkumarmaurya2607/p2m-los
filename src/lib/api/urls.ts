@@ -3,17 +3,20 @@ export const API = {
   auth: {
     sendOTP: `${losService}/api/web-proxy/send-otp`,
     verifyOTP: `${losService}/api/web-proxy/verify-otp`,
+    
   },
   pan: {
-    verify: `${losService}/api/kyc/pan/verify`,
+    verify: `${losService}/api/web-proxy/pan/verify`,
   },
   personalInfo: {
-    submit: `${losService}/api/kyc/update/personalDetail`,
+    getDetails: `${losService}/api/web-proxy/user-profile`,
+    submit: `${losService}/api/web-proxy/personal-detail`,
   },
   aadhaar: {
     sendOTP: "/aadhaar/send-otp",
     verifyOTP: "/aadhaar/verify-otp",
-    digiLocker: `${losService}/api/kyc/digiLocker`,
+    digiLocker: `${losService}/api/web-proxy/aadhar/generate`,
+    verifyCallback: `${losService}/api/web-proxy/aadhar/verify-callback`,
   },
   bank: {
     verify: `${losService}/api/kyc/bank/verify`,
@@ -49,8 +52,12 @@ export const API = {
   loan: {
     program: `${losService}/api/loan/program`,
   },
-  progress: {
+  others: {
+    stepProgress: `${losService}/api/web-proxy/user-progress`,
+    geoLocation: `${losService}/api/web-proxy/geo-location`,
+    userProfile: `${losService}/api/web-proxy/user-profile`,
     save: "/application/progress",
     get: "/application/progress",
+  
   },
 } as const;
