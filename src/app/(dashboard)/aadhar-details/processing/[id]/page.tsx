@@ -1,47 +1,37 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { CheckCircle2, FileCheck2, Loader2, ShieldCheck, XCircle } from "lucide-react";
 import { checkAadhaarStatusAction } from "@/lib/actions/verification.action";
 
 type Status = "loading" | "success" | "error";
 
-export default function AadhaarProcessingPage() {
+export default function AadhaarProcessingIdPage({
+    params,
+}: {
+    params: Promise<{ id: string }>;
+}) {
     const router = useRouter();
-    const searchParams = useSearchParams();
     const [status, setStatus] = useState<Status>("loading");
     const [errorMsg, setErrorMsg] = useState("");
     const hasRun = useRef(false);
 
-    const txnId = searchParams.get("txnId");
-
     useEffect(() => {
         if (hasRun.current) return;
-        if (!txnId) {
-            router.replace("/aadhar-details");
-            return;
-        } else if (txnId === "FAIL") {
-            setStatus("error");
-            const msg = "Verification failed";
-            setErrorMsg(msg);
-            setTimeout(
-                () =>
-                    router.replace(
-                        `/aadhar-details?error_code=verify_failed&errMsg=${encodeURIComponent(msg)}`,
-                    ),
-                2000,
-            );
-            return
-        } else {
+        hasRun.current = true;
 
-            hasRun.current = true;
+        params.then(({ id }) => {
+            if (!id) {
+                router.replace("/aadhar-details");
+                return;
+            }
 
             setTimeout(() => {
-                checkAadhaarStatusAction(txnId).then((res) => {
+                checkAadhaarStatusAction(id).then((res) => {
                     if (res?.success) {
                         setStatus("success");
-                        setTimeout(() => router.replace("/aadhar-details?error_code=verify_success"), 1500);
+                        setTimeout(() => router.push("/bank-details"), 1500);
                     } else {
                         setStatus("error");
                         const msg = res?.error || "Verification failed";
@@ -56,8 +46,8 @@ export default function AadhaarProcessingPage() {
                     }
                 });
             }, 5000);
-        }
-    }, [txnId, router]);
+        });
+    }, [params, router]);
 
     return (
         <div className="min-h-screen bg-background px-4 py-8 flex items-center justify-center">

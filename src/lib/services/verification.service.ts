@@ -53,14 +53,15 @@ export type KycUnifiedUrlResponse = {
   provider: "DIGITAP" | string;
   raw: {
     code: string;
-    model: {
-      url: string;
-      transactionId: string;
-      kycUrl: string;
-    };
+    model: modelType;
   };
 };
 
+export type modelType =  {
+      url: string;
+      transactionId: string;
+      kycUrl: string;
+    }
 export async function verifyPAN(
   panNumber: string,
 ): Promise<ApiResponse<VerifyPANResponse>> {
@@ -104,8 +105,8 @@ export async function submitEmployment(
 
 export async function triggerDigiLockerWebhook(
   txnId: string,
-): Promise<ApiResponse<{ success: boolean }>> {
-  return apiGet<ApiResponse<{ success: boolean }>>(API.webhook.digiLocker, {
+): Promise<ApiResponse<{ response: string }>> {
+  return apiGet<ApiResponse<{ response: string }>>(API.webhook.digiLocker, {
     params: { txnId, success: true },
   });
 }

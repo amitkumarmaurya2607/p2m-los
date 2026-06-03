@@ -50,9 +50,10 @@ export async function digiLockerAction() {
 export async function triggerDigiLockerWebhookAction(txnId: string) {
   try {
     const result = await triggerDigiLockerWebhook(txnId);
+    console.log("Webhook response:", JSON.stringify(result));
     if (result.code !== "0000")
       return { error: result.message || "Webhook call failed" };
-    return { success: true as const };
+    return { success: true as const, data: result.data };
   } catch (err) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Webhook call failed") };

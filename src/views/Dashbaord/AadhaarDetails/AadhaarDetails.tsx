@@ -9,6 +9,7 @@ import {
   handleDigiLockerCallbackAction,
 } from "@/lib/actions/verification.action";
 import { showToast } from "@/lib/toast";
+import { modelType } from "@/lib/services/verification.service";
 
 function AadhaarDetails() {
   const router = useRouter();
@@ -17,11 +18,10 @@ function AadhaarDetails() {
   const txnId = searchParams.get("txnId");
   const errorCode = searchParams.get("error_code");
   const errMsg = searchParams.get("errMsg");
-  const hasCallBack = Boolean(txnId);
-  const isCallbackError = Boolean(errorCode);
+  const isCallbackError = Boolean(errorCode) && errorCode !== "verify_success";
 
-  const [digiLockerData, setDigiLockerData] = useState<unknown>(null);
-  const [digiLockerLoading, setDigiLockerLoading] = useState(true);
+  const [digiLockerData, setDigiLockerData] = useState<modelType | null>(null);
+  const [digiLockerLoading, setDigiLockerLoading] = useState(false);
   const [digiLockerError, setDigiLockerError] = useState<string | null>(null);
   const [isRedirect, setIsRedirect] = useState(false);
   const [loading, setLoadin] = useState(false);
@@ -31,14 +31,26 @@ function AadhaarDetails() {
     setDigiLockerError(null);
     const res = await digiLockerAction();
     console.log("digiLocker response:", res);
-    if (res.success) {
+    if (res.success && res.data?.raw?.model) {
       setDigiLockerData(res.data?.raw?.model);
+      handleOpenDigiLocker(res.data?.raw?.model);
       localStorage.setItem("digiLockerData", JSON.stringify(res.data));
     } else {
       setDigiLockerError(res.error || "digiLocker failed");
     }
     setDigiLockerLoading(false);
   }
+
+  const handleOpenDigiLocker = (digiLockerData_: modelType | null) => {
+    if (!digiLockerData_) return;
+    const kycUrl =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000/aadhaar-simulate"
+        : (digiLockerData_ as Record<string, string>).kycUrl;
+
+    window.open(kycUrl, "_blank");
+
+  };
 
   const handleContinue = useCallback(async () => {
     try {
@@ -64,14 +76,8 @@ function AadhaarDetails() {
     }
   }, [router]);
 
-  useEffect(() => {
-    if (!hasCallBack) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      callDigiLocker();
-    }
-  }, [hasCallBack]);
 
-  if (hasCallBack) {
+  if (errorCode) {
     if (isCallbackError) {
       return (
         <StepCard
@@ -186,10 +192,10 @@ function AadhaarDetails() {
         <div className="text-center text-sm text-muted-foreground mb-4">Loading DigiLocker...</div>
       )}
 
-      {digiLockerError && (
+      {(
         <div className="mb-4 space-y-2">
           <p className="text-sm text-destructive text-center">{digiLockerError}</p>
-          <GradientButton type="button" onClick={callDigiLocker} className="w-full">
+          <GradientButton type="button" onClick={() => callDigiLocker()} className="w-full">
             Generate Link
           </GradientButton>
         </div>
@@ -199,14 +205,7 @@ function AadhaarDetails() {
         <div className="mb-4">
           <GradientButton
             type="button"
-            onClick={() => {
-              const kycUrl =
-                process.env.NODE_ENV === "development"
-                  ? "http://localhost:3000/aadhaar-simulate"
-                  : (digiLockerData as Record<string, string>).kycUrl;
-
-              window.open(kycUrl, "_blank");
-            }}
+            // onClick={() => callDigiLocker()}
             className="w-full"
           >
             Verify with DigiLocker

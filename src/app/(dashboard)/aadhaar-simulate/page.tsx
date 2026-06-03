@@ -9,7 +9,7 @@ import { triggerDigiLockerWebhookAction } from "@/lib/actions/verification.actio
 
 export default function AadhaarSimulatePage() {
     const [loading, setLoading] = useState(false);
-    const [digiLockerData, setDigiLockerData] = useState(null);
+    const [digiLockerData, setDigiLockerData] = useState<{ raw?: { model?: { transactionId?: string } } } | null>(null);
 
     useEffect(() => {
         const digiLockerData_ = JSON.parse(localStorage.getItem("digiLockerData") || "null");
@@ -20,14 +20,23 @@ export default function AadhaarSimulatePage() {
         setLoading(true);
 
         const txnId = digiLockerData?.raw?.model?.transactionId;
+        if (!txnId) {
+            console.error("No transactionId found in digiLockerData");
+            setLoading(false);
+            return;
+        }
 
         try {
-            await triggerDigiLockerWebhookAction(txnId);
+            const res = await triggerDigiLockerWebhookAction(txnId);
+            if (res?.success && res.data?.response?.startsWith("redirect:")) {
+                window.location.href = res.data.response.replace("redirect:", "");
+                return;
+            }
         } catch (err) {
             console.error("Webhook error:", err);
         }
 
-        window.location.href = `/aadhar-details/processing?txnId=${txnId}`;
+        setLoading(false);
     };
 
     return (
