@@ -198,7 +198,14 @@ function AadhaarDetails() {
         <div className="mb-4">
           <GradientButton
             type="button"
-            onClick={() => window.open((digiLockerData as Record<string, string>).kycUrl, "_blank")}
+            onClick={() => {
+              const kycUrl =
+                process.env.NODE_ENV === "development"
+                  ? "http://localhost:3000/aadhaar-simulate"
+                  : (digiLockerData as Record<string, string>).kycUrl;
+
+              window.open(kycUrl, "_blank");
+            }}
             className="w-full"
           >
             Verify with DigiLocker
