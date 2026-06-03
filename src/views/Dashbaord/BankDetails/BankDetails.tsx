@@ -9,6 +9,7 @@ import { verifyBankAction } from "@/lib/actions/verification.action";
 import { callSecure } from "@/lib/secure-action";
 import { showToast } from "@/lib/toast";
 import BankDetailsVerify from "./BankDetailsVerify";
+import { BankDetailsReaponce } from "@/lib/services/verification.service";
 
 function BankDetails() {
   const [form, setForm] = useState({
@@ -21,14 +22,8 @@ function BankDetails() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
+  const [bankDetails, setBankDetails] = useState<BankDetailsReaponce | null>(null);
 
-  const userId =
-    typeof window !== "undefined"
-      ? document.cookie
-          .split("; ")
-          .find((r) => r.startsWith("p2m-user-id="))
-          ?.split("=")[1] || ""
-      : "";
 
   const handleChange = (key: string, value: string) => {
     let v = value;
@@ -86,9 +81,9 @@ function BankDetails() {
         bankName: form.benName,
         // bankAddress: ""
       });
-      if (result?.success) {
+      if (result?.success && result?.data) {
         setVerified(true);
-
+        setBankDetails(result?.data);
         showToast({
           message: "Personal information added successfully!",
           type: "success",
@@ -107,21 +102,9 @@ function BankDetails() {
     }
   };
 
-  const bankDetails = {
-    id: "064bed49-317a-444c-8fed-274d7c3b4c4f",
-    userId: "25d1260c-180d-4377-8732-fc4c71d75c7d",
-    accountHolderName: "Ajitha Goparaju",
-    accountNumber: "59191182222",
-    ifscCode: "IDIB000D578",
-    bankName: "indian bank",
-    accountType: "SAVINGS",
-    isVerified: false,
-    verificationStatus: "VERIFIED",
-    userDataStatus: "NOT_VERIFIED",
-    isPrimary: true,
-  };
 
-  if (verified) {
+
+  if (verified && bankDetails) {
     return <BankDetailsVerify bankDetails={bankDetails} />;
   }
 

@@ -33,6 +33,7 @@ function AadhaarDetails() {
     console.log("digiLocker response:", res);
     if (res.success) {
       setDigiLockerData(res.data?.raw?.model);
+      localStorage.setItem("digiLockerData", JSON.stringify(res.data));
     } else {
       setDigiLockerError(res.error || "digiLocker failed");
     }

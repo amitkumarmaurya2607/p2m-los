@@ -66,7 +66,7 @@ const Profile = () => {
       const result = await getProfileDataAction();
 
       if (result?.success && result?.data) {
-        setProfileData(result?.data);
+        setProfileData(result.data as UserDetailsType);
         return;
       }
       showToast({
@@ -150,11 +150,11 @@ const Profile = () => {
             <Field label="First Name" value={profileData?.firstName ?? ""} />
             <Field label="Middle Name" value={profileData?.middleName ?? ""} />
             <Field label="Last Name" value={profileData?.lastName ?? ""} />
-            <Field label="Father Name" value={profileData?.fatherName ?? ""} />
-            <Field label="Email Address" value={profileData?.emailId ?? ""} />
-            <Field label="Date of Birth" value={profileData?.dob ?? ""} />
+            <Field label="Father Name" value={profileData?.fathersName ?? ""} />
+            {/* <Field label="Email Address" value={profileData?.emailId ?? ""} /> */}
+            <Field label="Date of Birth" value={profileData?.dateOfBirth ?? ""} />
             <Field label="Gender" value={profileData?.gender ?? ""} />
-            <Field label="Salary" value={profileData?.salary ?? ""} />
+            <Field label="Salary" value={profileData?.creditScore ? String(profileData.creditScore) : ""} />
           </div>
         </section>
 
@@ -169,7 +169,7 @@ const Profile = () => {
           <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="State" value={profileData?.state ?? ""} />
             <Field label="City" value={profileData?.city ?? ""} />
-            <Field label="Pincode" value={profileData?.pinCode ?? ""} />
+            <Field label="Pincode" value={profileData?.pincode ?? ""} />
             <Field label="Address" value={profileData?.address ?? ""} full />
           </div>
         </section>
@@ -245,9 +245,9 @@ const Profile = () => {
                       ? `${profileData.firstName} ${profileData.lastName}`.trim()
                       : "User"}
                   </h3>
-                  <p className="mt-1 max-w-full break-all text-sm text-text-secondary">
+                  {/* <p className="mt-1 max-w-full break-all text-sm text-text-secondary">
                     {profileData?.emailId || "user@example.com"}
-                  </p>
+                  </p> */}
                   <p className="mt-1 break-words text-sm text-text-secondary">
                     {profileData?.address || ""}
                   </p>

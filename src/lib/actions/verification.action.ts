@@ -55,7 +55,7 @@ export const verifyBankAction = withDecryption(async function verifyBankAction(d
     const result = await verifyBank(data);
     if (result.code !== "0000") return { error: result.message || "Bank verification failed" };
     await saveStepCookie("bankDetails");
-    return { success: true as const };
+    return { success: true as const,data: result.data };
   } catch (err) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Bank verification failed") };

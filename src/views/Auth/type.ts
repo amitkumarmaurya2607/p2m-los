@@ -3,8 +3,9 @@ export type loginPayload = {
   brandId: string;
 };
 export type loginVerifyPayload = {
-  mobileNumber: string;
-  id: string;
+  userId: string;
   otp: string;
+  type: string;
+  deviceId?: string;
   brandId?: string;
 };

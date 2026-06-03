@@ -14,7 +14,7 @@ type VerifyPANResponse = {
   raw: Record<string, unknown>;
 };
 
- type BankDetailsReaponce = {
+ export type BankDetailsReaponce = {
   id: string;
   userId: string;
 
