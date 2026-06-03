@@ -2,7 +2,7 @@ import { logInfo, logWarn, logError } from "@/lib/logger";
 import type { NextRequest } from "next/server";
 
 const SENSITIVE_HEADERS = new Set([
-  // "authorization",
+  "authorization",
   "cookie",
   "set-cookie",
   "x-api-key",

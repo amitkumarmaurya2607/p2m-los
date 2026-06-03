@@ -3,7 +3,6 @@
 import {
   getLoanPrograms,
   submitApplication,
-  getApplicationStatus,
 } from "@/lib/services/apply.service";
 import { saveStepCookie } from "@/lib/step-cookie";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
@@ -34,14 +33,3 @@ export const submitApplicationAction = withDecryption(async function submitAppli
   }
 });
 
-export async function getApplicationStatusAction(id: string) {
-  try {
-    const result = await getApplicationStatus(id);
-    if (result.code !== "0000")
-      return { error: result.message || "Failed to fetch application status" };
-    return { success: true as const, data: result.data };
-  } catch (err) {
-    rethrowIfRedirect(err);
-    return { error: getErrorMessage(err, "Failed to fetch application status") };
-  }
-}

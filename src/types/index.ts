@@ -139,10 +139,74 @@ export interface PaginationParams {
   limit: number;
 }
 
-export interface PaginatedResponse<T> {
-  data: T[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-}
+
+export type UserDetailsType = {
+  id: string;
+  userId: string;
+
+  firstName: string | null;
+  middleName: string | null;
+  lastName: string | null;
+  gender: string | null;
+  dateOfBirth: string | null;
+  age: number | null;
+
+  fathersName: string | null;
+  mothersName: string | null;
+  maritalStatus: string | null;
+  spouseName: string | null;
+  religion: string | null;
+
+  address: string | null;
+  city: string | null;
+  state: string | null;
+  pincode: string | null;
+  residenceType: "OWNED" | "RENTED" | string | null;
+  isCommunicationAddress: boolean;
+
+  profilePicUrl: string | null;
+  profileVideoUrl: string | null;
+
+  userDataStatus: "VERIFIED" | "NOT_VERIFIED" | "PENDING" | "FAILED" | string;
+
+  filePrivateKey: string | null;
+  addressProofType: string | null;
+
+  creditScore: number;
+
+  aAdharName: string | null;
+  aAdharDOB: string | null;
+  aadhar_fathername: string | null;
+
+  pan_name: string | null;
+  pan_fathername: string | null;
+  pan_dob: string | null;
+
+  userBlockAlert: string | null;
+
+  geoLatitude: number | null;
+  geoLongitude: number | null;
+  geolocation_pincode: string | null;
+
+  isFraudulentByCMS: boolean;
+  isGoaAndPanMatching: boolean;
+  isServicablePinCodesByCMS: boolean;
+  aadhaarPanLinkedByPanPlus: boolean;
+
+  linkedAadhaarNumberByPanPlus: string | null;
+  linkedAadhaarNumberByDigiLocker: string | null;
+
+  aadhaar_digilocker_gz_key: string | null;
+  aadhaar_digilocker_pdf_key: string | null;
+  aadhaar_digilocker_photo_key: string | null;
+  aadhaar_digilocker_xml_key: string | null;
+
+  pan_details_gz_key: string | null;
+  profile_photo_key: string | null;
+  profile_video_key: string | null;
+
+  face_match_score: number | null;
+
+  createdAt: string;
+  updatedAt: string;
+};

@@ -1,10 +1,31 @@
 import { apiPost } from "@/lib/axios";
 import { API } from "@/lib/api/urls";
+import { ApiResponse } from "@/types";
+
+ type BankStatementResponce = {
+  id: string;
+  userId: string;
+  userBankAccountId: string;
+
+  filePrivateKey: string;
+  filePassword: string | null;
+
+  fromDate: string | null;
+  toDate: string | null;
+
+  message: string | null;
+
+  isFraud: boolean;
+  fraudScore: number;
+
+  createdAt: string;
+  updatedAt: string;
+};
 
 export async function uploadAccountStatement(
   formData: FormData,
-): Promise<{ code?: string; message?: string }> {
-  return apiPost<{ code?: string; message?: string }>(API.bank.uploadStatement, formData, {
+): Promise<ApiResponse<BankStatementResponce>> {
+  return apiPost<ApiResponse<BankStatementResponce>>(API.bank.uploadStatement, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 }

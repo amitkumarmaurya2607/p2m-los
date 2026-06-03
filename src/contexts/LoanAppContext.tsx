@@ -24,7 +24,7 @@ export function LoanAppProvider({ children }: { children: React.ReactNode }) {
     try {
       const data = await getStepProgressAction();
       //setApplication(data);
-      console.log("data----", data);
+      console.log("data----", JSON.stringify(data));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to fetch loan application");
     } finally {

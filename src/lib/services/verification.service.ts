@@ -1,11 +1,53 @@
 import { apiPost } from "@/lib/axios";
 import { API } from "@/lib/api/urls";
-import type { ApiResponse } from "@/types";
+import type { ApiResponse, UserDetailsType } from "@/types";
+
+
+type VerifyPANResponse = {
+  success: boolean;
+  dob: string;
+  name: string;
+  address: string;
+  fathersName: string | null;
+  message: string;
+  provider: "DIGITAP" | string;
+  raw: Record<string, unknown>;
+};
+
+ type BankDetailsReaponce = {
+  id: string;
+  userId: string;
+
+  accountHolderName: string;
+  accountNumber: string;
+  ifscCode: string;
+  bankName: string;
+  accountType: "SAVINGS" | "CURRENT" | string;
+
+  isVerified: boolean;
+  verificationMethod: string | null;
+  verificationStatus: "VERIFIED" | "NOT_VERIFIED" | "PENDING" | "FAILED" | string;
+  verifiedAt: string | null;
+
+  createdAt: string;
+  updatedAt: string;
+
+  userDataStatus: "VERIFIED" | "NOT_VERIFIED" | "PENDING" | "FAILED" | string;
+  isPrimary: boolean;
+
+  pennyDropResponse: unknown | null;
+  pennyDropStatus: string | null;
+  pennyVerifiedName: string | null;
+
+  beneficiary_name: string | null;
+  name_match_percentage: number | null;
+  verification_provider: string | null;
+};
 
 export async function verifyPAN(
   panNumber: string,
-): Promise<ApiResponse<{ number?: string; fullName?: string; verified?: boolean }>> {
-  return apiPost<ApiResponse<{ number?: string; fullName?: string; verified?: boolean }>>(
+): Promise<ApiResponse<VerifyPANResponse>> {
+  return apiPost<ApiResponse<VerifyPANResponse>>(
     API.pan.verify,
     { pan: panNumber },
   );
@@ -20,8 +62,8 @@ export async function verifyBank(data: {
   accountNumber: string;
   ifscCode: string;
   bankName: string;
-}): Promise<ApiResponse<{ code: string; message?: string }>> {
-  return apiPost<ApiResponse<{ code: string; message?: string }>>(API.bank.verify, data);
+}): Promise<ApiResponse<BankDetailsReaponce>> {
+  return apiPost<ApiResponse<BankDetailsReaponce>>(API.bank.verify, data);
 }
 
 export async function verifyDigiLockerCallback(
@@ -33,8 +75,8 @@ export async function verifyDigiLockerCallback(
 export async function saveGeoLocation(data: {
   geoLatitude: number;
   geoLongitude: number;
-}): Promise<ApiResponse<{ success: boolean }>> {
-  return apiPost<ApiResponse<{ success: boolean }>>(API.others.geoLocation, data);
+}): Promise<ApiResponse<UserDetailsType>> {
+  return apiPost<ApiResponse<UserDetailsType>>(API.others.geoLocation, data);
 }
 
 export async function submitEmployment(
