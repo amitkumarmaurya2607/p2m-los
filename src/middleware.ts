@@ -93,8 +93,8 @@ export function middleware(request: NextRequest) {
     if (!allComplete) {
       const nextPending = stepOrder.find((s) => !completedSet.has(s));
       if (nextPending) {
-        const target = stepRouteMap[nextPending] || "/apply-now"; 
-        return NextResponse.redirect(new URL(target, request.url)); 
+        const target = stepRouteMap[nextPending] || "/apply-now";
+        return NextResponse.redirect(new URL(target, request.url));
       }
     }
     return NextResponse.next();

@@ -121,38 +121,39 @@ const FinalCTA = ({ version = "v2" }: FinalCTAProps) => {
                 </div>
               ))}
 
-              {showAll && hiddenSteps.map((step, index) => (
-                <div
-                  key={step}
-                  className="group flex w-full items-center gap-3 rounded-xl border
-                    border-white/10 bg-white/[0.05] px-3 py-3 transition-all duration-300
-                    hover:-translate-y-1 hover:border-home-green/40 hover:bg-home-green/10"
-                >
+              {showAll &&
+                hiddenSteps.map((step, index) => (
                   <div
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full
-                      bg-home-green/15 text-[13px] font-black text-home-green"
+                    key={step}
+                    className="group flex w-full items-center gap-3 rounded-xl border
+                      border-white/10 bg-white/[0.05] px-3 py-3 transition-all duration-300
+                      hover:-translate-y-1 hover:border-home-green/40 hover:bg-home-green/10"
                   >
-                    {index + 7}
-                  </div>
+                    <div
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full
+                        bg-home-green/15 text-[13px] font-black text-home-green"
+                    >
+                      {index + 7}
+                    </div>
 
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[13px] font-semibold capitalize text-white">
-                      {step.replace(/([A-Z])/g, " $1")}
-                    </p>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[13px] font-semibold capitalize text-white">
+                        {step.replace(/([A-Z])/g, " $1")}
+                      </p>
 
-                    <p className="mt-0.5 text-[11px] text-white/50">Verification step</p>
+                      <p className="mt-0.5 text-[11px] text-white/50">Verification step</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
 
             <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
               <button
                 type="button"
                 onClick={() => setShowAll(!showAll)}
-                className="flex h-[52px] cursor-pointer items-center justify-center gap-2 rounded-[14px]
-                  border-2 border-white/20 px-7 text-[14px] font-semibold text-white transition-all
-                  duration-300 hover:-translate-y-1 hover:bg-white/10"
+                className="flex h-[52px] cursor-pointer items-center justify-center gap-2
+                  rounded-[14px] border-2 border-white/20 px-7 text-[14px] font-semibold text-white
+                  transition-all duration-300 hover:-translate-y-1 hover:bg-white/10"
               >
                 {showAll ? "Show less" : "View all steps"}
                 <ChevronDown

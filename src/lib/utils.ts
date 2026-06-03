@@ -65,13 +65,12 @@ export const formatMobile = (value: string): string => {
   return "+91 " + digits.slice(0, 5) + " " + digits.slice(5);
 };
 
-
 export const cleanAddress = (
   address: string,
   city?: string,
   state?: string,
   pincode?: string,
-  country: string = "India"
+  country: string = "India",
 ) => {
   let cleaned = address;
 

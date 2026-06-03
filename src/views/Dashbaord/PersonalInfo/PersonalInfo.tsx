@@ -18,7 +18,6 @@ import { getProfileDataAction } from "@/lib/actions/other.action";
 function PersonalInfo() {
   const router = useRouter();
 
-
   useEffect(() => {
     getDetails();
   }, []);
@@ -107,7 +106,7 @@ function PersonalInfo() {
       setErrors((prev) => ({ ...prev, submit: result?.error || "Submission failed" }));
       return;
     } catch (err) {
-      console.log("err", err)
+      console.log("err", err);
       showToast({
         message: "Something went wrong",
         type: "error",
@@ -118,8 +117,6 @@ function PersonalInfo() {
     }
   };
   const getDetails = async () => {
-
-
     try {
       setLoading(true);
 
@@ -151,7 +148,7 @@ function PersonalInfo() {
       });
       return;
     } catch (err) {
-      console.log("err", err)
+      console.log("err", err);
       showToast({
         message: "Something went wrong",
         type: "error",

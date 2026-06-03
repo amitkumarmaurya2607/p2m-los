@@ -22,7 +22,11 @@ function GeoLocation() {
     longitude: number;
     accuracy: number;
   } | null>(null);
-  const [ipLocation, setIPLocation] = useState<{ region: string; city: string; country: string } | null>(null);
+  const [ipLocation, setIPLocation] = useState<{
+    region: string;
+    city: string;
+    country: string;
+  } | null>(null);
   const [error, setError] = useState("");
   const [permissionState, setPermissionState] = useState<
     "prompt" | "granted" | "denied" | "unavailable"
@@ -50,7 +54,7 @@ function GeoLocation() {
         });
         getCurrentLocation();
       });
-  }, [])
+  }, []);
 
   const [isMobile] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -158,7 +162,7 @@ function GeoLocation() {
             setPermissionState(result.state as "prompt" | "granted" | "denied");
           };
         })
-        .catch(() => { });
+        .catch(() => {});
     }
     /* eslint-enable react-hooks/set-state-in-effect */
   }, []);

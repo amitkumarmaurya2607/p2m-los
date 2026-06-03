@@ -15,7 +15,11 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
   const shouldSkip = skipPaths.some((p) => pathname.startsWith(p));
 
   const [blocked, setBlocked] = useState(false);
-  const [location, setLocation] = useState<{ region: string; city: string; country: string } | null>(null);
+  const [location, setLocation] = useState<{
+    region: string;
+    city: string;
+    country: string;
+  } | null>(null);
 
   const [isMobile] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -48,7 +52,7 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
         });
         tryGetPosition();
       });
-  }, [blocked])
+  }, [blocked]);
   const [os] = useState<"android" | "ios" | "other">(() => {
     if (typeof window === "undefined") return "other";
     const ua = navigator.userAgent;
@@ -78,33 +82,36 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const tryGetPosition = useCallback((onSuccess?: () => void) => {
-    if (!navigator.geolocation) {
-      setBlocked(false);
-      return;
-    }
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
+  const tryGetPosition = useCallback(
+    (onSuccess?: () => void) => {
+      if (!navigator.geolocation) {
         setBlocked(false);
-        callSecure(saveLocationCookiesAction, {
-          latitude: pos.coords.latitude,
-          longitude: pos.coords.longitude,
-          city: location?.city || "",
-          country: location?.country || "",
-          region: location?.region || "",
-        });
-        onSuccess?.();
-      },
-      (err) => {
-        if (err.code === err.PERMISSION_DENIED) {
-          setBlocked(true);
-        } else {
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
           setBlocked(false);
-        }
-      },
-      { enableHighAccuracy: false, timeout: 5000, maximumAge: 120000 },
-    );
-  }, [setBlocked]);
+          callSecure(saveLocationCookiesAction, {
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+            city: location?.city || "",
+            country: location?.country || "",
+            region: location?.region || "",
+          });
+          onSuccess?.();
+        },
+        (err) => {
+          if (err.code === err.PERMISSION_DENIED) {
+            setBlocked(true);
+          } else {
+            setBlocked(false);
+          }
+        },
+        { enableHighAccuracy: false, timeout: 5000, maximumAge: 120000 },
+      );
+    },
+    [setBlocked],
+  );
 
   const checkLocation = useCallback(() => {
     if (typeof window === "undefined") return;
@@ -147,8 +154,6 @@ function GeoLocationGuard({ children }: { children: React.ReactNode }) {
       window.removeEventListener("pageshow", checkLocation);
     };
   }, [checkLocation]);
-
-
 
   if (shouldSkip) return <>{children}</>;
 

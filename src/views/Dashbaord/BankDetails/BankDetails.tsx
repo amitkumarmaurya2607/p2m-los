@@ -25,9 +25,9 @@ function BankDetails() {
   const userId =
     typeof window !== "undefined"
       ? document.cookie
-        .split("; ")
-        .find((r) => r.startsWith("p2m-user-id="))
-        ?.split("=")[1] || ""
+          .split("; ")
+          .find((r) => r.startsWith("p2m-user-id="))
+          ?.split("=")[1] || ""
       : "";
 
   const handleChange = (key: string, value: string) => {
@@ -121,11 +121,8 @@ function BankDetails() {
     isPrimary: true,
   };
 
-
   if (verified) {
-    return (
-      <BankDetailsVerify bankDetails={bankDetails} />
-    );
+    return <BankDetailsVerify bankDetails={bankDetails} />;
   }
 
   return (

@@ -3,7 +3,6 @@ export const API = {
   auth: {
     sendOTP: `${losService}/api/web-proxy/send-otp`,
     verifyOTP: `${losService}/api/web-proxy/verify-otp`,
-    
   },
   pan: {
     verify: `${losService}/api/web-proxy/pan/verify`,
@@ -31,7 +30,7 @@ export const API = {
     update: `${losService}/api/kyc/update/alternateMobNum`,
   },
   application: {
-    submit:`${losService}/api/web-proxy/apply-loan`,
+    submit: `${losService}/api/web-proxy/apply-loan`,
     status: (id: string) => `/application/${id}/status`,
   },
   contact: {
@@ -42,7 +41,7 @@ export const API = {
   },
 
   selfie: {
-    upload:    `${losService}/api/web-proxy/media/upload`,
+    upload: `${losService}/api/web-proxy/media/upload`,
   },
   lookup: {
     schemes: "/lookup/schemes",
@@ -56,6 +55,5 @@ export const API = {
     userProfile: `${losService}/api/web-proxy/user-profile`,
     save: "/application/progress",
     get: "/application/progress",
-  
   },
 } as const;

@@ -51,18 +51,18 @@ const EmiDashboard = () => {
         lg:py-24`}
     >
       <div
-        className={`absolute -right-[160px] -top-[250px] h-[500px] w-[500px] rounded-full bg-white/40
-          blur-[64px]`}
+        className={`absolute -right-[160px] -top-[250px] h-[500px] w-[500px] rounded-full
+          bg-white/40 blur-[64px]`}
       />
 
       <div
-        className={`relative mx-auto flex max-w-[1257px] flex-col items-center justify-between gap-12
-          lg:flex-row lg:gap-16`}
+        className={`relative mx-auto flex max-w-[1257px] flex-col items-center justify-between
+          gap-12 lg:flex-row lg:gap-16`}
       >
         <div className="w-full max-w-[584px]">
           <div
-            className={`flex h-16 w-16 rotate-[3deg] items-center justify-center rounded-2xl bg-white
-              shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.1),0px_2px_4px_-2px_rgba(0,0,0,0.1)]`}
+            className={`flex h-16 w-16 rotate-[3deg] items-center justify-center rounded-2xl
+              bg-white shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.1),0px_2px_4px_-2px_rgba(0,0,0,0.1)]`}
           >
             <Calculator className="h-8 w-8 text-home-purple" />
           </div>
@@ -171,8 +171,8 @@ const EmiDashboard = () => {
             <h3 className="text-xl font-bold text-dark-navy">Repayment Plan</h3>
 
             <span
-            className={`rounded-full bg-home-bg-green-light px-3 py-1 text-sm font-bold
-              text-home-green`}
+              className={`rounded-full bg-home-bg-green-light px-3 py-1 text-sm font-bold
+                text-home-green`}
             >
               {annualRate}% p.a.
             </span>
@@ -229,9 +229,9 @@ const EmiDashboard = () => {
               </div>
 
               <div
-              className={`rounded-2xl border border-muted bg-home-bg-gray-light px-6 py-6
-                transition-all duration-300 hover:-translate-y-1
-                hover:shadow-[0px_14px_35px_rgba(0,0,0,0.1)]`}
+                className={`rounded-2xl border border-muted bg-home-bg-gray-light px-6 py-6
+                  transition-all duration-300 hover:-translate-y-1
+                  hover:shadow-[0px_14px_35px_rgba(0,0,0,0.1)]`}
               >
                 <p className="text-sm text-home-muted">Monthly EMI</p>
 
@@ -243,13 +243,13 @@ const EmiDashboard = () => {
 
             <div className="flex flex-col items-center justify-center">
               <div
-              className={`relative flex h-40 w-40 items-center justify-center rounded-full
-                transition-all duration-300 hover:scale-105`}
+                className={`relative flex h-40 w-40 items-center justify-center rounded-full
+                  transition-all duration-300 hover:scale-105`}
                 style={circleStyle}
               >
                 <div
-                className={`flex h-[120px] w-[120px] flex-col items-center justify-center
-                  rounded-full bg-white`}
+                  className={`flex h-[120px] w-[120px] flex-col items-center justify-center
+                    rounded-full bg-white`}
                 >
                   <p className="text-xs font-medium text-home-muted">Total Amount</p>
 

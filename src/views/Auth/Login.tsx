@@ -13,7 +13,6 @@ import Link from "next/link";
 import { decrypt, encrypt } from "@/lib/crypto";
 
 const Login = ({ type }: { type?: string }) => {
-
   const [sendOtp, setSendOtp] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState<string>("");
@@ -31,7 +30,6 @@ const Login = ({ type }: { type?: string }) => {
 
   const validate = () => {
     return isValidMobile(userName);
-
   };
 
   const submitHandler = (e?: React.FormEvent | null, type?: "resend") => {
@@ -81,8 +79,6 @@ const Login = ({ type }: { type?: string }) => {
 
     setUserName(digits ? "+91" + digits : "");
   };
-
-
 
   return (
     <>

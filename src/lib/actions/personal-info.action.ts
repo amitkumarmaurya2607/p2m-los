@@ -1,6 +1,10 @@
 "use server";
 
-import { getPersonalInfo, sendEmailOTP, submitPersonalInfo } from "@/lib/services/personal-info.service";
+import {
+  getPersonalInfo,
+  sendEmailOTP,
+  submitPersonalInfo,
+} from "@/lib/services/personal-info.service";
 import { saveStepCookie } from "@/lib/step-cookie";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
 import { withDecryption } from "@/lib/secure-action";
@@ -16,7 +20,6 @@ export const sendEmailOTPAction = withDecryption(async function sendEmailOTPActi
   }
 });
 
-
 function buildPayload(data: Record<string, unknown>) {
   return {
     fathersName: data.fatherName ?? "",
@@ -30,11 +33,12 @@ function buildPayload(data: Record<string, unknown>) {
     dateOfBirth: data.dob ?? "",
     email: data.email ?? "",
     // gender: data.gender ?? "",
-
   };
 }
 
-export const submitPersonalInfoAction = withDecryption(async function submitPersonalInfoAction(data: Record<string, unknown>) {
+export const submitPersonalInfoAction = withDecryption(async function submitPersonalInfoAction(
+  data: Record<string, unknown>,
+) {
   try {
     const result = await submitPersonalInfo(buildPayload(data));
     if (result.code !== "0000") return { error: result.message || "Submission failed" };

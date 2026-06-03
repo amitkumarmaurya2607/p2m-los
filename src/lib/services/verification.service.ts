@@ -15,9 +15,8 @@ export async function digiLockerApi(): Promise<ApiResponse<unknown>> {
   return apiPost<ApiResponse<unknown>>(API.aadhaar.digiLocker, {});
 }
 
-
 export async function verifyBank(data: {
-   accountType: string;
+  accountType: string;
   accountNumber: string;
   ifscCode: string;
   bankName: string;

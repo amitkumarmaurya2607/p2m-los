@@ -1,8 +1,6 @@
 import "server-only";
 
-export function formatDate(
-  date: Date | string | number | null | undefined
-): string {
+export function formatDate(date: Date | string | number | null | undefined): string {
   if (!date) return "";
   const d = typeof date === "string" || typeof date === "number" ? new Date(date) : date;
   if (isNaN(d.getTime())) return "";
@@ -13,9 +11,7 @@ export function formatDate(
   });
 }
 
-export function formatDateTime(
-  date: Date | string | number | null | undefined
-): string {
+export function formatDateTime(date: Date | string | number | null | undefined): string {
   if (!date) return "";
   const d = typeof date === "string" || typeof date === "number" ? new Date(date) : date;
   if (isNaN(d.getTime())) return "";
@@ -29,9 +25,7 @@ export function formatDateTime(
   });
 }
 
-export function formatDateInput(
-  date: Date | string | number | null | undefined
-): string {
+export function formatDateInput(date: Date | string | number | null | undefined): string {
   if (!date) return "";
   const d = typeof date === "string" || typeof date === "number" ? new Date(date) : date;
   if (isNaN(d.getTime())) return "";
@@ -41,18 +35,14 @@ export function formatDateInput(
   return `${year}-${month}-${day}`;
 }
 
-export function formatISODate(
-  date: Date | string | number | null | undefined
-): string {
+export function formatISODate(date: Date | string | number | null | undefined): string {
   if (!date) return "";
   const d = typeof date === "string" || typeof date === "number" ? new Date(date) : date;
   if (isNaN(d.getTime())) return "";
   return d.toISOString();
 }
 
-export function formatRelativeTime(
-  date: Date | string | number | null | undefined
-): string {
+export function formatRelativeTime(date: Date | string | number | null | undefined): string {
   if (!date) return "";
   const d = typeof date === "string" || typeof date === "number" ? new Date(date) : date;
   if (isNaN(d.getTime())) return "";

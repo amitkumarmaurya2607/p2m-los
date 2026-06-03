@@ -20,7 +20,6 @@ export async function saveUserIdCookie(userId: string) {
   });
 }
 
-
 export const sendOTPAction = withDecryption(async function sendOTPAction(mobileNumber: string) {
   const payload: loginPayload = {
     mobileNumber,
@@ -39,7 +38,9 @@ export const sendOTPAction = withDecryption(async function sendOTPAction(mobileN
   }
 });
 
-export const verifyOTPAction = withDecryption(async function verifyOTPAction(payload: loginVerifyPayload) {
+export const verifyOTPAction = withDecryption(async function verifyOTPAction(
+  payload: loginVerifyPayload,
+) {
   payload.brandId = process.env.ORG_ID || "";
   console.log("Verifying OTP with payload:", payload);
   try {
@@ -58,8 +59,6 @@ export const verifyOTPAction = withDecryption(async function verifyOTPAction(pay
     return { error: getErrorMessage(err, "Verification failed") };
   }
 });
-
-
 
 export async function getStepProgressAction() {
   try {

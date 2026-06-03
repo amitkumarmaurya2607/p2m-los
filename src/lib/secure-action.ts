@@ -55,7 +55,11 @@ export async function callSecureFormData<T>(
   }
 
   const encrypted = await encrypt(JSON.stringify({ fields, files }));
-  return action({ __encrypted: true, __formData: true, data: encrypted } satisfies EncryptedPayload);
+  return action({
+    __encrypted: true,
+    __formData: true,
+    data: encrypted,
+  } satisfies EncryptedPayload);
 }
 
 export function withDecryption<T, R>(

@@ -2,18 +2,9 @@
 
 import React from "react";
 import Link from "next/link";
-import {
-  Clock3,
-  Headphones,
-  Shield,
-  BadgeCheck,
-  Activity,
-  User,
-} from "lucide-react";
+import { Clock3, Headphones, Shield, BadgeCheck, Activity, User } from "lucide-react";
 import StepCard from "../componants/StepCard";
 import PulseDot from "@/components/PulseDot";
-
-
 
 const timeline = [
   {

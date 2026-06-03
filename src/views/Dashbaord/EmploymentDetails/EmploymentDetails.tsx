@@ -101,7 +101,7 @@ function EmploymentDetails() {
       });
       setError((prev) => ({ ...prev, submit: result?.error || "Submission failed" }));
     } catch (err) {
-      console.log(err)
+      console.log(err);
       showToast({
         message: "Something went wrong",
         type: "error",

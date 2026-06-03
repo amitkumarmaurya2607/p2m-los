@@ -2,12 +2,7 @@
 
 import React, { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Edit3,
-  Shield,
-  BadgeCheckIcon,
-  IndianRupee,
-} from "lucide-react";
+import { Edit3, Shield, BadgeCheckIcon, IndianRupee } from "lucide-react";
 import GradientButton from "@/components/ui/GradientButton";
 import { showToast } from "@/lib/toast";
 import { submitApplicationAction, getLoanProgramsAction } from "@/lib/actions/apply.action";
@@ -62,7 +57,7 @@ function LoanEligibility() {
         }
         setPrograms(res.data);
       })
-      .catch(() => { });
+      .catch(() => {});
   }, []);
 
   const interestRate = 10.5;

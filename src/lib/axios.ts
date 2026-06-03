@@ -25,9 +25,9 @@ async function handleServer401(): Promise<never> {
     const cookieStore = await getCookies();
     cookieStore.delete("p2m-lat");
     cookieStore.delete("p2m-lng");
-      cookieStore.delete("p2m-city");
-      cookieStore.delete("p2m-country");
-      cookieStore.delete("p2m-region");
+    cookieStore.delete("p2m-city");
+    cookieStore.delete("p2m-country");
+    cookieStore.delete("p2m-region");
     redirect("/apply-now?type=exp");
   } else {
     await fetch("/api/logout", { method: "POST" });
@@ -57,11 +57,21 @@ function createClient(): AxiosInstance {
       const country = cookieStore.get("p2m-country")?.value;
       const city = cookieStore.get("p2m-city")?.value;
       const region = cookieStore.get("p2m-region")?.value;
-      if (lat) { config.headers["LATITUDE"] = `${lat}`; }
-      if (lng) { config.headers["LONGITUDE"] = lng; }
-      if (city) { config.headers["CITY"] = city; }
-      if (country) { config.headers["COUNTRY"] = country; }
-      if (region) { config.headers["REGION"] = region; }
+      if (lat) {
+        config.headers["LATITUDE"] = `${lat}`;
+      }
+      if (lng) {
+        config.headers["LONGITUDE"] = lng;
+      }
+      if (city) {
+        config.headers["CITY"] = city;
+      }
+      if (country) {
+        config.headers["COUNTRY"] = country;
+      }
+      if (region) {
+        config.headers["REGION"] = region;
+      }
       const method = (config.method?.toUpperCase() ?? "GET") as string;
       const url = config.baseURL
         ? (config.url?.replace(config.baseURL, "") ?? config.url ?? "")

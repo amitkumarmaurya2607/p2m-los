@@ -1,4 +1,3 @@
-
 import InfoCard from "@/components/Cards/InfoCard";
 import { ShieldCheck, TrendingUp, Users } from "lucide-react";
 import Link from "next/link";

@@ -183,10 +183,11 @@ const RatingReviews_v2 = () => {
           <button
             key={index}
             onClick={() => scrollToCard(index)}
-            className={`transition-all duration-300 ${activeIndex === index
+            className={`transition-all duration-300 ${
+              activeIndex === index
                 ? "h-3 w-3 rounded-full bg-[#3737C1]"
                 : "h-2 w-2 rounded-full bg-[#00C89C]/40"
-              }`}
+            }`}
           />
         ))}
       </div>

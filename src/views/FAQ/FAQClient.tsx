@@ -136,11 +136,12 @@ export default function FAQClient({ faqData }: { faqData: FAQItem[] }) {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-6 py-3 rounded-full font-bold text-sm transition-all border ${activeCategory === cat
+                className={`px-6 py-3 rounded-full font-bold text-sm transition-all border ${
+                  activeCategory === cat
                     ? "bg-primary text-white border-primary shadow-lg shadow-primary/20 scale-105"
                     : `bg-surface border-border text-text-secondary hover:border-primary/40
                       hover:text-primary`
-                  }`}
+                }`}
               >
                 {cat}
               </button>

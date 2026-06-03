@@ -29,9 +29,7 @@ const routeStepMap: Record<string, string> = {
   "/loan-eligibility": "loanEligibility",
 };
 
-const Header: React.FC<HeaderProps> = ({
-  onBack,
-}) => {
+const Header: React.FC<HeaderProps> = ({ onBack }) => {
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();

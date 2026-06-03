@@ -20,7 +20,9 @@ export async function getLoanProgramsAction() {
   }
 }
 
-export const submitApplicationAction = withDecryption(async function submitApplicationAction(data: unknown) {
+export const submitApplicationAction = withDecryption(async function submitApplicationAction(
+  data: unknown,
+) {
   try {
     const result = await submitApplication(data);
     if (result.code !== "0000") return { error: result.message || "Submission failed" };

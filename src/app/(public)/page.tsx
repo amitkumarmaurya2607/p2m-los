@@ -1,4 +1,3 @@
-
 import Home from "@/views/Home/Home";
 
 const page = () => {

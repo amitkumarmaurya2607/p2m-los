@@ -56,7 +56,6 @@ export type UserDetails = {
   face_match_score: number | null;
 };
 
-
 export async function getProfileData(): Promise<ApiResponse<UserDetails>> {
   return apiGet<Promise<ApiResponse<UserDetails>>>(API.others.userProfile);
 }

@@ -40,8 +40,9 @@ const TabContent = ({
       sm:px-4"
   >
     <h3
-      className={`mb-3 text-xl font-semibold sm:text-2xl ${danger ? "text-destructive" : "text-text-heading"
-        }`}
+      className={`mb-3 text-xl font-semibold sm:text-2xl ${
+        danger ? "text-destructive" : "text-text-heading"
+      }`}
     >
       {title}
     </h3>
@@ -54,23 +55,17 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [profileData, setProfileData] = useState(null);
 
-
-
   useEffect(() => {
     getDetails();
   }, []);
 
-
   const getDetails = async () => {
-
-
     try {
       setLoading(true);
 
       const result = await getProfileDataAction();
 
       if (result?.success) {
-
         setProfileData(result?.data);
         return;
       }
@@ -80,18 +75,15 @@ const Profile = () => {
       });
       return;
     } catch (err) {
-      console.log("err", err)
+      console.log("err", err);
       showToast({
         message: "Something went wrong",
         type: "error",
       });
-
-
     } finally {
       setLoading(false);
     }
   };
-
 
   const menuItems = ["Profile", "Security", "Billing", "Terms", "Notifications", "Delete Account"];
 
@@ -216,13 +208,14 @@ const Profile = () => {
                     type="button"
                     onClick={() => setActiveTab(item)}
                     className={`min-w-0 rounded-xl px-3 py-2.5 text-left text-xs font-medium
-                    transition-all sm:text-sm lg:w-full ${isActive
+                    transition-all sm:text-sm lg:w-full ${
+                      isActive
                         ? `bg-primary-muted text-primary
                           shadow-[inset_0px_0px_8px_rgba(73,55,156,0.08)]`
                         : isDelete
                           ? "text-destructive hover:bg-destructive/5"
                           : "text-text-secondary hover:bg-muted"
-                      }`}
+                    }`}
                   >
                     <span className="block truncate">{item}</span>
                   </button>
@@ -249,7 +242,9 @@ const Profile = () => {
 
                 <div className="min-w-0">
                   <h3 className="break-words text-xl font-semibold text-text-heading">
-                    {profileData?.firstName ? `${profileData.firstName} ${profileData.lastName}`.trim() : "User"}
+                    {profileData?.firstName
+                      ? `${profileData.firstName} ${profileData.lastName}`.trim()
+                      : "User"}
                   </h3>
                   <p className="mt-1 max-w-full break-all text-sm text-text-secondary">
                     {profileData?.emailId || "user@example.com"}

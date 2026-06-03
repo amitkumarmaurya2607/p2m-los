@@ -29,17 +29,11 @@ function bytesToBase64(bytes: Uint8Array): string {
 
 async function getCryptoKey(): Promise<CryptoKey> {
   const rawKey = getEncryptionKey();
-  const hash = await crypto.subtle.digest(
-    "SHA-256",
-    new TextEncoder().encode(rawKey),
-  );
-  return crypto.subtle.importKey(
-    "raw",
-    new Uint8Array(hash),
-    { name: ALGORITHM },
-    false,
-    ["encrypt", "decrypt"],
-  );
+  const hash = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(rawKey));
+  return crypto.subtle.importKey("raw", new Uint8Array(hash), { name: ALGORITHM }, false, [
+    "encrypt",
+    "decrypt",
+  ]);
 }
 
 export async function encrypt(plaintext: string): Promise<string> {

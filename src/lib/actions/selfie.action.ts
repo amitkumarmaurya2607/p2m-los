@@ -5,7 +5,9 @@ import { uploadSelfie } from "@/lib/services/selfie.service";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
 import { withDecryption } from "@/lib/secure-action";
 
-export const submitSelfieAction = withDecryption(async function submitSelfieAction(formData: FormData) {
+export const submitSelfieAction = withDecryption(async function submitSelfieAction(
+  formData: FormData,
+) {
   try {
     const result = await uploadSelfie(formData);
     if (result.code !== "0000") {

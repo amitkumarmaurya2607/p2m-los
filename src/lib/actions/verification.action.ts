@@ -81,7 +81,13 @@ export const saveGeoLocationAction = withDecryption(async function saveGeoLocati
   }
 });
 
-export const saveLocationCookiesAction = async function saveLocationCookiesAction(data: { latitude: number; longitude: number,city:string,country:string,region:string }) {
+export const saveLocationCookiesAction = async function saveLocationCookiesAction(data: {
+  latitude: number;
+  longitude: number;
+  city: string;
+  country: string;
+  region: string;
+}) {
   try {
     const { cookies } = await import("next/headers");
     const cookieStore = await cookies();
@@ -105,7 +111,9 @@ export const saveLocationCookiesAction = async function saveLocationCookiesActio
   }
 };
 
-export const submitEmploymentAction = withDecryption(async function submitEmploymentAction(data: Record<string, unknown>) {
+export const submitEmploymentAction = withDecryption(async function submitEmploymentAction(
+  data: Record<string, unknown>,
+) {
   try {
     const modeMap: Record<string, string> = {
       "Bank Transfer": "BANK_TRANSFER",
@@ -135,6 +143,3 @@ export const submitEmploymentAction = withDecryption(async function submitEmploy
     return { error: getErrorMessage(err, "Failed to submit employment details") };
   }
 });
-
-
-

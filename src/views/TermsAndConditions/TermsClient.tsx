@@ -116,10 +116,11 @@ export default function TermsClient({ sections }: { sections: Section[] }) {
                 key={section.id}
                 onClick={() => scrollToSection(section.id)}
                 className={`w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all
-                flex items-center justify-between group ${activeSection === section.id
+                flex items-center justify-between group ${
+                  activeSection === section.id
                     ? "bg-secondary text-white shadow-lg shadow-secondary/20 scale-105"
                     : "text-text-secondary hover:bg-secondary/5 hover:text-secondary"
-                  }`}
+                }`}
               >
                 {section.title.split(". ")[1]}
                 <ChevronRight
@@ -140,24 +141,27 @@ export default function TermsClient({ sections }: { sections: Section[] }) {
             <div
               key={section.id}
               id={section.id}
-              className={`bg-surface rounded-3xl border transition-all duration-500 ${activeSection === section.id
+              className={`bg-surface rounded-3xl border transition-all duration-500 ${
+                activeSection === section.id
                   ? "border-secondary/30 shadow-xl shadow-secondary/5"
                   : "border-border"
-                }`}
+              }`}
             >
               <div
                 className={`p-6 lg:p-8 flex items-center justify-between cursor-pointer
-                lg:cursor-default ${activeSection === section.id ? "text-secondary" : "text-text-heading"
-                  }`}
+                lg:cursor-default ${
+                  activeSection === section.id ? "text-secondary" : "text-text-heading"
+                }`}
                 onClick={() => toggleAccordion(section.id)}
               >
                 <div className="flex items-center gap-4">
                   <div
                     className={`w-12 h-12 rounded-2xl flex items-center justify-center
-                    transition-colors ${activeSection === section.id
+                    transition-colors ${
+                      activeSection === section.id
                         ? "bg-secondary text-white"
                         : "bg-secondary/10 text-secondary"
-                      }`}
+                    }`}
                   >
                     <IconComponent size={24} />
                   </div>
@@ -171,10 +175,11 @@ export default function TermsClient({ sections }: { sections: Section[] }) {
               </div>
 
               <div
-                className={`px-6 pb-8 lg:px-8 lg:pb-10 transition-all overflow-hidden ${isMobileAccordionOpen[section.id]
+                className={`px-6 pb-8 lg:px-8 lg:pb-10 transition-all overflow-hidden ${
+                  isMobileAccordionOpen[section.id]
                     ? "max-h-[2000px] opacity-100"
                     : "max-h-0 opacity-0 lg:max-h-none lg:opacity-100"
-                  }`}
+                }`}
               >
                 <div className="lg:pl-16 text-text-secondary leading-relaxed text-lg">
                   {section.content}
