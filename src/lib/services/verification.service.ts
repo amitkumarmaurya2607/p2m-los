@@ -1,4 +1,4 @@
-import { apiPost } from "@/lib/axios";
+import { apiGet, apiPost } from "@/lib/axios";
 import { API } from "@/lib/api/urls";
 import type { ApiResponse, UserDetailsType } from "@/types";
 
@@ -100,4 +100,20 @@ export async function submitEmployment(
   data: Record<string, unknown>,
 ): Promise<ApiResponse<{ submitted: boolean }>> {
   return apiPost<ApiResponse<{ submitted: boolean }>>(API.employment.submit, data);
+}
+
+export async function triggerDigiLockerWebhook(
+  txnId: string,
+): Promise<ApiResponse<{ success: boolean }>> {
+  return apiGet<ApiResponse<{ success: boolean }>>(API.webhook.digiLocker, {
+    params: { txnId, success: true },
+  });
+}
+
+export async function checkAadhaarStatus(
+  transactionId: string,
+): Promise<ApiResponse<{ status: string }>> {
+  return apiPost<ApiResponse<{ status: string }>>(API.aadhaar.status, {
+    transactionId,
+  });
 }

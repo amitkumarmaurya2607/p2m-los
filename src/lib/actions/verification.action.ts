@@ -6,6 +6,8 @@ import {
   verifyBank,
   submitEmployment,
   saveGeoLocation,
+  triggerDigiLockerWebhook,
+  checkAadhaarStatus,
 } from "@/lib/services/verification.service";
 import { saveStepCookie } from "@/lib/step-cookie";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
@@ -42,6 +44,30 @@ export async function digiLockerAction() {
   } catch (err) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "digiLocker failed") };
+  }
+}
+
+export async function triggerDigiLockerWebhookAction(txnId: string) {
+  try {
+    const result = await triggerDigiLockerWebhook(txnId);
+    if (result.code !== "0000")
+      return { error: result.message || "Webhook call failed" };
+    return { success: true as const };
+  } catch (err) {
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Webhook call failed") };
+  }
+}
+
+export async function checkAadhaarStatusAction(txnId: string) {
+  try {
+    const result = await checkAadhaarStatus(txnId);
+    if (result.code !== "0000")
+      return { error: result.message || "Status check failed" };
+    return { success: true as const, data: result.data };
+  } catch (err) {
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Status check failed") };
   }
 }
 

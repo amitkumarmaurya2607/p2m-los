@@ -5,6 +5,7 @@
 import { useEffect, useState } from "react";
 import { CheckCircle2, Fingerprint, Loader2, ShieldCheck, Smartphone } from "lucide-react";
 import GradientButton from "@/components/ui/GradientButton";
+import { triggerDigiLockerWebhookAction } from "@/lib/actions/verification.action";
 
 export default function AadhaarSimulatePage() {
     const [loading, setLoading] = useState(false);
@@ -15,12 +16,18 @@ export default function AadhaarSimulatePage() {
         setDigiLockerData(digiLockerData_);
     }, []);
 
-    const handleSimulateAadhaar = () => {
+    const handleSimulateAadhaar = async () => {
         setLoading(true);
 
-        setTimeout(() => {
-            window.location.href = "/aadhar-details/processing?txnId=SIMULATED_AADHAAR_123456";
-        }, 1500);
+        const txnId = digiLockerData?.raw?.model?.transactionId;
+
+        try {
+            await triggerDigiLockerWebhookAction(txnId);
+        } catch (err) {
+            console.error("Webhook error:", err);
+        }
+
+        window.location.href = `/aadhar-details/processing?txnId=${txnId}`;
     };
 
     return (

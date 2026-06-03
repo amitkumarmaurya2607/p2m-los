@@ -14,6 +14,7 @@ export const API = {
   aadhaar: {
     digiLocker: `${losService}/api/web-proxy/aadhar/generate`,
     verifyCallback: `${losService}/api/web-proxy/aadhar/verify-callback`,
+    status: `${losService}/api/web-proxy/aadhar/status`,
   },
   bank: {
     verify: `${losService}/api/web-proxy/bank/verify`,
@@ -47,5 +48,8 @@ export const API = {
     stepProgress: `${losService}/api/web-proxy/user-progress`,
     geoLocation: `${losService}/api/web-proxy/geo-location`,
     userProfile: `${losService}/api/web-proxy/user-profile`,
+  },
+  webhook: {
+    digiLocker: `${losService}/api/webhook/digiLocker`,
   },
 } as const;
