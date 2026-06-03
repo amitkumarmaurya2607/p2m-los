@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { User } from "lucide-react";
 import { getProfileDataAction } from "@/lib/actions/other.action";
 import { showToast } from "@/lib/toast";
+import { UserDetailsType } from "@/types";
 
 const Field = ({
   label,
@@ -40,9 +41,8 @@ const TabContent = ({
       sm:px-4"
   >
     <h3
-      className={`mb-3 text-xl font-semibold sm:text-2xl ${
-        danger ? "text-destructive" : "text-text-heading"
-      }`}
+      className={`mb-3 text-xl font-semibold sm:text-2xl ${danger ? "text-destructive" : "text-text-heading"
+        }`}
     >
       {title}
     </h3>
@@ -53,7 +53,7 @@ const TabContent = ({
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("Profile");
   const [loading, setLoading] = useState(false);
-  const [profileData, setProfileData] = useState(null);
+  const [profileData, setProfileData] = useState<UserDetailsType | null>(null);
 
   useEffect(() => {
     getDetails();
@@ -65,7 +65,7 @@ const Profile = () => {
 
       const result = await getProfileDataAction();
 
-      if (result?.success) {
+      if (result?.success && result?.data) {
         setProfileData(result?.data);
         return;
       }
@@ -208,14 +208,13 @@ const Profile = () => {
                     type="button"
                     onClick={() => setActiveTab(item)}
                     className={`min-w-0 rounded-xl px-3 py-2.5 text-left text-xs font-medium
-                    transition-all sm:text-sm lg:w-full ${
-                      isActive
+                    transition-all sm:text-sm lg:w-full ${isActive
                         ? `bg-primary-muted text-primary
                           shadow-[inset_0px_0px_8px_rgba(73,55,156,0.08)]`
                         : isDelete
                           ? "text-destructive hover:bg-destructive/5"
                           : "text-text-secondary hover:bg-muted"
-                    }`}
+                      }`}
                   >
                     <span className="block truncate">{item}</span>
                   </button>

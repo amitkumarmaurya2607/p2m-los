@@ -44,6 +44,23 @@ type VerifyPANResponse = {
   verification_provider: string | null;
 };
 
+export type KycUnifiedUrlResponse = {
+  success: boolean;
+  message: string;
+  url: string;
+  id: string;
+  uniqueId: string;
+  provider: "DIGITAP" | string;
+  raw: {
+    code: string;
+    model: {
+      url: string;
+      transactionId: string;
+      kycUrl: string;
+    };
+  };
+};
+
 export async function verifyPAN(
   panNumber: string,
 ): Promise<ApiResponse<VerifyPANResponse>> {
@@ -53,8 +70,8 @@ export async function verifyPAN(
   );
 }
 
-export async function digiLockerApi(): Promise<ApiResponse<unknown>> {
-  return apiPost<ApiResponse<unknown>>(API.aadhaar.digiLocker, {});
+export async function digiLockerApi(): Promise<ApiResponse<KycUnifiedUrlResponse>> {
+  return apiPost<ApiResponse<KycUnifiedUrlResponse>>(API.aadhaar.digiLocker, {});
 }
 
 export async function verifyBank(data: {

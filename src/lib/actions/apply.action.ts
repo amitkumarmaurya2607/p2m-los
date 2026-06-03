@@ -12,7 +12,7 @@ export async function getLoanProgramsAction() {
   try {
     const result = await getLoanPrograms();
     if (result.code !== "0000") return { error: result.message || "Failed to fetch loan programs" };
-    return { success: true as const, data: result.data ?? [] };
+    return { success: true as const, data: result.data ?? null };
   } catch (err) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Failed to fetch loan programs") };

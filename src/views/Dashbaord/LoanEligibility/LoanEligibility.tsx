@@ -9,6 +9,7 @@ import { submitApplicationAction, getLoanProgramsAction } from "@/lib/actions/ap
 import { callSecure } from "@/lib/secure-action";
 import StepCard from "../componants/StepCard";
 import PulseDot from "@/components/PulseDot";
+import { LoanEligibilityRuleResponce } from "@/lib/services/apply.service";
 
 const ReviewField = ({ label, value }: { label: string; value: string }) => (
   <div className="flex items-center justify-between border-b border-border-light pb-3">
@@ -46,7 +47,7 @@ function LoanEligibility() {
   const [tenure, setTenure] = useState(36);
   const [agreed, setAgreed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [programs, setPrograms] = useState<unknown[]>([]);
+  const [programs, setPrograms] = useState<LoanEligibilityRuleResponce | null>(null);
 
   useEffect(() => {
     getLoanProgramsAction()
@@ -57,7 +58,7 @@ function LoanEligibility() {
         }
         setPrograms(res.data);
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const interestRate = 10.5;

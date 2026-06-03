@@ -136,7 +136,7 @@ function PersonalInfo() {
           state: data.state || "",
           city: data.city || "",
           pincode: data.pincode || "",
-          address: cleanAddress(data.address, data.city, data.state, data.pincode) || "",
+          address: cleanAddress(data?.address || "", data?.city || "", data?.state || "", data?.pincode || "") || "",
           gender: data.gender || "",
         }));
 

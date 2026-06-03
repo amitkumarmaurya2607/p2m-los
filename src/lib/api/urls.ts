@@ -31,21 +31,15 @@ export const API = {
   },
   application: {
     submit: `${losService}/api/web-proxy/apply-loan`,
-    status: (id: string) => `/application/${id}/status`,
   },
   contact: {
     submit: "/contact/submit",
-  },
-  email: {
-    sendOTP: "/email/send-otp",
   },
 
   selfie: {
     upload: `${losService}/api/web-proxy/media/upload`,
   },
-  lookup: {
-    schemes: "/lookup/schemes",
-  },
+ 
   loan: {
     program: `${losService}/api/web-proxy/program`,
   },
@@ -53,7 +47,5 @@ export const API = {
     stepProgress: `${losService}/api/web-proxy/user-progress`,
     geoLocation: `${losService}/api/web-proxy/geo-location`,
     userProfile: `${losService}/api/web-proxy/user-profile`,
-    save: "/application/progress",
-    get: "/application/progress",
   },
 } as const;
