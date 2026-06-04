@@ -13,12 +13,12 @@ const approvedDocs = [
 const ApprovedDocsTab = () => (
   <div className="space-y-5">
     <ProfileInfoCard title="Approved Documents" icon={FileCheck2}>
-      <div className="space-y-3">
+      <div className="space-y-3 my-5">
         {approvedDocs.map((doc) => (
           <div
             key={doc}
-            className="flex flex-col gap-3 rounded-xl border border-border bg-background p-4
-            sm:flex-row sm:items-center sm:justify-between"
+            className="flex flex-col gap-3 rounded-xl border border-border-light bg-surface-muted
+              p-4 sm:flex-row sm:items-center sm:justify-between"
           >
             <div className="flex min-w-0 items-start gap-3">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-muted">
@@ -26,7 +26,7 @@ const ApprovedDocsTab = () => (
               </div>
 
               <div className="min-w-0">
-                <h4 className="break-words text-sm font-semibold text-text-heading sm:text-base">
+                <h4 className="break-words text-sm font-bold text-text-heading sm:text-base">
                   {doc}
                 </h4>
                 <p className="mt-1 text-sm text-text-secondary">
@@ -37,8 +37,9 @@ const ApprovedDocsTab = () => (
 
             <button
               type="button"
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-border
-              px-4 py-2 text-sm font-medium text-text-heading transition hover:bg-muted"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border
+                border-border-light px-4 py-2 text-sm font-medium text-text-heading transition
+                hover:bg-muted"
             >
               <Download className="h-4 w-4" />
               View
@@ -48,9 +49,9 @@ const ApprovedDocsTab = () => (
       </div>
     </ProfileInfoCard>
 
-    <div className="rounded-2xl border border-primary/20 bg-primary-muted p-4 text-sm leading-6 text-primary sm:p-5">
-      Your documents are approved. Please review your loan agreement before final
-      disbursal.
+    <div className="rounded-2xl border border-border-light bg-surface-muted p-4 text-sm leading-6 text-text-body sm:p-5">
+      Your documents are approved. Please review your loan agreement before
+      final disbursal.
     </div>
   </div>
 );

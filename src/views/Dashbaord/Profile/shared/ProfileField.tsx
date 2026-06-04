@@ -1,24 +1,28 @@
-const ProfileField = ({
-  label,
-  value,
-  full = false,
-}: {
+import React from "react";
+
+type ProfileFieldProps = {
   label: string;
   value?: string | number | null;
   full?: boolean;
-}) => (
-  <div className={full ? "sm:col-span-2 min-w-0" : "min-w-0"}>
-    <label className="mb-2 block text-sm font-medium text-text-muted">
-      {label}
-    </label>
+};
 
+const ProfileField = ({ label, value, full = false }: ProfileFieldProps) => {
+  return (
     <div
-      className="min-h-11 w-full max-w-full overflow-hidden break-words rounded-xl border
-      border-border bg-background px-4 py-2.5 text-sm text-text-heading sm:text-base"
+      className={[
+        "min-w-0 border-b border-border/80 py-5",
+        full ? "sm:col-span-2" : "",
+      ].join(" ")}
     >
-      {value ? String(value) : "-"}
+      <p className="mb-2 text-sm font-medium text-text-muted sm:text-base">
+        {label}
+      </p>
+
+      <p className="break-words text-sm font-medium text-text-heading sm:text-base">
+        {value || "-"}
+      </p>
     </div>
-  </div>
-);
+  );
+};
 
 export default ProfileField;

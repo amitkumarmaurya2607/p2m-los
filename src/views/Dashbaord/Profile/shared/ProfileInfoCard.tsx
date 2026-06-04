@@ -1,24 +1,30 @@
-const ProfileInfoCard = ({
-  title,
-  children,
-  icon: Icon,
-}: {
-  title: string;
-  children: React.ReactNode;
-  icon: React.ElementType;
-}) => (
-  <section className="rounded-2xl border border-border bg-surface p-4 sm:p-5">
-    <div className="mb-5 flex items-center gap-3">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-muted">
-        <Icon className="h-5 w-5 text-primary" />
-      </div>
-      <h3 className="text-lg font-semibold text-text-heading sm:text-xl">
-        {title}
-      </h3>
-    </div>
+import React from "react";
+import type { LucideIcon } from "lucide-react";
 
-    {children}
-  </section>
-);
+type ProfileInfoCardProps = {
+  title: string;
+  icon?: LucideIcon;
+  children: React.ReactNode;
+};
+
+const ProfileInfoCard = ({ title, icon: Icon, children }: ProfileInfoCardProps) => {
+  return (
+    <section className="overflow-hidden rounded-2xl border border-border bg-surface">
+      <div className="flex items-center gap-3 border-b border-border px-5 py-5 sm:px-8">
+        {Icon && (
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <Icon className="h-5 w-5" />
+          </div>
+        )}
+
+        <h2 className="text-lg font-bold text-text-heading sm:text-xl">
+          {title}
+        </h2>
+      </div>
+
+      <div className="px-5 sm:px-8">{children}</div>
+    </section>
+  );
+};
 
 export default ProfileInfoCard;

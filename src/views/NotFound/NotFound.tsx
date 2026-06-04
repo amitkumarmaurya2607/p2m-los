@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function NotFound({ type = "public" }: { type?: "dashboard" | "public" }) {
   return (
     <main className="relative flex min-h-screen flex-col overflow-hidden bg-surface-accent">
-      <Header />
+      {type === "dashboard" && <Header />}
 
       <section
         className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-20"
@@ -82,7 +82,7 @@ export default function NotFound({ type = "public" }: { type?: "dashboard" | "pu
         </div>
       </section>
 
-      <Footer />
+      {type === "dashboard" && <Footer />}
     </main>
   );
 }

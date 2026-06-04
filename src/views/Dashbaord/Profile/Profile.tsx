@@ -182,7 +182,7 @@ const Profile = () => {
           </p>
         </div>
 
-        <section
+        {/* <section
           className="mb-5 rounded-3xl border border-border-light bg-surface p-4 shadow-[var(--shadow-card)]
           sm:p-5"
         >
@@ -193,7 +193,7 @@ const Profile = () => {
               </div>
 
               <div className="min-w-0">
-                <h2 className="break-words text-xl font-semibold text-text-heading sm:text-2xl">
+                <h2 className="break-words text-xl font-bold text-text-heading sm:text-2xl">
                   {fullName}
                 </h2>
                 <p className="mt-1 break-words text-sm text-text-secondary">
@@ -209,7 +209,7 @@ const Profile = () => {
               </p>
             </div>
           </div>
-        </section>
+        </section> */}
 
         <div className="flex min-w-0 flex-col gap-5 lg:flex-row">
           <aside
@@ -229,7 +229,7 @@ const Profile = () => {
                     className={`group flex min-w-0 items-start gap-3 rounded-2xl px-3 py-3 text-left
                     transition-all ${isActive
                         ? "bg-primary-muted text-primary shadow-[inset_0px_0px_8px_rgba(73,55,156,0.08)]"
-                        : "text-text-secondary hover:bg-muted"
+                        : "text-text-heading hover:bg-muted"
                       }`}
                   >
                     <span
@@ -243,7 +243,7 @@ const Profile = () => {
                     </span>
 
                     <span className="min-w-0">
-                      <span className="block truncate text-sm font-semibold">
+                      <span className="block truncate text-sm font-bold">
                         {tab.label}
                       </span>
                       <span className="mt-0.5 hidden text-xs leading-5 text-text-secondary lg:block">
@@ -257,11 +257,12 @@ const Profile = () => {
           </aside>
 
           <main
-            className="min-w-0 flex-1 rounded-3xl border border-border-light bg-surface p-3
-            shadow-[var(--shadow-card)] sm:p-5 lg:p-6"
+            className="min-w-0 flex-1"
+          //rounded-3xl border border-border-light bg-surface p-5
+          //  shadow-[var(--shadow-card)] sm:p-6 lg:p-7"
           >
-            <div className="mb-5 rounded-2xl border border-border bg-background p-4">
-              <h2 className="text-xl font-semibold text-text-heading sm:text-2xl">
+            <div className="mb-5 rounded-2xl border border-border-light bg-surface-muted p-4 sm:p-5">
+              <h2 className="text-xl font-bold text-text-heading sm:text-2xl">
                 {activeTabData?.label}
               </h2>
               <p className="mt-1 text-sm text-text-secondary">

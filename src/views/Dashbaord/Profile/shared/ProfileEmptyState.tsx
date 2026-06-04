@@ -7,7 +7,7 @@ const ProfileEmptyState = ({
   title: string;
   description: string;
 }) => (
-  <div className="flex min-h-[260px] flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-background px-4 py-10 text-center">
+  <div className="flex min-h-[260px] flex-col items-center justify-center rounded-2xl border border-dashed border-border-light bg-surface-muted px-4 py-10 text-center">
     <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary-muted">
       <AlertTriangle className="h-7 w-7 text-primary" />
     </div>

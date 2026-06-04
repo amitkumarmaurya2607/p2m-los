@@ -5,6 +5,7 @@ import {
   CreditCard,
   ChevronRight,
 } from "lucide-react";
+import GradientButton from "@/components/ui/GradientButton";
 import ProfileInfoCard from "../shared/ProfileInfoCard";
 import ProfileStatCard from "../shared/ProfileStatCard";
 
@@ -37,31 +38,30 @@ const EmiPayTab = () => (
     </div>
 
     <ProfileInfoCard title="Pay Your EMI" icon={CreditCard}>
-      <div className="rounded-2xl border border-border bg-background p-4 sm:p-5">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <p className="text-sm text-text-secondary">Amount Due</p>
-            <h3 className="mt-1 text-2xl font-bold text-text-heading sm:text-3xl">
-              ₹4,850
-            </h3>
-            <p className="mt-2 text-sm text-text-secondary">
-              Pay before due date to avoid late charges.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary
-            px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90 sm:w-auto"
-          >
-            Pay EMI Now
-            <ChevronRight className="h-4 w-4" />
-          </button>
+      <div className="flex flex-col gap-5 rounded-2xl border border-border-light bg-surface-muted p-5 mt-6 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">
+            Amount Due
+          </p>
+          <h3 className="mt-1 text-3xl font-extrabold text-text-heading">
+            ₹4,850
+          </h3>
+          <p className="mt-2 text-sm text-text-secondary">
+            Pay before due date to avoid late charges.
+          </p>
         </div>
+
+        <GradientButton
+          type="button"
+          className="h-12 w-full px-6 sm:w-auto"
+          rightIcon={<ChevronRight className="h-4 w-4" />}
+        >
+          Pay EMI Now
+        </GradientButton>
       </div>
 
-      <div className="mt-5 overflow-hidden rounded-2xl border border-border">
-        <div className="grid grid-cols-4 bg-background px-4 py-3 text-xs font-semibold text-text-muted sm:text-sm">
+      <div className="overflow-hidden rounded-2xl border border-border-light mb-6">
+        <div className="grid grid-cols-4 bg-surface-muted px-4 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted sm:text-sm">
           <span>Month</span>
           <span>Amount</span>
           <span>Due Date</span>
@@ -71,7 +71,8 @@ const EmiPayTab = () => (
         {emiRows.map((emi) => (
           <div
             key={emi.month}
-            className="grid grid-cols-4 border-t border-border px-4 py-3 text-xs text-text-heading sm:text-sm"
+            className="grid grid-cols-4 border-t border-border-light px-4 py-3 text-xs
+              text-text-heading sm:text-sm"
           >
             <span>{emi.month}</span>
             <span>{emi.amount}</span>

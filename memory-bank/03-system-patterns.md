@@ -59,6 +59,18 @@ The Profile view is split so each tab is a self-contained presentational file:
 - Shared helpers in `Profile/shared/` are prefixed with `Profile` (e.g. `ProfileInfoCard`) to avoid colliding with the existing `src/components/Cards/InfoCard.tsx`, which has a different compact layout (title/description/icon vs section title/children/icon).
 - The `maskAccount` helper used by `BankDetailsTab` lives inside that tab file (single call site).
 
+### Profile Design Language (read-only data display)
+
+The Profile page is read-only, so it deliberately avoids any input chrome. Convention:
+- **Field** — `ProfileField` renders a label/value pair with a small `bg-primary` dot on the left. Label is `text-[11px] font-semibold uppercase tracking-wider text-text-muted-light`, value is `text-sm sm:text-base font-bold text-text-heading`. No border, no background. Matches the `LoanEligibility` review pattern, not the `TextInput` pattern.
+- **Section card** — `ProfileInfoCard` uses the project's `SectionCard` shape: `rounded-2xl border border-border-light bg-surface p-5 space-y-5`, icon chip `h-9 w-9 rounded-xl bg-primary-muted text-primary`, title `text-base font-bold text-text-heading`. Supports an optional `rightSlot` for badges/pills.
+- **Verified pill** — `VerifiedPill` is the standard way to show a `verified` boolean. Green (`border-home-green/20 bg-primary-muted text-primary` + `CheckCircle2`) when true, gray (`border-border-light bg-muted text-text-muted` + `Clock3`) when false. Always passed via the `ProfileInfoCard` `rightSlot` prop, not as a bottom banner.
+- **Stat tile** — `ProfileStatCard` uses `border-border-light bg-surface`, icon chip `h-8 w-8 rounded-lg bg-primary-muted`, label `text-xs uppercase tracking-wider text-text-muted`, value `text-xl font-extrabold text-text-heading`.
+- **Status timeline** — `ProfileStatusStep` matches `TrackApplicationV2` exactly: `h-5 w-5 rounded-full border-4` dot with a 4px halo (`shadow-[0px_0px_0px_4px_rgba(...)]`), `home-green` / `home-purple` / `border-medium` colors, `w-0.5` vertical line. The active step shows a bordered callout with a `Shield` icon. API is `state: "done" | "active" | "pending"` plus `isLast?: boolean`.
+- **Primary CTA** — Use `<GradientButton>` (from `@/components/ui/GradientButton`) for any primary action, e.g. Pay EMI. Hand-rolled `bg-primary` buttons are not used inside tabs.
+- **Soft banners** — Info / not-verified banners use `border border-border-light bg-surface-muted text-text-body` (the project-wide soft-card pattern).
+- **Shell** — Top header name `font-bold`; sidebar active label `font-bold`; sidebar inactive `text-text-heading`; main panel `p-5 lg:p-7`; main header card `border-border-light bg-surface-muted` with `font-bold` title.
+
 ## Design Patterns
 
 ### Form Pattern

@@ -7,12 +7,14 @@ const ProfileStatCard = ({
   value: string;
   icon: React.ElementType;
 }) => (
-  <div className="rounded-2xl border border-border bg-background p-4">
-    <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary-muted">
-      <Icon className="h-5 w-5 text-primary" />
+  <div className="rounded-2xl border border-border-light bg-surface p-4">
+    <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-lg bg-primary-muted text-primary">
+      <Icon className="h-4 w-4" />
     </div>
-    <p className="text-sm text-text-secondary">{label}</p>
-    <h4 className="mt-1 break-words text-lg font-semibold text-text-heading">
+    <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
+      {label}
+    </p>
+    <h4 className="mt-1 break-words text-xl font-extrabold text-text-heading">
       {value}
     </h4>
   </div>

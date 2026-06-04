@@ -35,30 +35,32 @@ const TrackLoanTab = () => (
     </div>
 
     <ProfileInfoCard title="Loan Application Progress" icon={Clock3}>
-      <div>
+      <div className="mt-5 space-y-5">
         <ProfileStatusStep
-          completed
+          state="done"
           title="Mobile Verification"
           description="Your mobile number has been verified successfully."
         />
         <ProfileStatusStep
-          completed
+          state="done"
           title="KYC & PAN Verification"
           description="PAN, Aadhaar, and basic KYC checks are completed."
         />
         <ProfileStatusStep
-          completed
+          state="done"
           title="Document Approved"
           description="Your uploaded documents have been reviewed and approved."
         />
         <ProfileStatusStep
-          active
+          state="active"
           title="Loan Disbursal"
           description="Your loan amount is being processed for bank transfer."
         />
         <ProfileStatusStep
+          state="pending"
           title="EMI Schedule Active"
           description="EMI schedule will be activated after disbursal."
+          isLast
         />
       </div>
     </ProfileInfoCard>

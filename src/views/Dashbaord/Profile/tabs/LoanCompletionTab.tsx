@@ -1,16 +1,22 @@
-import { CheckCircle2, IndianRupee, CreditCard, Clock3, Download } from "lucide-react";
+import {
+  CheckCircle2,
+  IndianRupee,
+  CreditCard,
+  Clock3,
+  Download,
+} from "lucide-react";
 import ProfileInfoCard from "../shared/ProfileInfoCard";
 import ProfileStatCard from "../shared/ProfileStatCard";
 
 const LoanCompletionTab = () => (
   <div className="space-y-5">
     <ProfileInfoCard title="Loan Completion" icon={CheckCircle2}>
-      <div className="rounded-2xl border border-border bg-background p-5 text-center">
+      <div className="rounded-2xl border border-border-light bg-surface-muted p-5 my-6 text-center">
         <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary-muted">
           <CheckCircle2 className="h-9 w-9 text-primary" />
         </div>
 
-        <h3 className="text-xl font-semibold text-text-heading sm:text-2xl">
+        <h3 className="text-xl font-bold text-text-heading sm:text-2xl">
           Loan Completion Pending
         </h3>
 

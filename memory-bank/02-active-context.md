@@ -6,11 +6,25 @@ June 4, 2026
 
 ## Current Focus
 
-12-step loan application flow implemented — migrated from 9-step to 12-step sequence with 5 new steps. Build passes cleanly. Latest work: split `Profile.tsx` into per-tab components + a `shared/` folder; lint and typecheck both clean for the new files.
+12-step loan application flow implemented — migrated from 9-step to 12-step sequence with 5 new steps. Build passes cleanly. Latest work: restyled the Profile page to match the project's design language (label/value pairs, `SectionCard` shape, `TrackApplicationV2` timeline, `GradientButton` for Pay EMI, verified pill in section header). `npx tsc --noEmit` and `npm run lint` both clean.
 
 ## Recent Changes
 
-0. **Profile.tsx — split into per-tab components + shared helpers**
+0. **Profile page restyled to match project design language**
+   - `src/views/Dashbaord/Profile/shared/ProfileField.tsx` — replaced the input-chrome look (border + bg + min-h-11) with a plain label/value pair: small `bg-primary` dot on the left, uppercase tracking-wider label (`text-text-muted-light`), bold value (`text-text-heading`). No border, no background, sits directly on the section card.
+   - `src/views/Dashbaord/Profile/shared/ProfileInfoCard.tsx` — slimmed to match the project's `SectionCard` shape (`rounded-2xl border border-border-light bg-surface p-5 space-y-5`); icon chip downsized to `h-9 w-9 rounded-xl`; title now `text-base font-bold`. New `rightSlot?: React.ReactNode` prop for the verified pill.
+   - `src/views/Dashbaord/Profile/shared/ProfileStatCard.tsx` — `border-border-light bg-surface`; icon chip `h-8 w-8 rounded-lg`; label `text-xs uppercase tracking-wider text-text-muted`; value `text-xl font-extrabold`.
+   - `src/views/Dashbaord/Profile/shared/ProfileStatusStep.tsx` — rewritten to match `TrackApplicationV2` exactly: `h-5 w-5 rounded-full border-4` dot with `shadow-[0px_0px_0px_4px_rgba(...)]` halo, `home-green` / `home-purple` / `border-medium` colors, `w-0.5` vertical line. API changed from `completed?/active?` to a single `state: "done" | "active" | "pending"` prop plus `isLast?: boolean`. Active step now shows a bordered callout with `Shield` icon (same as `TrackApplicationV2`).
+   - `src/views/Dashbaord/Profile/shared/ProfileEmptyState.tsx` — `border-light` + `bg-surface-muted`.
+   - `src/views/Dashbaord/Profile/shared/VerifiedPill.tsx` — **new** helper. `Verified` (green, `CheckCircle2`) or `Not verified` (gray, `Clock3`); used by `EmploymentTab` and `BankDetailsTab` via the new `rightSlot` prop. The bottom verified banner on those tabs was removed in favor of the pill.
+   - `src/views/Dashbaord/Profile/tabs/ProfileTab.tsx` — no JSX changes; uses new `ProfileField`. Field grid switched from `gap-4` to `gap-x-6 gap-y-5` for a more "profile page" feel.
+   - `src/views/Dashbaord/Profile/tabs/EmploymentTab.tsx` + `BankDetailsTab.tsx` — pass `<VerifiedPill>` to `rightSlot`; removed the bottom verified banner.
+   - `src/views/Dashbaord/Profile/tabs/TrackLoanTab.tsx` — uses the new `state`-driven `ProfileStatusStep`; pass `isLast` on the final pending step.
+   - `src/views/Dashbaord/Profile/tabs/ApprovedDocsTab.tsx` — doc rows now `border border-border-light bg-surface-muted`; titles `font-bold`; info banner moved to `border-border-light bg-surface-muted text-text-body`.
+   - `src/views/Dashbaord/Profile/tabs/EmiPayTab.tsx` — hero amount-due card now `border border-border-light bg-surface-muted` with uppercase tracking-wider "Amount Due" label. **Pay EMI Now button is now `<GradientButton>`** (teal gradient, h-12) with `rightIcon={<ChevronRight/>}`. EMI table outer `border-border-light`; header row `bg-surface-muted` with uppercase tracking-wider labels.
+   - `src/views/Dashbaord/Profile/tabs/LoanCompletionTab.tsx` — hero card now `border border-border-light bg-surface-muted`; hero title `font-bold`.
+   - `src/views/Dashbaord/Profile/Profile.tsx` — top header name `font-bold`; sidebar active label `font-bold`; sidebar inactive uses `text-text-heading`; main panel `p-5 lg:p-7` (was `p-3 sm:p-5 lg:p-6`); main header card `border-border-light bg-surface-muted` with `font-bold` title.
+1. **Profile.tsx — split into per-tab components + shared helpers**
    - `src/views/Dashbaord/Profile/Profile.tsx` shrunk from 696 lines (~24KB) to ~250 lines (~9KB) by extracting the 7 inline tab renderers and 5 helper components.
    - New `src/views/Dashbaord/Profile/shared/`: `ProfileField`, `ProfileInfoCard`, `ProfileStatCard`, `ProfileStatusStep`, `ProfileEmptyState` (all prefix-`Profile` to avoid collision with the existing `src/components/Cards/InfoCard.tsx`, which has a different shape).
    - New `src/views/Dashbaord/Profile/tabs/`: `ProfileTab`, `EmploymentTab`, `BankDetailsTab`, `TrackLoanTab`, `ApprovedDocsTab`, `EmiPayTab`, `LoanCompletionTab`.
