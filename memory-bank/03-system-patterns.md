@@ -27,11 +27,37 @@ src/
   pages/
     Auth/         - Login, OTPVerify, SideBar
     Dashbaord/    - Verification step pages
+      Profile/
+        Profile.tsx          - Shell: header, sidebar nav, tab switch, data fetch
+        shared/             - Reusable helpers scoped to the Profile view
+          ProfileField.tsx
+          ProfileInfoCard.tsx
+          ProfileStatCard.tsx
+          ProfileStatusStep.tsx
+          ProfileEmptyState.tsx
+        tabs/               - One component per tab
+          ProfileTab.tsx           ({ user: UserDetailsType | null })
+          EmploymentTab.tsx        ({ employment: LoanApplication["employmentDetails"] | undefined })
+          BankDetailsTab.tsx       ({ bank: LoanApplication["bankDetails"] | undefined })
+          TrackLoanTab.tsx         (no props, demo data)
+          ApprovedDocsTab.tsx      (no props, demo data)
+          EmiPayTab.tsx            (no props, demo data)
+          LoanCompletionTab.tsx    (no props, demo data)
   lib/            - Utilities, toast helper
   hooks/          - Custom hooks (useCountdownTimer)
   store/          - Redux store configuration
   types/          - TypeScript type definitions
 ```
+
+### Profile Tab Component Pattern
+
+The Profile view is split so each tab is a self-contained presentational file:
+- `Profile.tsx` owns the `TabKey` union, `tabs[]` config, all `useState`/`useEffect`, the `getDetails()` server-action call, the `fullName` memo, and the JSX shell (header card + sidebar nav + main panel).
+- A `switch` in `renderContent()` returns the right tab component, falling back to `<ProfileEmptyState>` while `loading` is true.
+- Tabs that read real data take typed props (`UserDetailsType`, `LoanApplication["employmentDetails"]`, `LoanApplication["bankDetails"]`).
+- Tabs that only show hardcoded demo data take no props — easy to wire to real data later by adding props.
+- Shared helpers in `Profile/shared/` are prefixed with `Profile` (e.g. `ProfileInfoCard`) to avoid colliding with the existing `src/components/Cards/InfoCard.tsx`, which has a different compact layout (title/description/icon vs section title/children/icon).
+- The `maskAccount` helper used by `BankDetailsTab` lives inside that tab file (single call site).
 
 ## Design Patterns
 

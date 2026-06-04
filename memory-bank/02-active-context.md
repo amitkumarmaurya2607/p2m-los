@@ -6,11 +6,25 @@ June 4, 2026
 
 ## Current Focus
 
-12-step loan application flow implemented — migrated from 9-step to 12-step sequence with 5 new steps. Build passes cleanly. Latest work: wired `AlternateMobile` and `LoanEligibility` views to be fully response-driven from `getLoanProgramsAction`.
+12-step loan application flow implemented — migrated from 9-step to 12-step sequence with 5 new steps. Build passes cleanly. Latest work: split `Profile.tsx` into per-tab components + a `shared/` folder; lint and typecheck both clean for the new files.
 
 ## Recent Changes
 
-1. **AlternateMobile.tsx — single Save & Next flow**
+0. **Profile.tsx — split into per-tab components + shared helpers**
+   - `src/views/Dashbaord/Profile/Profile.tsx` shrunk from 696 lines (~24KB) to ~250 lines (~9KB) by extracting the 7 inline tab renderers and 5 helper components.
+   - New `src/views/Dashbaord/Profile/shared/`: `ProfileField`, `ProfileInfoCard`, `ProfileStatCard`, `ProfileStatusStep`, `ProfileEmptyState` (all prefix-`Profile` to avoid collision with the existing `src/components/Cards/InfoCard.tsx`, which has a different shape).
+   - New `src/views/Dashbaord/Profile/tabs/`: `ProfileTab`, `EmploymentTab`, `BankDetailsTab`, `TrackLoanTab`, `ApprovedDocsTab`, `EmiPayTab`, `LoanCompletionTab`.
+   - `ProfileTab` takes `{ user: UserDetailsType | null }`; `EmploymentTab` takes `{ employment: LoanApplication["employmentDetails"] | undefined }`; `BankDetailsTab` takes `{ bank: LoanApplication["bankDetails"] | undefined }`; the other four tabs take no props and keep their hardcoded demo data internally.
+   - The `maskAccount` helper moved from `Profile.tsx` into `BankDetailsTab.tsx` (single use site).
+   - `Profile.tsx` now: imports the 5 shared + 7 tab components, keeps the `tabs[]` config + `TabKey` union, the `useState`/`useEffect`/`getDetails`/`fullName` logic, the header + sidebar nav + main panel JSX, and a `switch` in `renderContent()` that returns the right tab component (still shows `<ProfileEmptyState>` while loading).
+   - `react-hooks/set-state-in-effect` lint suppression kept in `Profile.tsx` (the only place with the effect).
+1. **Profile.tsx — added Employment Details and Bank Details tabs**
+   - `src/views/Dashbaord/Profile/Profile.tsx` — added two new tabs (`employment`, `bankDetails`) inserted right after the existing `profile` tab. New `Briefcase` and `Landmark` icons added to the lucide-react import.
+   - Both tabs are read-only views backed by `useLoanApp()` (data sourced from `application.employmentDetails` / `application.bankDetails`).
+   - Bank account number is masked, showing only the last 4 digits (e.g., `XXXXXX1234`).
+   - Each tab ends with a verified / not-verified badge driven by the `verified` flag on the corresponding `LoanApplication` slice.
+   - Pre-existing `getDetails`-called-in-effect lint issues fixed by reordering (move `getDetails` declaration above `useEffect`) and adding the `react-hooks/set-state-in-effect` eslint-disable comment to match the same pattern used in `LoanEligibility.tsx` and `AlternateMobile.tsx`.
+2. **AlternateMobile.tsx — single Save & Next flow**
    - `src/views/Dashbaord/AlternateMobile/AlternateMobile.tsx` — removed the per-contact "Save Contact 1" / "Save Contact 2" gating and the separate "Continue" button. Both contact forms are now editable in parallel; a single "Save & Next" button validates both, then runs `submitAlternateMobileAction` for C1 → C2 → `saveAlternateMobileStepAction` → `router.push("/loan-eligibility")` sequentially, bailing with a toast on the first error. All six fields (Name / Mobile / Relation × 2) marked `require` / `required`.
 2. **LoanEligibility.tsx — response-driven sliders + simple-interest calc**
    - `src/views/Dashbaord/LoanEligibility/LoanEligibility.tsx` — replaced hard-coded bounds (100000–1500000 amount, 12–60 month tenure) with `programs.minAmount` / `programs.maxAmount` and `programs.tenures.minTermDays` / `maxTermDays` (defaults 5000–100000, 7–45 days).

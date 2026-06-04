@@ -240,3 +240,21 @@ px eslint on both files): PASS
 - **TypeScript** (
 px tsc --noEmit): PASS
 
+
+## Session 3 - June 4, 2026
+
+### Completed
+
+1. **Profile.tsx - Employment Details and Bank Details tabs**
+   - Added two new tabs (employment, ankDetails) inserted right after the existing profile tab in src/views/Dashbaord/Profile/Profile.tsx.
+   - Both tabs are read-only views powered by useLoanApp() (pplication.employmentDetails / pplication.bankDetails).
+   - Bank account number masked to show only the last 4 digits.
+   - Each tab ends with a verified / not-verified badge driven by the erified flag.
+   - Pre-existing lint errors fixed: moved getDetails declaration above its useEffect consumer and added the eact-hooks/set-state-in-effect eslint-disable comment to match the same pattern used elsewhere in the codebase.
+
+### Build Status
+
+- **ESLint**: PASS
+- **TypeScript** (
+px tsc --noEmit): PASS
+
