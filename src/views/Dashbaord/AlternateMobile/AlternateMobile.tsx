@@ -48,10 +48,6 @@ function AlternateMobile() {
   const [number2, setNumber2] = useState("");
   const [relation2, setRelation2] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [contact1Saved, setContact1Saved] = useState(false);
-  const [contact2Saved, setContact2Saved] = useState(false);
-  const [loading1, setLoading1] = useState(false);
-  const [loading2, setLoading2] = useState(false);
   const [savingStep, setSavingStep] = useState(false);
 
   useEffect(() => {
@@ -61,12 +57,10 @@ function AlternateMobile() {
       setName1(alt.name1 || "");
       setNumber1(alt.number1);
       setRelation1(alt.relation1);
-      setContact1Saved(true);
       if (alt.number2) {
         setName2(alt.name2 || "");
         setNumber2(alt.number2);
         setRelation2(alt.relation2);
-        setContact2Saved(true);
       }
     }
     /* eslint-enable react-hooks/set-state-in-effect */
@@ -92,10 +86,10 @@ function AlternateMobile() {
     return Object.keys(errs).length === 0;
   };
 
-  const handleSaveContact1 = async () => {
-    if (!validateContact1()) return;
-    setLoading1(true);
+  const handleSaveAndNext = async () => {
     setErrors({});
+    if (!validateContact1() || !validateContact2()) return;
+    setSavingStep(true);
     try {
       const r1 = await callSecure(submitAlternateMobileAction, {
         mobileNumber: sanitizeNumeric(number1),
@@ -106,21 +100,7 @@ function AlternateMobile() {
         showToast({ message: r1.error, type: "error" });
         return;
       }
-      setContact1Saved(true);
-      showToast({ message: "Contact 1 saved successfully", type: "success" });
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : "Something went wrong";
-      showToast({ message: msg, type: "error" });
-    } finally {
-      setLoading1(false);
-    }
-  };
 
-  const handleSaveContact2 = async () => {
-    if (!validateContact2()) return;
-    setLoading2(true);
-    setErrors({});
-    try {
       const r2 = await callSecure(submitAlternateMobileAction, {
         mobileNumber: sanitizeNumeric(number2),
         name: name2.trim(),
@@ -130,24 +110,13 @@ function AlternateMobile() {
         showToast({ message: r2.error, type: "error" });
         return;
       }
-      setContact2Saved(true);
-      showToast({ message: "Contact 2 saved successfully", type: "success" });
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : "Something went wrong";
-      showToast({ message: msg, type: "error" });
-    } finally {
-      setLoading2(false);
-    }
-  };
 
-  const handleContinue = async () => {
-    setSavingStep(true);
-    try {
       const stepResult = await saveAlternateMobileStepAction();
       if (stepResult?.error) {
         showToast({ message: stepResult.error, type: "error" });
         return;
       }
+
       showToast({ message: "Alternate contact details saved", type: "success" });
       router.push("/loan-eligibility");
     } catch (err) {
@@ -157,8 +126,6 @@ function AlternateMobile() {
       setSavingStep(false);
     }
   };
-
-  const contact2Disabled = !contact1Saved;
 
   return (
     <StepCard
@@ -206,7 +173,6 @@ function AlternateMobile() {
               placeholder="Contact person name"
               error={errors.n1}
               require
-              disabled={contact1Saved}
             />
             <div className="flex gap-3">
               <div className="flex-1">
@@ -221,7 +187,7 @@ function AlternateMobile() {
                   }}
                   placeholder="10-digit mobile number"
                   error={errors.n1m}
-                  disabled={contact1Saved}
+                  require
                 />
               </div>
               <div className="w-[180px] shrink-0">
@@ -235,29 +201,15 @@ function AlternateMobile() {
                   }}
                   placeholder="Relation"
                   menuPlacement="auto"
-                  isDisabled={contact1Saved}
+                  required
                 />
                 {errors.r1 && <p className="mt-1 text-sm text-destructive px-1">{errors.r1}</p>}
               </div>
             </div>
           </div>
-          {!contact1Saved && (
-            <GradientButton
-              type="button"
-              onClick={handleSaveContact1}
-              disabled={loading1}
-              loading={loading1}
-              className="w-full mt-4"
-            >
-              Save Contact 1
-            </GradientButton>
-          )}
         </div>
 
-        <div
-          className={`space-y-4 rounded-2xl border border-border-light bg-surface p-5
-            ${contact2Disabled ? "opacity-50 pointer-events-none" : ""}`}
-        >
+        <div className="space-y-4 rounded-2xl border border-border-light bg-surface p-5">
           <h3 className="text-sm font-bold text-text-heading">Contact Person 2</h3>
           <div className="space-y-3">
             <TextInput
@@ -270,7 +222,6 @@ function AlternateMobile() {
               placeholder="Contact person name"
               error={errors.n2}
               require
-              disabled={contact2Disabled}
             />
             <div className="flex gap-3">
               <div className="flex-1">
@@ -285,7 +236,7 @@ function AlternateMobile() {
                   }}
                   placeholder="10-digit mobile number"
                   error={errors.n2m}
-                  disabled={contact2Disabled}
+                  require
                 />
               </div>
               <div className="w-[180px] shrink-0">
@@ -299,36 +250,23 @@ function AlternateMobile() {
                   }}
                   placeholder="Relation"
                   menuPlacement="auto"
-                  isDisabled={contact2Disabled}
+                  required
                 />
                 {errors.r2 && <p className="mt-1 text-sm text-destructive px-1">{errors.r2}</p>}
               </div>
             </div>
           </div>
-          {contact1Saved && !contact2Saved && (
-            <GradientButton
-              type="button"
-              onClick={handleSaveContact2}
-              disabled={loading2}
-              loading={loading2}
-              className="w-full mt-4"
-            >
-              Save Contact 2
-            </GradientButton>
-          )}
         </div>
 
-        {contact1Saved && contact2Saved && (
-          <GradientButton
-            type="button"
-            onClick={handleContinue}
-            disabled={savingStep}
-            loading={savingStep}
-            className="w-full"
-          >
-            Continue
-          </GradientButton>
-        )}
+        <GradientButton
+          type="button"
+          onClick={handleSaveAndNext}
+          disabled={savingStep}
+          loading={savingStep}
+          className="w-full"
+        >
+          Save & Next
+        </GradientButton>
       </div>
     </StepCard>
   );

@@ -160,7 +160,23 @@
 
 ### Completed
 
-1. **Loan Application Flow Expanded from 9 to 12 Steps**
+1. **Deduplicated Step-Progress URL in Middleware**
+   - `src/middleware.ts` — removed inline constant `STEP_PROGRESS_PATH = "/los-service/api/web-proxy/user-progress"` (was hardcoded alongside `API_BASE_URL`); now imports `API` from `@/lib/api/urls` and uses `API.others.stepProgress` in the `fetchStepProgress` call. Path is now defined once (in `src/lib/api/urls.ts:48`).
+   - Note: `getStepProgressAction` (Server Action) cannot be called from middleware because it depends on `next/headers` `cookies()` and `next/navigation` `redirect()` (via the shared axios client) and the Server Action runtime, none of which are available in the Edge Runtime. The middleware continues to use a raw `fetch` with the session token from `request.cookies` — the right pattern.
+2. **Allow Sub-routes of the Pending Step in Middleware**
+   - `src/middleware.ts` — added an `isSubRouteOfPending` check in the `currentStepIndex === -1` branch. If the pathname is the pending step's exact route or a sub-path of it (`/aadhar-details` or `/aadhar-details/processing/abc123` when pending is `/aadhar-details`), the middleware now allows the request through instead of redirecting.
+   - Why: the aadhaar flow uses a sub-route `/aadhar-details/processing/[id]` (the DigiLocker callback landing page at `src/app/(dashboard)\aadhar-details\processing\[id]\page.tsx`). The previous code would redirect this to `/aadhar-details`, breaking the verification flow.
+   - Sub-routes of *completed* steps (e.g., `/aadhar-details/processing/abc123` when the pending step is `/bank-details`) still redirect to the pending step, so completed-step sub-routes cannot be reached out of order.
+3. **Fixed Double Toast on GeoLocation Capture**
+   - `src/views/Dashbaord/GeoLocation/GeoLocation.tsx` — `getCurrentLocation()` was being called twice on mount: once from the first `useEffect`'s `.finally()` (after IP geolocation cookie save) and again from the second `useEffect` when `navigator.permissions` reported `"granted"`. Each call invoked `navigator.geolocation.getCurrentPosition`'s success handler, firing the `"Location captured successfully"` toast twice.
+   - Fix: removed the duplicate `getCurrentLocation()` call from the first `useEffect`'s `.finally()` (IP cookie save retained). The auto-detect-when-granted path in the second `useEffect` is now the sole entry point on mount; the "Detect My Location" button still calls it manually when permission is `"prompt"`. Also wrapped `getCurrentLocation` in `useCallback([ipLocation])` and added it to the second `useEffect`'s deps to clear a pre-existing `react-hooks/exhaustive-deps` warning.
+4. **Created Comprehensive Postman Collection**
+   - `postman/p2m-los.postman_collection.json` — 13 folders, 20 endpoints covering every API in `src/lib/api/urls.ts` except the mocked `bank.initiateFetch` and `loan-application.service.ts`. Organized by feature: Auth, PAN, Personal Info, Aadhaar (DigiLocker), Bank, Employment, Documents, Selfie/Media, GeoLocation, Loan, Step Progress, Webhooks, Contact.
+   - **Auth flow**: collection-level Bearer `{{accessToken}}`. Test scripts on Send OTP and Verify OTP capture `userId` and `accessToken` from the response — subsequent requests pick up the new token automatically. Collection-level pre-request script decodes the JWT, logs the expiry timestamp, and warns (without blocking) if the token is expired or about to expire.
+   - `postman/p2m-los-dev.postman_environment.json` — sample environment pointing at the dev ngrok backend; switch `baseUrl` for staging/prod.
+   - Replaces the previous 6-endpoint `p2m-los.postman_collection.json` at the project root.
+
+2. **Loan Application Flow Expanded from 9 to 12 Steps**
    - Updated step definitions in `sessionStorage.ts`
    - Added 5 new data types and setters to `ApplicationContext.tsx`
    - Added new API key mappings for all 12 steps
@@ -179,7 +195,7 @@
 3. **Navigation Routing Updated**
    - Mobile OTP → Geo Location → PAN → Personal Info → Aadhaar → Bank Details → Account Statement → Employment Details → Selfie → Address Proof → Alternate Mobile → Loan Eligibility
 
-4. **Fixed Pre-existing Contact.tsx TypeScript Error**
+4. **Fixed pre-existing Contact.tsx TypeScript Error**
    - `COMPANY_DETAILS.address` → `COMPANY_DETAILS.officeAddress`
 
 5. **Route Mappings Updated**
@@ -190,6 +206,7 @@
 
 - **Turbopack compilation**: ✓ PASS
 - **TypeScript type-check**: ✓ PASS (Contact.tsx fixed)
+- **ESLint** (`npx eslint src/middleware.ts`): ✓ PASS
 - **Pre-existing**: `src/pages/Home/Home.tsx` (not a module), `src/pages/VerifyOtpPage.tsx/VerifyOtpPage.tsx` (directory structure issue) still present
 
 ### Known Issues
@@ -197,3 +214,29 @@
 - No API integration yet - all flows use `setTimeout` simulation
 - No file upload endpoints - files stored in memory only
 - Directory naming inconsistencies (Dashbaord typo)
+
+## Session 2 - June 4, 2026
+
+### Completed
+
+1. **AlternateMobile.tsx - single Save & Next flow**
+   - Removed per-contact save buttons and the C2 grey-out gate. Both contact forms now editable in parallel.
+   - New handleSaveAndNext runs submitAlternateMobileAction for C1 then C2, then saveAlternateMobileStepAction, then outer.push("/loan-eligibility"). Bails on first error with toast.
+   - All six fields (Name / Mobile / Relation for both contacts) marked equire / equired.
+
+2. **LoanEligibility.tsx - response-driven sliders + simple-interest calculation**
+   - Amount slider bound to programs.minAmount (5000) and programs.maxAmount (100000).
+   - Tenure slider bound to programs.tenures.minTermDays (7) and programs.tenures.maxTermDays (45); label changed to Tenure (Days).
+   - Calculation replaced: interest = P * r * days/365; 	otalPayable = P + interest + processingFee; dailyEmi = total / days. Memoized.
+   - Submit payload: loanAmount and 	enureDays come from state; programId = programs.tenures.id; dueDate = 
+ow + tenureDays days.
+   - Skeleton placeholder renders inside Choose Loan Amount card while programs is loading. Submit button disabled when !programs or !programs.isAllowed.
+   - Removed unused Edit3 import and ReviewField component.
+
+### Build Status
+
+- **ESLint** (
+px eslint on both files): PASS
+- **TypeScript** (
+px tsc --noEmit): PASS
+

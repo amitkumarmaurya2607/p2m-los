@@ -1,54 +1,17 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import {
+  buildOrderedStepStatuses,
+  getCurrentStepIndex,
+  getStepRoute,
+} from "@/lib/step-progress-map";
+import { API } from "@/lib/api/urls";
 
 const SESSION_COOKIE = "p2m-session";
-const STEP_COOKIE = "p2m-step";
-
-const stepOrder = [
-  "mobile",
-  "geoLocation",
-  "pan",
-  "personalInfo",
-  "aadhaar",
-  "bankDetails",
-  "accountStatement",
-  "employmentDetails",
-  "selfie",
-  "addressProof",
-  "alternateMobile",
-  "loanEligibility",
-];
-
-const stepRouteMap: Record<string, string> = {
-  geoLocation: "/geo-location",
-  pan: "/pan-details",
-  personalInfo: "/personal-info",
-  aadhaar: "/aadhar-details",
-  bankDetails: "/bank-details",
-  accountStatement: "/account-statement",
-  employmentDetails: "/employment-details",
-  selfie: "/selfie-capture",
-  addressProof: "/address-proof",
-  alternateMobile: "/alternate-mobile",
-  loanEligibility: "/loan-eligibility",
-};
-
-const routeStepMap: Record<string, string> = {
-  "/apply-now": "mobile",
-  "/geo-location": "geoLocation",
-  "/pan-details": "pan",
-  "/personal-info": "personalInfo",
-  "/aadhar-details": "aadhaar",
-  "/bank-details": "bankDetails",
-  "/account-statement": "accountStatement",
-  "/employment-details": "employmentDetails",
-  "/selfie-capture": "selfie",
-  "/address-proof": "addressProof",
-  "/alternate-mobile": "alternateMobile",
-  "/loan-eligibility": "loanEligibility",
-};
+const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8080/api";
 
 const protectedPrefixes = [
+  "/profile",
   "/geo-location",
   "/pan-details",
   "/personal-info",
@@ -63,75 +26,105 @@ const protectedPrefixes = [
   "/track-application",
 ];
 
-export function middleware(request: NextRequest) {
+type StepProgress = {
+  steps: Array<{ step: string; status: string; completedAt: string | null }>;
+};
+
+async function fetchStepProgress(sessionToken: string): Promise<StepProgress | null> {
+  try {
+    const res = await fetch(`${API_BASE_URL}${API.others.stepProgress}`, {
+      headers: {
+        Authorization: `Bearer ${sessionToken}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      cache: "no-store",
+    });
+    if (!res.ok) return null;
+    const json = await res.json();
+    if (json?.code !== "0000" || !json?.data?.steps) return null;
+    return json.data as StepProgress;
+  } catch {
+    return null;
+  }
+}
+
+function makeRedirect(request: NextRequest, target: string) {
+  return NextResponse.redirect(new URL(target, request.url));
+}
+
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const isProtectedRoute = protectedPrefixes.some((prefix) => pathname.startsWith(prefix));
+  const res = NextResponse.next();
+  res.headers.set("x-pathname", pathname);
+
+  const isProtectedRoute = protectedPrefixes.some((prefix) =>
+    pathname.startsWith(prefix),
+  );
 
   if (!isProtectedRoute) {
-    return NextResponse.next();
+    return res;
   }
 
   const sessionToken = request.cookies.get(SESSION_COOKIE)?.value;
   if (!sessionToken) {
-    const redirectUrl = new URL("/apply-now", request.url);
-    return NextResponse.redirect(redirectUrl);
+    return makeRedirect(request, "/apply-now");
   }
 
-  const stepCookie = request.cookies.get(STEP_COOKIE)?.value;
-  let completedSteps: string[] = [];
-  if (stepCookie) {
-    const match = stepCookie.match(/^step(\d+)$/);
-    if (match) {
-      completedSteps = stepOrder.slice(0, parseInt(match[1]));
-    }
-  }
-  const completedSet = new Set(completedSteps);
+  const progress = await fetchStepProgress(sessionToken);
 
-  if (pathname.startsWith("/track-application")) {
-    const allComplete = stepOrder.every((s) => completedSet.has(s));
-    if (!allComplete) {
-      const nextPending = stepOrder.find((s) => !completedSet.has(s));
-      if (nextPending) {
-        const target = stepRouteMap[nextPending] || "/apply-now";
-        return NextResponse.redirect(new URL(target, request.url));
-      }
+  if (!progress) {
+    return res;
+  }
+console.log("Middleware - Step Progress:", progress); // Debugging line
+  const statusByOrder = buildOrderedStepStatuses(progress.steps);
+  const firstPendingIndex = statusByOrder.findIndex((s) => s === "PENDING");
+  const allComplete = firstPendingIndex === -1;
+
+  if (allComplete) {
+    if (pathname !== "/profile") {
+      return makeRedirect(request, "/profile");
     }
-    return NextResponse.next();
+    return res;
   }
 
-  const currentStep = routeStepMap[pathname];
-  if (currentStep) {
-    const allComplete = stepOrder.every((s) => completedSet.has(s));
-    if (allComplete) {
-      return NextResponse.redirect(new URL("/track-application", request.url));
+  const currentStepIndex = getCurrentStepIndex(pathname);
+
+  if (currentStepIndex === -1) {
+    const target = getStepRoute(firstPendingIndex);
+    const isSubRouteOfPending =
+      !!target && (pathname === target || pathname.startsWith(`${target}/`));
+    if (isSubRouteOfPending) {
+      return res;
     }
-
-    if (completedSet.has(currentStep)) {
-      const nextPending = stepOrder.find((s) => !completedSet.has(s));
-      if (nextPending) {
-        const target =
-          nextPending === "mobile" ? "/apply-now" : stepRouteMap[nextPending] || "/apply-now";
-        return NextResponse.redirect(new URL(target, request.url));
-      }
+    if (target && target !== pathname) {
+      return makeRedirect(request, target);
     }
+    return res;
+  }
 
-    const currentIndex = stepOrder.indexOf(currentStep);
-    const firstIncompleteIndex = stepOrder.findIndex((s) => !completedSet.has(s));
+  if (currentStepIndex > firstPendingIndex) {
+    const target = getStepRoute(firstPendingIndex);
+    if (target && target !== pathname) {
+      return makeRedirect(request, target);
+    }
+    return res;
+  }
 
-    if (firstIncompleteIndex !== -1 && currentIndex > firstIncompleteIndex) {
-      const nextPending = stepOrder[firstIncompleteIndex];
-      const target =
-        nextPending === "mobile" ? "/apply-now" : stepRouteMap[nextPending] || "/apply-now";
-      return NextResponse.redirect(new URL(target, request.url));
+  if (statusByOrder[currentStepIndex] === "COMPLETED") {
+    const target = getStepRoute(firstPendingIndex);
+    if (target && target !== pathname) {
+      return makeRedirect(request, target);
     }
   }
 
-  return NextResponse.next();
+  return res;
 }
 
 export const config = {
   matcher: [
+    "/profile/:path*",
     "/geo-location/:path*",
     "/pan-details/:path*",
     "/personal-info/:path*",

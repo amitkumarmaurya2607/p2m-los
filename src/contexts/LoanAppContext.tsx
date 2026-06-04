@@ -8,7 +8,7 @@ type LoanAppContextValue = {
   application: LoanApplication | null;
   loading: boolean;
   error: string | null;
-  refreshApp: () => Promise<void>;
+
 };
 
 const LoanAppContext = createContext<LoanAppContextValue | undefined>(undefined);
@@ -18,27 +18,10 @@ export function LoanAppProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const refreshApp = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await getStepProgressAction();
-      //setApplication(data);
-      console.log("data----", JSON.stringify(data));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch loan application");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    refreshApp();
-  }, [refreshApp]);
 
   return (
-    <LoanAppContext.Provider value={{ application, loading, error, refreshApp }}>
+    <LoanAppContext.Provider value={{ application, loading, error, }}>
       {children}
     </LoanAppContext.Provider>
   );

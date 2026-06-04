@@ -77,7 +77,7 @@ const Login = ({ type }: { type?: string }) => {
     const raw = value.replace("+91", "");
     const digits = sanitizeNumeric(raw).slice(0, 10);
 
-    setUserName(digits ? "+91" + digits : "");
+    setUserName(digits);
   };
 
   return (

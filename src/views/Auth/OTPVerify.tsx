@@ -54,8 +54,8 @@ function OTPVerify({ resend = () => { }, method, userName, back, userId }: OTPVe
       }
       setIsRedirect(true);
       showToast({ message: "OTP verified successfully!", type: "success" });
-
-      router.push("/geo-location");
+      //  window.location.href = "/geo-location";
+      //  router.push("/geo-location");
     } catch (err) {
       console.log(err);
       showToast({ message: "Invalid OTP. Please try again.", type: "error" });

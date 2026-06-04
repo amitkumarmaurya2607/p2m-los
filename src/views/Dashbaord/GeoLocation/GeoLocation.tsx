@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import StepCard from "../componants/StepCard";
 import GradientButton from "@/components/ui/GradientButton";
@@ -52,7 +52,6 @@ function GeoLocation() {
           country: ipLocation?.country || "",
           region: ipLocation?.region || "",
         });
-        getCurrentLocation();
       });
   }, []);
 
@@ -92,7 +91,7 @@ function GeoLocation() {
     }
   };
 
-  const getCurrentLocation = () => {
+  const getCurrentLocation = useCallback(() => {
     if (!navigator.geolocation) {
       setError("Geolocation is not supported by your browser");
       return;
@@ -139,7 +138,7 @@ function GeoLocation() {
       },
       { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 },
     );
-  };
+  }, [ipLocation]);
 
   useEffect(() => {
     /* eslint-disable react-hooks/set-state-in-effect */
@@ -165,7 +164,7 @@ function GeoLocation() {
         .catch(() => {});
     }
     /* eslint-enable react-hooks/set-state-in-effect */
-  }, []);
+  }, [getCurrentLocation]);
 
   const handleSubmit = async () => {
     if (!location) {
