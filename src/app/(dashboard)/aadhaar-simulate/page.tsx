@@ -5,7 +5,7 @@
 import { useEffect, useState } from "react";
 import { CheckCircle2, Fingerprint, Loader2, ShieldCheck, Smartphone } from "lucide-react";
 import GradientButton from "@/components/ui/GradientButton";
-import { triggerDigiLockerWebhookAction } from "@/lib/actions/verification.action";
+import axios from "axios";
 
 export default function AadhaarSimulatePage() {
     const [loading, setLoading] = useState(false);
@@ -27,11 +27,22 @@ export default function AadhaarSimulatePage() {
         }
 
         try {
-            const res = await triggerDigiLockerWebhookAction(txnId);
-            if (res?.success && res.data?.response?.startsWith("redirect:")) {
-                window.location.href = res.data.response.replace("redirect:", "");
-                return;
+            setLoading(true);
+            const url = `/los-service/api/webhook/digiLocker?txnId=${txnId}&success=true`;
+            const res = await axios.get(url);
+
+            console.log("res-----------------", res)
+            if (res?.data?.data?.data) {
+
+
+                const txnId_ = res?.data?.data?.data;
+
+
+                const url = `http://localhost:3000/aadhar-details/processing/${txnId_}`;
+
+                window.location.href = url;
             }
+
         } catch (err) {
             console.error("Webhook error:", err);
         }

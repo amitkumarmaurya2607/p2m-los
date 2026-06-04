@@ -3,7 +3,9 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { CheckCircle2, FileCheck2, Loader2, ShieldCheck, XCircle } from "lucide-react";
-import { checkAadhaarStatusAction } from "@/lib/actions/verification.action";
+import { checkAadhaarStatusAction, handleDigiLockerCallbackAction } from "@/lib/actions/verification.action";
+import { showToast } from "@/lib/toast";
+// import { saveStepCookie } from "@/lib/step-cookie";
 
 type Status = "loading" | "success" | "error";
 
@@ -15,6 +17,7 @@ export default function AadhaarProcessingIdPage({
     const router = useRouter();
     const [status, setStatus] = useState<Status>("loading");
     const [errorMsg, setErrorMsg] = useState("");
+    const [loading, setLoading] = useState(false);
     const hasRun = useRef(false);
 
     useEffect(() => {
@@ -25,29 +28,72 @@ export default function AadhaarProcessingIdPage({
             if (!id) {
                 router.replace("/aadhar-details");
                 return;
+            } else if (id === "FAIL") {
+                setStatus("error");
+                const msg = "Verification failed";
+                setErrorMsg(msg);
+                setTimeout(
+                    () =>
+                        router.replace(
+                            `/aadhar-details?error_code=verify_failed&errMsg=${encodeURIComponent(msg)}`,
+                        ),
+                    2000,
+                );
+                return
+
+            } else {
+                setTimeout(() => {
+                    checkAadhaarStatusAction(id).then((res) => {
+                        if (res?.success && res.data?.status !== "FAIL") {
+                            setStatus("success");
+                            setTimeout(() => redirect(), 1500);
+                        } else {
+                            setStatus("error");
+                            const msg = res?.error || "Verification failed";
+                            setErrorMsg(msg);
+                            setTimeout(
+                                () =>
+                                    router.replace(
+                                        `/aadhar-details?error_code=verify_failed&errMsg=${encodeURIComponent(msg)}`,
+                                    ),
+                                2000,
+                            );
+                        }
+                    });
+                }, 5000);
             }
 
-            setTimeout(() => {
-                checkAadhaarStatusAction(id).then((res) => {
-                    if (res?.success) {
-                        setStatus("success");
-                        setTimeout(() => router.push("/bank-details"), 1500);
-                    } else {
-                        setStatus("error");
-                        const msg = res?.error || "Verification failed";
-                        setErrorMsg(msg);
-                        setTimeout(
-                            () =>
-                                router.replace(
-                                    `/aadhar-details?error_code=verify_failed&errMsg=${encodeURIComponent(msg)}`,
-                                ),
-                            2000,
-                        );
-                    }
-                });
-            }, 5000);
+
         });
     }, [params, router]);
+
+
+    async function redirect() {
+        try {
+            setLoading(true);
+            const res = await handleDigiLockerCallbackAction();
+
+            if (res?.success) {
+
+                router.push("/bank-details");
+                showToast({ message: "Aadhaar verified successfully!", type: "success" });
+                return;
+            } else if (res?.error) {
+                showToast({ message: "Aadhaar  verification failed", type: "error" });
+                return;
+            }
+        } catch (err) {
+            showToast({
+                message: err instanceof Error ? err.message : "Something went wrong",
+                type: "error",
+            });
+        } finally {
+            setLoading(false);
+        }
+
+    }
+
+
 
     return (
         <div className="min-h-screen bg-background px-4 py-8 flex items-center justify-center">
