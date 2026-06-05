@@ -6,11 +6,17 @@ June 4, 2026
 
 ## Current Focus
 
-12-step loan application flow implemented — migrated from 9-step to 12-step sequence with 5 new steps. Build passes cleanly. Latest work: restyled the Profile page to match the project's design language (label/value pairs, `SectionCard` shape, `TrackApplicationV2` timeline, `GradientButton` for Pay EMI, verified pill in section header). `npx tsc --noEmit` and `npm run lint` both clean.
+12-step loan application flow implemented — migrated from 9-step to 12-step sequence with 5 new steps. Build passes cleanly. Latest work: replaced hardcoded colors in `ProfileStatusStep` (`bg-[#3737C1]` → `bg-home-purple`, two `rgba()` halos → new `--shadow-green-ring` / `--shadow-purple-ring` tokens in `globals.css`). Profile folder now uses only project tokens. `npx tsc --noEmit` and `npm run lint` both clean.
 
 ## Recent Changes
 
-0. **Profile page restyled to match project design language**
+0. **Profile hardcoded colors replaced with project tokens**
+   - `src/app/globals.css` — added two new shadow tokens: `--shadow-green-ring: 0px 0px 0px 4px rgba(0, 200, 156, 0.2)` and `--shadow-purple-ring: 0px 0px 0px 4px rgba(55, 55, 193, 0.2)`. Placed next to the existing `--shadow-green-glow` / `--shadow-purple-button` tokens in the `:root` block.
+   - `src/views/Dashbaord/Profile/shared/ProfileStatusStep.tsx` — three class substitutions: `bg-[#3737C1]` → `bg-home-purple`; `shadow-[0px_0px_0px_4px_rgba(0,200,156,0.2)]` → `shadow-[var(--shadow-green-ring)]`; `shadow-[0px_0px_0px_4px_rgba(55,55,193,0.2)]` → `shadow-[var(--shadow-purple-ring)]`. No visual change.
+   - `src/views/Dashbaord/Profile/shared/ProfileInfoCard.tsx` — added `rightSlot?: React.ReactNode` to `ProfileInfoCardProps` type and rendered `{rightSlot}` after the title in the header. Required to fix a pre-existing TS error from the previous round (the `VerifiedPill` props in `EmploymentTab` and `BankDetailsTab` referenced a `rightSlot` prop that was never on the type). `h2` made `flex-1` to push the right-slot to the far right.
+   - Audit: `grep -E "#[0-9A-Fa-f]{3,6}|rgba?\("` over `src/views/Dashbaord/Profile/**` now returns only **one** match — `Profile.tsx:259` `shadow-[inset_0px_0px_8px_rgba(73,55,156,0.08)]` for the active sidebar button. That's a pre-existing inner shadow from the original file (not introduced by Profile work); left untouched per the narrow-scope request. If it ever needs tokenizing, suggest `--shadow-inner-purple: inset 0px 0px 8px rgba(73, 55, 156, 0.08)`.
+   - **Known divergence (out of scope per request)**: `src/views/Dashbaord/TrackApplication/TrackApplicationV2.tsx` lines 39 + 44 still use the same hardcoded `bg-[#3737C1]` and rgba halos that the new `ProfileStatusStep` no longer uses. Visually identical today, but a future cleanup should align them.
+1. **Profile page restyled to match project design language**
    - `src/views/Dashbaord/Profile/shared/ProfileField.tsx` — replaced the input-chrome look (border + bg + min-h-11) with a plain label/value pair: small `bg-primary` dot on the left, uppercase tracking-wider label (`text-text-muted-light`), bold value (`text-text-heading`). No border, no background, sits directly on the section card.
    - `src/views/Dashbaord/Profile/shared/ProfileInfoCard.tsx` — slimmed to match the project's `SectionCard` shape (`rounded-2xl border border-border-light bg-surface p-5 space-y-5`); icon chip downsized to `h-9 w-9 rounded-xl`; title now `text-base font-bold`. New `rightSlot?: React.ReactNode` prop for the verified pill.
    - `src/views/Dashbaord/Profile/shared/ProfileStatCard.tsx` — `border-border-light bg-surface`; icon chip `h-8 w-8 rounded-lg`; label `text-xs uppercase tracking-wider text-text-muted`; value `text-xl font-extrabold`.

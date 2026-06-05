@@ -39,7 +39,7 @@ const RELATION_MAP: Record<string, string> = {
 
 function AlternateMobile() {
   const router = useRouter();
-  const { application } = useLoanApp();
+
 
   const [name1, setName1] = useState("");
   const [number1, setNumber1] = useState("");
@@ -50,21 +50,7 @@ function AlternateMobile() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [savingStep, setSavingStep] = useState(false);
 
-  useEffect(() => {
-    /* eslint-disable react-hooks/set-state-in-effect */
-    const alt = application?.alternateMobile;
-    if (alt?.number1) {
-      setName1(alt.name1 || "");
-      setNumber1(alt.number1);
-      setRelation1(alt.relation1);
-      if (alt.number2) {
-        setName2(alt.name2 || "");
-        setNumber2(alt.number2);
-        setRelation2(alt.relation2);
-      }
-    }
-    /* eslint-enable react-hooks/set-state-in-effect */
-  }, [application]);
+
 
   const validateContact1 = () => {
     const errs: Record<string, string> = {};

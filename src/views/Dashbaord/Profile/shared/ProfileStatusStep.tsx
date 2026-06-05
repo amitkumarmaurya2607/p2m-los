@@ -7,12 +7,12 @@ const stateStyles: Record<
   { dot: string; text: string; line: string }
 > = {
   done: {
-    dot: "border-home-green/20 bg-home-green shadow-[0px_0px_0px_4px_rgba(0,200,156,0.2)]",
+    dot: "border-home-green/20 bg-home-green shadow-[var(--shadow-green-ring)]",
     text: "text-home-green",
     line: "bg-home-green",
   },
   active: {
-    dot: "border-home-purple/20 bg-[#3737C1] shadow-[0px_0px_0px_4px_rgba(55,55,193,0.2)]",
+    dot: "border-home-purple/20 bg-home-purple shadow-[var(--shadow-purple-ring)]",
     text: "text-home-purple",
     line: "bg-home-purple/30",
   },

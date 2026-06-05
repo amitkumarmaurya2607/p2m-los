@@ -214,8 +214,36 @@ const Profile = () => {
         <div className="flex min-w-0 flex-col gap-5 lg:flex-row">
           <aside
             className="w-full rounded-3xl border border-border-light bg-surface p-3
-            shadow-[var(--shadow-card)] lg:w-[300px] lg:shrink-0"
+  shadow-[var(--shadow-card)] lg:w-[300px] lg:shrink-0"
           >
+            {/* USER SUMMARY */}
+            <div className="mb-3 rounded-2xl border border-border bg-background p-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-muted text-primary">
+                  <User className="h-6 w-6" />
+                </div>
+
+                <div className="min-w-0">
+                  <h3 className="truncate text-sm font-bold text-text-heading">
+
+                    User Name
+                  </h3>
+
+                  <p className="mt-0.5 truncate text-xs text-text-secondary">
+                    Application ID: {"-"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-4 rounded-xl bg-primary-muted px-3 py-2">
+                <p className="text-xs font-medium text-text-secondary">Loan Status</p>
+
+                <p className="mt-0.5 text-sm font-bold text-primary">
+                  {"In Progress"}
+                </p>
+              </div>
+            </div>
+
             <nav className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:flex lg:flex-col">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
@@ -227,14 +255,14 @@ const Profile = () => {
                     type="button"
                     onClick={() => setActiveTab(tab.key)}
                     className={`group flex min-w-0 items-start gap-3 rounded-2xl px-3 py-3 text-left
-                    transition-all ${isActive
+          transition-all ${isActive
                         ? "bg-primary-muted text-primary shadow-[inset_0px_0px_8px_rgba(73,55,156,0.08)]"
                         : "text-text-heading hover:bg-muted"
                       }`}
                   >
                     <span
                       className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl
-                      ${isActive
+            ${isActive
                           ? "bg-primary text-white"
                           : "bg-background text-text-secondary group-hover:text-text-heading"
                         }`}
@@ -261,14 +289,14 @@ const Profile = () => {
           //rounded-3xl border border-border-light bg-surface p-5
           //  shadow-[var(--shadow-card)] sm:p-6 lg:p-7"
           >
-            <div className="mb-5 rounded-2xl border border-border-light bg-surface-muted p-4 sm:p-5">
+            {/* <div className="mb-5 rounded-2xl border border-border-light bg-surface-muted p-4 sm:p-5">
               <h2 className="text-xl font-bold text-text-heading sm:text-2xl">
                 {activeTabData?.label}
               </h2>
               <p className="mt-1 text-sm text-text-secondary">
                 {activeTabData?.description}
               </p>
-            </div>
+            </div> */}
 
             {renderContent()}
           </main>

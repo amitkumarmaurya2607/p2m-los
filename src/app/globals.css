@@ -82,6 +82,8 @@
   --shadow-btn-soft: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
   --shadow-green-glow: 0px 0px 60px rgba(0, 200, 156, 0.6);
   --shadow-purple-button: 0px 12px 24px -8px rgba(55, 55, 193, 0.4);
+  --shadow-green-ring: 0px 0px 0px 4px rgba(0, 200, 156, 0.2);
+  --shadow-purple-ring: 0px 0px 0px 4px rgba(55, 55, 193, 0.2);
 
   /* Card */
   --card-border: #f1f5f9;
