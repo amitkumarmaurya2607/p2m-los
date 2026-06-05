@@ -43,6 +43,7 @@ export const API = {
  
   loan: {
     program: `${losService}/api/web-proxy/program`,
+    credibility: `${losService}/api/web-proxy/loans-credibility`,
   },
   others: {
     stepProgress: `${losService}/api/web-proxy/user-progress`,

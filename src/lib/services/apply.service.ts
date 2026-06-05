@@ -105,6 +105,12 @@ export async function getLoanPrograms(): Promise<ApiResponse<LoanEligibilityRule
   return apiGet<ApiResponse<LoanEligibilityRuleResponce>>(API.loan.program);
 }
 
+export type LoansCredibilityData = Record<string, unknown>;
+
+export async function getLoansCredibility(): Promise<ApiResponse<LoansCredibilityData>> {
+  return apiGet<ApiResponse<LoansCredibilityData>>(API.loan.credibility);
+}
+
 export async function submitApplication(
   data: unknown,
 ): Promise<ApiResponse<LoanDetailsType>> {

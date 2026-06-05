@@ -272,3 +272,19 @@ px tsc --noEmit): PASS
 - **ESLint** (`npm run lint`): no new errors in `src/middleware.ts` (6 pre-existing errors remain in `src/views/Dashbaord/PersonalInfo/PersonalInfo.tsx` and `src/views/Dashbaord/Profile/Profile.tsx`, unrelated to this change).
 - **TypeScript**: `npm run typecheck` script is not defined in `package.json` — skipped.
 
+## Session 5 - June 5, 2026
+
+### Completed
+
+1. **`/los-service/api/web-proxy/loans-credibility` endpoint wired up**
+   - `src/lib/api/urls.ts` — added `loan.credibility = ${losService}/api/web-proxy/loans-credibility` to the `loan` group.
+   - `src/lib/services/apply.service.ts` — new `LoansCredibilityData = Record<string, unknown>` type and `getLoansCredibility(): Promise<ApiResponse<LoansCredibilityData>>` service that calls `apiGet(API.loan.credibility)`.
+   - `src/lib/actions/apply.action.ts` — new `getLoansCredibilityAction()` server action (unencrypted, mirrors `getLoanProgramsAction`): returns `{ success, data }` on `code === "0000"`, else `{ error }`; uses `rethrowIfRedirect` + `getErrorMessage` for redirect-safe error handling.
+   - `src/views/Dashbaord/Profile/tabs/LoanApplication.tsx` — replaced the stub. New `"use client"` component calls `getLoansCredibilityAction()` in a mount-only `useEffect` (with a `cancelled` flag for safe unmount), tracks `data` / `loading` / `error` in `useState`. Renders a `ProfileInfoCard` titled "Loans Credibility" with a `ShieldCheck` icon. While loading, shows the project's pulse-skeleton pattern (`bg-border-medium animate-pulse` bars). On success, renders the response as `JSON.stringify(data, null, 2)` inside a styled `<pre><code>` (max-h 500px, overflow-auto, `border-border-light bg-surface-muted`). On error, shows a `ProfileEmptyState` + `showToast`.
+   - `src/lib/api/urls.ts` is the single source of truth for the endpoint path; `Profile.tsx` already had the `LoanApplication` tab wired (icon: `FileCheck2`, first in the sidebar list, key: `"LoanApplication"`), so no `Profile.tsx` changes were needed.
+   - Response type is intentionally `Record<string, unknown>` — tighten once the real shape is known.
+
+2. **Memory bank: API documentation created**
+   - `memory-bank/07-api-documentation.md` — new file. Documents every endpoint from `src/lib/api/urls.ts` in a single table per group (auth, PAN, personal info, aadhaar, bank, employment, address proof, alternate mobile, application/loan, contact, selfie, others, webhook), plus the encryption wrapper inventory, plus a "Recently Added" section for the new `loan.credibility` endpoint.
+
+

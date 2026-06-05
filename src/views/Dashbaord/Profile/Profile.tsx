@@ -18,11 +18,11 @@ import ProfileEmptyState from "./shared/ProfileEmptyState";
 import ProfileTab from "./tabs/ProfileTab";
 import EmploymentTab from "./tabs/EmploymentTab";
 import BankDetailsTab from "./tabs/BankDetailsTab";
-import TrackLoanTab from "./tabs/TrackLoanTab";
 import ApprovedDocsTab from "./tabs/ApprovedDocsTab";
 import EmiPayTab from "./tabs/EmiPayTab";
 import LoanCompletionTab from "./tabs/LoanCompletionTab";
 import LoanApplication from "./tabs/LoanApplication";
+import LoanDetailsTab from "./tabs/LoanDetailsTab";
 
 type TabKey =
   | "LoanApplication"
@@ -32,6 +32,7 @@ type TabKey =
   | "trackLoan"
   | "approvedDocs"
   | "emiPay"
+  | "loanDetails"
   | "loanCompletion";
 
 const tabs: {
@@ -66,10 +67,10 @@ const tabs: {
       description: "View your verified bank account",
     },
     {
-      key: "trackLoan",
-      label: "Track Loan Status",
-      icon: Clock3,
-      description: "Check your loan application progress",
+      key: "loanDetails",
+      label: "Loan Details",
+      icon: Landmark,
+      description: "View your loan information and status",
     },
     {
       key: "approvedDocs",
@@ -92,7 +93,7 @@ const tabs: {
   ];
 
 const Profile = () => {
-  const [activeTab, setActiveTab] = useState<TabKey>("profile");
+  const [activeTab, setActiveTab] = useState<TabKey>("LoanApplication");
   const [loading, setLoading] = useState(false);
   const [profileData, setProfileData] = useState<UserDetailsType | null>(null);
   const { application } = useLoanApp();
@@ -165,8 +166,8 @@ const Profile = () => {
         return <EmploymentTab employment={employment} />;
       case "bankDetails":
         return <BankDetailsTab bank={bank} />;
-      case "trackLoan":
-        return <TrackLoanTab />;
+      case "loanDetails":
+        return <LoanDetailsTab />;
       case "approvedDocs":
         return <ApprovedDocsTab />;
       case "emiPay":
@@ -180,18 +181,18 @@ const Profile = () => {
 
   return (
     <div
-      className="min-h-screen w-full max-w-full overflow-x-hidden bg-background px-3 py-5
-      text-text-heading sm:px-6 sm:py-8 lg:px-10"
+      className="min-h-screen w-full max-w-full overflow-x-hidden bg-background px-3
+      text-text-heading sm:px-6  lg:px-10"
     >
       <div className="mx-auto w-full max-w-7xl">
-        <div className="mb-6">
+        {/* <div className="mb-6">
           <h1 className="break-words text-2xl font-semibold text-text-heading sm:text-3xl">
             Profile Settings
           </h1>
           <p className="mt-1 break-words text-sm text-text-secondary sm:text-base">
             Manage your profile, loan status, EMI payments, and documents.
           </p>
-        </div>
+        </div> */}
 
         {/* <section
           className="mb-5 rounded-3xl border border-border-light bg-surface p-4 shadow-[var(--shadow-card)]

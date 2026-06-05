@@ -3,6 +3,7 @@
 import {
   getLoanPrograms,
   submitApplication,
+  getLoansCredibility,
 } from "@/lib/services/apply.service";
 import { saveStepCookie } from "@/lib/step-cookie";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
@@ -16,6 +17,17 @@ export async function getLoanProgramsAction() {
   } catch (err) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Failed to fetch loan programs") };
+  }
+}
+
+export async function getLoansCredibilityAction() {
+  try {
+    const result = await getLoansCredibility();
+    if (result.code !== "0000") return { error: result.message || "Failed to fetch loans credibility" };
+    return { success: true as const, data: result.data ?? null };
+  } catch (err) {
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Failed to fetch loans credibility") };
   }
 }
 
