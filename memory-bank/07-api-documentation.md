@@ -69,6 +69,8 @@ Base URL is configured via `process.env.API_BASE_URL` (defaults to `http://local
 | `application.submit` | POST | `/los-service/api/web-proxy/apply-loan` | Submits loan application |
 | `loan.program` | GET | `/los-service/api/web-proxy/program` | Fetches loan program rules (used by LoanEligibility) |
 | `loan.credibility` | GET | `/los-service/api/web-proxy/loans-credibility` | Fetches loans credibility data (used by Profile → Loan Application tab) |
+| `loan.getLoan` | GET | `/los-service/api/web-proxy/get-loan` | Fetches the user's loan list (used by Profile → Loan Details tab) |
+| `loan.getLoanDetails` | POST | `/los-service/api/web-proxy/get-loan-details` | Fetches full details for a single loan; body `{ "loanId": "<uuid>" }` (used by Profile → Loan Details tab, on "View Details" click) |
 
 ## Contact
 
@@ -106,11 +108,11 @@ Current actions wrapped with `withDecryption`:
 - `personal-info.action.ts` (`submitPersonalInfoAction`)
 - `document.action.ts`
 - `selfie.action.ts`
-- `apply.action.ts` (`submitApplicationAction`)
+- `apply.action.ts` (`submitApplicationAction`, `getLoanDetailsAction`)
 - `contact.action.ts`
 
 Unencrypted actions (plain JSON):
-- `apply.action.ts` — `getLoanProgramsAction`, `getLoansCredibilityAction`
+- `apply.action.ts` — `getLoanProgramsAction`, `getLoansCredibilityAction`, `getLoanListAction`
 - `other.action.ts` — `getProfileDataAction`
 - `personal-info.action.ts` — `getPersonalInfoAction`
 - `statement.action.ts` — `fetchStatementUrlAction`
@@ -119,3 +121,4 @@ Unencrypted actions (plain JSON):
 ## Recently Added
 
 - **`loan.credibility`** (`/los-service/api/web-proxy/loans-credibility`) — added June 5, 2026. New `getLoansCredibility()` service in `src/lib/services/apply.service.ts` (response typed as `LoansCredibilityData = Record<string, unknown>` until real shape is known). New `getLoansCredibilityAction()` server action in `src/lib/actions/apply.action.ts`. Consumed by the `LoanApplication` tab in the Profile page (`src/views/Dashbaord/Profile/tabs/LoanApplication.tsx`), which renders the raw JSON in a styled `<pre>` code block.
+- **`loan.getLoan`** (`/los-service/api/web-proxy/get-loan`, GET) and **`loan.getLoanDetails`** (`/los-service/api/web-proxy/get-loan-details`, POST with `{ loanId }`) — added June 5, 2026. New `getLoanList()` + `getLoanDetails(loanId)` services in `src/lib/services/apply.service.ts`. New `getLoanListAction()` (unencrypted) and `getLoanDetailsAction()` (wrapped with `withDecryption`) server actions in `src/lib/actions/apply.action.ts`. Consumed by the `LoanDetailsTab` (`src/views/Dashbaord/Profile/tabs/LoanDetailsTab.tsx`): list is fetched on mount, full details are fetched once per `loanId` on "View Details" click and cached in component state. Card body shows just `loanId` (+ optional status pill + optional purpose); expanded accordion body shows the raw `get-loan` row JSON in a `<pre>` block plus the `get-loan-details` response mapped to the existing 6 `DetailItem` tiles (Applicant Name, EMI Amount, Tenure, Interest Rate, Application Date, Current Status).

@@ -4,6 +4,8 @@ import {
   getLoanPrograms,
   submitApplication,
   getLoansCredibility,
+  getLoanList,
+  getLoanDetails,
 } from "@/lib/services/apply.service";
 import { saveStepCookie } from "@/lib/step-cookie";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
@@ -30,6 +32,32 @@ export async function getLoansCredibilityAction() {
     return { error: getErrorMessage(err, "Failed to fetch loans credibility") };
   }
 }
+
+export async function getLoanListAction() {
+  try {
+    const result = await getLoanList();
+    if (result.code !== "0000") return { error: result.message || "Failed to fetch loans" };
+    return { success: true as const, data: result.data ?? [] };
+  } catch (err) {
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Failed to fetch loans") };
+  }
+}
+
+export const getLoanDetailsAction = withDecryption(
+  async function getLoanDetailsAction(loanId: string) {
+    try {
+      const result = await getLoanDetails(loanId);
+      if (result.code !== "0000") {
+        return { error: result.message || "Failed to fetch loan details" };
+      }
+      return { success: true as const, data: result.data ?? null };
+    } catch (err) {
+      rethrowIfRedirect(err);
+      return { error: getErrorMessage(err, "Failed to fetch loan details") };
+    }
+  },
+);
 
 export const submitApplicationAction = withDecryption(async function submitApplicationAction(
   data: unknown,

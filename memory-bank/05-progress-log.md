@@ -287,4 +287,52 @@ px tsc --noEmit): PASS
 2. **Memory bank: API documentation created**
    - `memory-bank/07-api-documentation.md` — new file. Documents every endpoint from `src/lib/api/urls.ts` in a single table per group (auth, PAN, personal info, aadhaar, bank, employment, address proof, alternate mobile, application/loan, contact, selfie, others, webhook), plus the encryption wrapper inventory, plus a "Recently Added" section for the new `loan.credibility` endpoint.
 
+## Session 6 - June 5, 2026
+
+### Completed
+
+1. **`/los-service/api/web-proxy/get-loan` (GET) and `/los-service/api/web-proxy/get-loan-details` (POST) wired up**
+   - `src/lib/api/urls.ts` — added `loan.getLoan = ${losService}/api/web-proxy/get-loan` and `loan.getLoanDetails = ${losService}/api/web-proxy/get-loan-details` to the `loan` group.
+   - `src/lib/services/apply.service.ts` — new `GetLoanListItem = Record<string, unknown>` type + `getLoanList(): Promise<ApiResponse<GetLoanListItem[]>>` (apiGet). New `GetLoanDetailsResponse` type with the 10 known fields (`loanId, status, amount, purpose, applicationDate, applicantName, tenure, interestRate, dueDate, emiAmount, updatedAt`) plus an open `[key: string]: unknown` index, and `getLoanDetails(loanId): Promise<ApiResponse<GetLoanDetailsResponse>>` (apiPost with `{ loanId }`).
+   - `src/lib/actions/apply.action.ts` — new `getLoanListAction()` (unencrypted GET, mirrors `getLoanProgramsAction`) and new `getLoanDetailsAction = withDecryption(...)` (POST; the only wrapped action alongside `submitApplicationAction` in this file). `getLoanDetailsAction` is called from the client via `callSecure` from `src/lib/secure-action.ts`.
+   - `src/views/Dashbaord/Profile/tabs/LoanDetailsTab.tsx` — full rewrite. Removed the hardcoded stub `res.data` and the local `LoanApplication` UI type. Replaced with a real data flow:
+     - State: `loans: GetLoanListItem[]`, `loansLoading`, `loansError`, `openLoanId`, `detailsByLoanId: Record<string, { data?, loading, error? }>`.
+     - Mount effect calls `getLoanListAction()`; on success stores the array, on error sets `loansError` + `showToast`.
+     - Card body (always visible) shows `loanId` (mono), an optional status pill (only if `item.status` matches one of the 5 known `LoanStatus` values — new `toLoanStatus()` helper guards the type), and an optional `purpose` line. No more `MiniInfo` tiles, no more hardcoded amount/date on the card itself.
+     - On "View Details" click (`handleToggleDetails`): toggles `openLoanId`, and if opening for the first time for that `loanId`, fires `callSecure(getLoanDetailsAction, loanId)` and stores the result in `detailsByLoanId[loanId]`. Re-clicks use the cache. If the action returns `{ error }` or throws, the cached entry holds the error and a destructive banner is shown inside the accordion.
+     - Expanded accordion body has two labelled sections: "Loan row (get-loan)" (the raw `JSON.stringify(item, null, 2)` in a styled `<pre>` — max-h 60, overflow-auto, `border-border-light bg-surface` — same pattern as `LoanApplication.tsx`); and "Loan details (get-loan-details)" which shows the existing 6-tile `DetailItem` grid mapped from the cached `GetLoanDetailsResponse` (Applicant Name, EMI Amount, Tenure, Interest Rate, Application Date, Current Status). Below the grid is the same "Your application is currently …" info banner the stub had, now driven by the live data.
+     - Loading state inside the details section uses the project's pulse-skeleton pattern (`h-3 w-* rounded bg-border-medium animate-pulse` bars + small "Loading loan details…" caption). Error state is a `rounded-2xl border border-destructive/20 bg-destructive/5` banner.
+     - Helper changes: dropped the unused `formatDateTime` (no longer called). Kept `formatAmount` and `formatDate`, but made them more defensive (handle `number | string | undefined`, return `"-"` for empty/NaN, pass through non-numeric strings).
+   - `Profile.tsx` already had the `loanDetails` tab wired (key: `"loanDetails"`, label: "Loan Details", icon: `Landmark`) — no changes needed there.
+
+2. **Memory bank: API documentation updated**
+   - `memory-bank/07-api-documentation.md` — `loan.getLoan` and `loan.getLoanDetails` added to the "Application / Loan" table; encryption inventory updated (`getLoanListAction` added to unencrypted list, `getLoanDetailsAction` added to `withDecryption` list inside `apply.action.ts`); "Recently Added" section extended with the two new endpoints.
+
+## Session 6 (addendum) - June 5, 2026
+
+### Completed
+
+1. **LoanDetailsTab switched to component-level mock data while keeping the real API calls**
+   - User requested: "for now use mock data", with the constraint "don't change API call, only set mock data in state after API success or failed".
+   - **Strategy**: the real `getLoanListAction()` and `callSecure(getLoanDetailsAction, loanId)` calls still fire on mount and on "View Details" click (so the network path is exercised and the integration point is wired end-to-end), but both `.then` and `.catch` discard the API response and write hardcoded `MOCK_LOANS` / `MOCK_DETAILS[loanId]` to state instead. This is a "UI is ready, backend is not" pattern — the UI shows realistic data while the API call still goes out.
+   - `src/views/Dashbaord/Profile/tabs/LoanDetailsTab.tsx`:
+     - Added two module-level constants right after the `toLoanStatus` helper: `MOCK_LOANS: GetLoanListItem[]` (3 entries — the 2 from the old hardcoded stub + 1 new "Medical Loan / Disbursed / 12 months" row) and `MOCK_DETAILS: Record<string, GetLoanDetailsResponse>` (3 entries keyed by `loanId`, one per mock loan).
+     - Mount `useEffect`: replaced the typed `res` handling with `.then(() => setLoans(MOCK_LOANS))` and `.catch(() => setLoans(MOCK_LOANS))`. Removed the `showToast` + `setLoansError` branches for this mock phase. `loansError` state is still in the component (kept for an easy revert) but no longer set in the mock path.
+     - `handleToggleDetails`: replaced the typed `res` handling with `.then(() => setDetailsByLoanId(...))` and `.catch(() => setDetailsByLoanId(...))` — both write `MOCK_DETAILS[loanId] ?? MOCK_DETAILS.L26060000221` (fallback to the first entry if the loanId is unknown, so any click always shows something). Removed the `showToast` + error banner branch for the mock phase.
+   - **No changes to**: `src/lib/api/urls.ts`, `src/lib/services/apply.service.ts`, `src/lib/actions/apply.action.ts`. The URL constants, real `apiGet`/`apiPost` service calls, and `withDecryption`/`callSecure` wrappers are all preserved. The encryption wrapper on `getLoanDetailsAction` is still a no-op pass-through when `ENCRYPTION_ENABLED` is false (the default), so mock data flows through unchanged.
+   - **How to flip back to real later**: in the same two functions, replace `setLoans(MOCK_LOANS)` with the real `res.data` handling (and re-add the `showToast`/error branch), and replace `MOCK_DETAILS[loanId] ?? MOCK_DETAILS.L26060000221` with `(res.data ?? null) as GetLoanDetailsResponse | undefined`. The function signatures, types, imports, and the API calls stay identical — clean 2-edit revert.
+
+## Session 6 (addendum 2) - June 5, 2026
+
+### Completed
+
+1. **LoanDetailsTab card body restored with 3 MiniInfo tiles (Amount / Applied On / Due Date)**
+   - User noted the Amount / Applied On / Due Date tiles were missing from the card body after the previous rewrite (those had been intentionally dropped when the user picked the "render each card with just `loanId` + a raw-JSON `<pre>` inside the expanded accordion" option).
+   - `src/views/Dashbaord/Profile/tabs/LoanDetailsTab.tsx`:
+     - Re-added the `MiniInfo` component at the bottom of the file (after `DetailItem`). Identical to the original stub shape: `rounded-2xl border border-border bg-surface-muted px-4 py-3`, label `text-[11px] font-bold uppercase tracking-wide text-text-muted`, value `text-sm font-bold text-text-heading`, with the icon above the label.
+     - Re-inserted a 3-tile grid on the right side of the existing `flex flex-col ... lg:flex-row lg:items-center lg:justify-between` row in the card body. Tiles read from the `get-loan` row (`item.amount`, `item.applicationDate`, `item.dueDate`) using the existing `formatAmount` and `formatDate` helpers. Icons: `CircleDollarSign` (Amount), `CalendarDays` (Applied On), `Clock3` (Due Date) — all already imported. Grid uses `grid-cols-3` on sm+, with `lg:min-w-[520px]` to keep the 3 tiles on one line on desktop.
+     - Cast `item.amount` as `number | string | undefined` and `item.applicationDate` / `item.dueDate` as `string | null | undefined` so TS doesn't complain about the `Record<string, unknown>` shape. `formatAmount` and `formatDate` already return `"-"` for missing/empty/NaN values, so missing fields degrade gracefully.
+   - **What's preserved**: the expanded accordion still shows the raw-JSON `<pre>` for the `get-loan` row (under "Loan row (get-loan)") and the 6-tile `DetailItem` grid (under "Loan details (get-loan-details)"). The mock data + cache + `callSecure` flow is unchanged. The "Click 'View Details' to see full loan information" hint under the card body is unchanged.
+   - **Why those 3 fields**: the user explicitly listed them ("Amount ₹5,000 / Applied On 05 Jun 2026 / Due Date 05 Jul 2026") — they match the original stub's tile set exactly.
+
 

@@ -111,6 +111,35 @@ export async function getLoansCredibility(): Promise<ApiResponse<LoansCredibilit
   return apiGet<ApiResponse<LoansCredibilityData>>(API.loan.credibility);
 }
 
+export type GetLoanListItem = Record<string, unknown>;
+
+export async function getLoanList(): Promise<ApiResponse<GetLoanListItem[]>> {
+  return apiGet<ApiResponse<GetLoanListItem[]>>(API.loan.getLoan);
+}
+
+export type GetLoanDetailsResponse = {
+  loanId?: string;
+  status?: string;
+  amount?: number | string;
+  purpose?: string | null;
+  applicationDate?: string;
+  applicantName?: string;
+  tenure?: string;
+  interestRate?: string;
+  dueDate?: string;
+  emiAmount?: number | string;
+  updatedAt?: string;
+  [key: string]: unknown;
+};
+
+export async function getLoanDetails(
+  loanId: string,
+): Promise<ApiResponse<GetLoanDetailsResponse>> {
+  return apiPost<ApiResponse<GetLoanDetailsResponse>>(API.loan.getLoanDetails, {
+    loanId,
+  });
+}
+
 export async function submitApplication(
   data: unknown,
 ): Promise<ApiResponse<LoanDetailsType>> {
