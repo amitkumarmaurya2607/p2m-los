@@ -22,8 +22,10 @@ import TrackLoanTab from "./tabs/TrackLoanTab";
 import ApprovedDocsTab from "./tabs/ApprovedDocsTab";
 import EmiPayTab from "./tabs/EmiPayTab";
 import LoanCompletionTab from "./tabs/LoanCompletionTab";
+import LoanApplication from "./tabs/LoanApplication";
 
 type TabKey =
+  | "LoanApplication"
   | "profile"
   | "employment"
   | "bankDetails"
@@ -39,11 +41,18 @@ const tabs: {
   description: string;
 }[] = [
     {
+      key: "LoanApplication",
+      label: "Loan Application",
+      icon: FileCheck2,
+      description: "View and manage your loan application",
+    },
+    {
       key: "profile",
       label: "Profile",
       icon: User,
       description: "View your personal and address details",
     },
+
     {
       key: "employment",
       label: "Employment Details",
@@ -148,6 +157,8 @@ const Profile = () => {
     }
 
     switch (activeTab) {
+      case "LoanApplication":
+        return <LoanApplication />;
       case "profile":
         return <ProfileTab user={profileData} />;
       case "employment":

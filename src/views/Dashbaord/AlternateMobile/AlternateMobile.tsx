@@ -18,13 +18,13 @@ import { callSecure } from "@/lib/secure-action";
 import PulseDot from "@/components/PulseDot";
 
 const RELATION_OPTIONS = [
-  { value: "spouse", label: "Spouse" },
-  { value: "parent", label: "Parent" },
-  { value: "sibling", label: "Sibling" },
-  { value: "child", label: "Child" },
-  { value: "friend", label: "Friend" },
-  { value: "colleague", label: "Colleague" },
-  { value: "other", label: "Other" },
+  { value: "SPOUSE", label: "Spouse" },
+  { value: "PARENT", label: "Parent" },
+  { value: "SIBLING", label: "Sibling" },
+  { value: "CHILD", label: "Child" },
+  { value: "FRIEND", label: "Friend" },
+  { value: "COLLEAGUE", label: "Colleague" },
+  { value: "OTHER", label: "Other" },
 ];
 
 const RELATION_MAP: Record<string, string> = {
@@ -80,7 +80,7 @@ function AlternateMobile() {
       const r1 = await callSecure(submitAlternateMobileAction, {
         mobileNumber: sanitizeNumeric(number1),
         name: name1.trim(),
-        relationType: RELATION_MAP[relation1],
+        relationType: relation1,
       });
       if (r1?.error) {
         showToast({ message: r1.error, type: "error" });
@@ -90,7 +90,7 @@ function AlternateMobile() {
       const r2 = await callSecure(submitAlternateMobileAction, {
         mobileNumber: sanitizeNumeric(number2),
         name: name2.trim(),
-        relationType: RELATION_MAP[relation2],
+        relationType: relation2,
       });
       if (r2?.error) {
         showToast({ message: r2.error, type: "error" });
@@ -112,6 +112,15 @@ function AlternateMobile() {
       setSavingStep(false);
     }
   };
+
+  console.log("Rendering AlternateMobile with state:", {
+    name1,
+    number1,
+    relation1,
+    name2,
+    number2,
+    relation2
+  });
 
   return (
     <StepCard
@@ -181,8 +190,8 @@ function AlternateMobile() {
                   options={RELATION_OPTIONS}
                   value={relation1}
                   label="Relation"
-                  onChange={(val: string) => {
-                    setRelation1(val);
+                  onChange={(val) => {
+                    setRelation1(val?.value);
                     setErrors((p) => ({ ...p, r1: "" }));
                   }}
                   placeholder="Relation"
@@ -230,8 +239,8 @@ function AlternateMobile() {
                   options={RELATION_OPTIONS}
                   value={relation2}
                   label="Relation"
-                  onChange={(val: string) => {
-                    setRelation2(val);
+                  onChange={(val) => {
+                    setRelation2(val?.value);
                     setErrors((p) => ({ ...p, r2: "" }));
                   }}
                   placeholder="Relation"
