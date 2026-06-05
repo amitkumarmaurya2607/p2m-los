@@ -10,7 +10,9 @@ June 4, 2026
 
 ## Recent Changes
 
-0. **Profile hardcoded colors replaced with project tokens**
+0. **Middleware: completed-flow redirect goes to `/track-application`, both `/profile` and `/track-application` are freely accessible**
+   - `src/middleware.ts` — in the `allComplete` branch (lines 85-95), the funnel target switched from `/profile` to `/track-application`. New `isPostCompletionRoute` check lets requests through when `pathname` is `/profile`, `/profile/...`, `/track-application`, or `/track-application/...`. Any other protected step route (e.g. `/geo-location`, `/pan-details`, etc.) on a completed user now redirects to `/track-application` instead of `/profile`. Both post-completion pages remain mutually accessible — no auto-redirect between them.
+1. **Profile hardcoded colors replaced with project tokens**
    - `src/app/globals.css` — added two new shadow tokens: `--shadow-green-ring: 0px 0px 0px 4px rgba(0, 200, 156, 0.2)` and `--shadow-purple-ring: 0px 0px 0px 4px rgba(55, 55, 193, 0.2)`. Placed next to the existing `--shadow-green-glow` / `--shadow-purple-button` tokens in the `:root` block.
    - `src/views/Dashbaord/Profile/shared/ProfileStatusStep.tsx` — three class substitutions: `bg-[#3737C1]` → `bg-home-purple`; `shadow-[0px_0px_0px_4px_rgba(0,200,156,0.2)]` → `shadow-[var(--shadow-green-ring)]`; `shadow-[0px_0px_0px_4px_rgba(55,55,193,0.2)]` → `shadow-[var(--shadow-purple-ring)]`. No visual change.
    - `src/views/Dashbaord/Profile/shared/ProfileInfoCard.tsx` — added `rightSlot?: React.ReactNode` to `ProfileInfoCardProps` type and rendered `{rightSlot}` after the title in the header. Required to fix a pre-existing TS error from the previous round (the `VerifiedPill` props in `EmploymentTab` and `BankDetailsTab` referenced a `rightSlot` prop that was never on the type). `h2` made `flex-1` to push the right-slot to the far right.

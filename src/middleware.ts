@@ -83,10 +83,15 @@ console.log("Middleware - Step Progress:", progress); // Debugging line
   const allComplete = firstPendingIndex === -1;
 
   if (allComplete) {
-    if (pathname !== "/profile") {
-      return makeRedirect(request, "/profile");
+    const isPostCompletionRoute =
+      pathname === "/profile" ||
+      pathname.startsWith("/profile/") ||
+      pathname === "/track-application" ||
+      pathname.startsWith("/track-application/");
+    if (isPostCompletionRoute) {
+      return res;
     }
-    return res;
+    return makeRedirect(request, "/track-application");
   }
 
   const currentStepIndex = getCurrentStepIndex(pathname);

@@ -22,7 +22,7 @@ export async function saveUserIdCookie(userId: string) {
 
 export const sendOTPAction = withDecryption(async function sendOTPAction(mobileNumber: string) {
   const payload: loginPayload = {
-    mobileNumber,
+    mobileNumber:`+91${mobileNumber}`,
     brandId: process.env.ORG_ID || "",
   };
   try {
