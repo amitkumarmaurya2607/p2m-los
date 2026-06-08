@@ -21,6 +21,7 @@ type LoanStatus =
     | "processing"
     | "rejected"
     | "due"
+    | "active"
     | "error";
 
 type LoanApplicationData = {
@@ -28,6 +29,7 @@ type LoanApplicationData = {
     status: "APPROVED" | "PROCESSING" | "REJECTED" | "DUE" | string;
     loanAmount: number;
     dueDate: string;
+    agreement: string;
 };
 
 export default function LoanApplication() {
@@ -66,11 +68,13 @@ export default function LoanApplication() {
                 status: data?.loan?.status,
                 loanAmount: data?.loan?.amount,
                 dueDate: data?.loan?.loanDetails?.dueDate,
+                agreement: data?.loan?.agreement?.status,
             });
             setCurrentStatus(data?.loan?.status);
             const apiStatus = data?.loan?.status?.toUpperCase();
-
-            if (apiStatus === "APPROVED")
+            if (apiStatus === "ACTIVE") {
+                setStatus("active");
+            } else if (apiStatus === "APPROVED")
                 setStatus("approved");
             else if (apiStatus === "REJECTED")
                 setStatus("rejected");
@@ -117,6 +121,7 @@ export default function LoanApplication() {
         rejected: "Application Rejected",
         due: "Payment Due Soon",
         error: "Unable to Fetch Status",
+        active: "Loan Active",
     }[status];
 
     const description = {
@@ -126,7 +131,10 @@ export default function LoanApplication() {
         rejected: "Your loan application could not be approved at this time.",
         due: "Your loan repayment due date is approaching.",
         error: errorMsg || "Could not fetch loan application status.",
+        active: "Your loan is active. Please check your repayment schedule.",
     }[status];
+
+    const agreementStatus = loanData?.agreement;
 
     return (
         <div className="flex min-h-screen justify-center bg-background px-4 pb-4 pt-0">
@@ -156,6 +164,10 @@ export default function LoanApplication() {
                                     )}
 
                                     {status === "approved" && (
+                                        <CheckCircle2 className="h-8 w-8 text-green-400" />
+                                    )}
+
+                                    {status === "active" && (
                                         <CheckCircle2 className="h-8 w-8 text-green-400" />
                                     )}
 
@@ -191,6 +203,12 @@ export default function LoanApplication() {
                                     <span className="text-green-400">
                                         <CheckCircle2 className="mr-1 inline h-3.5 w-3.5" />
                                         Approved
+                                    </span>
+                                )}
+                                {status === "active" && (
+                                    <span className="text-green-400">
+                                        <CheckCircle2 className="mr-1 inline h-3.5 w-3.5" />
+                                        Active
                                     </span>
                                 )}
 
@@ -304,6 +322,48 @@ export default function LoanApplication() {
                             </div>
                         </div>
 
+                        {/* Agreement Status */}
+                        <div className="flex items-start gap-3">
+                            <div
+                                className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${agreementStatus === "SIGNED"
+                                    ? "bg-green-100"
+                                    : agreementStatus === "SEND"
+                                        ? "bg-blue-100"
+                                        : agreementStatus === "NOT_SEND"
+                                            ? "bg-yellow-100"
+                                            : "bg-muted"
+                                    }`}
+                            >
+                                <FileText
+                                    className={`h-3.5 w-3.5 ${agreementStatus === "SIGNED"
+                                        ? "text-green-600"
+                                        : agreementStatus === "SENT"
+                                            ? "text-blue-600"
+                                            : agreementStatus === "NOT_SENT"
+                                                ? "text-yellow-600"
+                                                : "text-muted-foreground"
+                                        }`}
+                                />
+                            </div>
+
+                            <div className="min-w-0">
+                                <p className="text-xs font-semibold text-foreground">
+                                    Agreement Status
+                                </p>
+                                <p className="text-[11px] text-muted-foreground">
+                                    {status === "loading"
+                                        ? "Fetching..."
+                                        : agreementStatus === "SIGNED"
+                                            ? "Signed"
+                                            : agreementStatus === "SENT"
+                                                ? "Sent"
+                                                : agreementStatus === "NOT_SENT"
+                                                    ? "Not Sent"
+                                                    : "N/A"}
+                                </p>
+                            </div>
+                        </div>
+
                         {/* Current Status */}
                         <div className="flex items-start gap-3">
                             <div
@@ -320,7 +380,7 @@ export default function LoanApplication() {
                                     <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
                                 )}
 
-                                {status === "approved" && (
+                                {(status === "approved" || status === "active") && (
                                     <BadgeCheck className="h-3.5 w-3.5 text-green-600" />
                                 )}
 
@@ -358,7 +418,7 @@ export default function LoanApplication() {
                             {status === "loading" &&
                                 "Please do not refresh or close this page while we fetch your loan status."}
 
-                            {status === "approved" &&
+                            {(status === "approved" || status === "active") &&
                                 "Your loan details are updated. Please check your repayment schedule carefully."}
 
                             {status === "processing" &&

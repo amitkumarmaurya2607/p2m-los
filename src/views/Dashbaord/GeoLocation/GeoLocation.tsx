@@ -113,7 +113,7 @@ function GeoLocation() {
           country: ipLocation?.country || "",
           region: ipLocation?.region || "",
         });
-        showToast({ message: "Location captured successfully", type: "success" });
+
       },
       (err) => {
         setLoading(false);
@@ -161,7 +161,7 @@ function GeoLocation() {
             setPermissionState(result.state as "prompt" | "granted" | "denied");
           };
         })
-        .catch(() => {});
+        .catch(() => { });
     }
     /* eslint-enable react-hooks/set-state-in-effect */
   }, [getCurrentLocation]);

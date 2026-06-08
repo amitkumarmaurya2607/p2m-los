@@ -18,6 +18,8 @@ const ProfileTab = ({ user }: { user: UserDetailsType | null }) => {
     .filter(Boolean)
     .join(" ");
 
+  console.log("USER DETAILS", user);
+
   return (
     <div className="space-y-8">
       <ProfileInfoCard title="Personal Details" icon={User}>

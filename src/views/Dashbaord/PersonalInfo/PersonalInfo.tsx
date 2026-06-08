@@ -125,6 +125,10 @@ function PersonalInfo() {
       if (result?.success && result?.data) {
         const data = result.data;
         setPersonalInfo(data);
+        const name = [data.firstName, data.middleName, data.lastName]
+          .filter(Boolean)
+          .join(" ");
+        localStorage.setItem("Profile", JSON.stringify({ name: name || "User", img: data?.profilePicUrl || "" }));
         setForm((prev) => ({
           ...prev,
           firstName: data.firstName || "",

@@ -82,7 +82,7 @@ function AlternateMobile() {
         name: name1.trim(),
         relationType: relation1,
       });
-      if (r1?.error) {
+      if (!r1?.success) {
         showToast({ message: r1.error, type: "error" });
         return;
       }
@@ -92,7 +92,7 @@ function AlternateMobile() {
         name: name2.trim(),
         relationType: relation2,
       });
-      if (r2?.error) {
+      if (!r2?.success) {
         showToast({ message: r2.error, type: "error" });
         return;
       }
@@ -188,7 +188,7 @@ function AlternateMobile() {
               <div className="w-[180px] shrink-0">
                 <SelectBox
                   options={RELATION_OPTIONS}
-                  value={relation1}
+                  value={RELATION_OPTIONS.find((item) => item.value === relation1) || null}
                   label="Relation"
                   onChange={(val) => {
                     setRelation1(val?.value);
@@ -237,7 +237,7 @@ function AlternateMobile() {
               <div className="w-[180px] shrink-0">
                 <SelectBox
                   options={RELATION_OPTIONS}
-                  value={relation2}
+                  value={RELATION_OPTIONS.find((item) => item.value === relation2) || null}
                   label="Relation"
                   onChange={(val) => {
                     setRelation2(val?.value);

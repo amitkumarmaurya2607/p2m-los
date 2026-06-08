@@ -29,15 +29,17 @@ const routeStepMap: Record<string, string> = {
   "/loan-eligibility": "loanEligibility",
 };
 
+interface Profile {
+  name: string;
+  img: string;
+}
+
 const Header: React.FC<HeaderProps> = ({ onBack }) => {
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
+  const [userData, setUserData] = React.useState<Profile | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const pathname = usePathname();
-  const { application } = useLoanApp();
-  const userName = application?.personalInfo?.firstName
-    ? `${application.personalInfo.firstName} ${application.personalInfo.lastName}`.trim()
-    : null;
 
   const handleLogout = async () => {
     await logoutAction();
@@ -46,6 +48,7 @@ const Header: React.FC<HeaderProps> = ({ onBack }) => {
   };
 
   useEffect(() => {
+
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setDropdownOpen(false);
@@ -53,6 +56,25 @@ const Header: React.FC<HeaderProps> = ({ onBack }) => {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const profileData = localStorage.getItem("Profile");
+      console.log("Storage event detected in Header:", profileData);
+      if (profileData) {
+        const parsedData = JSON.parse(profileData);
+        setUserData({ name: parsedData.name, img: parsedData.img });
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    handleStorageChange();
+
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
   const progressItem: StepItem | null = useMemo(() => {
@@ -102,9 +124,9 @@ const Header: React.FC<HeaderProps> = ({ onBack }) => {
         </div>
 
         <div className="flex items-center gap-3">
-          {userName && (
+          {userData?.name && (
             <span className="hidden text-sm font-medium text-text-heading sm:block">
-              {userName}
+              {userData.name}
             </span>
           )}
           <div className="relative" ref={dropdownRef}>
@@ -112,7 +134,11 @@ const Header: React.FC<HeaderProps> = ({ onBack }) => {
               onClick={() => setDropdownOpen(!dropdownOpen)}
               className="flex items-center justify-center w-10 h-10 rounded-full bg-muted"
             >
-              <User size={18} />
+              {userData?.img ? (
+                <img src={userData.img} alt="Profile" className="w-full h-full object-cover rounded-full" />
+              ) : (
+                <User size={18} />
+              )}
             </button>
             {dropdownOpen && (
               <div

@@ -6,7 +6,6 @@ import {
   FileCheck2,
   CreditCard,
   CheckCircle2,
-  Clock3,
   Briefcase,
   Landmark,
 } from "lucide-react";
@@ -102,7 +101,12 @@ const Profile = () => {
       const result = await getProfileDataAction();
 
       if (result?.success && result?.data) {
-        setProfileData(result.data as UserDetailsType);
+        const data = result.data;
+        const name = [data.firstName, data.middleName, data.lastName]
+          .filter(Boolean)
+          .join(" ");
+        localStorage.setItem("Profile", JSON.stringify({ name: name || "User", img: data?.profilePicUrl || "" }));
+        setProfileData(data as UserDetailsType);
         return;
       }
 
@@ -227,18 +231,25 @@ const Profile = () => {
             <div className="mb-3 rounded-2xl border border-border bg-background p-4">
               <div className="flex items-center gap-3">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-muted text-primary">
-                  <User className="h-6 w-6" />
+                  {profileData?.profilePicUrl ? (
+                    <img
+                      src={profileData.profilePicUrl}
+                      alt="Profile"
+                      className="h-full w-full rounded-full object-cover"
+                    />
+                  ) : (
+                    <User className="h-6 w-6" />
+                  )}
                 </div>
 
                 <div className="min-w-0">
                   <h3 className="truncate text-sm font-bold text-text-heading">
-
-                    User Name
+                    {fullName}
                   </h3>
 
-                  <p className="mt-0.5 truncate text-xs text-text-secondary">
+                  {/* <p className="mt-0.5 truncate text-xs text-text-secondary">
                     Application ID: {"-"}
-                  </p>
+                  </p> */}
                 </div>
               </div>
 
