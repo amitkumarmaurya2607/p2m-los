@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { steps as allSteps, StepItem } from "@/lib/sessionStorage";
 import { logoutAction } from "@/lib/actions/logout.action";
 import Logo from "@/assets/icon/Logo";
-import { useLoanApp } from "@/contexts/LoanAppContext";
+import Image from "next/image";
 
 type HeaderProps = {
   title?: string;
@@ -135,7 +135,7 @@ const Header: React.FC<HeaderProps> = ({ onBack }) => {
               className="flex items-center justify-center w-10 h-10 rounded-full bg-muted"
             >
               {userData?.img ? (
-                <img src={userData.img} alt="Profile" className="w-full h-full object-cover rounded-full" />
+                <Image height={40} width={40} src={userData.img} alt="Profile" className="w-full h-full object-cover rounded-full" />
               ) : (
                 <User size={18} />
               )}

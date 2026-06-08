@@ -43,13 +43,6 @@ export default function LoanApplication({ setLoansCredibilit }: { setLoansCredib
 
     const hasRun = useRef(false);
 
-    useEffect(() => {
-        if (hasRun.current) return;
-        hasRun.current = true;
-
-        fetchLoanStatus();
-    }, []);
-
     async function fetchLoanStatus() {
         try {
             setStatus("loading");
@@ -98,6 +91,15 @@ export default function LoanApplication({ setLoansCredibilit }: { setLoansCredib
             });
         }
     }
+
+    useEffect(() => {
+        if (hasRun.current) return;
+        hasRun.current = true;
+
+        fetchLoanStatus();
+    }, []);
+
+
 
     const formatAmount = (amount?: number) => {
         if (!amount) return "₹0";
@@ -182,10 +184,6 @@ export default function LoanApplication({ setLoansCredibilit }: { setLoansCredib
                                             <CheckCircle2 className="h-8 w-8 text-green-400" />
                                         )}
 
-                                        {status === "active" && (
-                                            <CheckCircle2 className="h-8 w-8 text-green-400" />
-                                        )}
-
                                         {status === "processing" && (
                                             <Clock3 className="h-8 w-8 text-primary" />
                                         )}
@@ -220,13 +218,6 @@ export default function LoanApplication({ setLoansCredibilit }: { setLoansCredib
                                             Approved
                                         </span>
                                     )}
-                                    {status === "active" && (
-                                        <span className="text-green-400">
-                                            <CheckCircle2 className="mr-1 inline h-3.5 w-3.5" />
-                                            Active
-                                        </span>
-                                    )}
-
                                     {status === "processing" && (
                                         <span className="text-primary">
                                             <Clock3 className="mr-1 inline h-3.5 w-3.5" />

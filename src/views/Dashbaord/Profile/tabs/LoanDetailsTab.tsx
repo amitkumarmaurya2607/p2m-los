@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import {
     CalendarDays,
-    Check,
     ChevronDown,
     CircleDollarSign,
     Clock3,
@@ -12,7 +11,6 @@ import {
     Loader2,
     User,
     Wallet,
-    X,
 } from "lucide-react";
 import { callSecure } from "@/lib/secure-action";
 import { getLoanListAction, getLoanDetailsAction } from "@/lib/actions/apply.action";
@@ -160,7 +158,7 @@ export default function LoanDetailsTab() {
                 </div>
             ) : (
                 <div className="grid gap-5">
-                    {loans.map((item, index) => {
+                    {loans.map((item) => {
                         const loanId = String(item.formattedLoanId);
                         const id = String(item.id);
                         const status = toLoanStatus(item.status);

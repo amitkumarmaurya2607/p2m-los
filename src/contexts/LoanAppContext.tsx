@@ -1,8 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, } from "react";
 import type { LoanApplication } from "@/types";
-import { getStepProgressAction } from "@/lib/actions/auth.action";
 
 type LoanAppContextValue = {
   application: LoanApplication | null;
