@@ -13,6 +13,9 @@ import {
 } from "lucide-react";
 import { showToast } from "@/lib/toast";
 import { getLoansCredibilityAction } from "@/lib/actions/apply.action";
+import { formatStatus } from "@/lib/utils";
+import GradientButton from "@/components/ui/GradientButton";
+import { LoansCredibilityDataResponce } from "@/lib/actions/action.type";
 
 
 type LoanStatus =
@@ -32,7 +35,7 @@ type LoanApplicationData = {
     agreement: string;
 };
 
-export default function LoanApplication() {
+export default function LoanApplication({ setLoansCredibilit }: { setLoansCredibilit: (data: LoansCredibilityDataResponce) => void }) {
     const [status, setStatus] = useState<LoanStatus>("loading");
     const [loanData, setLoanData] = useState<LoanApplicationData | null>(null);
     const [errorMsg, setErrorMsg] = useState("");
@@ -62,6 +65,8 @@ export default function LoanApplication() {
             if (!data.loan) {
                 throw new Error("No active loan application found");
             }
+
+            setLoansCredibilit(data)
 
             setLoanData({
                 applicationId: data?.loan?.id,
@@ -140,102 +145,112 @@ export default function LoanApplication() {
         <div className="flex min-h-screen justify-center bg-background px-4 pb-4 pt-0">
             <div className="w-full max-w-[420px]">
                 {/* TOP STATUS CARD */}
-                <div className="relative h-[260px] overflow-hidden rounded-3xl border bg-black shadow-xl">
-                    <div
-                        className="relative flex h-[260px] items-center justify-center bg-gradient-to-br
-            from-[#0F172A] via-[#111827] to-black"
+
+                {status === "active" ? <>
+                    <GradientButton
+                        onClick={() => { }}
+                        leftIcon={<IndianRupee className="h-4 w-4" />}
+                        className="w-full"
                     >
-                        {/* BG GLOW */}
-                        <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-primary/30 blur-3xl" />
-                        <div className="absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-green-500/20 blur-3xl" />
+                        Pay Now
+                    </GradientButton>
+                </> :
+                    <div className="relative h-[260px] overflow-hidden rounded-3xl border bg-black shadow-xl">
+                        <div
+                            className="relative flex h-[260px] items-center justify-center bg-gradient-to-br
+            from-[#0F172A] via-[#111827] to-black"
+                        >
 
-                        {/* CONTENT */}
-                        <div className="relative z-10 w-full px-5 text-center text-white">
-                            <div className="relative mx-auto mb-4 flex h-20 w-20 items-center justify-center">
-                                <div className="absolute inset-0 animate-ping rounded-full border-4 border-green-500/30" />
-                                <div className="absolute inset-2 animate-pulse rounded-full border-4 border-primary/30" />
+                            <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-primary/30 blur-3xl" />
+                            <div className="absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-green-500/20 blur-3xl" />
 
-                                <div
-                                    className="relative flex h-16 w-16 items-center justify-center rounded-full
+
+                            <div className="relative z-10 w-full px-5 text-center text-white">
+                                <div className="relative mx-auto mb-4 flex h-20 w-20 items-center justify-center">
+                                    <div className="absolute inset-0 animate-ping rounded-full border-4 border-green-500/30" />
+                                    <div className="absolute inset-2 animate-pulse rounded-full border-4 border-primary/30" />
+
+                                    <div
+                                        className="relative flex h-16 w-16 items-center justify-center rounded-full
                   border border-white/20 bg-white/10 backdrop-blur-md"
-                                >
+                                    >
+                                        {status === "loading" && (
+                                            <Loader2 className="h-8 w-8 animate-spin text-green-400" />
+                                        )}
+
+                                        {status === "approved" && (
+                                            <CheckCircle2 className="h-8 w-8 text-green-400" />
+                                        )}
+
+                                        {status === "active" && (
+                                            <CheckCircle2 className="h-8 w-8 text-green-400" />
+                                        )}
+
+                                        {status === "processing" && (
+                                            <Clock3 className="h-8 w-8 text-primary" />
+                                        )}
+
+                                        {status === "due" && (
+                                            <CalendarDays className="h-8 w-8 text-yellow-400" />
+                                        )}
+
+                                        {(status === "rejected" || status === "error") && (
+                                            <XCircle className="h-8 w-8 text-destructive" />
+                                        )}
+                                    </div>
+                                </div>
+
+                                <h2 className="mb-1 text-xl font-bold">{title}</h2>
+
+                                <p className="mx-auto max-w-[300px] text-xs leading-5 text-white/70">
+                                    {description}
+                                </p>
+
+                                <div className="mt-5 flex items-center justify-center gap-2 text-xs font-medium">
                                     {status === "loading" && (
-                                        <Loader2 className="h-8 w-8 animate-spin text-green-400" />
+                                        <span className="text-green-400">
+                                            <Loader2 className="mr-1 inline h-3.5 w-3.5 animate-spin" />
+                                            Fetching details...
+                                        </span>
                                     )}
 
                                     {status === "approved" && (
-                                        <CheckCircle2 className="h-8 w-8 text-green-400" />
+                                        <span className="text-green-400">
+                                            <CheckCircle2 className="mr-1 inline h-3.5 w-3.5" />
+                                            Approved
+                                        </span>
                                     )}
-
                                     {status === "active" && (
-                                        <CheckCircle2 className="h-8 w-8 text-green-400" />
+                                        <span className="text-green-400">
+                                            <CheckCircle2 className="mr-1 inline h-3.5 w-3.5" />
+                                            Active
+                                        </span>
                                     )}
 
                                     {status === "processing" && (
-                                        <Clock3 className="h-8 w-8 text-primary" />
+                                        <span className="text-primary">
+                                            <Clock3 className="mr-1 inline h-3.5 w-3.5" />
+                                            Under review
+                                        </span>
                                     )}
 
                                     {status === "due" && (
-                                        <CalendarDays className="h-8 w-8 text-yellow-400" />
+                                        <span className="text-yellow-400">
+                                            <CalendarDays className="mr-1 inline h-3.5 w-3.5" />
+                                            Due date approaching
+                                        </span>
                                     )}
 
                                     {(status === "rejected" || status === "error") && (
-                                        <XCircle className="h-8 w-8 text-destructive" />
+                                        <span className="text-destructive">
+                                            <XCircle className="mr-1 inline h-3.5 w-3.5" />
+                                            Failed
+                                        </span>
                                     )}
                                 </div>
                             </div>
-
-                            <h2 className="mb-1 text-xl font-bold">{title}</h2>
-
-                            <p className="mx-auto max-w-[300px] text-xs leading-5 text-white/70">
-                                {description}
-                            </p>
-
-                            <div className="mt-5 flex items-center justify-center gap-2 text-xs font-medium">
-                                {status === "loading" && (
-                                    <span className="text-green-400">
-                                        <Loader2 className="mr-1 inline h-3.5 w-3.5 animate-spin" />
-                                        Fetching details...
-                                    </span>
-                                )}
-
-                                {status === "approved" && (
-                                    <span className="text-green-400">
-                                        <CheckCircle2 className="mr-1 inline h-3.5 w-3.5" />
-                                        Approved
-                                    </span>
-                                )}
-                                {status === "active" && (
-                                    <span className="text-green-400">
-                                        <CheckCircle2 className="mr-1 inline h-3.5 w-3.5" />
-                                        Active
-                                    </span>
-                                )}
-
-                                {status === "processing" && (
-                                    <span className="text-primary">
-                                        <Clock3 className="mr-1 inline h-3.5 w-3.5" />
-                                        Under review
-                                    </span>
-                                )}
-
-                                {status === "due" && (
-                                    <span className="text-yellow-400">
-                                        <CalendarDays className="mr-1 inline h-3.5 w-3.5" />
-                                        Due date approaching
-                                    </span>
-                                )}
-
-                                {(status === "rejected" || status === "error") && (
-                                    <span className="text-destructive">
-                                        <XCircle className="mr-1 inline h-3.5 w-3.5" />
-                                        Failed
-                                    </span>
-                                )}
-                            </div>
                         </div>
-                    </div>
-                </div>
+                    </div>}
 
                 {/* DETAILS CARD */}
                 <div className="mt-4 rounded-3xl border bg-card p-4 shadow-sm">
@@ -407,7 +422,7 @@ export default function LoanApplication() {
                                     {status === "processing" && "Processing"}
                                     {status === "rejected" && "Rejected"}
                                     {status === "due" && "Due"} */}
-                                    {status === "error" ? "Unable to fetch application status." : currentStatus || "-"}
+                                    {status === "error" ? "Unable to fetch application status." : formatStatus(currentStatus) || "-"}
                                 </p>
                             </div>
                         </div>

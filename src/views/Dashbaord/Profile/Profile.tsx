@@ -22,6 +22,7 @@ import EmiPayTab from "./tabs/EmiPayTab";
 import LoanCompletionTab from "./tabs/LoanCompletionTab";
 import LoanApplication from "./tabs/LoanApplication";
 import LoanDetailsTab from "./tabs/LoanDetailsTab";
+import { LoansCredibilityDataResponce } from "@/lib/actions/action.type";
 
 type TabKey =
   | "LoanApplication"
@@ -90,6 +91,7 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState<TabKey>("LoanApplication");
   const [loading, setLoading] = useState(false);
   const [profileData, setProfileData] = useState<UserDetailsType | null>(null);
+  const [loansCredibility, setLoansCredibility] = useState<LoansCredibilityDataResponce | null>(null);
   const { application } = useLoanApp();
   const employment = application?.employmentDetails;
   const bank = application?.bankDetails;
@@ -144,7 +146,32 @@ const Profile = () => {
     return name || "User";
   }, [profileData]);
 
-  const activeTabData = tabs.find((tab) => tab.key === activeTab);
+  const filteredTabs = useMemo(() => {
+    const status = loansCredibility?.loan?.status?.toUpperCase();
+
+    return tabs.filter((tab) => {
+      if (tab.key === "loanCompletion") {
+        return status === "COMPLETE";
+      }
+
+      if (tab.key === "emiPay") {
+        return status === "ACTIVE" || status === "COMPLETE";
+      }
+
+      return true;
+    });
+  }, [loansCredibility]);
+
+  useEffect(() => {
+    const validKeys = new Set<TabKey>([
+      "LoanApplication",
+      ...filteredTabs.map((t) => t.key),
+    ]);
+
+    if (!validKeys.has(activeTab)) {
+      setActiveTab("LoanApplication");
+    }
+  }, [filteredTabs, activeTab]);
 
   const renderContent = () => {
     if (loading) {
@@ -158,7 +185,7 @@ const Profile = () => {
 
     switch (activeTab) {
       case "LoanApplication":
-        return <LoanApplication />;
+        return <LoanApplication setLoansCredibilit={setLoansCredibility} />;
       case "profile":
         return <ProfileTab user={profileData} />;
       case "employment":
@@ -263,9 +290,11 @@ const Profile = () => {
             </div>
 
             <nav className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:flex lg:flex-col">
-              {tabs.map((tab) => {
+              {filteredTabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = tab.key === activeTab;
+
+
 
                 return (
                   <button

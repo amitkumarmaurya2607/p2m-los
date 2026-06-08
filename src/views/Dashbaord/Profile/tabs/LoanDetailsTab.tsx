@@ -17,6 +17,7 @@ import {
 import { callSecure } from "@/lib/secure-action";
 import { getLoanListAction, getLoanDetailsAction } from "@/lib/actions/apply.action";
 import type { LoanDetailsResponse } from "@/lib/actions/action.type";
+import { formatStatus } from "@/lib/utils";
 
 type LoanStatus = "Approved" | "Active" | "Rejected" | "Disbursed" | "Closed";
 
@@ -189,7 +190,7 @@ export default function LoanDetailsTab() {
                                                             className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold ${statusClass[status] || "bg-yellow-100 text-yellow-800 border-yellow-200"}`}
                                                         >
                                                             {statusIcon[status] || <Clock3 className="h-3.5 w-3.5" />}
-                                                            {status}
+                                                            {formatStatus(status || "")}
                                                         </span>
                                                     )}
                                                 </div>
