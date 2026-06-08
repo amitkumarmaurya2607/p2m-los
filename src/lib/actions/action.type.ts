@@ -706,3 +706,115 @@ export type FetchStatementResponse = {
   requestId: string;
   tempUrl: string;
 };
+
+
+
+
+export type ValueType = "percentage" | "fixed";
+export type ChargeMode = "EXCLUSIVE" | "INCLUSIVE";
+export type PenaltyType = "SIMPLE" | string;
+export type TaxType = "GST" | string;
+
+export type FeeTax = {
+  taxType?: TaxType;
+  taxValueType?: ValueType;
+  taxRate?: string;
+  taxAmount?: string;
+  isTaxInclusive?: boolean;
+};
+
+export type FeeCalculation = {
+  principalAmount: string;
+  rateApplied: string;
+  daysApplied: number;
+  formula: string;
+};
+
+export type FeeBreakdown = {
+  type: string;
+  chargeMode: ChargeMode;
+  valueType: ValueType;
+  chargeValue: string;
+  isRecurringDaily: boolean;
+  calculatedFeeAmount: string;
+  totalTaxes: string;
+  totalAmount: string;
+  taxes: FeeTax[];
+  calculation: FeeCalculation;
+};
+
+export type PenaltyCalculation = {
+  baseAmount: string;
+  overdueDays: number;
+  penaltyInterest: string;
+  method: string;
+  formula: string;
+  calculation: string;
+  stepByStep: string[];
+};
+
+export type TaxCalculation = {
+  method: string;
+  formula: string;
+  calculation: string;
+  stepByStep: string[];
+};
+
+export type PenaltyTax = {
+  taxType: TaxType;
+  taxValueType: ValueType;
+  taxRate: string;
+  taxAmount: string;
+  isTaxInclusive: boolean;
+  taxCalculation: TaxCalculation;
+};
+
+export type PenaltySummary = {
+  penaltyAmount: string;
+  taxAmount: string;
+  totalPenaltyAmount: string;
+  description: string;
+};
+
+export type PenaltyBreakdownInfo = {
+  isOverdue: boolean;
+  daysOverdue: number;
+  dailyPenaltyRate: string;
+  penaltyMethod: string;
+  taxMethod: string;
+};
+
+export type PenaltyBreakdown = {
+  penaltyId: string;
+  penaltyType: PenaltyType;
+  penaltyValueType: ValueType;
+  penaltyRate: string;
+  penaltyCalculation: PenaltyCalculation;
+  tax: PenaltyTax;
+  summary: PenaltySummary;
+  breakdown: PenaltyBreakdownInfo;
+};
+
+export type RepaymentTotals = {
+  principalAmount: string;
+  totalFees: string;
+  totalTaxes: string;
+  totalPenalties: string;
+};
+
+export type RepaymentDetailsType = {
+  loanId: string;
+  userId: string;
+  principalAmount: string;
+  applicationDate: string;
+  dueDate: string;
+  repaymentDate: string;
+  totalDays: number;
+  daysBeforeDue: number;
+  daysAfterDue: number;
+  isOverdue: boolean;
+  feeBreakdowns: FeeBreakdown[];
+  penaltyBreakdown: PenaltyBreakdown[];
+  totals: RepaymentTotals;
+  totalRepayment: string;
+};

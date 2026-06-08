@@ -46,6 +46,7 @@ export const API = {
     credibility: `${losService}/api/web-proxy/loans-credibility`,
     getLoan: `${losService}/api/web-proxy/get-loans`,
     getLoanDetails: `${losService}/api/web-proxy/get-loan-details`,
+    currentRepayment: `${losService}/api/web-proxy/current-repayment`,
   },
   others: {
     stepProgress: `${losService}/api/web-proxy/user-progress`,

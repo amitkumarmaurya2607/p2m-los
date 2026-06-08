@@ -6,6 +6,7 @@ import {
   getLoansCredibility,
   getLoanList,
   getLoanDetails,
+  getCurrentRepayment,
 } from "@/lib/services/apply.service";
 import { saveStepCookie } from "@/lib/step-cookie";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
@@ -73,3 +74,18 @@ export const submitApplicationAction = withDecryption(async function submitAppli
   }
 });
 
+
+export const getCurrentRepaymentAction = withDecryption(
+  async function getCurrentRepaymentAction(loanId: string) {
+    try {
+      const result = await getCurrentRepayment(loanId);
+      if (result.code !== "0000") {
+        return { error: result.message || "Failed to fetch loan details" };
+      }
+      return { success: true as const, data: result.data ?? null };
+    } catch (err) {
+      rethrowIfRedirect(err);
+      return { error: getErrorMessage(err, "Failed to fetch loan details") };
+    }
+  },
+);

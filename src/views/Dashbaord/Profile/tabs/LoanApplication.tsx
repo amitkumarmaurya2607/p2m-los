@@ -16,6 +16,7 @@ import { getLoansCredibilityAction } from "@/lib/actions/apply.action";
 import { formatStatus } from "@/lib/utils";
 import GradientButton from "@/components/ui/GradientButton";
 import { LoansCredibilityDataResponce } from "@/lib/actions/action.type";
+import { useRouter } from "next/navigation";
 
 
 type LoanStatus =
@@ -142,6 +143,7 @@ export default function LoanApplication({ setLoansCredibilit }: { setLoansCredib
     }[status];
 
     const agreementStatus = loanData?.agreement;
+    const router = useRouter();
 
     return (
         <div className="flex min-h-screen justify-center bg-background px-4 pb-4 pt-0">
@@ -150,7 +152,7 @@ export default function LoanApplication({ setLoansCredibilit }: { setLoansCredib
 
                 {status === "active" ? <>
                     <GradientButton
-                        onClick={() => { }}
+                        onClick={() => router.push(`/profile/repayment/${loanData?.applicationId}`)}
                         leftIcon={<IndianRupee className="h-4 w-4" />}
                         className="w-full"
                     >
