@@ -12,7 +12,8 @@ import {
     XCircle,
 } from "lucide-react";
 import { showToast } from "@/lib/toast";
-// import { getLoanApplicationStatusAction } from "@/lib/actions/loan.action";
+import { getLoansCredibilityAction } from "@/lib/actions/apply.action";
+
 
 type LoanStatus =
     | "loading"
@@ -47,33 +48,33 @@ export default function LoanApplication() {
         try {
             setStatus("loading");
 
-            // Replace this with your real server action
-            // const res = await getLoanApplicationStatusAction();
-
-            // Demo response
-            const res = {
-                success: true,
-                data: {
-                    applicationId: "LOS-20260526-001",
-                    status: "APPROVED",
-                    loanAmount: 50000,
-                    dueDate: "2026-06-25",
-                },
-            };
+            const res = await getLoansCredibilityAction();
 
             if (!res?.success || !res?.data) {
-                throw new Error("Unable to fetch loan application status");
+                throw new Error(res?.error ?? "Unable to fetch loan application status");
             }
 
-            setLoanData(res.data);
+            const { data } = res;
 
-            const apiStatus = res.data.status?.toUpperCase();
+            if (!data.loan) {
+                throw new Error("No active loan application found");
+            }
 
-            if (apiStatus === "APPROVED") setStatus("approved");
-            else if (apiStatus === "PROCESSING") setStatus("processing");
-            else if (apiStatus === "REJECTED") setStatus("rejected");
-            else if (apiStatus === "DUE") setStatus("due");
-            else setStatus("processing");
+            setLoanData({
+                applicationId: data?.loan?.id,
+                status: data?.loan?.status,
+                loanAmount: data?.loan?.amount,
+                dueDate: data?.loan?.loanDetails?.dueDate,
+            });
+
+            const apiStatus = data?.loan?.status?.toUpperCase();
+
+            if (apiStatus === "APPROVED")
+                setStatus("approved");
+            else if (apiStatus === "REJECTED")
+                setStatus("rejected");
+            else
+                setStatus("processing");
         } catch (err) {
             const message =
                 err instanceof Error ? err.message : "Something went wrong";
@@ -340,14 +341,11 @@ export default function LoanApplication() {
                                     Current Status
                                 </p>
                                 <p className="text-[11px] text-muted-foreground">
-                                    {status === "loading" && "Fetching your latest loan status."}
-                                    {status === "approved" &&
-                                        "Your loan has been approved successfully."}
-                                    {status === "processing" &&
-                                        "Your loan application is under review."}
-                                    {status === "rejected" &&
-                                        "Your loan application was rejected."}
-                                    {status === "due" && "Your repayment due date is near."}
+                                    {status === "loading" && status.toUpperCase()}
+                                    {status === "approved" && "Approved"}
+                                    {status === "processing" && "Processing"}
+                                    {status === "rejected" && "Rejected"}
+                                    {status === "due" && "Due"}
                                     {status === "error" && "Unable to fetch application status."}
                                 </p>
                             </div>

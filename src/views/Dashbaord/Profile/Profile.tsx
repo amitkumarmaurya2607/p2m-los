@@ -41,12 +41,7 @@ const tabs: {
   icon: React.ElementType;
   description: string;
 }[] = [
-    {
-      key: "LoanApplication",
-      label: "Loan Application",
-      icon: FileCheck2,
-      description: "View and manage your loan application",
-    },
+
     {
       key: "profile",
       label: "Profile",

@@ -14,17 +14,15 @@ import {
 } from "lucide-react";
 import { callSecure } from "@/lib/secure-action";
 import { getLoanListAction, getLoanDetailsAction } from "@/lib/actions/apply.action";
-import type { GetLoanListItem, GetLoanDetailsResponse } from "@/lib/services/apply.service";
+import type { LoanDetailsResponse } from "@/lib/services/apply.service";
 
 type LoanStatus = "Pending" | "Approved" | "Rejected" | "Disbursed" | "Closed";
 
 type DetailsEntry = {
-    data?: GetLoanDetailsResponse;
+    data?: LoanDetailsResponse;
     loading: boolean;
     error?: string;
 };
-
-const KNOWN_STATUSES: LoanStatus[] = ["Pending", "Approved", "Rejected", "Disbursed", "Closed"];
 
 const statusClass: Record<LoanStatus, string> = {
     Pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
@@ -44,83 +42,16 @@ const statusIcon: Record<LoanStatus, React.ReactNode> = {
 
 function toLoanStatus(value: unknown): LoanStatus | null {
     if (typeof value !== "string") return null;
-    return (KNOWN_STATUSES as string[]).includes(value) ? (value as LoanStatus) : null;
+    const upper = value.toUpperCase();
+    if (upper === "APPROVED") return "Approved";
+    if (upper === "REJECTED") return "Rejected";
+    if (upper === "DISBURSED") return "Disbursed";
+    if (upper === "CLOSED") return "Closed";
+    return "Pending";
 }
 
-const MOCK_LOANS: GetLoanListItem[] = [
-    {
-        loanId: "L26060000221",
-        status: "Pending",
-        amount: 5000,
-        purpose: "Personal Loan",
-        applicationDate: "2026-06-05T17:03:00",
-        applicantName: "Amit Kumar",
-        tenure: "6 Months",
-        interestRate: "18% p.a.",
-        dueDate: "2026-07-05",
-        emiAmount: 940,
-        updatedAt: "2026-06-05T17:03:00",
-    },
-    {
-        loanId: "L26060000222",
-        status: "Approved",
-        amount: 15000,
-        purpose: "Emergency Loan",
-        applicationDate: "2026-06-03T12:20:00",
-        applicantName: "Amit Kumar",
-        tenure: "9 Months",
-        interestRate: "16% p.a.",
-        dueDate: "2026-07-03",
-        emiAmount: 1860,
-        updatedAt: "2026-06-05T16:30:00",
-    },
-    {
-        loanId: "L26060000223",
-        status: "Disbursed",
-        amount: 25000,
-        purpose: "Medical Loan",
-        applicationDate: "2026-05-20T09:15:00",
-        applicantName: "Amit Kumar",
-        tenure: "12 Months",
-        interestRate: "15% p.a.",
-        dueDate: "2026-06-20",
-        emiAmount: 2300,
-        updatedAt: "2026-05-25T10:00:00",
-    },
-];
-
-const MOCK_DETAILS: Record<string, GetLoanDetailsResponse> = {
-    L26060000221: {
-        loanId: "L26060000221",
-        applicantName: "Amit Kumar",
-        emiAmount: 940,
-        tenure: "6 Months",
-        interestRate: "18% p.a.",
-        applicationDate: "2026-06-05T17:03:00",
-        status: "Pending",
-    },
-    L26060000222: {
-        loanId: "L26060000222",
-        applicantName: "Amit Kumar",
-        emiAmount: 1860,
-        tenure: "9 Months",
-        interestRate: "16% p.a.",
-        applicationDate: "2026-06-03T12:20:00",
-        status: "Approved",
-    },
-    L26060000223: {
-        loanId: "L26060000223",
-        applicantName: "Amit Kumar",
-        emiAmount: 2300,
-        tenure: "12 Months",
-        interestRate: "15% p.a.",
-        applicationDate: "2026-05-20T09:15:00",
-        status: "Disbursed",
-    },
-};
-
 export default function LoanDetailsTab() {
-    const [loans, setLoans] = useState<GetLoanListItem[]>([]);
+    const [loans, setLoans] = useState<Record<string, unknown>[]>([]);
     const [loansLoading, setLoansLoading] = useState(true);
     const [openLoanId, setOpenLoanId] = useState<string | null>(null);
     const [detailsByLoanId, setDetailsByLoanId] = useState<Record<string, DetailsEntry>>({});
@@ -128,25 +59,27 @@ export default function LoanDetailsTab() {
     useEffect(() => {
         let cancelled = false;
 
-        getLoanListAction()
-            .then(() => {
+        async function fetchLoans() {
+            try {
+                setLoansLoading(true);
+                const res = await getLoanListAction();
                 if (cancelled) return;
-                setLoans(MOCK_LOANS);
-            })
-            .catch(() => {
-                if (cancelled) return;
-                setLoans(MOCK_LOANS);
-            })
-            .finally(() => {
+                setLoans(res?.success && res?.data ? (res.data as unknown as Record<string, unknown>[]) : []);
+            } catch {
+                if (!cancelled) setLoans([]);
+            } finally {
                 if (!cancelled) setLoansLoading(false);
-            });
+            }
+        }
+
+        fetchLoans();
 
         return () => {
             cancelled = true;
         };
     }, []);
 
-    const handleToggleDetails = (loanId: string) => {
+    const handleToggleDetails = async (loanId: string) => {
         const willOpen = openLoanId !== loanId;
         setOpenLoanId(willOpen ? loanId : null);
 
@@ -158,25 +91,25 @@ export default function LoanDetailsTab() {
             [loanId]: { loading: true },
         }));
 
-        callSecure(getLoanDetailsAction, loanId)
-            .then(() => {
-                setDetailsByLoanId((prev) => ({
-                    ...prev,
-                    [loanId]: {
-                        loading: false,
-                        data: MOCK_DETAILS[loanId] ?? MOCK_DETAILS.L26060000221,
-                    },
-                }));
-            })
-            .catch(() => {
-                setDetailsByLoanId((prev) => ({
-                    ...prev,
-                    [loanId]: {
-                        loading: false,
-                        data: MOCK_DETAILS[loanId] ?? MOCK_DETAILS.L26060000221,
-                    },
-                }));
-            });
+        try {
+            const res = await callSecure(getLoanDetailsAction, loanId);
+            setDetailsByLoanId((prev) => ({
+                ...prev,
+                [loanId]: {
+                    loading: false,
+                    data: res?.success && res.data ? res.data : undefined,
+                    error: res?.error,
+                },
+            }));
+        } catch (err) {
+            setDetailsByLoanId((prev) => ({
+                ...prev,
+                [loanId]: {
+                    loading: false,
+                    error: err instanceof Error ? err.message : "Failed to load details",
+                },
+            }));
+        }
     };
 
     const formatAmount = (value: number | string | undefined) => {
@@ -221,7 +154,7 @@ export default function LoanDetailsTab() {
                 ) : (
                     <div className="grid gap-5">
                         {loans.map((item, index) => {
-                            const loanId = String(item.loanId ?? item.id ?? `loan-${index}`);
+                            const loanId = String(item.formattedLoanId ?? item.id ?? `loan-${index}`);
                             const status = toLoanStatus(item.status);
                             const isOpen = openLoanId === loanId;
                             const details = detailsByLoanId[loanId];
@@ -277,7 +210,7 @@ export default function LoanDetailsTab() {
 
                                                 <MiniInfo
                                                     label="Due Date"
-                                                    value={formatDate(item.dueDate as string | null | undefined)}
+                                                    value={formatDate((item.loanDetails as any)?.dueDate as string | null | undefined)}
                                                     icon={<Clock3 className="h-4 w-4" />}
                                                 />
                                             </div>
@@ -341,27 +274,21 @@ export default function LoanDetailsTab() {
                                                     <>
                                                         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                                             <DetailItem
-                                                                icon={<User className="h-4 w-4" />}
-                                                                label="Applicant Name"
-                                                                value={details.data.applicantName ?? "-"}
-                                                            />
-
-                                                            <DetailItem
-                                                                icon={<Wallet className="h-4 w-4" />}
-                                                                label="EMI Amount"
-                                                                value={formatAmount(details.data.emiAmount)}
-                                                            />
-
-                                                            <DetailItem
-                                                                icon={<Clock3 className="h-4 w-4" />}
-                                                                label="Tenure"
-                                                                value={details.data.tenure ?? "-"}
+                                                                icon={<FileText className="h-4 w-4" />}
+                                                                label="Loan ID"
+                                                                value={details.data.formattedLoanId ?? "-"}
                                                             />
 
                                                             <DetailItem
                                                                 icon={<CircleDollarSign className="h-4 w-4" />}
-                                                                label="Interest Rate"
-                                                                value={details.data.interestRate ?? "-"}
+                                                                label="Amount"
+                                                                value={formatAmount(details.data.amount)}
+                                                            />
+
+                                                            <DetailItem
+                                                                icon={<Info className="h-4 w-4" />}
+                                                                label="Purpose"
+                                                                value={details.data.purpose ?? "-"}
                                                             />
 
                                                             <DetailItem
@@ -371,9 +298,15 @@ export default function LoanDetailsTab() {
                                                             />
 
                                                             <DetailItem
-                                                                icon={<Info className="h-4 w-4" />}
-                                                                label="Current Status"
-                                                                value={details.data.status ?? "-"}
+                                                                icon={<Clock3 className="h-4 w-4" />}
+                                                                label="Due Date"
+                                                                value={formatDate(details.data.loanDetails?.dueDate)}
+                                                            />
+
+                                                            <DetailItem
+                                                                icon={<Wallet className="h-4 w-4" />}
+                                                                label="Status"
+                                                                value={toLoanStatus(details.data.status) ?? "-"}
                                                             />
                                                         </div>
 
@@ -381,7 +314,7 @@ export default function LoanDetailsTab() {
                                                             <p className="text-xs leading-5 text-text-secondary">
                                                                 Your application is currently{" "}
                                                                 <span className="font-bold text-text-heading">
-                                                                    {details.data.status ?? "Unknown"}
+                                                                    {toLoanStatus(details.data.status) ?? "Unknown"}
                                                                 </span>
                                                                 . You can check this section anytime for updated
                                                                 loan details and repayment information.
