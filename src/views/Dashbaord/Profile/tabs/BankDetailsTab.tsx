@@ -11,7 +11,7 @@ const maskAccount = (acc?: string | null) => {
   return `XXXXXX${acc.slice(-4)}`;
 };
 
-const BankDetailsTab = ({ bank }: { bank: BankSlice | undefined }) => (
+const BankDetailsTab = ({ bank }: { bank?: BankSlice | undefined }) => (
   <div className="space-y-5">
     <ProfileInfoCard
       title="Bank Account Information"

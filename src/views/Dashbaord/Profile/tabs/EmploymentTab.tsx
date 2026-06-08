@@ -9,7 +9,7 @@ type EmploymentSlice = LoanApplication["employmentDetails"];
 const EmploymentTab = ({
   employment,
 }: {
-  employment: EmploymentSlice | undefined;
+  employment?: EmploymentSlice | undefined;
 }) => (
   <div className="space-y-5">
     <ProfileInfoCard

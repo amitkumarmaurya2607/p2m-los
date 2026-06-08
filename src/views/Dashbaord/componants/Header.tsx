@@ -135,7 +135,7 @@ const Header: React.FC<HeaderProps> = ({ onBack }) => {
               className="flex items-center justify-center w-10 h-10 rounded-full bg-muted"
             >
               {userData?.img ? (
-                <Image height={40} width={40} src={userData.img} alt="Profile" className="w-full h-full object-cover rounded-full" />
+                <img src={userData.img} alt="Profile" className="w-full h-full object-cover rounded-full" />
               ) : (
                 <User size={18} />
               )}

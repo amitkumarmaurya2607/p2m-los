@@ -12,7 +12,6 @@ import {
 import { getProfileDataAction } from "@/lib/actions/other.action";
 import { showToast } from "@/lib/toast";
 import { UserDetailsType } from "@/types";
-import { useLoanApp } from "@/contexts/LoanAppContext";
 import ProfileEmptyState from "./shared/ProfileEmptyState";
 import ProfileTab from "./tabs/ProfileTab";
 import EmploymentTab from "./tabs/EmploymentTab";
@@ -92,9 +91,8 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [profileData, setProfileData] = useState<UserDetailsType | null>(null);
   const [loansCredibility, setLoansCredibility] = useState<LoansCredibilityDataResponce | null>(null);
-  const { application } = useLoanApp();
-  const employment = application?.employmentDetails;
-  const bank = application?.bankDetails;
+
+
 
   const getDetails = async () => {
     try {
@@ -189,9 +187,9 @@ const Profile = () => {
       case "profile":
         return <ProfileTab user={profileData} />;
       case "employment":
-        return <EmploymentTab employment={employment} />;
+        return <EmploymentTab />;
       case "bankDetails":
-        return <BankDetailsTab bank={bank} />;
+        return <BankDetailsTab />;
       case "loanDetails":
         return <LoanDetailsTab />;
       case "approvedDocs":
