@@ -1,26 +1,7 @@
 import { apiPost } from "@/lib/axios";
 import { API } from "@/lib/api/urls";
-import { ApiResponse } from "@/types";
-
- type BankStatementResponce = {
-  id: string;
-  userId: string;
-  userBankAccountId: string;
-
-  filePrivateKey: string;
-  filePassword: string | null;
-
-  fromDate: string | null;
-  toDate: string | null;
-
-  message: string | null;
-
-  isFraud: boolean;
-  fraudScore: number;
-
-  createdAt: string;
-  updatedAt: string;
-};
+import type { ApiResponse } from "@/types";
+import type { BankStatementResponce } from "@/lib/actions/action.type";
 
 export async function uploadAccountStatement(
   formData: FormData,

@@ -9,7 +9,7 @@ import { submitApplicationAction, getLoanProgramsAction } from "@/lib/actions/ap
 import { callSecure } from "@/lib/secure-action";
 import StepCard from "../componants/StepCard";
 import PulseDot from "@/components/PulseDot";
-import { LoanEligibilityRuleResponce } from "@/lib/services/apply.service";
+import type { LoanEligibilityRuleResponce } from "@/lib/actions/action.type";
 
 const SectionCard = ({
   title,
@@ -114,7 +114,7 @@ function LoanEligibility() {
     });
     if (result.success) {
       showToast({ message: "Application submitted successfully!", type: "success" });
-      router.push("/track-application");
+      router.push("/profile");
     } else {
       showToast({ message: result.error || "Submission failed", type: "error" });
     }

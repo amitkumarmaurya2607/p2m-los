@@ -34,6 +34,7 @@ export default function LoanApplication() {
     const [status, setStatus] = useState<LoanStatus>("loading");
     const [loanData, setLoanData] = useState<LoanApplicationData | null>(null);
     const [errorMsg, setErrorMsg] = useState("");
+    const [currentStatus, setCurrentStatus] = useState("");
 
     const hasRun = useRef(false);
 
@@ -66,7 +67,7 @@ export default function LoanApplication() {
                 loanAmount: data?.loan?.amount,
                 dueDate: data?.loan?.loanDetails?.dueDate,
             });
-
+            setCurrentStatus(data?.loan?.status);
             const apiStatus = data?.loan?.status?.toUpperCase();
 
             if (apiStatus === "APPROVED")
@@ -341,12 +342,12 @@ export default function LoanApplication() {
                                     Current Status
                                 </p>
                                 <p className="text-[11px] text-muted-foreground">
-                                    {status === "loading" && status.toUpperCase()}
+                                    {/* {status === "loading" && status.toUpperCase()}
                                     {status === "approved" && "Approved"}
                                     {status === "processing" && "Processing"}
                                     {status === "rejected" && "Rejected"}
-                                    {status === "due" && "Due"}
-                                    {status === "error" && "Unable to fetch application status."}
+                                    {status === "due" && "Due"} */}
+                                    {status === "error" ? "Unable to fetch application status." : currentStatus || "-"}
                                 </p>
                             </div>
                         </div>

@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { callSecure } from "@/lib/secure-action";
 import { getLoanListAction, getLoanDetailsAction } from "@/lib/actions/apply.action";
-import type { LoanDetailsResponse } from "@/lib/services/apply.service";
+import type { LoanDetailsResponse } from "@/lib/actions/action.type";
 
 type LoanStatus = "Pending" | "Approved" | "Rejected" | "Disbursed" | "Closed";
 
@@ -93,11 +93,12 @@ export default function LoanDetailsTab() {
 
         try {
             const res = await callSecure(getLoanDetailsAction, loanId);
+            if (!res?.success) throw new Error(res?.error || "Failed to fetch loan details");
             setDetailsByLoanId((prev) => ({
                 ...prev,
                 [loanId]: {
                     loading: false,
-                    data: res?.success && res.data ? res.data : undefined,
+                    data: res?.data as LoanDetailsResponse,
                     error: res?.error,
                 },
             }));
@@ -154,7 +155,8 @@ export default function LoanDetailsTab() {
                 ) : (
                     <div className="grid gap-5">
                         {loans.map((item, index) => {
-                            const loanId = String(item.formattedLoanId ?? item.id ?? `loan-${index}`);
+                            const loanId = String(item.formattedLoanId);
+                            const id = String(item.id);
                             const status = toLoanStatus(item.status);
                             const isOpen = openLoanId === loanId;
                             const details = detailsByLoanId[loanId];
@@ -223,7 +225,7 @@ export default function LoanDetailsTab() {
 
                                             <button
                                                 type="button"
-                                                onClick={() => handleToggleDetails(loanId)}
+                                                onClick={() => handleToggleDetails(id)}
                                                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-primary/20 bg-primary-muted px-4 py-2 text-sm font-bold text-primary transition hover:bg-primary hover:text-primary-foreground"
                                             >
                                                 {isOpen ? "Hide Details" : "View Details"}

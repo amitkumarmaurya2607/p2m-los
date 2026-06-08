@@ -1,7 +1,4 @@
-type FetchStatementResponse = {
-  requestId: string;
-  tempUrl: string;
-};
+import type { FetchStatementResponse } from "@/lib/actions/action.type";
 
 export async function fetchStatementUrl(): Promise<FetchStatementResponse> {
   // TODO: Replace with real API call

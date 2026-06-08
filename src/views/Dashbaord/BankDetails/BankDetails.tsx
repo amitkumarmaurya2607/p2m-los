@@ -9,7 +9,7 @@ import { verifyBankAction } from "@/lib/actions/verification.action";
 import { callSecure } from "@/lib/secure-action";
 import { showToast } from "@/lib/toast";
 import BankDetailsVerify from "./BankDetailsVerify";
-import { BankDetailsReaponce } from "@/lib/services/verification.service";
+import type { BankDetailsReaponce } from "@/lib/actions/action.type";
 
 function BankDetails() {
   const [form, setForm] = useState({

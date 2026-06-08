@@ -9,7 +9,7 @@ import {
   handleDigiLockerCallbackAction,
 } from "@/lib/actions/verification.action";
 import { showToast } from "@/lib/toast";
-import { modelType } from "@/lib/services/verification.service";
+import type { modelType } from "@/lib/actions/action.type";
 
 function AadhaarDetails() {
   const router = useRouter();

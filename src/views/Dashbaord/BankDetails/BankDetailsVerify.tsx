@@ -1,7 +1,7 @@
 "use client";
 
 import GradientButton from "@/components/ui/GradientButton";
-import { BankDetailsReaponce } from "@/lib/services/verification.service";
+import type { BankDetailsReaponce } from "@/lib/actions/action.type";
 import {
     Banknote,
     CheckCircle2,

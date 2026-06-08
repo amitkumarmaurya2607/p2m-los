@@ -91,7 +91,7 @@ console.log("Middleware - Step Progress:", progress); // Debugging line
     if (isPostCompletionRoute) {
       return res;
     }
-    return makeRedirect(request, "/track-application");
+    return makeRedirect(request, "/profile");
   }
 
   const currentStepIndex = getCurrentStepIndex(pathname);
