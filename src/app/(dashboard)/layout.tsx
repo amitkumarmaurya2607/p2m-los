@@ -1,31 +1,30 @@
-import Header from "@/views/Dashbaord/componants/Header";
-import ProgressBar from "@/views/Dashbaord/componants/ProgressBar";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
-import GeoLocationGuard from "@/components/GeoLocationGuard";
+
+import { headers } from "next/headers";
 
 import type { Metadata } from "next";
+import LayoutV1 from "@/views/Dashbaord/Layout/LayoutV1";
+import ProfileLayout from "@/views/Dashbaord/Profile/componants/ProfileLayout";
+
 
 export const metadata: Metadata = {
   title: "P2M LOS - Dashboard",
   description: "Dashboard pages",
 };
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") || "";
+
   return (
 
     <div className="min-h-screen bg-background">
-      <Header />
-
-      <div className="flex">
-        <div className="grow-1">
-          <ProgressBar />
-          <div className="flex justify-center px-4 pt-12 pb-6">
-            <ErrorBoundary label="Dashboard">
-              <GeoLocationGuard>{children}</GeoLocationGuard>
-            </ErrorBoundary>
-          </div>
-        </div>
-      </div>
+      {pathname.includes('profile') ?
+        <ProfileLayout>
+          {children}
+        </ProfileLayout>
+        : <LayoutV1>
+          {children}
+        </LayoutV1>}
     </div>
   );
 }

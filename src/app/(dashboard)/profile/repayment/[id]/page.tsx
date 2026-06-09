@@ -15,7 +15,7 @@ import ProfileEmptyState from "@/views/Dashbaord/Profile/shared/ProfileEmptyStat
 import GradientButton from "@/components/ui/GradientButton";
 import PulseDot from "@/components/PulseDot";
 import { getCurrentRepaymentAction, getInitPaymentAction } from "@/lib/actions/apply.action";
-import type { RepaymentDetailsType } from "@/lib/actions/action.type";
+import type { initpaymentType, RepaymentDetailsType } from "@/lib/actions/action.type";
 import QrCode from "@/components/QrCode/QrCode";
 
 export default function Page({
@@ -27,7 +27,7 @@ export default function Page({
   const [repayment, setRepayment] = useState<RepaymentDetailsType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [paymentData, setPaymentData] = useState<{ qrcode: string; upiUrl: string, transactionId: string } | null>(null);
+  const [paymentData, setPaymentData] = useState<initpaymentType | null>(null);
 
   useEffect(() => {
     if (!id) {
@@ -122,22 +122,23 @@ export default function Page({
     );
   }
 
-  async function generateLink(loanId: string) {
-    // try {
-    //   setLoading(true);
-    //   const res = await getInitPaymentAction(loanId);
+  async function generateLink() {
+    try {
+      setLoading(true);
+      const res = await getInitPaymentAction(id);
 
-    //   if (!res?.success || !res?.data) {
-    //     throw new Error(res?.error || "Failed to fetch repayment details");
-    //   }
+      if (res?.success && res?.data) {
+        setRepayment(res.data);
+        return;
+      }
+      throw new Error(res?.error || "Failed to fetch repayment details");
 
-    //   setRepayment(res.data);
-    // } catch (err) {
-    //   setError(err instanceof Error ? err.message : "Something went wrong");
-    // } finally {
-    //   setLoading(false);
-    // }
-    setPaymentData({ qrcode: "ydyfy", upiUrl: "ihhhohi" });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+    setPaymentData({ qrcode: "ydyfy", upiUrl: "ihhhohi", transactionId: "" });
   }
 
 
