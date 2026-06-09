@@ -22,6 +22,7 @@ const Login = ({ type }: { type?: string }) => {
   const [accepted, setAccepted] = useState(false);
 
   useEffect(() => {
+    localStorage.removeItem('Profile')
     if (type === "exp") {
       showToast({ message: "Your session has expired. Please sign in again.", type: "error" });
       window.history.replaceState(null, "", window.location.pathname);
