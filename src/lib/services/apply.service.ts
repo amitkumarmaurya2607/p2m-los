@@ -8,6 +8,7 @@ import type {
   LoanDetailsResponse,
   LoansListResponse,
   RepaymentDetailsType,
+  initpaymentType,
  
 } from "@/lib/actions/action.type";
 
@@ -53,6 +54,13 @@ export async function getCurrentRepayment(
   loanId: string,
 ): Promise<ApiResponse<RepaymentDetailsType>> {
   return apiPost<ApiResponse<RepaymentDetailsType>>(API.loan.currentRepayment, {
+    loanId,
+  });
+}
+export async function getInitPayment(
+  loanId: string,
+): Promise<ApiResponse<initpaymentType>> {
+  return apiPost<ApiResponse<initpaymentType>>(API.loan.initPayment, {
     loanId,
   });
 }

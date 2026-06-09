@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, use } from "react";
 import {
   IndianRupee,
   CheckCircle2,
@@ -14,28 +14,29 @@ import ProfileStatCard from "@/views/Dashbaord/Profile/shared/ProfileStatCard";
 import ProfileEmptyState from "@/views/Dashbaord/Profile/shared/ProfileEmptyState";
 import GradientButton from "@/components/ui/GradientButton";
 import PulseDot from "@/components/PulseDot";
-import { getCurrentRepaymentAction } from "@/lib/actions/apply.action";
+import { getCurrentRepaymentAction, getInitPaymentAction } from "@/lib/actions/apply.action";
 import type { RepaymentDetailsType } from "@/lib/actions/action.type";
+import QrCode from "@/components/QrCode/QrCode";
 
 export default function Page({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const { id } = use(params);
   const [repayment, setRepayment] = useState<RepaymentDetailsType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [paymentData, setPaymentData] = useState<{ qrcode: string; upiUrl: string, transactionId: string } | null>(null);
 
   useEffect(() => {
-    params.then(({ id }) => {
-      if (!id) {
-        setError("No loan ID provided");
-        setLoading(false);
-        return;
-      }
-      fetchRepayment(id);
-    });
-  }, [params]);
+    if (!id) {
+      setError("No loan ID provided");
+      setLoading(false);
+      return;
+    }
+    fetchRepayment(id);
+  }, [id]);
 
   async function fetchRepayment(loanId: string) {
     try {
@@ -53,6 +54,8 @@ export default function Page({
       setLoading(false);
     }
   }
+
+
 
   const formatAmount = (value?: string | number) => {
     if (value === undefined || value === null) return "₹0";
@@ -119,6 +122,29 @@ export default function Page({
     );
   }
 
+  async function generateLink(loanId: string) {
+    // try {
+    //   setLoading(true);
+    //   const res = await getInitPaymentAction(loanId);
+
+    //   if (!res?.success || !res?.data) {
+    //     throw new Error(res?.error || "Failed to fetch repayment details");
+    //   }
+
+    //   setRepayment(res.data);
+    // } catch (err) {
+    //   setError(err instanceof Error ? err.message : "Something went wrong");
+    // } finally {
+    //   setLoading(false);
+    // }
+    setPaymentData({ qrcode: "ydyfy", upiUrl: "ihhhohi" });
+  }
+
+
+
+  const timeover = () => {
+    console.log("timeover")
+  }
   return (
     <StepCard
       title="Repayment Details"
@@ -150,123 +176,129 @@ export default function Page({
         NoteIcon: Lightbulb,
       }}
     >
-      <div className="space-y-6">
-        {/* Summary Cards */}
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          <ProfileStatCard label="Total Loan" value={formatAmount(repayment.principalAmount)} icon={IndianRupee} />
-          <ProfileStatCard label="Total Due" value={formatAmount(repayment.totalRepayment)} icon={CreditCard} />
+      {
+        paymentData ?
+          <QrCode qrcode="8798" upiUrl="ytyt" timeover={timeover} />
+          :
+          <div className="space-y-6">
+            {/* Summary Cards */}
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <ProfileStatCard label="Total Loan" value={formatAmount(repayment.principalAmount)} icon={IndianRupee} />
+              <ProfileStatCard label="Total Due" value={formatAmount(repayment.totalRepayment)} icon={CreditCard} />
 
-          {penaltyAmount > 0 && (
-            <ProfileStatCard label="Penalty" value={formatAmount(penaltyAmount)} icon={AlertTriangle} />
-          )}
+              {penaltyAmount > 0 && (
+                <ProfileStatCard label="Penalty" value={formatAmount(penaltyAmount)} icon={AlertTriangle} />
+              )}
 
-          <ProfileStatCard
-            label="Status"
-            value={repayment.isOverdue ? "Overdue" : "On Track"}
-            icon={repayment.isOverdue ? Clock3 : CheckCircle2}
-          />
-        </div>
+              <ProfileStatCard
+                label="Status"
+                value={repayment.isOverdue ? "Overdue" : "On Track"}
+                icon={repayment.isOverdue ? Clock3 : CheckCircle2}
+              />
+            </div>
 
-        {/* Loan Details */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4">Loan Details</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Loan Details */}
             <div>
-              <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Loan ID</p>
-              <p className="mt-0.5 font-semibold text-text-heading">{repayment.loanId}</p>
-            </div>
-            <div>
-              <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Due Date</p>
-              <p className="mt-0.5 font-semibold text-text-heading">{formatDate(repayment.dueDate)}</p>
-            </div>
-            <div>
-              <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Repayment Date</p>
-              <p className="mt-0.5 font-semibold text-text-heading">{formatDate(repayment.repaymentDate)}</p>
-            </div>
-            {repayment.daysAfterDue > 0 && (
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Days Overdue</p>
-                <p className="mt-0.5 font-semibold text-destructive">
-                  {repayment.daysAfterDue} day{repayment.daysAfterDue !== 1 ? "s" : ""}
-                </p>
-              </div>
-            )}
-            <div>
-              <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Status</p>
-              <span
-                className={`mt-1 inline-flex rounded-full px-3 py-1 text-sm font-medium ${
-                  repayment.isOverdue
-                    ? "bg-destructive/10 text-destructive"
-                    : "bg-success/10 text-success"
-                }`}
-              >
-                {repayment.isOverdue ? "Overdue" : "On Track"}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Penalty Details */}
-        {repayment.penaltyBreakdown?.length > 0 && (
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Penalty Details</h3>
-            {repayment.penaltyBreakdown.map((penalty, index) => (
-              <div key={penalty.penaltyId || index} className="rounded-2xl border border-border-light bg-surface-muted p-5 mb-4 last:mb-0">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <div>
-                    <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Type</p>
-                    <p className="mt-0.5 font-semibold text-text-heading">{penalty.penaltyType}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Rate</p>
-                    <p className="mt-0.5 font-semibold text-text-heading">{penalty.penaltyRate}%</p>
-                  </div>
+              <h3 className="text-lg font-semibold mb-4">Loan Details</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Loan ID</p>
+                  <p className="mt-0.5 font-semibold text-text-heading">{repayment.loanId}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Due Date</p>
+                  <p className="mt-0.5 font-semibold text-text-heading">{formatDate(repayment.dueDate)}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Repayment Date</p>
+                  <p className="mt-0.5 font-semibold text-text-heading">{formatDate(repayment.repaymentDate)}</p>
+                </div>
+                {repayment.daysAfterDue > 0 && (
                   <div>
                     <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Days Overdue</p>
-                    <p className="mt-0.5 font-semibold text-destructive">{penalty.breakdown.daysOverdue} day{penalty.breakdown.daysOverdue !== 1 ? "s" : ""}</p>
+                    <p className="mt-0.5 font-semibold text-destructive">
+                      {repayment.daysAfterDue} day{repayment.daysAfterDue !== 1 ? "s" : ""}
+                    </p>
                   </div>
-                  <div>
-                    <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Penalty Amount</p>
-                    <p className="mt-0.5 font-semibold text-text-heading">{formatAmount(penalty.summary.penaltyAmount)}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Tax</p>
-                    <p className="mt-0.5 font-semibold text-text-heading">{formatAmount(penalty.summary.taxAmount)}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Total Penalty</p>
-                    <p className="mt-0.5 font-semibold text-destructive">{formatAmount(penalty.summary.totalPenaltyAmount)}</p>
-                  </div>
+                )}
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Status</p>
+                  <span
+                    className={`mt-1 inline-flex rounded-full px-3 py-1 text-sm font-medium ${repayment.isOverdue
+                      ? "bg-destructive/10 text-destructive"
+                      : "bg-success/10 text-success"
+                      }`}
+                  >
+                    {repayment.isOverdue ? "Overdue" : "On Track"}
+                  </span>
                 </div>
-                <p className="mt-4 text-xs text-text-secondary leading-relaxed">{penalty.summary.description}</p>
               </div>
-            ))}
-          </div>
-        )}
+            </div>
 
-        {/* Payment CTA */}
-        {Number(repayment.totalRepayment) > 0 && (
-          <div className="rounded-2xl border border-border-light bg-surface-muted p-5">
-            <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">
-              Amount Due
-            </p>
-            <h3 className="mt-1 text-3xl font-extrabold text-text-heading">
-              {formatAmount(repayment.totalRepayment)}
-            </h3>
-            <p className="mt-2 text-sm text-text-secondary">
-              {repayment.isOverdue
-                ? `Overdue since ${formatDate(repayment.dueDate)}`
-                : `Pay before ${formatDate(repayment.dueDate)} to avoid late charges.`}
-            </p>
-            <GradientButton
-              leftIcon={<IndianRupee className="h-4 w-4" />}
-              className="mt-5"
-            >
-              Pay Now
-            </GradientButton>
+            {/* Penalty Details */}
+            {repayment.penaltyBreakdown?.length > 0 && (
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Penalty Details</h3>
+                {repayment.penaltyBreakdown.map((penalty, index) => (
+                  <div key={penalty.penaltyId || index} className="rounded-2xl border border-border-light bg-surface-muted p-5 mb-4 last:mb-0">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <div>
+                        <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Type</p>
+                        <p className="mt-0.5 font-semibold text-text-heading">{penalty.penaltyType}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Rate</p>
+                        <p className="mt-0.5 font-semibold text-text-heading">{penalty.penaltyRate}%</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Days Overdue</p>
+                        <p className="mt-0.5 font-semibold text-destructive">{penalty.breakdown.daysOverdue} day{penalty.breakdown.daysOverdue !== 1 ? "s" : ""}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Penalty Amount</p>
+                        <p className="mt-0.5 font-semibold text-text-heading">{formatAmount(penalty.summary.penaltyAmount)}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Tax</p>
+                        <p className="mt-0.5 font-semibold text-text-heading">{formatAmount(penalty.summary.taxAmount)}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium uppercase tracking-wider text-text-muted">Total Penalty</p>
+                        <p className="mt-0.5 font-semibold text-destructive">{formatAmount(penalty.summary.totalPenaltyAmount)}</p>
+                      </div>
+                    </div>
+                    <p className="mt-4 text-xs text-text-secondary leading-relaxed">{penalty.summary.description}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Payment CTA */}
+            {Number(repayment.totalRepayment) > 0 && (
+              <div className="rounded-2xl border border-border-light bg-surface-muted p-5">
+                <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">
+                  Amount Due
+                </p>
+                <h3 className="mt-1 text-3xl font-extrabold text-text-heading">
+                  {formatAmount(repayment.totalRepayment)}
+                </h3>
+                <p className="mt-2 text-sm text-text-secondary">
+                  {repayment.isOverdue
+                    ? `Overdue since ${formatDate(repayment.dueDate)}`
+                    : `Pay before ${formatDate(repayment.dueDate)} to avoid late charges.`}
+                </p>
+                <GradientButton
+                  onClick={generateLink}
+                  leftIcon={<IndianRupee className="h-4 w-4" />}
+                  className="mt-5"
+                >
+                  Pay Now
+                </GradientButton>
+              </div>
+            )}
           </div>
-        )}
-      </div>
+      }
+
     </StepCard>
   );
 }

@@ -818,3 +818,10 @@ export type RepaymentDetailsType = {
   totals: RepaymentTotals;
   totalRepayment: string;
 };
+
+export type initpaymentType = {
+  upiUrl:string
+  qrcode:string
+  transactionId:string
+
+}
