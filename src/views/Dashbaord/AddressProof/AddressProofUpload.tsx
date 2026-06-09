@@ -12,22 +12,18 @@ import { submitAddressProofAction } from "@/lib/actions/document.action";
 import { callSecureFormData } from "@/lib/secure-action";
 import PulseDot from "@/components/PulseDot";
 
-const PROOF_TYPE_MAP: Record<string, string> = {
-  aadhaar: "AADHAAR",
-  voter: "VOTER_ID",
-  passport: "PASSPORT",
-  utility: "UTILITY_BILL",
-  rental: "RENTAL_AGREEMENT",
-  bank: "BANK_STATEMENT",
+type DocumentTypeOption = {
+  value: string;
+  label: string;
 };
 
 const DOCUMENT_TYPES = [
-  { value: "aadhaar", label: "Aadhaar Card" },
-  { value: "voter", label: "Voter ID" },
-  { value: "passport", label: "Passport" },
-  { value: "utility", label: "Utility Bill (Electricity/Water/Gas)" },
-  { value: "rental", label: "Rental Agreement" },
-  { value: "bank", label: "Bank Statement with Address" },
+  { value: "AADHAAR", label: "Aadhaar Card" },
+  { value: "VOTER_ID", label: "Voter ID" },
+  { value: "PASSPORT", label: "Passport" },
+  { value: "UTILITY_BILL", label: "Utility Bill (Electricity/Water/Gas)" },
+  { value: "RENTAL_AGREEMENT", label: "Rental Agreement" },
+  { value: "BANK_STATEMENT", label: "Bank Statement with Address" },
 ];
 
 function AddressProofUpload() {
@@ -36,13 +32,13 @@ function AddressProofUpload() {
   const backInputRef = useRef<HTMLInputElement | null>(null);
   const [frontFile, setFrontFile] = useState<File | null>(null);
   const [backFile, setBackFile] = useState<File | null>(null);
-  const [docType, setDocType] = useState<string>("");
+  const [docType, setDocType] = useState<DocumentTypeOption | null>(null);
   const [documentNumber, setDocumentNumber] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
 
-  const isAadhaar = docType === "aadhaar";
+
 
   const validateFile = (f: File) => {
     const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
@@ -86,12 +82,14 @@ function AddressProofUpload() {
     setError("");
   };
 
-  const handleDocTypeChange = (val: string) => {
+  const handleDocTypeChange = (val: DocumentTypeOption) => {
     setDocType(val);
-    if (val !== "aadhaar") {
+    if (val.value !== "AADHAAR") {
       setBackFile(null);
     }
   };
+
+  const isAadhaar = docType?.value === "AADHAAR";
 
   const handleSubmit = async () => {
     if (!docType) {
@@ -123,7 +121,7 @@ function AddressProofUpload() {
       formData.append(
         "data",
         JSON.stringify({
-          proofType: PROOF_TYPE_MAP[docType],
+          proofType: docType?.value,
           documentNumber: documentNumber.trim(),
         }),
       );
@@ -146,6 +144,8 @@ function AddressProofUpload() {
       setLoading(false);
     }
   };
+
+  console.log("isAadhaar", isAadhaar, docType)
 
   return (
     <StepCard

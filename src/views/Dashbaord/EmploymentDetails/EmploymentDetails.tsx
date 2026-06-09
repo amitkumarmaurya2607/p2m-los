@@ -67,6 +67,7 @@ function EmploymentDetails() {
     }
 
     if (!form.salary) newError.salary = "Salary is required";
+    if (!form.modeOfSalary) newError.salary = "Mode of salary is required";
 
     if (!form.expectedDateOfSalary) {
       newError.expectedDateOfSalary = "Expected date of salary is required";
@@ -193,7 +194,8 @@ function EmploymentDetails() {
               form.modeOfSalary ? { value: form.modeOfSalary, label: form.modeOfSalary } : null
             }
             onChange={(option) => handleChange("modeOfSalary", option?.value || "")}
-            error={error.modeOfSalary}
+            error={error?.modeOfSalary}
+            required
           />
 
           <CustomDatePicker

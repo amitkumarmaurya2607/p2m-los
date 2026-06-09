@@ -11,7 +11,7 @@ import { getLocationGuard } from "@/lib/location-guard";
 
 function GeoLocationGuard({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const skipPaths = ["/geo-location", "/profile", "/track-application"];
+  const skipPaths = ["/geo-location", "/profile"];
   const shouldSkip = skipPaths.some((p) => pathname.startsWith(p));
 
   const [blocked, setBlocked] = useState(false);

@@ -23,7 +23,6 @@ const protectedPrefixes = [
   "/address-proof",
   "/alternate-mobile",
   "/loan-eligibility",
-  "/track-application",
 ];
 
 type StepProgress = {
@@ -77,7 +76,7 @@ export async function middleware(request: NextRequest) {
   if (!progress) {
     return res;
   }
-console.log("Middleware - Step Progress:", progress); // Debugging line
+
   const statusByOrder = buildOrderedStepStatuses(progress.steps);
   const firstPendingIndex = statusByOrder.findIndex((s) => s === "PENDING");
   const allComplete = firstPendingIndex === -1;
@@ -85,9 +84,7 @@ console.log("Middleware - Step Progress:", progress); // Debugging line
   if (allComplete) {
     const isPostCompletionRoute =
       pathname === "/profile" ||
-      pathname.startsWith("/profile/") ||
-      pathname === "/track-application" ||
-      pathname.startsWith("/track-application/");
+      pathname.startsWith("/profile/");
     if (isPostCompletionRoute) {
       return res;
     }
@@ -141,7 +138,6 @@ export const config = {
     "/address-proof/:path*",
     "/alternate-mobile/:path*",
     "/loan-eligibility/:path*",
-    "/track-application/:path*",
     "/apply-now/:path*",
   ],
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Shield, BadgeCheckIcon, IndianRupee } from "lucide-react";
 import GradientButton from "@/components/ui/GradientButton";
@@ -66,7 +67,7 @@ function LoanEligibility() {
     /* eslint-enable react-hooks/set-state-in-effect */
   }, [programs, initialized]);
 
-  const interestRate = programs?.interest ?? 10.2;
+  const interestRate = programs?.interest ?? 0;
   const processingFee = programs?.processingFee ?? 0;
   const minAmount = programs?.minAmount ?? 0;
   const maxAmount = programs?.maxAmount ?? 0;
@@ -306,7 +307,13 @@ function LoanEligibility() {
                   className="h-5 w-5 rounded border-border-medium accent-primary"
                 />
                 <span className="text-sm font-medium text-text-heading">
-                  I agree to the Terms & Conditions
+                  I agree to the{" "}
+                    <Link
+                      href="/terms-and-conditions"
+                      className="text-primary underline"
+                    >
+                      Terms & Conditions
+                    </Link>
                 </span>
               </label>
             </div>

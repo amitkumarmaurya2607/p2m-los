@@ -14,7 +14,6 @@ import type { BankDetailsReaponce } from "@/lib/actions/action.type";
 function BankDetails() {
   const [form, setForm] = useState({
     accountNumber: "",
-    confirmAccountNumber: "",
     ifscCode: "",
     benName: "",
   });
@@ -47,10 +46,6 @@ function BankDetails() {
     const err: Record<string, string> = {};
 
     if (!form.accountNumber) err.accountNumber = "Required";
-    if (!form.confirmAccountNumber) err.confirmAccountNumber = "Required";
-    if (form.accountNumber !== form.confirmAccountNumber) {
-      err.confirmAccountNumber = "Account numbers do not match";
-    }
 
     if (!form.ifscCode) err.ifscCode = "Required";
     else if (!isValidIFSCCode(form.ifscCode)) {
@@ -135,13 +130,7 @@ function BankDetails() {
             require
           />
 
-          <TextInput
-            label="Re-enter Account Number"
-            value={form.confirmAccountNumber}
-            onChange={(e) => handleChange("confirmAccountNumber", e.target.value)}
-            error={errors.confirmAccountNumber}
-            require
-          />
+
 
           <TextInput
             label="IFSC CODE"
@@ -158,6 +147,11 @@ function BankDetails() {
             onChange={(e) => handleChange("benName", e.target.value)}
             error={errors.benName}
             require
+          />
+          <TextInput
+            label="Account Type"
+            value="SAVINGS"
+            disabled
           />
         </div>
 
