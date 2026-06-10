@@ -1,6 +1,7 @@
-import EmploymentTab from "@/views/Dashbaord/Profile/tabs/EmploymentTab";
+
+import ProfileTab from "@/views/Dashbaord/Profile/tabs/ProfileTab";
 
 
 export default function Page() {
-    return <EmploymentTab />;
+    return <ProfileTab />;
 }
