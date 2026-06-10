@@ -2,6 +2,8 @@ import { ShieldCheck, User } from "lucide-react";
 import type { UserDetailsType } from "@/types";
 import ProfileField from "../shared/ProfileField";
 import ProfileInfoCard from "../shared/ProfileInfoCard";
+import { useProfile } from "@/contexts/ProfileContext";
+import ProfileEmptyState from "../shared/ProfileEmptyState";
 
 const formatDate = (date?: string | null) => {
   if (!date) return "-";
@@ -13,12 +15,22 @@ const formatDate = (date?: string | null) => {
   });
 };
 
-const ProfileTab = ({ user }: { user: UserDetailsType | null }) => {
+const ProfileTab = () => {
+  const { profileData: user, loading } = useProfile();
   const fullName = [user?.firstName, user?.middleName, user?.lastName]
     .filter(Boolean)
     .join(" ");
 
-  console.log("USER DETAILS", user);
+
+
+  if (loading) {
+    return (
+      <ProfileEmptyState
+        title="Loading profile..."
+        description="Please wait while we fetch your latest account details."
+      />
+    );
+  }
 
   return (
     <div className="space-y-8">

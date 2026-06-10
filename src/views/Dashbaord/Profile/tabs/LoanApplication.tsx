@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import {
     BadgeCheck,
     CalendarDays,
@@ -11,96 +10,16 @@ import {
     Loader2,
     XCircle,
 } from "lucide-react";
-import { showToast } from "@/lib/toast";
-import { getLoansCredibilityAction } from "@/lib/actions/apply.action";
 import { formatStatus } from "@/lib/utils";
 import GradientButton from "@/components/ui/GradientButton";
-import { LoansCredibilityDataResponce } from "@/lib/actions/action.type";
 import { useRouter } from "next/navigation";
+import { useProfile } from "@/contexts/ProfileContext";
 
 
-type LoanStatus =
-    | "loading"
-    | "approved"
-    | "processing"
-    | "rejected"
-    | "due"
-    | "active"
-    | "error";
-
-type LoanApplicationData = {
-    applicationId: string;
-    status: "APPROVED" | "PROCESSING" | "REJECTED" | "DUE" | string;
-    loanAmount: number;
-    dueDate: string;
-    agreement: string;
-};
-
-export default function LoanApplication({ setLoansCredibilit }: { setLoansCredibilit: (data: LoansCredibilityDataResponce) => void }) {
-    const [status, setStatus] = useState<LoanStatus>("loading");
-    const [loanData, setLoanData] = useState<LoanApplicationData | null>(null);
-    const [errorMsg, setErrorMsg] = useState("");
-    const [currentStatus, setCurrentStatus] = useState("");
-
-    const hasRun = useRef(false);
-
-    async function fetchLoanStatus() {
-        try {
-            setStatus("loading");
-
-            const res = await getLoansCredibilityAction();
-
-            if (!res?.success || !res?.data) {
-                throw new Error(res?.error ?? "Unable to fetch loan application status");
-            }
-
-            const { data } = res;
-
-            if (!data.loan) {
-                throw new Error("No active loan application found");
-            }
-
-            setLoansCredibilit(data)
-
-            setLoanData({
-                applicationId: data?.loan?.id,
-                status: data?.loan?.status,
-                loanAmount: data?.loan?.amount,
-                dueDate: data?.loan?.loanDetails?.dueDate,
-                agreement: data?.loan?.agreement?.status,
-            });
-            setCurrentStatus(data?.loan?.status);
-            const apiStatus = data?.loan?.status?.toUpperCase();
-            if (apiStatus === "ACTIVE") {
-                setStatus("active");
-            } else if (apiStatus === "APPROVED")
-                setStatus("approved");
-            else if (apiStatus === "REJECTED")
-                setStatus("rejected");
-            else
-                setStatus("processing");
-        } catch (err) {
-            const message =
-                err instanceof Error ? err.message : "Something went wrong";
-
-            setErrorMsg(message);
-            setStatus("error");
-
-            showToast({
-                message,
-                type: "error",
-            });
-        }
-    }
-
-    useEffect(() => {
-        if (hasRun.current) return;
-        hasRun.current = true;
-
-        fetchLoanStatus();
-    }, []);
+export default function LoanApplication() {
 
 
+    const { status, loanData, errorMsg, currentStatus } = useProfile()
 
     const formatAmount = (amount?: number) => {
         if (!amount) return "₹0";

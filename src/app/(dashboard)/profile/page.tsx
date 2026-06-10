@@ -1,5 +1,6 @@
-import Profile from "@/views/Dashbaord/Profile/Profile";
+
+import LoanApplication from "@/views/Dashbaord/Profile/tabs/LoanApplication";
 
 export default function Page() {
-  return <Profile />;
+  return <LoanApplication />;
 }

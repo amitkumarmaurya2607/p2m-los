@@ -183,9 +183,9 @@ const Profile = () => {
 
     switch (activeTab) {
       case "LoanApplication":
-        return <LoanApplication setLoansCredibilit={setLoansCredibility} />;
+        return <LoanApplication />;
       case "profile":
-        return <ProfileTab user={profileData} />;
+        return <ProfileTab />;
       case "employment":
         return <EmploymentTab />;
       case "bankDetails":
