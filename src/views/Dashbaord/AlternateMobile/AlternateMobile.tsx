@@ -64,31 +64,38 @@ function AlternateMobile() {
     if (!validateContact1() || !validateContact2()) return;
     setSavingStep(true);
     try {
-      const r1 = await callSecure(submitAlternateMobileAction, {
-        mobileNumber: sanitizeNumeric(number1),
-        name: name1.trim(),
-        relationType: relation1,
-      });
-      if (!r1?.success) {
-        showToast({ message: r1.error, type: "error" });
+      // const r1 = await callSecure(submitAlternateMobileAction, {
+      //   mobileNumber: sanitizeNumeric(number1),
+      //   name: name1.trim(),
+      //   relationType: relation1,
+      // });
+      // if (!r1?.success) {
+      //   showToast({ message: r1.error, type: "error" });
+      //   return;
+      // }
+
+      const resp = await callSecure(submitAlternateMobileAction, [
+        {
+          mobileNumber: sanitizeNumeric(number2),
+          name: name2.trim(),
+          relationType: relation2,
+        },
+        {
+          mobileNumber: sanitizeNumeric(number1),
+          name: name1.trim(),
+          relationType: relation1,
+        }
+      ]);
+      if (!resp?.success) {
+        showToast({ message: resp.error, type: "error" });
         return;
       }
 
-      const r2 = await callSecure(submitAlternateMobileAction, {
-        mobileNumber: sanitizeNumeric(number2),
-        name: name2.trim(),
-        relationType: relation2,
-      });
-      if (!r2?.success) {
-        showToast({ message: r2.error, type: "error" });
-        return;
-      }
-
-      const stepResult = await saveAlternateMobileStepAction();
-      if (stepResult?.error) {
-        showToast({ message: stepResult.error, type: "error" });
-        return;
-      }
+      // const stepResult = await saveAlternateMobileStepAction();
+      // if (stepResult?.error) {
+      //   showToast({ message: stepResult.error, type: "error" });
+      //   return;
+      // }
 
       showToast({ message: "Alternate contact details saved", type: "success" });
       router.push("/loan-eligibility");
@@ -144,7 +151,7 @@ function AlternateMobile() {
       <div className="mt-6 space-y-6">
         {/* Contact Person 1 */}
         <div className="space-y-4 rounded-2xl border border-border-light bg-surface p-5">
-          <h3 className="text-sm font-bold text-text-heading">Contact Person 1</h3>
+          <h3 className="text-sm font-bold text-text-heading">Primary Contact</h3>
 
           <div className="space-y-3">
             <TextInput
@@ -198,7 +205,7 @@ function AlternateMobile() {
 
         {/* Contact Person 2 */}
         <div className="space-y-4 rounded-2xl border border-border-light bg-surface p-5">
-          <h3 className="text-sm font-bold text-text-heading">Contact Person 2</h3>
+          <h3 className="text-sm font-bold text-text-heading">Secondary Contact</h3>
 
           <div className="space-y-3">
             <TextInput

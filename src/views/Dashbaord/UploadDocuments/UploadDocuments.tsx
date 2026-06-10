@@ -56,10 +56,10 @@ function UploadDocuments() {
       return prev.map((item, i) =>
         i === index
           ? {
-              ...item,
-              file: error ? null : file,
-              error,
-            }
+            ...item,
+            file: error ? null : file,
+            error,
+          }
           : item,
       );
     });
@@ -144,8 +144,7 @@ function UploadDocuments() {
           onDragLeave={() => setDragActive(false)}
           onDrop={handleDrop}
           className={`mt-10 flex h-[256px] cursor-pointer flex-col items-center justify-center
-            rounded-[24px] border-2 border-dashed bg-white transition ${
-              dragActive ? "border-secondary" : "border-muted"
+            rounded-[24px] border-2 border-dashed bg-white transition ${dragActive ? "border-secondary" : "border-muted"
             }`}
         >
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-surface">
@@ -189,9 +188,8 @@ function UploadDocuments() {
                     </div>
 
                     <p
-                      className={`mt-0.5 truncate text-[12px] ${
-                        doc.error ? "text-destructive" : "text-muted-foreground"
-                      }`}
+                      className={`mt-0.5 truncate text-[12px] ${doc.error ? "text-destructive" : "text-muted-foreground"
+                        }`}
                     >
                       {doc.error || (doc.file ? doc.file.name : "Pending upload")}
                     </p>

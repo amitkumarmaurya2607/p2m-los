@@ -122,6 +122,7 @@ function BankDetails() {
           <TextInput
             label="Bank Account Number"
             value={form.accountNumber}
+            placeholder="9856636747"
             onChange={(e) => handleChange("accountNumber", e.target.value)}
             error={errors.accountNumber}
             require
@@ -130,6 +131,7 @@ function BankDetails() {
           <TextInput
             label="IFSC CODE"
             value={form.ifscCode}
+            placeholder="IDIB000D987"
             onChange={(e) => handleChange("ifscCode", e.target.value)}
             error={errors.ifscCode}
             maxLength={11}
@@ -139,6 +141,7 @@ function BankDetails() {
           <TextInput
             label="Bank Name"
             value={form.benName}
+            placeholder="Indian Bank"
             onChange={(e) => handleChange("benName", e.target.value)}
             error={errors.benName}
             require
@@ -153,8 +156,7 @@ function BankDetails() {
         >
           <CreditCard className="w-5 h-5 mt-1 shrink-0" />
           <p className="text-xs sm:text-sm leading-relaxed">
-            We will deposit <b>₹1.00</b> to verify this account securely. Your data is encrypted and
-            completely safe.
+            We will deposit <b>₹1.00</b> to verify this account securely. This amount is used only for account verification.
           </p>
         </div>
 

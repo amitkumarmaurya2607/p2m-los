@@ -132,7 +132,7 @@ const StepCard: React.FC<StepCardProps> = ({
 
           {/* Right content section */}
           <div
-            className={`w-full max-w-full lg:w-[500px] flex items-center justify-center px-5 sm:px-8
+            className={`w-full max-w-full lg:w-[500px] flex  justify-center px-5 sm:px-8
               lg:px-14 py-10 ${className}`}
           >
             <div className={"w-full"}>
@@ -150,11 +150,11 @@ const StepCard: React.FC<StepCardProps> = ({
                 </button>
               )}
 
-              <div className="mb-8">
+              <div className="mb-5 lg:mb-8">
                 <div className="flex items-start gap-4">
                   {icon && (
                     <div
-                      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl
+                      className={`flex h-10  lg:h-12 w-10 lg:w-12 shrink-0 items-center justify-center rounded-xl
                       bg-primary-mute ${iconBgClassName}`}
                     >
                       {icon}
@@ -163,14 +163,14 @@ const StepCard: React.FC<StepCardProps> = ({
 
                   <div>
                     <h2
-                      className="text-[28px] font-extrabold leading-[36px] tracking-[-0.75px]
+                      className="text-[20px] lg:text-[28px] font-extrabold leading-[28px] lg:leading-[36px] tracking-[-0.75px]
                         text-text-heading"
                     >
                       {title}
                     </h2>
 
                     {subtitle && (
-                      <p className="mt-2 text-[16px] leading-[24px] text-text-muted">{subtitle}</p>
+                      <p className="mt-0 lg:mt-2 text-[13px] lg:text-[16px] leading-[18px] lg:leading-[24px] text-text-muted">{subtitle}</p>
                     )}
                   </div>
                 </div>
@@ -223,7 +223,7 @@ const StepCard: React.FC<StepCardProps> = ({
           )}
 
           <h2
-            className="text-[30px] leading-[36px] font-extrabold tracking-[-0.75px]
+            className="text-[20px] lg:text-[30px] leading-[24px] lg:leading-[36px] font-extrabold tracking-[-0.75px]
               text-text-heading"
           >
             {title}

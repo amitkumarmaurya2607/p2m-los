@@ -83,6 +83,7 @@ function PanDetails() {
           type="text"
           label="PAN Number"
           value={pan}
+          placeholder="NGNLK9876P"
           onChange={handleChange}
           error={error}
           maxLength={10}

@@ -160,12 +160,11 @@ function LoanApplicationCard({
 
           <div
             className={`flex w-fit items-center gap-1.5 rounded-[10px] px-3 py-1.5 sm:gap-2 sm:px-4
-              sm:py-2 ${
-                isRejected
-                  ? "bg-red-50"
-                  : isApproved || isActive
-                    ? "bg-green-50"
-                    : "bg-[rgba(255,200,87,0.1)]"
+              sm:py-2 ${isRejected
+                ? "bg-red-50"
+                : isApproved || isActive
+                  ? "bg-green-50"
+                  : "bg-[rgba(255,200,87,0.1)]"
               }`}
           >
             {isLoading && (
@@ -183,8 +182,7 @@ function LoanApplicationCard({
             {isRejected && <XCircle size={16} className="text-red-600 sm:size-[18px]" />}
 
             <span
-              className={`text-xs font-bold leading-5 sm:text-sm ${
-                isRejected
+              className={`text-xs font-bold leading-5 sm:text-sm ${isRejected
                   ? "text-red-600"
                   : isApproved || isActive
                     ? "text-[#009966]"
@@ -271,17 +269,15 @@ function InfoBlock({
           {danger && <XCircle size={14} className="shrink-0 text-red-600 sm:size-4" />}
 
           <span
-            className={`min-w-0 break-words text-xs font-bold leading-5 sm:text-sm ${
-              danger ? "text-red-600" : "text-[#009966]"
-            }`}
+            className={`min-w-0 break-words text-sm font-semibold leading-5 sm:text-sm ${danger ? "text-red-600" : "text-[#009966]"
+              }`}
           >
             {value}
           </span>
         </div>
       ) : (
         <p
-          className={`mt-1 break-words font-bold ${
-            large
+          className={`mt-1 break-words font-bold ${large
               ? "text-lg font-extrabold leading-6 text-[#0F172B] sm:text-2xl sm:leading-8"
               : "text-sm leading-5 text-[#1D293D] sm:text-lg sm:leading-7"
             }`}

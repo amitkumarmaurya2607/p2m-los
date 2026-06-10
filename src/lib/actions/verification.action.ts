@@ -38,8 +38,7 @@ export const verifyPANAction = withDecryption(async function verifyPANAction(pan
 export async function digiLockerAction() {
   try {
     const result = await digiLockerApi();
-    if (result.code !== "0000")
-      return { error: result.message || "digiLocker verification failed" };
+    if (result.code !== "0000")  return { error: result.message || "digiLocker verification failed" };
     return { success: true as const, data: result.data };
   } catch (err) {
     rethrowIfRedirect(err);

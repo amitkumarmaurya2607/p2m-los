@@ -44,13 +44,13 @@ const SelectBox = ({
             <label
               htmlFor={id}
               className={cn(
-                "absolute z-10 pointer-events-none text-xs font-bold transition-all duration-200",
+                "absolute z-10 pointer-events-none text-xs font-bold transition-all duration-200 text-muted-foreground",
                 isActive
-                  ? "top-[-8px] left-[16px] w-fit bg-[#F8FAFC] px-[4px] text-primary"
+                  ? "top-[-8px] left-[16px] w-fit bg-[#F8FAFC] px-[4px] "
                   : cn(
-                      "top-1/2 -translate-y-1/2 text-muted-foreground",
-                      leftIcon ? "left-12" : "left-5",
-                    ),
+                    "top-1/2 -translate-y-1/2 text-muted-foreground",
+                    leftIcon ? "left-12" : "left-5",
+                  ),
               )}
             >
               {label}
@@ -154,9 +154,9 @@ const SelectBox = ({
               isActive
                 ? "left-5 top-2 text-[11px] text-primary"
                 : cn(
-                    "top-1/2 -translate-y-1/2 text-xs text-muted-foreground",
-                    leftIcon ? "left-12" : "left-5",
-                  ),
+                  "top-1/2 -translate-y-1/2 text-xs text-muted-foreground",
+                  leftIcon ? "left-12" : "left-5",
+                ),
             )}
           >
             {label}

@@ -204,7 +204,7 @@ function PersonalInfo() {
     >
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <h3 className="text-lg font-semibold mb-4">Personal Details</h3>
+          {/* <h3 className="text-lg font-semibold mb-4">Personal Details</h3> */}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <TextInput
@@ -234,6 +234,7 @@ function PersonalInfo() {
               value={form.fatherName}
               onChange={(e) => handleChange("fatherName", e.target.value)}
               error={errors.fatherName}
+              placeholder=""
               require
             />
           </div>
@@ -261,6 +262,7 @@ function PersonalInfo() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <CustomDatePicker
             label="Date of Birth"
+
             value={form.dob ? new Date(form.dob) : null}
             onChange={(date: Date | null) => handleChange("dob", date ? date.toISOString() : "")}
             error={errors.dob}
@@ -278,7 +280,7 @@ function PersonalInfo() {
         </div>
 
         <div>
-          <h3 className="text-lg font-semibold mb-4">Address Details</h3>
+          {/* <h3 className="text-lg font-semibold mb-4">Address Details</h3> */}
 
           <div className="mb-4">
             <TextInput
@@ -292,18 +294,17 @@ function PersonalInfo() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <TextInput
-              label="City"
-              value={form.city}
-              onChange={(e) => handleChange("city", e.target.value)}
-              error={errors.city}
-              require
-            />
-
-            <TextInput
               label="State"
               value={form.state}
               onChange={(e) => handleChange("state", e.target.value)}
               error={errors.state}
+              require
+            />
+            <TextInput
+              label="City"
+              value={form.city}
+              onChange={(e) => handleChange("city", e.target.value)}
+              error={errors.city}
               require
             />
           </div>

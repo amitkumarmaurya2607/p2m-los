@@ -68,7 +68,7 @@ const Header: React.FC<HeaderProps> = ({ onBack }) => {
     };
 
     window.addEventListener("storage", handleStorageChange);
-    handleStorageChange();
+    setTimeout(() => handleStorageChange(), 1000)
 
     return () => {
       window.removeEventListener("storage", handleStorageChange);
@@ -134,12 +134,17 @@ const Header: React.FC<HeaderProps> = ({ onBack }) => {
             >
               {userData?.img ? (
                 <img
-                  src={userData.img}
-                  alt="Profile"
-                  className="w-full h-full object-cover rounded-full"
+                  src={userData?.img}
+                  alt={userData?.name}
+                  className="h-full w-full object-cover"
                 />
               ) : (
-                <User size={18} />
+                <div
+                  className="flex h-full w-full items-center justify-center text-sm font-semibold
+                    text-text-heading"
+                >
+                  {(userData?.name || "U").charAt(0).toUpperCase()}
+                </div>
               )}
             </button>
             {dropdownOpen && (
@@ -147,12 +152,6 @@ const Header: React.FC<HeaderProps> = ({ onBack }) => {
                 className="absolute right-0 mt-2 w-40 bg-surface border border-border rounded-md
                   shadow-md z-10"
               >
-                <a
-                  href="/profile"
-                  className="block px-4 py-2 text-sm text-text-heading hover:bg-muted"
-                >
-                  Profile
-                </a>
                 <button
                   onClick={handleLogout}
                   className="w-full text-left px-4 py-2 text-sm text-text-heading hover:bg-muted"

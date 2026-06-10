@@ -544,6 +544,10 @@ export interface VerifyOTPResponse {
     phoneVerified: boolean;
     userDetailsId: string;
     whatsappVerified: boolean;
+    firstName: string,
+    lastName: string,
+    middleName: string,
+    profilePicUrl: string,
   };
 }
 

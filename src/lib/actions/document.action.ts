@@ -42,25 +42,82 @@ export const submitAddressProofAction = withDecryption(async function submitAddr
   }
 });
 
+// export const submitAlternateMobileAction = withDecryption(
+//   async function submitAlternateMobileAction(contact: [
+//     {
+//     mobileNumber: string;
+//     name: string;
+//     relationType: string;
+//   }{
+//     mobileNumber: string;
+//     name: string;
+//     relationType: string;
+//   }
+//   ]) {
+//     try {
+//       const result = await updateAlternateMobile(contact);
+//       if (result.code !== "0000") {
+//         return { error: result.message || "Failed to save contact" };
+//       }
+//       return { success: true as const };
+//     } catch (err) {
+//       rethrowIfRedirect(err);
+//       return { error: getErrorMessage(err, "Failed to save contact") };
+//     }
+//   },
+// );
+
+type AlternateMobileContact = {
+  mobileNumber: string;
+  name: string;
+  relationType: string;
+};
+
+
+
 export const submitAlternateMobileAction = withDecryption(
-  async function submitAlternateMobileAction(contact: {
-    mobileNumber: string;
-    name: string;
-    relationType: string;
-  }) {
+  async function submitAlternateMobileAction(contact: AlternateMobileContact[]) {
     try {
-      const result = await updateAlternateMobile(contact);
-      if (result.code !== "0000") {
-        return { error: result.message || "Failed to save contact" };
+      if (!Array.isArray(contact) || contact.length === 0) {
+        return { error: "At least one contact is required" };
       }
-      return { success: true as const };
+
+      if (contact.length > 2) {
+        return { error: "Only 2 alternate contacts are allowed" };
+      }
+
+      const results = [];
+
+      for (const item of contact) {
+        const result = await updateAlternateMobile(item);
+
+        results.push({
+          contact: item,
+          result,
+        });
+
+        if (result.code !== "0000") {
+          return {
+            error:
+              result.message ||
+              `Failed to save contact ${item.name || item.mobileNumber}`,
+            failedContact: item,
+            results,
+          };
+        }
+      }
+
+      return {
+        success: true as const,
+        message: "All contacts saved successfully",
+        results,
+      };
     } catch (err) {
       rethrowIfRedirect(err);
       return { error: getErrorMessage(err, "Failed to save contact") };
     }
-  },
+  }
 );
-
 export async function saveAlternateMobileStepAction() {
   try {
     await saveStepCookie("alternateMobile");

@@ -38,12 +38,11 @@ const CustomDatePicker = ({
             <label
               htmlFor={id}
               className={`absolute z-10 pointer-events-none text-xs font-bold transition-all
-              duration-200 ${
-                isActive
-                  ? "top-[-8px] left-[16px] w-fit bg-[#F8FAFC] px-[4px] text-primary"
+              duration-200 text-muted-foreground ${isActive
+                  ? "top-[-8px] left-[16px] w-fit bg-[#F8FAFC] px-[4px] "
                   : `${leftIcon ? "left-12" : "left-5"} top-1/2 -translate-y-1/2
-                    text-muted-foreground`
-              }`}
+                    `
+                }`}
             >
               {label}
               {required && <span className="ml-0.5 text-destructive">*</span>}
@@ -68,10 +67,9 @@ const CustomDatePicker = ({
             className={`h-16 w-full rounded-2xl bg-[#F8FAFC] px-5 text-sm text-foreground
               shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] transition-all
               duration-200 focus:outline-none ${leftIcon ? "pl-12" : ""} ${rightIcon ? "pr-12" : ""}
-              ${
-                error
-                  ? "border border-destructive"
-                  : "border border-transparent focus:border-primary"
+              ${error
+                ? "border border-destructive"
+                : "border border-transparent focus:border-primary"
               }`}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
@@ -230,12 +228,11 @@ const CustomDatePicker = ({
           <label
             htmlFor={id}
             className={`absolute z-10 pointer-events-none font-semibold transition-all duration-200
-            ${
-              isActive
+            ${isActive
                 ? "left-5 top-2 text-[11px] text-primary"
                 : `${leftIcon ? "left-12" : "left-5"} top-1/2 -translate-y-1/2 text-xs
                   text-muted-foreground`
-            }`}
+              }`}
           >
             {label}
             {required && <span className="ml-0.5 text-destructive">*</span>}
@@ -260,8 +257,7 @@ const CustomDatePicker = ({
           className={`h-16 w-full rounded-2xl bg-[#F8FAFC] px-5 pb-2 pt-6 text-sm text-foreground
             shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] transition-all
             duration-200 focus:outline-none ${leftIcon ? "pl-12" : ""} ${rightIcon ? "pr-12" : ""}
-            ${
-              error ? "border border-destructive" : "border border-transparent focus:border-primary"
+            ${error ? "border border-destructive" : "border border-transparent focus:border-primary"
             }`}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}

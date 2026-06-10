@@ -5,10 +5,6 @@ import { loginPayload, loginVerifyPayload } from "@/views/Auth/type";
 import type {
   SendOTPResponse,
   VerifyOTPResponse,
-  OnboardingProgress,
-  OnboardingStep,
-  OnboardingStepStatus,
-  OnboardingStepKey,
   StepProgressResponse,
 } from "@/lib/actions/action.type";
 

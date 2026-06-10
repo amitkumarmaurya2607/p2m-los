@@ -82,22 +82,12 @@ export default function BankDetailsVerify({ bankDetails }: { bankDetails: BankDe
             />
 
             <DetailItem
-              icon={<Landmark className="h-5 w-5" />}
-              label="Bank Name"
-              value={formatBankName(bankDetails.bankName)}
-            />
-
-            <DetailItem
               icon={<Banknote className="h-5 w-5" />}
               label="IFSC Code"
               value={bankDetails.ifscCode}
             />
 
-            <DetailItem
-              icon={<ShieldCheck className="h-5 w-5" />}
-              label="Account Type"
-              value={bankDetails.accountType}
-            />
+
           </div>
 
           {/* WARNING / NOTE */}
