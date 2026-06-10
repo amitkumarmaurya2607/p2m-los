@@ -49,7 +49,11 @@
     }
   ],
   "variable": [
-    { "key": "baseUrl", "value": "https://multinucleolate-angularly-conrad.ngrok-free.dev", "type": "string" },
+    {
+      "key": "baseUrl",
+      "value": "https://multinucleolate-angularly-conrad.ngrok-free.dev",
+      "type": "string"
+    },
     { "key": "orgId", "value": "5d8868eb-40e8-47f8-a497-cd2ce6216c4f", "type": "string" },
     { "key": "accessToken", "value": "", "type": "string" },
     { "key": "userId", "value": "", "type": "string" },

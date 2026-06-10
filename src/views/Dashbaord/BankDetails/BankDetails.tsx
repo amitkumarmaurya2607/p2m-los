@@ -23,7 +23,6 @@ function BankDetails() {
   const [verified, setVerified] = useState(false);
   const [bankDetails, setBankDetails] = useState<BankDetailsReaponce | null>(null);
 
-
   const handleChange = (key: string, value: string) => {
     let v = value;
 
@@ -97,8 +96,6 @@ function BankDetails() {
     }
   };
 
-
-
   if (verified && bankDetails) {
     return <BankDetailsVerify bankDetails={bankDetails} />;
   }
@@ -130,8 +127,6 @@ function BankDetails() {
             require
           />
 
-
-
           <TextInput
             label="IFSC CODE"
             value={form.ifscCode}
@@ -148,11 +143,7 @@ function BankDetails() {
             error={errors.benName}
             require
           />
-          <TextInput
-            label="Account Type"
-            value="SAVINGS"
-            disabled
-          />
+          <TextInput label="Account Type" value="SAVINGS" disabled />
         </div>
 
         {/* Info Box */}

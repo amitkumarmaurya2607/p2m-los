@@ -86,7 +86,6 @@ export const cleanAddress = (
     .trim();
 };
 
-
 export const formatStatus = (value: string) => {
   return value
     .toLowerCase()

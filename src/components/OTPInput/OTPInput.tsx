@@ -8,11 +8,7 @@ interface OTPInputProps {
   version?: "v1" | "v2";
 }
 
-const OTPInput = ({
-  length = 6,
-  onComplete,
-  version = "v2",
-}: OTPInputProps) => {
+const OTPInput = ({ length = 6, onComplete, version = "v2" }: OTPInputProps) => {
   const [otp, setOtp] = useState<string[]>(new Array(length).fill(""));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -102,10 +98,10 @@ const OTPInput = ({
           className={
             version === "v2"
               ? `h-14 w-full max-w-[64px] rounded-2xl bg-[#F8FAFC] text-center text-lg font-bold
-                text-foreground shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)]
-                border border-transparent outline-none transition-all duration-200
-                focus:border-primary focus:ring-2 focus:ring-primary/20
-                sm:h-16 sm:max-w-[68px] sm:text-xl`
+                text-foreground
+                shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] border
+                border-transparent outline-none transition-all duration-200 focus:border-primary
+                focus:ring-2 focus:ring-primary/20 sm:h-16 sm:max-w-[68px] sm:text-xl`
               : `w-full max-w-[56px] aspect-[7/8] text-center text-[18px] sm:text-[20px] font-bold
                 bg-input-bg border-2 border-input-border rounded-[12px] sm:rounded-[16px]
                 shadow-[var(--shadow-sm)] outline-none transition-all duration-200

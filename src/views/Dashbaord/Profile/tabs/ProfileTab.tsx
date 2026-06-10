@@ -1,14 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  CreditCard,
-  Mail,
-  MapPin,
-  Phone,
-  ShieldCheck,
-  UserRound,
-} from "lucide-react";
+import { CreditCard, Mail, MapPin, Phone, ShieldCheck, UserRound } from "lucide-react";
 import { useProfile } from "@/contexts/ProfileContext";
 import ProfileEmptyState from "../shared/ProfileEmptyState";
 import { InfoField, InfoItemType } from "../componants/InfoField";
@@ -32,14 +25,8 @@ const maskAadhaar = (aadhaar?: string | null) => {
   return `XXXX XXXX ${last4}`;
 };
 
-
-
-
-
 function PersonalInformationCard({ user }: { user: any }) {
-  const fullName = [user?.firstName, user?.middleName, user?.lastName]
-    .filter(Boolean)
-    .join(" ");
+  const fullName = [user?.firstName, user?.middleName, user?.lastName].filter(Boolean).join(" ");
 
   const items: InfoItemType[] = [
     {
@@ -79,8 +66,7 @@ function PersonalInformationCard({ user }: { user: any }) {
 }
 
 function IdentityContactCard({ user }: { user: any }) {
-  const aadhaarNumber =
-    user?.linkedAadhaarNumberByDigiLocker || user?.linkedAadhaarNumberByPanPlus;
+  const aadhaarNumber = user?.linkedAadhaarNumberByDigiLocker || user?.linkedAadhaarNumberByPanPlus;
 
   const items: InfoItemType[] = [
     {
@@ -126,13 +112,9 @@ function IdentityContactCard({ user }: { user: any }) {
 }
 
 function AddressInformationCard({ user }: { user: any }) {
-  const addressLines = [
-    user?.address,
-    user?.city,
-    user?.state,
-    user?.pincode,
-    "India",
-  ].filter(Boolean);
+  const addressLines = [user?.address, user?.city, user?.state, user?.pincode, "India"].filter(
+    Boolean,
+  );
 
   return (
     <WhiteInfoCard
@@ -140,7 +122,10 @@ function AddressInformationCard({ user }: { user: any }) {
       icon={<MapPin className="h-4 w-4 text-[#FE9A00] sm:h-5 sm:w-5" />}
     >
       <div className="mt-5 rounded-2xl border border-[#F1F5F9] bg-[#F8FAFC] p-4 sm:mt-6 sm:p-5">
-        <p className="whitespace-pre-line break-words text-sm font-medium leading-6 text-[#314158] sm:text-base sm:leading-7">
+        <p
+          className="whitespace-pre-line break-words text-sm font-medium leading-6 text-[#314158]
+            sm:text-base sm:leading-7"
+        >
           {addressLines.length ? addressLines.join("\n") : "-"}
         </p>
       </div>
@@ -148,27 +133,20 @@ function AddressInformationCard({ user }: { user: any }) {
   );
 }
 
-function VerificationItem({
-  label,
-  verified,
-}: {
-  label: string;
-  verified: boolean;
-}) {
+function VerificationItem({ label, verified }: { label: string; verified: boolean }) {
   return (
-    <div className="flex min-h-[44px] items-center justify-between rounded-xl border border-white/10 bg-white/[0.05] px-3 py-2.5 sm:min-h-[50px] sm:rounded-[14px] sm:p-3">
-      <span className="text-xs font-medium leading-5 text-[#CAD5E2] sm:text-sm">
-        {label}
-      </span>
+    <div
+      className="flex min-h-[44px] items-center justify-between rounded-xl border border-white/10
+        bg-white/[0.05] px-3 py-2.5 sm:min-h-[50px] sm:rounded-[14px] sm:p-3"
+    >
+      <span className="text-xs font-medium leading-5 text-[#CAD5E2] sm:text-sm">{label}</span>
 
       <span
-        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${verified ? "bg-[#00C89C]/20" : "bg-white/10"
-          }`}
+        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${
+          verified ? "bg-[#00C89C]/20" : "bg-white/10"
+        }`}
       >
-        <ShieldCheck
-          className={`h-4 w-4 ${verified ? "text-[#00C89C]" : "text-[#90A1B9]"
-            }`}
-        />
+        <ShieldCheck className={`h-4 w-4 ${verified ? "text-[#00C89C]" : "text-[#90A1B9]"}`} />
       </span>
     </div>
   );
@@ -183,12 +161,10 @@ function VerificationSummaryCard({ user }: { user: any }) {
 
   return (
     <aside
-      className="
-        w-full rounded-2xl border border-white/10
-        bg-[linear-gradient(135deg,#0F172B_0%,#1D293D_100%)]
-        p-4 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]
-        sm:rounded-3xl sm:p-6 lg:sticky lg:top-6 lg:max-w-[306px] lg:p-8
-      "
+      className="w-full rounded-2xl border border-white/10
+        bg-[linear-gradient(135deg,#0F172B_0%,#1D293D_100%)] p-4
+        shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] sm:rounded-3xl sm:p-6 lg:sticky lg:top-6
+        lg:max-w-[306px] lg:p-8"
     >
       <div className="flex items-center gap-2 border-b border-white/10 pb-4">
         <ShieldCheck className="h-4 w-4 text-[#00C89C] sm:h-5 sm:w-5" />
@@ -207,22 +183,23 @@ function VerificationSummaryCard({ user }: { user: any }) {
       </div>
 
       <div className="mt-6 border-t border-white/10 pt-5 sm:mt-8 sm:pt-6">
-        <p className="text-[10px] font-bold uppercase leading-4 tracking-[0.6px] text-[#90A1B9] sm:text-xs">
+        <p
+          className="text-[10px] font-bold uppercase leading-4 tracking-[0.6px] text-[#90A1B9]
+            sm:text-xs"
+        >
           Credit Score
         </p>
 
         <div className="mt-2 flex flex-wrap items-end gap-2">
-          <span className="text-3xl font-extrabold leading-9 text-[#00C89C] sm:text-4xl sm:leading-10">
+          <span
+            className="text-3xl font-extrabold leading-9 text-[#00C89C] sm:text-4xl sm:leading-10"
+          >
             {user?.creditScore || "-"}
           </span>
 
           {user?.creditScore ? (
             <span className="pb-1 text-xs font-medium uppercase text-[#90A1B9] sm:text-sm">
-              {user.creditScore >= 750
-                ? "Excellent"
-                : user.creditScore >= 650
-                  ? "Good"
-                  : "Average"}
+              {user.creditScore >= 750 ? "Excellent" : user.creditScore >= 650 ? "Good" : "Average"}
             </span>
           ) : null}
         </div>
@@ -259,9 +236,11 @@ const ProfileTab = () => {
         title="Profile Details"
         showButton={false}
         subtitle="Manage your personal and contact information."
-
       />
-      <div className="grid w-full grid-cols-1 mt-8 gap-5 sm:gap-8 lg:grid-cols-[minmax(0,1fr)_306px] lg:items-start">
+      <div
+        className="grid w-full grid-cols-1 mt-8 gap-5 sm:gap-8 lg:grid-cols-[minmax(0,1fr)_306px]
+          lg:items-start"
+      >
         <div className="space-y-5 sm:space-y-8">
           <PersonalInformationCard user={user} />
           <IdentityContactCard user={user} />

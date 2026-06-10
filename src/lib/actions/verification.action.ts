@@ -51,8 +51,7 @@ export async function triggerDigiLockerWebhookAction(txnId: string) {
   try {
     const result = await triggerDigiLockerWebhook(txnId);
     console.log("Webhook response:", JSON.stringify(result));
-    if (result.code !== "0000")
-      return { error: result.message || "Webhook call failed" };
+    if (result.code !== "0000") return { error: result.message || "Webhook call failed" };
     return { success: true as const, data: result.data };
   } catch (err) {
     rethrowIfRedirect(err);
@@ -63,8 +62,7 @@ export async function triggerDigiLockerWebhookAction(txnId: string) {
 export async function checkAadhaarStatusAction(txnId: string) {
   try {
     const result = await checkAadhaarStatus(txnId);
-    if (result.code !== "0000")
-      return { error: result.message || "Status check failed" };
+    if (result.code !== "0000") return { error: result.message || "Status check failed" };
     return { success: true as const, data: result.data };
   } catch (err) {
     rethrowIfRedirect(err);
@@ -82,7 +80,7 @@ export const verifyBankAction = withDecryption(async function verifyBankAction(d
     const result = await verifyBank(data);
     if (result.code !== "0000") return { error: result.message || "Bank verification failed" };
     await saveStepCookie("bankDetails");
-    return { success: true as const,data: result.data };
+    return { success: true as const, data: result.data };
   } catch (err) {
     rethrowIfRedirect(err);
     return { error: getErrorMessage(err, "Bank verification failed") };

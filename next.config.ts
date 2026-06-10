@@ -7,8 +7,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/los-service/:path*",
-        destination:
-          "https://multinucleolate-angularly-conrad.ngrok-free.dev/los-service/:path*",
+        destination: "https://multinucleolate-angularly-conrad.ngrok-free.dev/los-service/:path*",
       },
     ];
   },

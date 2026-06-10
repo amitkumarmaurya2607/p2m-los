@@ -7,13 +7,8 @@ import type {
   KycUnifiedUrlResponse,
   modelType,
 } from "@/lib/actions/action.type";
-export async function verifyPAN(
-  panNumber: string,
-): Promise<ApiResponse<VerifyPANResponse>> {
-  return apiPost<ApiResponse<VerifyPANResponse>>(
-    API.pan.verify,
-    { pan: panNumber },
-  );
+export async function verifyPAN(panNumber: string): Promise<ApiResponse<VerifyPANResponse>> {
+  return apiPost<ApiResponse<VerifyPANResponse>>(API.pan.verify, { pan: panNumber });
 }
 
 export async function digiLockerApi(): Promise<ApiResponse<KycUnifiedUrlResponse>> {

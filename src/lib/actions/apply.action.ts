@@ -29,7 +29,8 @@ export async function getLoanProgramsAction() {
 export async function getLoansCredibilityAction() {
   try {
     const result = await getLoansCredibility();
-    if (result.code !== "0000") return { error: result.message || "Failed to fetch loans credibility" };
+    if (result.code !== "0000")
+      return { error: result.message || "Failed to fetch loans credibility" };
     return { success: true as const, data: result.data ?? null };
   } catch (err) {
     rethrowIfRedirect(err);
@@ -48,20 +49,20 @@ export async function getLoanListAction() {
   }
 }
 
-export const getLoanDetailsAction = withDecryption(
-  async function getLoanDetailsAction(loanId: string) {
-    try {
-      const result = await getLoanDetails(loanId);
-      if (result.code !== "0000") {
-        return { error: result.message || "Failed to fetch loan details" };
-      }
-      return { success: true as const, data: result.data ?? null };
-    } catch (err) {
-      rethrowIfRedirect(err);
-      return { error: getErrorMessage(err, "Failed to fetch loan details") };
+export const getLoanDetailsAction = withDecryption(async function getLoanDetailsAction(
+  loanId: string,
+) {
+  try {
+    const result = await getLoanDetails(loanId);
+    if (result.code !== "0000") {
+      return { error: result.message || "Failed to fetch loan details" };
     }
-  },
-);
+    return { success: true as const, data: result.data ?? null };
+  } catch (err) {
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Failed to fetch loan details") };
+  }
+});
 
 export const submitApplicationAction = withDecryption(async function submitApplicationAction(
   data: unknown,
@@ -77,60 +78,55 @@ export const submitApplicationAction = withDecryption(async function submitAppli
   }
 });
 
-
-export const getCurrentRepaymentAction = withDecryption(
-  async function getCurrentRepaymentAction(loanId: string) {
-    try {
-      const result = await getCurrentRepayment(loanId);
-      if (result.code !== "0000") {
-        return { error: result.message || "Failed to fetch loan details" };
-      }
-      return { success: true as const, data: result.data ?? null };
-    } catch (err) {
-      rethrowIfRedirect(err);
-      return { error: getErrorMessage(err, "Failed to fetch loan details") };
+export const getCurrentRepaymentAction = withDecryption(async function getCurrentRepaymentAction(
+  loanId: string,
+) {
+  try {
+    const result = await getCurrentRepayment(loanId);
+    if (result.code !== "0000") {
+      return { error: result.message || "Failed to fetch loan details" };
     }
-  },
-);
-export const getInitPaymentAction = withDecryption(
-  async function getInitPaymentAction(loanId: string) {
-    try {
-      const result = await getInitPayment(loanId);
-      if (result.code !== "0000") {
-        return { error: result.message || "Failed to fetch loan details" };
-      }
-      return { success: true as const, data: result.data ?? null };
-    } catch (err) {
-      rethrowIfRedirect(err);
-      return { error: getErrorMessage(err, "Failed to fetch loan details") };
+    return { success: true as const, data: result.data ?? null };
+  } catch (err) {
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Failed to fetch loan details") };
+  }
+});
+export const getInitPaymentAction = withDecryption(async function getInitPaymentAction(
+  loanId: string,
+) {
+  try {
+    const result = await getInitPayment(loanId);
+    if (result.code !== "0000") {
+      return { error: result.message || "Failed to fetch loan details" };
     }
-  },
-);
-export const getEmploymentAction = withDecryption(
-  async function getEmploymentAction() {
-    try {
-      const result = await getEmployment();
-      if (result.code !== "0000") {
-        return { error: result.message || "Failed to fetch employment details" };
-      }
-      return { success: true as const, data: result.data ?? null };
-    } catch (err) {
-      rethrowIfRedirect(err);
-      return { error: getErrorMessage(err, "Failed to fetch employment details") };
+    return { success: true as const, data: result.data ?? null };
+  } catch (err) {
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Failed to fetch loan details") };
+  }
+});
+export const getEmploymentAction = withDecryption(async function getEmploymentAction() {
+  try {
+    const result = await getEmployment();
+    if (result.code !== "0000") {
+      return { error: result.message || "Failed to fetch employment details" };
     }
-  },
-);
-export const getDocumentByUserAction = withDecryption(
-  async function getDocumentByUserAction() {
-    try {
-      const result = await getDocumentByUser();
-      if (result.code !== "0000") {
-        return { error: result.message || "Failed to fetch loan details" };
-      }
-      return { success: true as const, data: result.data ?? null };
-    } catch (err) {
-      rethrowIfRedirect(err);
-      return { error: getErrorMessage(err, "Failed to fetch loan details") };
+    return { success: true as const, data: result.data ?? null };
+  } catch (err) {
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Failed to fetch employment details") };
+  }
+});
+export const getDocumentByUserAction = withDecryption(async function getDocumentByUserAction() {
+  try {
+    const result = await getDocumentByUser();
+    if (result.code !== "0000") {
+      return { error: result.message || "Failed to fetch loan details" };
     }
-  },
-);
+    return { success: true as const, data: result.data ?? null };
+  } catch (err) {
+    rethrowIfRedirect(err);
+    return { error: getErrorMessage(err, "Failed to fetch loan details") };
+  }
+});

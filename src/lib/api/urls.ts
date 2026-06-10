@@ -40,7 +40,7 @@ export const API = {
   selfie: {
     upload: `${losService}/api/web-proxy/media/upload`,
   },
- 
+
   loan: {
     program: `${losService}/api/web-proxy/program`,
     credibility: `${losService}/api/web-proxy/loans-credibility`,

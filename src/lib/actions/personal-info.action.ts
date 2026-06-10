@@ -1,14 +1,9 @@
 "use server";
 
-import {
-  getPersonalInfo,
-  submitPersonalInfo,
-} from "@/lib/services/personal-info.service";
+import { getPersonalInfo, submitPersonalInfo } from "@/lib/services/personal-info.service";
 import { saveStepCookie } from "@/lib/step-cookie";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
 import { withDecryption } from "@/lib/secure-action";
-
-
 
 function buildPayload(data: Record<string, unknown>) {
   return {

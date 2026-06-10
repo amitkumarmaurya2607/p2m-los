@@ -48,7 +48,6 @@ const Header: React.FC<HeaderProps> = ({ onBack }) => {
   };
 
   useEffect(() => {
-
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setDropdownOpen(false);
@@ -70,7 +69,6 @@ const Header: React.FC<HeaderProps> = ({ onBack }) => {
 
     window.addEventListener("storage", handleStorageChange);
     handleStorageChange();
-
 
     return () => {
       window.removeEventListener("storage", handleStorageChange);
@@ -135,7 +133,11 @@ const Header: React.FC<HeaderProps> = ({ onBack }) => {
               className="flex items-center justify-center w-10 h-10 rounded-full bg-muted"
             >
               {userData?.img ? (
-                <img src={userData.img} alt="Profile" className="w-full h-full object-cover rounded-full" />
+                <img
+                  src={userData.img}
+                  alt="Profile"
+                  className="w-full h-full object-cover rounded-full"
+                />
               ) : (
                 <User size={18} />
               )}

@@ -139,7 +139,6 @@ export interface PaginationParams {
   limit: number;
 }
 
-
 export type UserDetailsType = {
   id: string;
   userId: string;

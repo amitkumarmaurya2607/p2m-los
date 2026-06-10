@@ -49,7 +49,6 @@ function AadhaarDetails() {
         : (digiLockerData_ as Record<string, string>).kycUrl;
 
     window.open(kycUrl, "_blank");
-
   };
 
   const handleContinue = useCallback(async () => {
@@ -75,7 +74,6 @@ function AadhaarDetails() {
       setLoadin(false);
     }
   }, [router]);
-
 
   if (errorCode) {
     if (isCallbackError) {
@@ -192,14 +190,14 @@ function AadhaarDetails() {
         <div className="text-center text-sm text-muted-foreground mb-4">Loading DigiLocker...</div>
       )}
 
-      {(
+      {
         <div className="mb-4 space-y-2">
           <p className="text-sm text-destructive text-center">{digiLockerError}</p>
           <GradientButton type="button" onClick={() => callDigiLocker()} className="w-full">
             Generate Link
           </GradientButton>
         </div>
-      )}
+      }
 
       {digiLockerData !== null && (
         <div className="mb-4">

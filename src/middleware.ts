@@ -58,9 +58,7 @@ export async function middleware(request: NextRequest) {
   const res = NextResponse.next();
   res.headers.set("x-pathname", pathname);
 
-  const isProtectedRoute = protectedPrefixes.some((prefix) =>
-    pathname.startsWith(prefix),
-  );
+  const isProtectedRoute = protectedPrefixes.some((prefix) => pathname.startsWith(prefix));
 
   if (!isProtectedRoute) {
     return res;
@@ -82,9 +80,7 @@ export async function middleware(request: NextRequest) {
   const allComplete = firstPendingIndex === -1;
 
   if (allComplete) {
-    const isPostCompletionRoute =
-      pathname === "/profile" ||
-      pathname.startsWith("/profile/");
+    const isPostCompletionRoute = pathname === "/profile" || pathname.startsWith("/profile/");
     if (isPostCompletionRoute) {
       return res;
     }

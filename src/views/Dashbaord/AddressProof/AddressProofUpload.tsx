@@ -38,8 +38,6 @@ function AddressProofUpload() {
   const [loading, setLoading] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
 
-
-
   const validateFile = (f: File) => {
     const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
     const maxSize = 5 * 1024 * 1024;
@@ -145,7 +143,7 @@ function AddressProofUpload() {
     }
   };
 
-  console.log("isAadhaar", isAadhaar, docType)
+  console.log("isAadhaar", isAadhaar, docType);
 
   return (
     <StepCard

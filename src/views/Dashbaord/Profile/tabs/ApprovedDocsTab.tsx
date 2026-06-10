@@ -21,7 +21,10 @@ const ApprovedDocsTab = () => (
               p-4 sm:flex-row sm:items-center sm:justify-between"
           >
             <div className="flex min-w-0 items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-muted">
+              <div
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl
+                  bg-primary-muted"
+              >
                 <CheckCircle2 className="h-5 w-5 text-primary" />
               </div>
 
@@ -29,9 +32,7 @@ const ApprovedDocsTab = () => (
                 <h4 className="break-words text-sm font-bold text-text-heading sm:text-base">
                   {doc}
                 </h4>
-                <p className="mt-1 text-sm text-text-secondary">
-                  Approved and verified
-                </p>
+                <p className="mt-1 text-sm text-text-secondary">Approved and verified</p>
               </div>
             </div>
 
@@ -49,9 +50,11 @@ const ApprovedDocsTab = () => (
       </div>
     </ProfileInfoCard>
 
-    <div className="rounded-2xl border border-border-light bg-surface-muted p-4 text-sm leading-6 text-text-body sm:p-5">
-      Your documents are approved. Please review your loan agreement before
-      final disbursal.
+    <div
+      className="rounded-2xl border border-border-light bg-surface-muted p-4 text-sm leading-6
+        text-text-body sm:p-5"
+    >
+      Your documents are approved. Please review your loan agreement before final disbursal.
     </div>
   </div>
 );

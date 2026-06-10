@@ -27,10 +27,8 @@ const RELATION_OPTIONS = [
   { value: "OTHER", label: "Other" },
 ];
 
-
 function AlternateMobile() {
   const router = useRouter();
-
 
   const [name1, setName1] = useState("");
   const [number1, setNumber1] = useState("");
@@ -40,8 +38,6 @@ function AlternateMobile() {
   const [relation2, setRelation2] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [savingStep, setSavingStep] = useState(false);
-
-
 
   const validateContact1 = () => {
     const errs: Record<string, string> = {};
@@ -110,7 +106,7 @@ function AlternateMobile() {
     relation1,
     name2,
     number2,
-    relation2
+    relation2,
   });
 
   return (
@@ -148,9 +144,7 @@ function AlternateMobile() {
       <div className="mt-6 space-y-6">
         {/* Contact Person 1 */}
         <div className="space-y-4 rounded-2xl border border-border-light bg-surface p-5">
-          <h3 className="text-sm font-bold text-text-heading">
-            Contact Person 1
-          </h3>
+          <h3 className="text-sm font-bold text-text-heading">Contact Person 1</h3>
 
           <div className="space-y-3">
             <TextInput
@@ -185,11 +179,7 @@ function AlternateMobile() {
               <div className="w-full md:w-[180px] md:shrink-0">
                 <SelectBox
                   options={RELATION_OPTIONS}
-                  value={
-                    RELATION_OPTIONS.find(
-                      (item) => item.value === relation1
-                    ) || null
-                  }
+                  value={RELATION_OPTIONS.find((item) => item.value === relation1) || null}
                   label="Relation"
                   onChange={(val) => {
                     setRelation1(val?.value);
@@ -200,11 +190,7 @@ function AlternateMobile() {
                   required
                 />
 
-                {errors.r1 && (
-                  <p className="mt-1 px-1 text-sm text-destructive">
-                    {errors.r1}
-                  </p>
-                )}
+                {errors.r1 && <p className="mt-1 px-1 text-sm text-destructive">{errors.r1}</p>}
               </div>
             </div>
           </div>
@@ -212,9 +198,7 @@ function AlternateMobile() {
 
         {/* Contact Person 2 */}
         <div className="space-y-4 rounded-2xl border border-border-light bg-surface p-5">
-          <h3 className="text-sm font-bold text-text-heading">
-            Contact Person 2
-          </h3>
+          <h3 className="text-sm font-bold text-text-heading">Contact Person 2</h3>
 
           <div className="space-y-3">
             <TextInput
@@ -249,11 +233,7 @@ function AlternateMobile() {
               <div className="w-full md:w-[180px] md:shrink-0">
                 <SelectBox
                   options={RELATION_OPTIONS}
-                  value={
-                    RELATION_OPTIONS.find(
-                      (item) => item.value === relation2
-                    ) || null
-                  }
+                  value={RELATION_OPTIONS.find((item) => item.value === relation2) || null}
                   label="Relation"
                   onChange={(val) => {
                     setRelation2(val?.value);
@@ -264,11 +244,7 @@ function AlternateMobile() {
                   required
                 />
 
-                {errors.r2 && (
-                  <p className="mt-1 px-1 text-sm text-destructive">
-                    {errors.r2}
-                  </p>
-                )}
+                {errors.r2 && <p className="mt-1 px-1 text-sm text-destructive">{errors.r2}</p>}
               </div>
             </div>
           </div>

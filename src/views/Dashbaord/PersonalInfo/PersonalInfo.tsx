@@ -125,10 +125,11 @@ function PersonalInfo() {
       if (result?.success && result?.data) {
         const data = result.data;
         setPersonalInfo(data);
-        const name = [data.firstName, data.middleName, data.lastName]
-          .filter(Boolean)
-          .join(" ");
-        localStorage.setItem("Profile", JSON.stringify({ name: name || "User", img: data?.profilePicUrl || "" }));
+        const name = [data.firstName, data.middleName, data.lastName].filter(Boolean).join(" ");
+        localStorage.setItem(
+          "Profile",
+          JSON.stringify({ name: name || "User", img: data?.profilePicUrl || "" }),
+        );
         setForm((prev) => ({
           ...prev,
           firstName: data.firstName || "",
@@ -140,7 +141,13 @@ function PersonalInfo() {
           state: data.state || "",
           city: data.city || "",
           pincode: data.pincode || "",
-          address: cleanAddress(data?.address || "", data?.city || "", data?.state || "", data?.pincode || "") || "",
+          address:
+            cleanAddress(
+              data?.address || "",
+              data?.city || "",
+              data?.state || "",
+              data?.pincode || "",
+            ) || "",
           gender: data.gender || "",
         }));
 

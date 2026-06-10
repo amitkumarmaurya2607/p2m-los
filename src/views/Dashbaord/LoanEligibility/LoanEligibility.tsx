@@ -54,7 +54,7 @@ function LoanEligibility() {
         console.log("Loan Programs:", JSON.stringify(res.data, null, 2));
         setPrograms(res.data);
       })
-      .catch(() => { });
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -109,9 +109,7 @@ function LoanEligibility() {
       loanAmount,
       remark: "test",
       programId: programs.tenures.id,
-      dueDate: new Date(Date.now() + tenureDays * 24 * 60 * 60 * 1000)
-        .toISOString()
-        .split("T")[0],
+      dueDate: new Date(Date.now() + tenureDays * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
     });
     if (result.success) {
       showToast({ message: "Application submitted successfully!", type: "success" });
@@ -217,10 +215,13 @@ function LoanEligibility() {
                     step={amountStep}
                     value={loanAmount}
                     onChange={(e) => setLoanAmount(Number(e.target.value))}
-                    className="h-2 w-full cursor-pointer appearance-none rounded-full bg-border-medium
-                      accent-primary"
+                    className="h-2 w-full cursor-pointer appearance-none rounded-full
+                      bg-border-medium accent-primary"
                   />
-                  <div className="mt-2 flex justify-between text-xs font-semibold text-text-muted-light">
+                  <div
+                    className="mt-2 flex justify-between text-xs font-semibold
+                      text-text-muted-light"
+                  >
                     <span>₹{formatINR(minAmount)}</span>
                     <span>₹{formatINR(maxAmount)}</span>
                   </div>
@@ -238,10 +239,13 @@ function LoanEligibility() {
                     step={1}
                     value={tenureDays}
                     onChange={(e) => setTenureDays(Number(e.target.value))}
-                    className="h-2 w-full cursor-pointer appearance-none rounded-full bg-border-medium
-                      accent-secondary"
+                    className="h-2 w-full cursor-pointer appearance-none rounded-full
+                      bg-border-medium accent-secondary"
                   />
-                  <div className="mt-2 flex justify-between text-xs font-semibold text-text-muted-light">
+                  <div
+                    className="mt-2 flex justify-between text-xs font-semibold
+                      text-text-muted-light"
+                  >
                     <span>{minTermDays}d</span>
                     <span>{maxTermDays}d</span>
                   </div>
@@ -253,7 +257,9 @@ function LoanEligibility() {
                 >
                   <div>
                     <p className="text-xs text-text-muted">Daily Repayment</p>
-                    <p className="text-xl font-extrabold text-text-heading">₹{formatINR(dailyEmi)}</p>
+                    <p className="text-xl font-extrabold text-text-heading">
+                      ₹{formatINR(dailyEmi)}
+                    </p>
                   </div>
                   <div>
                     <p className="text-xs text-text-muted">Total Payable</p>
@@ -263,7 +269,9 @@ function LoanEligibility() {
                   </div>
                   <div>
                     <p className="text-xs text-text-muted">Interest</p>
-                    <p className="text-xl font-extrabold text-text-heading">₹{formatINR(interest)}</p>
+                    <p className="text-xl font-extrabold text-text-heading">
+                      ₹{formatINR(interest)}
+                    </p>
                   </div>
                   <div>
                     <p className="text-xs text-text-muted">Processing Fee</p>
@@ -308,12 +316,9 @@ function LoanEligibility() {
                 />
                 <span className="text-sm font-medium text-text-heading">
                   I agree to the{" "}
-                    <Link
-                      href="/terms-and-conditions"
-                      className="text-primary underline"
-                    >
-                      Terms & Conditions
-                    </Link>
+                  <Link href="/terms-and-conditions" className="text-primary underline">
+                    Terms & Conditions
+                  </Link>
                 </span>
               </label>
             </div>

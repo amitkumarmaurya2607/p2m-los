@@ -531,20 +531,20 @@ export interface SendOTPResponse {
 }
 
 export interface VerifyOTPResponse {
-    accessToken: string;
-    user: {
-        brandId: string;
-        email: string | null;
-        emailVerified: boolean;
-        employmentId: string;
-        googleId: string | null;
-        id: string;
-        onboardingStep: number;
-        phoneNumber: string;
-        phoneVerified: boolean;
-        userDetailsId: string;
-        whatsappVerified: boolean;
-    };
+  accessToken: string;
+  user: {
+    brandId: string;
+    email: string | null;
+    emailVerified: boolean;
+    employmentId: string;
+    googleId: string | null;
+    id: string;
+    onboardingStep: number;
+    phoneNumber: string;
+    phoneVerified: boolean;
+    userDetailsId: string;
+    whatsappVerified: boolean;
+  };
 }
 
 export type OnboardingProgress = {
@@ -707,9 +707,6 @@ export type FetchStatementResponse = {
   tempUrl: string;
 };
 
-
-
-
 export type ValueType = "percentage" | "fixed";
 export type ChargeMode = "EXCLUSIVE" | "INCLUSIVE";
 export type PenaltyType = "SIMPLE" | string;
@@ -820,11 +817,10 @@ export type RepaymentDetailsType = {
 };
 
 export type initpaymentType = {
-  upiUrl:string
-  qrcode:string
-  transactionId:string
-
-}
+  upiUrl: string;
+  qrcode: string;
+  transactionId: string;
+};
 
 export type EmploymentDetailsType = {
   id: string;
@@ -866,7 +862,6 @@ export type PayslipType = {
   createdAt?: string;
   updatedAt?: string;
 };
-
 
 export type AadhaarProviderData = {
   verification?: AadhaarVerification;
@@ -926,7 +921,6 @@ export type AadhaarPersonalDetails = {
   gender?: string;
   aadhaarNumber?: string;
 };
-
 
 export type KycDocumentType = {
   id: string;
