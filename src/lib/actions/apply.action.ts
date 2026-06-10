@@ -8,6 +8,8 @@ import {
   getLoanDetails,
   getCurrentRepayment,
   getInitPayment,
+  getEmployment,
+  getDocumentByUser,
 } from "@/lib/services/apply.service";
 import { saveStepCookie } from "@/lib/step-cookie";
 import { rethrowIfRedirect, getErrorMessage } from "@/lib/redirect-error";
@@ -94,6 +96,34 @@ export const getInitPaymentAction = withDecryption(
   async function getInitPaymentAction(loanId: string) {
     try {
       const result = await getInitPayment(loanId);
+      if (result.code !== "0000") {
+        return { error: result.message || "Failed to fetch loan details" };
+      }
+      return { success: true as const, data: result.data ?? null };
+    } catch (err) {
+      rethrowIfRedirect(err);
+      return { error: getErrorMessage(err, "Failed to fetch loan details") };
+    }
+  },
+);
+export const getEmploymentAction = withDecryption(
+  async function getEmploymentAction() {
+    try {
+      const result = await getEmployment();
+      if (result.code !== "0000") {
+        return { error: result.message || "Failed to fetch employment details" };
+      }
+      return { success: true as const, data: result.data ?? null };
+    } catch (err) {
+      rethrowIfRedirect(err);
+      return { error: getErrorMessage(err, "Failed to fetch employment details") };
+    }
+  },
+);
+export const getDocumentByUserAction = withDecryption(
+  async function getDocumentByUserAction() {
+    try {
+      const result = await getDocumentByUser();
       if (result.code !== "0000") {
         return { error: result.message || "Failed to fetch loan details" };
       }

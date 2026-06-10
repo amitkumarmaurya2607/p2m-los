@@ -825,3 +825,243 @@ export type initpaymentType = {
   transactionId:string
 
 }
+
+export type EmploymentDetailsType = {
+  id: string;
+  userId: string;
+
+  companyName: string;
+  designation: string;
+  joiningDate: string;
+
+  salary: number;
+  companyAddress: string;
+  pinCode: string;
+
+  uanNumber: string | null;
+  modeOfSalary: "BANK_TRANSFER" | "CASH" | "CHEQUE" | string;
+
+  userDataStatus: "VERIFIED" | "NOT_VERIFIED" | "PENDING" | "FAILED" | string;
+
+  expectedDateOfSalary: number;
+  salaryExceedsBase: boolean;
+
+  officialEmail: string;
+  employmenttype: "FULL_TIME" | "PART_TIME" | "SELF_EMPLOYED" | "CONTRACT" | string;
+
+  payslips: PayslipType[];
+
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type PayslipType = {
+  id?: string;
+  fileName?: string;
+  fileUrl?: string;
+  fileKey?: string;
+  month?: string;
+  year?: number;
+  status?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+
+export type AadhaarProviderData = {
+  verification?: AadhaarVerification;
+  documentLinks?: AadhaarDocumentLinks;
+  addressDetails?: AadhaarAddressDetails;
+  personalDetails?: AadhaarPersonalDetails;
+
+  rawCallbackData?: {
+    verification?: AadhaarVerification;
+    documentLinks?: AadhaarDocumentLinks;
+    addressDetails?: AadhaarAddressDetails;
+    personalDetails?: AadhaarPersonalDetails;
+
+    rawCallbackData?: {
+      status?: string;
+      message?: string;
+      provider?: string;
+      timestamp?: string;
+      responseCode?: string;
+      transactionId?: string;
+    };
+  };
+};
+
+export type AadhaarVerification = {
+  source?: string;
+  passCode?: string;
+  uniqueId?: string;
+  isXmlValid?: boolean;
+  referenceId?: string;
+};
+
+export type AadhaarDocumentLinks = {
+  xmlLink?: string;
+  imageBase64?: string;
+  downloadLink?: string;
+};
+
+export type AadhaarAddressDetails = {
+  house?: string;
+  state?: string;
+  street?: string;
+  country?: string;
+  pincode?: string;
+  vtcName?: string;
+  district?: string;
+  landmark?: string;
+  locality?: string;
+  subDistrict?: string;
+  postOfficeName?: string;
+};
+
+export type AadhaarPersonalDetails = {
+  dob?: string;
+  name?: string;
+  careOf?: string;
+  gender?: string;
+  aadhaarNumber?: string;
+};
+
+
+export type KycDocumentType = {
+  id: string;
+  userId: string;
+
+  frontDocumentUrl: string | null;
+  backDocumentUrl: string | null;
+  verificationNotes: string | null;
+  documentNumber: string | null;
+
+  userDataStatus: "VERIFIED" | "NOT_VERIFIED" | "PENDING" | "FAILED" | string;
+
+  verifiedAt: string | null;
+  isApprovedByAdmin: boolean;
+
+  providerData: {
+    result?: {
+      dob?: string;
+      pan?: string;
+      email?: string;
+      gender?: string;
+      mobile?: string;
+      address?: {
+        city?: string;
+        state?: string;
+        country?: string;
+        pincode?: string;
+        locality?: string;
+        street_name?: string;
+        building_name?: string;
+      };
+      fullname?: string;
+      pan_type?: string;
+      last_name?: string;
+      first_name?: string;
+      middle_name?: string;
+      aadhaar_linked?: boolean;
+      aadhaar_number?: string;
+    };
+
+    request_id?: string;
+    result_code?: number;
+    client_ref_num?: string;
+    http_response_code?: number;
+
+    verification?: {
+      source?: string;
+      passCode?: string;
+      uniqueId?: string;
+      isXmlValid?: boolean;
+      referenceId?: string;
+    };
+
+    documentLinks?: {
+      xmlLink?: string;
+      imageBase64?: string;
+      downloadLink?: string;
+    };
+
+    addressDetails?: {
+      house?: string;
+      state?: string;
+      street?: string;
+      country?: string;
+      pincode?: string;
+      vtcName?: string;
+      district?: string;
+      landmark?: string;
+      locality?: string;
+      subDistrict?: string;
+      postOfficeName?: string;
+    };
+
+    personalDetails?: {
+      dob?: string;
+      name?: string;
+      careOf?: string;
+      gender?: string;
+      aadhaarNumber?: string;
+    };
+
+    rawCallbackData?: {
+      verification?: {
+        source?: string;
+        passCode?: string;
+        uniqueId?: string;
+        isXmlValid?: boolean;
+        referenceId?: string;
+      };
+
+      documentLinks?: {
+        xmlLink?: string;
+        imageBase64?: string;
+        downloadLink?: string;
+      };
+
+      addressDetails?: {
+        house?: string;
+        state?: string;
+        street?: string;
+        country?: string;
+        pincode?: string;
+        vtcName?: string;
+        district?: string;
+        landmark?: string;
+        locality?: string;
+        subDistrict?: string;
+        postOfficeName?: string;
+      };
+
+      personalDetails?: {
+        dob?: string;
+        name?: string;
+        careOf?: string;
+        gender?: string;
+        aadhaarNumber?: string;
+      };
+
+      rawCallbackData?: {
+        status?: string;
+        message?: string;
+        provider?: string;
+        timestamp?: string;
+        responseCode?: string;
+        transactionId?: string;
+      };
+    };
+  };
+
+  backPassword: string | null;
+  frontPassword: string | null;
+
+  type: "PAN" | "AADHAAR" | string;
+  status: "APPROVED" | "REJECTED" | "PENDING" | "FAILED" | string;
+
+  createdAt: string;
+  updatedAt: string;
+};

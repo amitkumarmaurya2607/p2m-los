@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
     X,
     FileText,
@@ -13,6 +13,7 @@ import {
     Settings,
     LogOut,
 } from "lucide-react";
+import { logoutAction } from "@/lib/actions/logout.action";
 
 interface SidebarProps {
     open: boolean;
@@ -33,6 +34,12 @@ const menuItems = [
 
 export default function ProfileSidebar({ open, setOpen }: SidebarProps) {
     const pathname = usePathname();
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        await logoutAction();
+        router.push("/apply-now");
+    };
 
     return (
         <>
@@ -120,7 +127,7 @@ export default function ProfileSidebar({ open, setOpen }: SidebarProps) {
                             <span className="font-semibold">Settings</span>
                         </Link>
 
-                        <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-red-600 hover:bg-red-50">
+                        <button onClick={handleLogout} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-red-600 hover:bg-red-50">
                             <LogOut size={20} />
                             <span className="font-semibold">Logout</span>
                         </button>

@@ -33,6 +33,7 @@ type LoanApplicationData = {
     loanAmount: number;
     dueDate: string;
     agreement: string;
+    msg: string
 };
 
 
@@ -122,7 +123,17 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
             const { data } = res;
 
             if (!data.loan) {
-                throw new Error("No active loan application found");
+                setStatus("error");
+                setLoanData({
+                    applicationId: "",
+                    status: "",
+                    loanAmount: 0,
+                    dueDate: "",
+                    agreement: "",
+                    msg: data.loan ? "Success" : "No active loan application found"
+                });
+                // throw new Error("No active loan application found");
+                return;
             }
 
             setLoansCredibility(data)
@@ -133,6 +144,7 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
                 loanAmount: data?.loan?.amount,
                 dueDate: data?.loan?.loanDetails?.dueDate,
                 agreement: data?.loan?.agreement?.status,
+                msg: data.loan ? "Success" : "No active loan application found"
             });
             setCurrentStatus(data?.loan?.status);
             const apiStatus = data?.loan?.status?.toUpperCase();
@@ -164,8 +176,8 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
 
 
     useEffect(() => {
-        if (hasRun.current) return;
-        hasRun.current = true;
+        // if (hasRun.current) return;
+        // hasRun.current = true;
 
         fetchLoanStatus();
         getDetails();

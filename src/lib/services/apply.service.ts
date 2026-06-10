@@ -9,6 +9,8 @@ import type {
   LoansListResponse,
   RepaymentDetailsType,
   initpaymentType,
+  EmploymentDetailsType,
+  KycDocumentType,
  
 } from "@/lib/actions/action.type";
 
@@ -63,4 +65,12 @@ export async function getInitPayment(
   return apiPost<ApiResponse<initpaymentType>>(API.loan.initPayment, {
     loanId,
   });
+}
+
+
+export async function getEmployment(): Promise<ApiResponse<EmploymentDetailsType>> {
+  return apiGet<ApiResponse<EmploymentDetailsType>>(API.loan.employment);
+}
+export async function getDocumentByUser(): Promise<ApiResponse<KycDocumentType[]>> {
+  return apiGet<ApiResponse<KycDocumentType[]>>(API.loan.documentByuser);
 }

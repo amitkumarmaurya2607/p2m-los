@@ -14,6 +14,8 @@ import GradientButton from "@/components/ui/GradientButton";
 import { useProfile } from "@/contexts/ProfileContext";
 import { formatStatus } from "@/lib/utils";
 import PageHeader from "../componants/PageHeader";
+import { NoActiveLoanApplication } from "../componants/NoActiveLoanApplication";
+import { LoanApplicationSkeleton } from "../componants/LoanApplicationSkeleton";
 
 type TrackerStatus = "completed" | "active" | "pending";
 
@@ -439,25 +441,38 @@ export default function LoanApplication() {
     const { status, loanData, errorMsg, currentStatus, getDetails, loading } =
         useProfile();
 
+    const noActiveLoan =
+        status !== "loading" && !loading && !loanData?.status;
+
+
+    if (status === "loading" || loading) return <LoanApplicationSkeleton />
+
     return (
 
         <div className="mx-auto w-full ">
             <PageHeader
-                loading={loading || status === "loading"}
+                loading={loading}
                 onButtonClick={getDetails}
             />
 
-            <div className="mt-5 grid grid-cols-1 gap-5 sm:mt-8 sm:gap-8 lg:grid-cols-[minmax(0,1fr)_306px] lg:items-start">
-                <LoanApplicationCard
-                    status={status}
-                    loanData={loanData}
-                    currentStatus={currentStatus}
-                    errorMsg={errorMsg}
-                />
+            {noActiveLoan ? (
+                <NoActiveLoanApplication />
+            ) :
 
-                <ProgressTracker status={status} />
-            </div>
+                <div className="mt-5 grid grid-cols-1 gap-5 sm:mt-8 sm:gap-8 lg:grid-cols-[minmax(0,1fr)_306px] lg:items-start">
+                    <LoanApplicationCard
+                        status={status}
+                        loanData={loanData}
+                        currentStatus={currentStatus}
+                        errorMsg={errorMsg}
+                    />
+
+                    <ProgressTracker status={status} />
+                </div>
+            }
         </div>
 
     );
 }
+
+
