@@ -59,7 +59,7 @@ export default function ProfileSidebar({ open, setOpen }: SidebarProps) {
           ${open ? "translate-x-0" : "-translate-x-full"}
         `}
             >
-                <div className="flex items-center justify-between border-b border-border-light p-6">
+                <div className="flex items-center justify-between border-b border-border-light py-5 p-6">
                     <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-home-green to-home-purple text-lg font-bold text-white shadow">
                             F
@@ -113,19 +113,7 @@ export default function ProfileSidebar({ open, setOpen }: SidebarProps) {
                     </div>
 
                     <div className="space-y-1">
-                        <Link
-                            href="/profile/settings"
-                            onClick={() => setOpen(false)}
-                            className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 transition-all
-                ${pathname === "/profile/settings"
-                                    ? "bg-home-green text-white shadow"
-                                    : "text-text-secondary hover:bg-surface-muted"
-                                }
-              `}
-                        >
-                            <Settings size={20} />
-                            <span className="font-semibold">Settings</span>
-                        </Link>
+
 
                         <button onClick={handleLogout} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-red-600 hover:bg-red-50">
                             <LogOut size={20} />
