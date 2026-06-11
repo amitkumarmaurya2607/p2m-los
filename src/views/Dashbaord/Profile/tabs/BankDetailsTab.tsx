@@ -16,6 +16,7 @@ import ProfileEmptyState from "../shared/ProfileEmptyState";
 import PageHeader from "../componants/PageHeader";
 import { InfoField } from "../componants/InfoField";
 import WhiteInfoCard from "../componants/WhiteInfoCard";
+import EmploymentSkeleton from "./EmploymentSkeleton";
 
 const formatValue = (value?: string | number | null) => {
   if (value === null || value === undefined || value === "") return "-";
@@ -158,18 +159,16 @@ function BankVerificationCard({ bank }: { bank: any }) {
               <p className="text-xs font-bold text-[#1D293D] sm:text-sm">{item.label}</p>
 
               <p
-                className={`mt-0.5 text-[11px] font-medium sm:text-xs ${
-                  item.verified ? "text-[#00A882]" : "text-[#90A1B9]"
-                }`}
+                className={`mt-0.5 text-[11px] font-medium sm:text-xs ${item.verified ? "text-[#00A882]" : "text-[#90A1B9]"
+                  }`}
               >
                 {item.value}
               </p>
             </div>
 
             <span
-              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
-                item.verified ? "bg-[#00C89C]/15" : "bg-[#E2E8F0]"
-              }`}
+              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${item.verified ? "bg-[#00C89C]/15" : "bg-[#E2E8F0]"
+                }`}
             >
               <ShieldCheck
                 className={`h-4 w-4 ${item.verified ? "text-[#00A882]" : "text-[#90A1B9]"}`}
@@ -192,12 +191,7 @@ const BankDetailsTab = () => {
     {};
 
   if (loading) {
-    return (
-      <ProfileEmptyState
-        title="Loading bank details..."
-        description="Please wait while we fetch your latest bank account details."
-      />
-    );
+    return <EmploymentSkeleton />;
   }
 
   const accountNumber = bank?.accountNumber || bank?.bankAccountNumber || bank?.account_no;
@@ -210,25 +204,20 @@ const BankDetailsTab = () => {
   return (
     <div className="w-full">
       <div
-        className="flex flex-col gap-4 border-b border-[#E2E8F0] pb-5 sm:flex-row sm:items-end
+        className="flex flex-col gap-4 sm:flex-row sm:items-end
           sm:justify-between sm:gap-4 sm:pb-6"
       >
         <PageHeader
           title="Bank Details"
           subtitle="Manage your bank account and verification details."
           showButton={false}
-          className="border-b-0 pb-0"
+
         />
 
         {/* <BankVerifiedBadge /> */}
       </div>
 
-      <div className="mt-5 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-5 lg:grid-cols-4 lg:gap-6">
-        <SummaryCard label="Bank Name" value={bankName} />
-        <SummaryCard label="Account Type" value={accountType} />
-        <SummaryCard label="IFSC Code" value={ifscCode} />
-        <SummaryCard label="Monthly Credit" value={formatAmount(monthlyCredit)} green />
-      </div>
+
 
       <div
         className="mt-5 grid grid-cols-1 gap-5 sm:mt-8 sm:gap-8 lg:grid-cols-[minmax(0,1fr)_306px]

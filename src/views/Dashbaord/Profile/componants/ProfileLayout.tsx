@@ -12,7 +12,7 @@ function ProfileLayout({ children }: { children: React.ReactNode }) {
     <ProfileProvider>
       <div className="min-h-screen bg-surface-muted">
         {/* Sidebar */}
-        <ProfileSidebar open={sidebarOpen} setOpen={setSidebarOpen} activeItem="Profile Details" />
+        <ProfileSidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 
         {/* Main Area */}
         <div className="flex min-h-screen flex-col lg:ml-72">

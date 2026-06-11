@@ -20,6 +20,7 @@ import { InfoField } from "../componants/InfoField";
 import { getEmploymentAction } from "@/lib/actions/apply.action";
 import type { EmploymentDetailsType } from "@/lib/actions/action.type";
 import { showToast } from "@/lib/toast";
+import EmploymentSkeleton from "./EmploymentSkeleton";
 
 const formatAmount = (amount?: number | string | null) => {
   if (amount === null || amount === undefined || amount === "") return "₹0";
@@ -56,81 +57,7 @@ const formatValue = (value?: string | number | boolean | null) => {
   return String(value).replaceAll("_", " ");
 };
 
-function SkeletonBlock({ className = "" }: { className?: string }) {
-  return <div className={`animate-pulse rounded-md bg-slate-200/80 ${className}`} />;
-}
 
-function EmploymentSkeleton() {
-  return (
-    <div className="w-full">
-      <div className="flex flex-col gap-3 border-b border-[#E2E8F0] pb-5 sm:pb-6">
-        <SkeletonBlock className="h-8 w-full max-w-[260px]" />
-        <SkeletonBlock className="h-4 w-full max-w-[360px]" />
-      </div>
-
-      <div className="mt-5 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-5 lg:grid-cols-4 lg:gap-6">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <div
-            key={index}
-            className="rounded-2xl border border-[#F1F5F9] bg-white p-4
-              shadow-[0px_4px_24px_-12px_rgba(0,0,0,0.05)] sm:p-5 lg:rounded-[20px] lg:p-6"
-          >
-            <SkeletonBlock className="h-3 w-[70%] max-w-[110px]" />
-            <SkeletonBlock className="mt-3 h-6 w-[85%] max-w-[150px] sm:h-8" />
-          </div>
-        ))}
-      </div>
-
-      <div
-        className="mt-5 grid grid-cols-1 gap-5 sm:mt-8 sm:gap-8 lg:grid-cols-[minmax(0,1fr)_306px]
-          lg:items-start"
-      >
-        <div className="space-y-5 sm:space-y-8">
-          {Array.from({ length: 2 }).map((_, cardIndex) => (
-            <div
-              key={cardIndex}
-              className="rounded-2xl border border-[#F1F5F9] bg-white p-4
-                shadow-[0px_8px_32px_-12px_rgba(0,0,0,0.05)] sm:rounded-3xl sm:p-6 lg:p-8"
-            >
-              <div className="flex items-center gap-3 border-b border-[#F1F5F9] pb-4">
-                <SkeletonBlock className="h-9 w-9 rounded-xl" />
-                <SkeletonBlock className="h-5 w-44" />
-              </div>
-
-              <div
-                className="mt-5 grid grid-cols-1 gap-x-8 gap-y-5 sm:mt-6 sm:grid-cols-2 sm:gap-y-6"
-              >
-                {Array.from({ length: cardIndex === 0 ? 6 : 4 }).map((_, index) => (
-                  <div key={index}>
-                    <SkeletonBlock className="h-3 w-28" />
-                    <SkeletonBlock className="mt-2 h-5 w-[80%] max-w-[180px]" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div
-          className="w-full rounded-2xl border border-[#3737C1]/10 bg-[#3737C1]/5 p-4 sm:rounded-3xl
-            sm:p-6 lg:min-h-[578px] lg:max-w-[306px] lg:p-8"
-        >
-          <SkeletonBlock className="h-6 w-40" />
-
-          <div
-            className="mt-5 rounded-[14px] border border-[#F1F5F9] bg-white p-4
-              shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] sm:mt-6 sm:p-6"
-          >
-            <SkeletonBlock className="h-10 w-10 rounded-[10px]" />
-            <SkeletonBlock className="mt-4 h-5 w-40" />
-            <SkeletonBlock className="mt-3 h-4 w-full" />
-            <SkeletonBlock className="mt-2 h-4 w-[75%]" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function IncomeCard({
   label,
@@ -169,8 +96,7 @@ function EmployeeStatusBadge({ status }: { status?: string | null }) {
   return (
     <div
       className={`flex h-[38px] w-full items-center justify-center gap-2 rounded-[14px] border px-4
-        py-2 sm:w-fit ${
-          isVerified ? "border-[#00C89C]/20 bg-[#00C89C]/10" : "border-[#FE9A00]/20 bg-[#FE9A00]/10"
+        py-2 sm:w-fit ${isVerified ? "border-[#00C89C]/20 bg-[#00C89C]/10" : "border-[#FE9A00]/20 bg-[#FE9A00]/10"
         }`}
     >
       <ShieldCheck
@@ -178,9 +104,8 @@ function EmployeeStatusBadge({ status }: { status?: string | null }) {
       />
 
       <span
-        className={`whitespace-nowrap text-sm font-bold leading-5 ${
-          isVerified ? "text-[#00A882]" : "text-[#FE9A00]"
-        }`}
+        className={`whitespace-nowrap text-sm font-bold leading-5 ${isVerified ? "text-[#00A882]" : "text-[#FE9A00]"
+          }`}
       >
         {isVerified ? "Verified Employee" : "Not Verified"}
       </span>
@@ -300,20 +225,19 @@ const EmploymentTab = () => {
   return (
     <div className="w-full">
       <div
-        className="flex flex-col gap-4 border-b border-[#E2E8F0] pb-5 sm:flex-row sm:items-end
+        className="flex flex-col gap-4  sm:flex-row sm:items-end
           sm:justify-between sm:gap-4 sm:pb-6"
       >
         <PageHeader
           title="Employment Info"
           subtitle="Your professional and income details."
           showButton={false}
-          className="border-b-0 pb-0"
         />
 
         {/* <EmployeeStatusBadge status={employment.userDataStatus} /> */}
       </div>
 
-      <div className="mt-5 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+      {/* <div className="mt-5 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-5 lg:grid-cols-4 lg:gap-6">
         <IncomeCard label="Monthly Salary" value={formatAmount(monthlyIncome)} green />
 
         <IncomeCard label="Annual Income" value={formatAmount(annualIncome)} />
@@ -324,7 +248,7 @@ const EmploymentTab = () => {
         />
 
         <IncomeCard label="Payslips" value={`${payslipCount}`} />
-      </div>
+      </div> */}
 
       <div
         className="mt-5 grid grid-cols-1 gap-5 sm:mt-8 sm:gap-8 lg:grid-cols-[minmax(0,1fr)_306px]

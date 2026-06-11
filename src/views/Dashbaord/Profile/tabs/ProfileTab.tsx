@@ -7,6 +7,7 @@ import ProfileEmptyState from "../shared/ProfileEmptyState";
 import { InfoField, InfoItemType } from "../componants/InfoField";
 import WhiteInfoCard from "../componants/WhiteInfoCard";
 import PageHeader from "../componants/PageHeader";
+import EmploymentSkeleton from "./EmploymentSkeleton";
 
 const formatDate = (date?: string | null) => {
   if (!date) return "-";
@@ -142,9 +143,8 @@ function VerificationItem({ label, verified }: { label: string; verified: boolea
       <span className="text-xs font-medium leading-5 text-[#CAD5E2] sm:text-sm">{label}</span>
 
       <span
-        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${
-          verified ? "bg-[#00C89C]/20" : "bg-white/10"
-        }`}
+        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${verified ? "bg-[#00C89C]/20" : "bg-white/10"
+          }`}
       >
         <ShieldCheck className={`h-4 w-4 ${verified ? "text-[#00C89C]" : "text-[#90A1B9]"}`} />
       </span>
@@ -212,12 +212,7 @@ const ProfileTab = () => {
   const { profileData: user, loading } = useProfile();
 
   if (loading) {
-    return (
-      <ProfileEmptyState
-        title="Loading profile..."
-        description="Please wait while we fetch your latest account details."
-      />
-    );
+    return <EmploymentSkeleton />;
   }
 
   if (!user) {
