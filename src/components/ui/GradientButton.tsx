@@ -8,7 +8,7 @@ type GradientButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const baseClasses =
-  "w-full h-[60px] rounded-[16px] text-primary-foreground font-medium flex items-center justify-center gap-2 bg-gradient-to-r from-secondary to-secondary/90 shadow-[var(--shadow-button)] hover:opacity-90 active:scale-[0.98] transition-all duration-200 disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed disabled:active:scale-100";
+  "w-full h-[48px] lg:h-[60px] rounded-[10px] lg:rounded-[16px] text-primary-foreground font-medium flex items-center justify-center gap-2 bg-gradient-to-r from-secondary to-secondary/90 shadow-[var(--shadow-button)] hover:opacity-90 active:scale-[0.98] transition-all duration-200 disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed disabled:active:scale-100";
 
 const GradientButton = ({
   children = "Button",

@@ -3,7 +3,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Shield, BadgeCheckIcon, IndianRupee } from "lucide-react";
+import { Shield, BadgeCheckIcon, IndianRupee, CheckCircle2 } from "lucide-react";
 import GradientButton from "@/components/ui/GradientButton";
 import { showToast } from "@/lib/toast";
 import { submitApplicationAction, getLoanProgramsAction } from "@/lib/actions/apply.action";
@@ -44,6 +44,7 @@ function LoanEligibility() {
   const [programs, setPrograms] = useState<LoanEligibilityRuleResponce | null>(null);
   const [initialized, setInitialized] = useState(false);
 
+
   useEffect(() => {
     getLoanProgramsAction()
       .then((res) => {
@@ -54,7 +55,7 @@ function LoanEligibility() {
         console.log("Loan Programs:", JSON.stringify(res.data, null, 2));
         setPrograms(res.data);
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   useEffect(() => {
@@ -80,11 +81,20 @@ function LoanEligibility() {
     return Math.max(500, Math.round(range / 100));
   }, [minAmount, maxAmount]);
 
+  const roundUpTo2 = (value: number) => {
+    return Math.ceil(value * 100) / 100;
+  };
+
   const { interest, totalPayable, dailyEmi } = useMemo(() => {
     const i = loanAmount * (interestRate / 100) * (tenureDays / 365);
     const total = loanAmount + i + processingFee;
-    const daily = tenureDays > 0 ? Math.round(total / tenureDays) : 0;
-    return { interest: i, totalPayable: total, dailyEmi: daily };
+    const daily = tenureDays > 0 ? total / tenureDays : 0;
+
+    return {
+      interest: roundUpTo2(i),
+      totalPayable: roundUpTo2(total),
+      dailyEmi: roundUpTo2(daily),
+    };
   }, [loanAmount, tenureDays, interestRate, processingFee]);
 
   const formatINR = (value: number) =>
@@ -182,7 +192,7 @@ function LoanEligibility() {
               {programs ? `₹${formatINR(maxAmount)}` : "—"}
             </h2>
             <div
-              className="mt-4 flex items-center justify-between border-t border-white/10 pt-4
+              className="mt-4 flex items-center justify-between gap-1 border-t border-white/10 pt-4
                 text-xs text-text-on-dark-muted"
             >
               <span>
@@ -252,30 +262,30 @@ function LoanEligibility() {
                 </div>
 
                 <div
-                  className="mt-4 grid grid-cols-2 gap-4 rounded-xl bg-white p-4 border
+                  className="hidden mt-4 lg:grid grid-cols-2 gap-4 rounded-xl bg-white p-4 border
                     border-border-medium"
                 >
                   <div>
                     <p className="text-xs text-text-muted">Daily Repayment</p>
-                    <p className="text-xl font-extrabold text-text-heading">
+                    <p className="text-[15px] lg:text-xl font-bold text-text-heading">
                       ₹{formatINR(dailyEmi)}
                     </p>
                   </div>
                   <div>
                     <p className="text-xs text-text-muted">Total Payable</p>
-                    <p className="text-xl font-extrabold text-text-heading">
+                    <p className="text-[15px] lg:text-xl font-bold text-text-heading">
                       ₹{formatINR(totalPayable)}
                     </p>
                   </div>
                   <div>
                     <p className="text-xs text-text-muted">Interest</p>
-                    <p className="text-xl font-extrabold text-text-heading">
+                    <p className="text-[15px] lg:text-xl font-bold text-text-heading">
                       ₹{formatINR(interest)}
                     </p>
                   </div>
                   <div>
                     <p className="text-xs text-text-muted">Processing Fee</p>
-                    <p className="text-xl font-extrabold text-text-heading">
+                    <p className="text-[15px] lg:text-xl font-bold text-text-heading">
                       ₹{formatINR(processingFee)}
                     </p>
                   </div>
@@ -284,46 +294,77 @@ function LoanEligibility() {
             )}
           </SectionCard>
 
-          {/* <SectionCard title="Review Your Information" icon={<Edit3 className="w-4 h-4" />}>
-            <ReviewField label="Mobile Number" value="-" />
-            <ReviewField label="PAN Number" value="-" />
-            <ReviewField label="Full Name" value="-" />
-            <ReviewField label="Email" value="-" />
-            <ReviewField label="DOB" value="-" />
-            <ReviewField label="Aadhaar" value="-" />
-            <ReviewField label="Bank Account" value="-" />
-            <ReviewField label="Employment" value="-" />
-          </SectionCard> */}
-
           <div
-            className="flex items-start gap-3 rounded-2xl border border-border-light bg-surface p-5"
+            className=" grid lg:hidden grid-cols-2 gap-4 rounded-xl bg-white p-4 border
+                    border-border-medium"
           >
-            <Shield className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm font-semibold text-text-heading">
-                I confirm that all the information provided is true and correct
+              <p className="text-xs text-text-muted">Daily Repayment</p>
+              <p className="text-[15px] lg:text-xl font-bold text-text-heading">
+                ₹{formatINR(dailyEmi)}
               </p>
-              <p className="mt-1 text-xs text-text-muted">
-                By submitting, you agree to our terms and conditions and authorize us to verify your
-                information.
+            </div>
+            <div>
+              <p className="text-xs text-text-muted">Total Payable</p>
+              <p className="text-[15px] lg:text-xl font-bold text-text-heading">
+                ₹{formatINR(totalPayable)}
               </p>
-              <label className="mt-3 flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={agreed}
-                  onChange={(e) => setAgreed(e.target.checked)}
-                  className="h-5 w-5 rounded border-border-medium accent-primary"
-                />
-                <span className="text-sm font-medium text-text-heading">
-                  I agree to the{" "}
-                  <Link href="/terms-and-conditions" className="text-primary underline">
-                    Terms & Conditions
-                  </Link>
-                </span>
-              </label>
+            </div>
+            <div>
+              <p className="text-xs text-text-muted">Interest</p>
+              <p className="text-[15px] lg:text-xl font-bold text-text-heading">
+                ₹{formatINR(interest)}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-text-muted">Processing Fee</p>
+              <p className="text-[15px] lg:text-xl font-bold text-text-heading">
+                ₹{formatINR(processingFee)}
+              </p>
             </div>
           </div>
 
+
+
+          <div className="rounded-xl lg:rounded-2xl border border-border-light bg-surface p-3 lg:p-5">
+            <div className="flex items-start gap-1 lg:gap-3">
+              <button
+                type="button"
+                onClick={() => setAgreed((prev) => !prev)}
+                aria-pressed={agreed}
+                className="mt-0.5 cursor-pointer shrink-0 border-0 bg-transparent p-0 outline-none"
+              >
+                {agreed ? (
+                  <CheckCircle2 className="h-5 w-5 text-primary" />
+                ) : (
+                  <Shield className="h-5 w-5 text-secondary" />
+                )}
+              </button>
+
+              <div className="min-w-0">
+                <button
+                  type="button"
+                  onClick={() => setAgreed((prev) => !prev)}
+                  className="cursor-pointer border-0 bg-transparent p-0 text-left outline-none"
+                >
+                  <p className="text-sm font-semibold text-text-heading">
+                    I confirm that all the information provided is true and correct
+                  </p>
+                </button>
+
+                <p className="mt-1 text-xs text-text-muted">
+                  By submitting, you agree to our{" "}
+                  <Link
+                    href="/terms-and-conditions"
+                    className="font-medium text-primary underline underline-offset-2"
+                  >
+                    Terms & Conditions
+                  </Link>{" "}
+                  and authorize us to verify your information.
+                </p>
+              </div>
+            </div>
+          </div>
           <GradientButton
             type="button"
             onClick={handleSubmit}

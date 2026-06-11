@@ -241,6 +241,9 @@ function SelfieCapture({ onSubmit }: Props) {
           setCapturedImage(imageSrc);
 
           setShowPopup(true);
+          setTimeout(() => {
+            setShowPopup(false);
+          }, 3000)
 
           setTimeout(() => {
             setStatus("captured");

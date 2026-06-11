@@ -42,8 +42,11 @@ const StepCard: React.FC<StepCardProps> = ({
     return (
       <div className="w-full flex items-center justify-center">
         <div
+          // -1.9px -1.9px 5px #11245175,1.9px 1.9px 5px #11245175
           className="w-full max-w-[1150px] lg:w-auto min-h-[220px] rounded-[12px] bg-white
-            shadow-[0px_30px_80px_rgba(15,23,42,0.18)] flex"
+     shadow-[-1.9px_-1.9px_8px_-3px_#11245175,1.9px_1.9px_8px_-3px_#11245175]
+  lg:shadow-[0px_30px_80px_rgba(15,23,42,0.18)]
+   flex"
         >
           {/* Left blue section */}
           {tips && (

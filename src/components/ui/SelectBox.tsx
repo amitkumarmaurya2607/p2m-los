@@ -87,7 +87,7 @@ const SelectBox = ({
             classNames={{
               control: ({ isFocused }) =>
                 cn(
-                  "min-h-[64px] h-[64px] rounded-2xl bg-[#F8FAFC]",
+                  "min-h-12 lg:min-h-16 h-12 lg:h-16 rounded-xl lg:rounded-2xl bg-[#F8FAFC]",
                   "px-5",
                   "shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)]",
                   "border cursor-pointer transition-all duration-200",

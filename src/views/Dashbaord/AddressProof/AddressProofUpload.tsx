@@ -42,7 +42,7 @@ function AddressProofUpload() {
     const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
     const maxSize = 5 * 1024 * 1024;
     if (!allowedTypes.includes(f.type)) return "Only PDF, JPG or PNG files are allowed";
-    if (f.size > maxSize) return "File size must be less than 5MB";
+    if (f.size > maxSize) return "File size must be less than 1MB";
     return "";
   };
 
@@ -185,6 +185,7 @@ function AddressProofUpload() {
             onChange={handleDocTypeChange}
             label="Document Type"
             menuPlacement="auto"
+            required
           />
         </div>
 
@@ -218,7 +219,7 @@ function AddressProofUpload() {
 
         {isAadhaar ? (
           <div className="space-y-4">
-            <div>
+            <div className="max-w-[calc(100vw-90px)]">
               <p className="mb-2 text-sm font-semibold text-text-heading">Front Side</p>
               {!frontFile ? (
                 <div
@@ -229,7 +230,7 @@ function AddressProofUpload() {
                 >
                   <Upload className="h-7 w-7 text-text-muted" />
                   <h3 className="mt-2 text-sm font-bold text-text-heading">Upload front side</h3>
-                  <p className="mt-1 text-xs text-text-muted-dark">PDF, JPG or PNG (Max 5MB)</p>
+                  <p className="mt-1 text-xs text-text-muted-dark">PDF, JPG or PNG (Max 1MB)</p>
                 </div>
               ) : (
                 <div
@@ -266,7 +267,7 @@ function AddressProofUpload() {
               )}
             </div>
 
-            <div>
+            <div className="max-w-[calc(100vw-90px)]">
               <p className="mb-2 text-sm font-semibold text-text-heading">Back Side</p>
               {!backFile ? (
                 <div
@@ -277,7 +278,7 @@ function AddressProofUpload() {
                 >
                   <Upload className="h-7 w-7 text-text-muted" />
                   <h3 className="mt-2 text-sm font-bold text-text-heading">Upload back side</h3>
-                  <p className="mt-1 text-xs text-text-muted-dark">PDF, JPG or PNG (Max 5MB)</p>
+                  <p className="mt-1 text-xs text-text-muted-dark">PDF, JPG or PNG (Max 1MB)</p>
                 </div>
               ) : (
                 <div
@@ -315,7 +316,7 @@ function AddressProofUpload() {
             </div>
           </div>
         ) : (
-          <div>
+          <div className="max-w-[calc(100vw-90px)]">
             {!frontFile ? (
               <div
                 onClick={() => frontInputRef.current?.click()}
@@ -327,7 +328,7 @@ function AddressProofUpload() {
                 <h3 className="mt-3 text-sm font-bold text-text-heading">
                   Click to upload document
                 </h3>
-                <p className="mt-1 text-xs text-text-muted-dark">PDF, JPG or PNG (Max 5MB)</p>
+                <p className="mt-1 text-xs text-text-muted-dark">PDF, JPG or PNG (Max 1MB)</p>
               </div>
             ) : (
               <div

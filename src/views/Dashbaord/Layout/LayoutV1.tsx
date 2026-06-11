@@ -11,7 +11,7 @@ function LayoutV1({ children }: { children: React.ReactNode }) {
       <div className="flex">
         <div className="grow-1">
           <ProgressBar />
-          <div className="flex justify-center px-4 pt-12 pb-6">
+          <div className="flex justify-center px-4 pt-6 lg:pt-12 pb-6">
             <ErrorBoundary label="Dashboard">
               <GeoLocationGuard>{children}</GeoLocationGuard>
             </ErrorBoundary>

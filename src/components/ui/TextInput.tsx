@@ -68,7 +68,7 @@ const TextInput = ({
               setIsFocused(false);
               props.onBlur?.(e);
             }}
-            className={`h-16 w-full rounded-2xl bg-[#F8FAFC] px-5 text-sm text-foreground
+            className={`h-12 lg:h-16 w-full rounded-xl lg:rounded-2xl bg-[#F8FAFC] px-5 text-sm text-foreground
               shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] transition-all
               duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20
               ${leftIcon ? "pl-12" : ""} ${rightIcon ? "pr-12" : ""} ${error

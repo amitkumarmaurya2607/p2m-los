@@ -183,10 +183,10 @@ function LoanApplicationCard({
 
             <span
               className={`text-xs font-bold leading-5 sm:text-sm ${isRejected
-                  ? "text-red-600"
-                  : isApproved || isActive
-                    ? "text-[#009966]"
-                    : "text-[#FFC857]"
+                ? "text-red-600"
+                : isApproved || isActive
+                  ? "text-[#009966]"
+                  : "text-[#FFC857]"
                 }`}
             >
               {getLoanDisplayStatus(status)}
@@ -278,8 +278,8 @@ function InfoBlock({
       ) : (
         <p
           className={`mt-1 break-words font-bold ${large
-              ? "text-lg font-extrabold leading-6 text-[#0F172B] sm:text-2xl sm:leading-8"
-              : "text-sm leading-5 text-[#1D293D] sm:text-lg sm:leading-7"
+            ? "text-lg font-extrabold leading-6 text-[#0F172B] sm:text-2xl sm:leading-8"
+            : "text-sm leading-5 text-[#1D293D] sm:text-lg sm:leading-7"
             }`}
         >
           {value}
