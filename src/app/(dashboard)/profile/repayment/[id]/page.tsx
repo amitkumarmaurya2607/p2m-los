@@ -8,6 +8,7 @@ import {
   CalendarDays,
   Lightbulb,
   AlertTriangle,
+  BriefcaseBusiness,
 } from "lucide-react";
 import StepCard from "@/views/Dashbaord/componants/StepCard";
 import ProfileStatCard from "@/views/Dashbaord/Profile/shared/ProfileStatCard";
@@ -17,6 +18,9 @@ import PulseDot from "@/components/PulseDot";
 import { getCurrentRepaymentAction, getInitPaymentAction } from "@/lib/actions/apply.action";
 import type { initpaymentType, RepaymentDetailsType } from "@/lib/actions/action.type";
 import QrCode from "@/components/QrCode/QrCode";
+import { InfoField } from "@/views/Dashbaord/Profile/componants/InfoField";
+import WhiteInfoCard from "@/views/Dashbaord/Profile/componants/WhiteInfoCard";
+import PageHeader from "@/views/Dashbaord/Profile/componants/PageHeader";
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -139,215 +143,242 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     console.log("timeover");
   };
   return (
-    <StepCard
-      title="Repayment Details"
-      subtitle="View your loan repayment information and make payments."
-      icon={<IndianRupee className="w-6 h-6 text-primary" />}
-      className="lg:w-[800px] mx-auto"
-      tips={{
-        title: "Repayment Tips",
-        description:
-          "Timely repayments improve your credit score and make future loan applications smoother.",
-        Icon: <CreditCard className="w-5 h-5 text-primary" />,
-        noteTitle: "Why Pay on Time?",
-        noteDescription: (
-          <ul className="space-y-2 text-sm leading-6">
-            <li className="flex items-start gap-2">
-              <PulseDot />
-              Avoid late payment penalties and extra charges
-            </li>
-            <li className="flex items-start gap-2">
-              <PulseDot />
-              Maintain a healthy credit score for future loans
-            </li>
-            <li className="flex items-start gap-2">
-              <PulseDot />
-              Set up auto-pay reminders to never miss a due date
-            </li>
-          </ul>
-        ),
-        NoteIcon: Lightbulb,
-      }}
-    >
-      {paymentData ? (
-        <QrCode qrcode="8798" upiUrl="ytyt" timeover={timeover} />
-      ) : (
-        <div className="space-y-6">
-          {/* Summary Cards */}
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            <ProfileStatCard
-              label="Total Loan"
-              value={formatAmount(repayment.principalAmount)}
-              icon={IndianRupee}
-            />
-            <ProfileStatCard
-              label="Total Due"
-              value={formatAmount(repayment.totalRepayment)}
-              icon={CreditCard}
-            />
+    <>
 
-            {penaltyAmount > 0 && (
-              <ProfileStatCard
-                label="Penalty"
-                value={formatAmount(penaltyAmount)}
-                icon={AlertTriangle}
-              />
-            )}
+      <div className="w-full">
+        <div
+          className="flex flex-col gap-4  sm:flex-row sm:items-end
+          sm:justify-between sm:gap-4 sm:pb-6"
+        >
+          <PageHeader
+            title="Repayment Details"
+            subtitle="View your loan repayment information and make payments."
+            onButtonClick={generateLink}
+            buttonText=" Pay EMI Now"
 
-            <ProfileStatCard
-              label="Status"
-              value={repayment.isOverdue ? "Overdue" : "On Track"}
-              icon={repayment.isOverdue ? Clock3 : CheckCircle2}
-            />
-          </div>
+          />
 
-          {/* Loan Details */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Loan Details</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
-                  Loan ID
-                </p>
-                <p className="mt-0.5 font-semibold text-text-heading">{repayment.loanId}</p>
-              </div>
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
-                  Due Date
-                </p>
-                <p className="mt-0.5 font-semibold text-text-heading">
-                  {formatDate(repayment.dueDate)}
-                </p>
-              </div>
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
-                  Repayment Date
-                </p>
-                <p className="mt-0.5 font-semibold text-text-heading">
-                  {formatDate(repayment.repaymentDate)}
-                </p>
-              </div>
-              {repayment.daysAfterDue > 0 && (
-                <div>
-                  <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
-                    Days Overdue
-                  </p>
-                  <p className="mt-0.5 font-semibold text-destructive">
-                    {repayment.daysAfterDue} day{repayment.daysAfterDue !== 1 ? "s" : ""}
-                  </p>
-                </div>
-              )}
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
-                  Status
-                </p>
-                <span
-                  className={`mt-1 inline-flex rounded-full px-3 py-1 text-sm font-medium ${
-                    repayment.isOverdue
-                      ? "bg-destructive/10 text-destructive"
-                      : "bg-success/10 text-success"
-                    }`}
-                >
-                  {repayment.isOverdue ? "Overdue" : "On Track"}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Penalty Details */}
-          {repayment.penaltyBreakdown?.length > 0 && (
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Penalty Details</h3>
-              {repayment.penaltyBreakdown.map((penalty, index) => (
-                <div
-                  key={penalty.penaltyId || index}
-                  className="rounded-2xl border border-border-light bg-surface-muted p-5 mb-4
-                    last:mb-0"
-                >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div>
-                      <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
-                        Type
-                      </p>
-                      <p className="mt-0.5 font-semibold text-text-heading">
-                        {penalty.penaltyType}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
-                        Rate
-                      </p>
-                      <p className="mt-0.5 font-semibold text-text-heading">
-                        {penalty.penaltyRate}%
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
-                        Days Overdue
-                      </p>
-                      <p className="mt-0.5 font-semibold text-destructive">
-                        {penalty.breakdown.daysOverdue} day
-                        {penalty.breakdown.daysOverdue !== 1 ? "s" : ""}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
-                        Penalty Amount
-                      </p>
-                      <p className="mt-0.5 font-semibold text-text-heading">
-                        {formatAmount(penalty.summary.penaltyAmount)}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
-                        Tax
-                      </p>
-                      <p className="mt-0.5 font-semibold text-text-heading">
-                        {formatAmount(penalty.summary.taxAmount)}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
-                        Total Penalty
-                      </p>
-                      <p className="mt-0.5 font-semibold text-destructive">
-                        {formatAmount(penalty.summary.totalPenaltyAmount)}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="mt-4 text-xs text-text-secondary leading-relaxed">
-                    {penalty.summary.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Payment CTA */}
-          {Number(repayment.totalRepayment) > 0 && (
-            <div className="rounded-2xl border border-border-light bg-surface-muted p-5">
-              <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">
-                Amount Due
-              </p>
-              <h3 className="mt-1 text-3xl font-extrabold text-text-heading">
-                {formatAmount(repayment.totalRepayment)}
-              </h3>
-              <p className="mt-2 text-sm text-text-secondary">
-                {repayment.isOverdue
-                  ? `Overdue since ${formatDate(repayment.dueDate)}`
-                  : `Pay before ${formatDate(repayment.dueDate)} to avoid late charges.`}
-              </p>
-              <GradientButton
-                onClick={generateLink}
-                leftIcon={<IndianRupee className="h-4 w-4" />}
-                className="mt-5"
-              >
-                Pay Now
-              </GradientButton>
-            </div>
-          )}
         </div>
-      )}
-    </StepCard>
+
+        <div
+          className="mt-5 grid grid-cols-1 gap-5 sm:mt-8 sm:gap-8 lg:grid-cols-[minmax(0,1fr)_306px]
+          lg:items-start"
+        >
+
+          {/* <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <ProfileStatCard
+                label="Total Loan"
+                value={formatAmount(repayment.principalAmount)}
+                icon={IndianRupee}
+              />
+              <ProfileStatCard
+                label="Total Due"
+                value={formatAmount(repayment.totalRepayment)}
+                icon={CreditCard}
+              />
+
+              {penaltyAmount > 0 && (
+                <ProfileStatCard
+                  label="Penalty"
+                  value={formatAmount(penaltyAmount)}
+                  icon={AlertTriangle}
+                />
+              )}
+
+              <ProfileStatCard
+                label="Status"
+                value={repayment.isOverdue ? "Overdue" : "On Track"}
+                icon={repayment.isOverdue ? Clock3 : CheckCircle2}
+              />
+            </div> */}
+          {paymentData ?
+            <div className="space-y-5 sm:space-y-8">
+              <WhiteInfoCard
+                title="Loan Details"
+                icon={<BriefcaseBusiness className="h-4 w-4 text-[#3737C1] sm:h-5 sm:w-5" />}
+              >
+                <QrCode qrcode="8798" upiUrl="ytyt" timeover={timeover} />
+              </WhiteInfoCard>
+            </div>
+            :
+
+            <>
+              <div className="space-y-5 sm:space-y-8">
+                <WhiteInfoCard
+                  title="Loan Details"
+                  icon={<BriefcaseBusiness className="h-4 w-4 text-[#3737C1] sm:h-5 sm:w-5" />}
+                >
+                  <div className="mt-5 grid grid-cols-1 gap-x-8 gap-y-5 sm:mt-6 sm:grid-cols-2 sm:gap-y-6">
+                    <InfoField label="Loan ID" value={repayment?.loanId} />
+                    <InfoField label="Due Date" value={formatDate(repayment?.dueDate)} />
+                    <InfoField label="Repayment Date" value={formatDate(repayment?.repaymentDate)} />
+                    {repayment?.daysAfterDue > 0 && <InfoField label="Days Overdue" value={`${repayment?.daysAfterDue} day${repayment.daysAfterDue !== 1 ? "s" : ""}`} />}
+                    <InfoField label="  Status" value={repayment?.isOverdue ? "Overdue" : "On Track"} />
+                  </div>
+                </WhiteInfoCard>
+
+                {repayment?.penaltyBreakdown?.length > 0 && (
+                  <WhiteInfoCard
+                    title="Penalty Details"
+                    icon={
+                      <BriefcaseBusiness className="h-4 w-4 text-[#3737C1] sm:h-5 sm:w-5" />
+                    }
+                  >
+                    <div className="mt-5 space-y-4 sm:mt-6">
+                      {repayment?.penaltyBreakdown?.map((penalty, index) => (
+                        <div
+                          key={penalty?.penaltyId || index}
+                          className="rounded-2xl border border-border-light bg-surface-muted p-5"
+                        >
+                          <div className="grid grid-cols-1 gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
+                            <InfoField label="Type" value={penalty?.penaltyType} />
+
+                            <InfoField label="Rate" value={`${penalty?.penaltyRate}%`} />
+
+                            <InfoField
+                              label="Days Overdue"
+                              value={`${penalty?.breakdown?.daysOverdue} day${penalty?.breakdown?.daysOverdue !== 1 ? "s" : ""
+                                }`}
+                              valueClassName="text-destructive"
+                            />
+
+                            <InfoField
+                              label="Penalty Amount"
+                              value={formatAmount(penalty?.summary?.penaltyAmount)}
+                            />
+
+                            <InfoField
+                              label="Tax"
+                              value={formatAmount(penalty?.summary?.taxAmount)}
+                            />
+
+                            <InfoField
+                              label="Total Penalty"
+                              value={formatAmount(penalty?.summary?.totalPenaltyAmount)}
+                              valueClassName="text-destructive"
+                            />
+                          </div>
+
+                          {penalty?.summary?.description && (
+                            <p className="mt-4 text-xs leading-relaxed text-text-secondary">
+                              {penalty.summary.description}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </WhiteInfoCard>
+                )}
+
+              </div>
+              <PaymentSummary />
+            </>
+
+          }
+        </div>
+      </div>
+
+    </>
+
+  );
+}
+
+
+import { ArrowRight } from "lucide-react";
+
+type PaymentSummaryProps = {
+  totalPaid?: string;
+  totalRemaining?: string;
+  upcomingEmi?: string;
+  dueDate?: string;
+  onEmiClick?: () => void;
+};
+
+function PaymentSummary({
+  totalPaid = "₹77,100",
+  totalRemaining = "₹2,84,000",
+  upcomingEmi = "₹12,850",
+  dueDate = "15 Feb 2026",
+  onEmiClick,
+}: PaymentSummaryProps) {
+  return (
+    <div
+      className="
+        relative w-full max-w-[306px] overflow-hidden rounded-3xl
+        bg-[linear-gradient(135deg,#0F172B_0%,#1D293D_100%)]
+        px-6 py-8 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]
+        sm:max-w-[306px] sm:px-8
+      "
+    >
+      {/* Green Blur */}
+      <div
+        className="
+          pointer-events-none absolute -right-10 -top-10 h-48 w-48
+          rounded-full bg-[#00C89C]/10 blur-[64px]
+        "
+      />
+
+      {/* Heading */}
+      <div className="relative border-b border-white/10 pb-4">
+        <h3 className="text-xl font-bold leading-7 text-white">
+          Payment Summary
+        </h3>
+      </div>
+
+      {/* Content */}
+      <div className="relative pt-8">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.6px] text-white/60">
+            Total Amount Paid
+          </p>
+          <p className="mt-1 text-[30px] font-extrabold leading-9 text-[#00C89C]">
+            {totalPaid}
+          </p>
+        </div>
+
+        <div className="mt-6">
+          <p className="text-xs font-bold uppercase tracking-[0.6px] text-white/60">
+            Total Remaining
+          </p>
+          <p className="mt-1 text-2xl font-bold leading-8 text-white">
+            {totalRemaining}
+          </p>
+        </div>
+
+        <div className="mt-6 border-t border-white/10 pt-6">
+          <p className="text-xs font-bold uppercase tracking-[0.6px] text-white/60">
+            Upcoming EMI
+          </p>
+
+          <button
+            type="button"
+            onClick={onEmiClick}
+            className="
+              mt-2 flex h-[82px] w-full items-center justify-between rounded-2xl
+              border border-white/10 bg-white/10 p-4 text-left
+              transition-all duration-200 hover:bg-white/[0.14]
+            "
+          >
+            <div>
+              <p className="text-lg font-bold leading-7 text-white">
+                {upcomingEmi}
+              </p>
+              <p className="mt-1 text-xs font-medium leading-4 text-white/70">
+                Due on {dueDate}
+              </p>
+            </div>
+
+            <span
+              className="
+                flex h-10 w-10 shrink-0 items-center justify-center rounded-full
+                bg-white text-[#3737C1]
+              "
+            >
+              <ArrowRight size={20} strokeWidth={2} />
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
